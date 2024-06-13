@@ -8,13 +8,13 @@ const MiddleContainer = ({ children }: Props) => {
   return (
     <Flex
       width="100vw"
-      height="100vh"
+      height="90vh"
       bg="#EFF2F6"
       justifyContent="center"
       alignItems="center"
     >
       <Box
-        width="80vw"
+        width="70vw"
         height="80vh"
         borderRadius={20}
         bg="white"

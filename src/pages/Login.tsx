@@ -23,7 +23,7 @@ import MiddleContainer from "../components/MiddleContainer";
 const Login = () => {
   return (
     <MiddleContainer>
-      <Grid gridTemplateColumns="1fr 1fr" gap={50} h="100%">
+      <Grid gridTemplateColumns="1fr 1fr" h="100%">
         <GridItem h="100%">
           <Center h="100%">
             <Image src={GroceryImage} />
