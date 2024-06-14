@@ -1,18 +1,15 @@
 import {
   Avatar,
-  Box,
   Flex,
   HStack,
   Icon,
   Image,
   Text,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { CiShoppingCart } from "react-icons/ci";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaCartShopping } from "react-icons/fa6";
-import Banner from '../assets/smart-shopper-banner.svg'
+import Banner from '../assets/smart-shopper-banner.svg';
 
 const Navbar = () => {
   const [user, setUser] = useState("User");
