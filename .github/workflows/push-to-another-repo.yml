@@ -22,7 +22,7 @@ jobs:
       run: |
         git remote add target https://github.com/chathushkaayash/Smart-Shopper-Frontend.git
         git fetch target
-        git checkout -b new-branch target/branch || git checkout -b new-branch
+        git checkout -b new-branch target/branch || git checkout -b target/new-branch
       env:
         TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
 
