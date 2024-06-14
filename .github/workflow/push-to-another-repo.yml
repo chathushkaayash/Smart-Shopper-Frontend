@@ -1,0 +1,35 @@
+name: Push to another repo
+
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger on
+
+jobs:
+  push_code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source repo
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.name 'chathushkaayash'
+        git config --global user.email 'chathushkaayash@gmail.com'
+
+    - name: Add target repo as a remote
+      run: |
+        git remote add target https://github.com/chathushkaayash/Smart-Shopper-Frontend.git
+        git fetch target
+        git checkout -b master target/branch || git checkout -b master
+      env:
+        TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+
+    - name: Push to target repo
+      run: |
+        git add .
+        git commit -m "Automated commit from GitHub Actions"
+        git push target master --force
+      env:
+        TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
