@@ -3,7 +3,7 @@ name: Push to another repo
 on:
   push:
     branches:
-      - main  # Change this to the branch you want to trigger on
+      - master  # Change this to the branch you want to trigger on
 
 jobs:
   push_code:
