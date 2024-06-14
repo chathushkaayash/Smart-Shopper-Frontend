@@ -27,6 +27,6 @@ jobs:
 
     - name: Push to target repo
       run: |
-        git push -u target main --force
+        git push -u target master --force
       env:
         TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
