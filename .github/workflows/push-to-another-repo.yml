@@ -21,16 +21,14 @@ jobs:
     - name: Add target repo as a remote
       run: |
         git remote add target https://github.com/chathushkaayash/Smart-Shopper-Frontend.git
-        git fetch target
-        git checkout -b new-branch target/branch || git checkout -b target/new-branch
+
       env:
         TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
 
     - name: Push to target repo
       run: |
-       git pull master
         git add .
         git commit -m "Automated commit from GitHub Actions"
-        git push target new-branch --force
+        git push -u target main --force
       env:
         TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
