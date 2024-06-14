@@ -27,8 +27,6 @@ jobs:
 
     - name: Push to target repo
       run: |
-        git add .
-        git commit -m "Automated commit from GitHub Actions"
         git push -u target main --force
       env:
         TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
