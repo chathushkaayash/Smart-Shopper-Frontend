@@ -12,7 +12,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import Banner from '../assets/smart-shopper-banner.svg';
 
 const Navbar = () => {
-  const [user] = useState("User");
+  const [user] = useState("User1");
 
   return (
     <>
