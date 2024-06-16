@@ -1,12 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { getProductsData, products } from "../../data/products";
 
-
-// export interface T {
-//   id: number;
-//   name: string;
-// }
-
 export interface FetchResponse<T> {
   count: number;
   next: string | null;
@@ -14,11 +8,7 @@ export interface FetchResponse<T> {
 }
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.rawg.io/api",
-  params: {
-    // key: "c7b18323a47d40c394ea5b019646b1f5",
-    key: "0896be4b90fb4060b4c2f5dc1275fde1",
-  },
+  baseURL: "https://zebraliveback.keellssuper.com/1.0/Showcase/",
 });
 
 class APIClient<T> {
@@ -29,11 +19,21 @@ class APIClient<T> {
   }
 
   getAll = (requestConfig: AxiosRequestConfig) => {
-    let productData= getProductsData(requestConfig.params);
-    return { data: productData, count: productData.length, next: 'true', results: productData };
+    const pageParam = requestConfig.params;
+    console.log("pageParam", pageParam);
+    // let productData= getProductsData(requestConfig.params);
+    // return { data: productData, count: productData.length, next: 'true', results: productData };
 
     return axiosInstance
-      .get<FetchResponse<T>>(this.endpoint, { ...requestConfig })
+      .get<FetchResponse<T>>(this.endpoint, {
+        ...requestConfig,
+        params: {
+          ...requestConfig.params,
+          campaignKeyWord: "keells_products",
+          fromCount: 0,
+          toCount: 20,
+        },
+      })
       .then((res) => res.data);
   };
 

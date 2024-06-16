@@ -19,6 +19,7 @@ import GoogleIcon from "../assets/social-media-icons/google.svg";
 import LoginButton from "../components/Buttons/LoginButton";
 import LoginInput from "../components/Inputs/LoginInput";
 import MiddleContainer from "../components/MiddleContainer";
+import SubmitButton from "../components/Buttons/SubmitButton";
 
 const Login = () => {
   return (
@@ -58,9 +59,16 @@ const Login = () => {
               label="Password"
             />
 
-            <Button type="submit" width="full" bg="#E9893B" mt={3}>
+            {/* <Button
+              type="submit"
+              width="full"
+              bg="secondary"
+              mt={3}
+              color="white"
+            >
               Login
-            </Button>
+            </Button> */}
+            <SubmitButton className="my-3">Login</SubmitButton>
           </form>
 
           <Text mt={3}>
