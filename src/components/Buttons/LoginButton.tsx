@@ -24,4 +24,5 @@ const LoginButton = ({ text, image }: Props) => {
   );
 };
 
+
 export default LoginButton;
