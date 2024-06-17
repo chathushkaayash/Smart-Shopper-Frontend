@@ -14,6 +14,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@hookform/resolvers": "^2.9.11",
     "@tanstack/react-query": "4.28",
     "@tanstack/react-query-devtools": "4.28",
     "@types/react-icons": "^3.0.0",
@@ -23,9 +24,10 @@
     "react-dom": "^18.2.0",
 
     "react-hook-form": "7.43",
-
-
     "react-icons": "^5.2.1",
+    "zod": "^3.20.6",
+
+
     "react-infinite-scroll-component": "^6.1.0"
 
   },

@@ -9,21 +9,22 @@ import {
 import React from "react";
 
 interface Props {
+  register: any;
   type: string;
-    label?: string;
+  label?: string;
   placeholder?: string;
   icon?: React.ElementType;
 }
 
-const LoginInput = ({ type,label, placeholder, icon }: Props) => {
+const LoginInput = ({ register, type, label, placeholder, icon }: Props) => {
   return (
-    <FormControl marginY={5}>
+    <FormControl marginY={3}>
       <FormLabel fontSize={15}>{label}</FormLabel>
       <InputGroup>
         <InputLeftElement>
           <Icon as={icon} />
         </InputLeftElement>
-        <Input type={type} placeholder={placeholder} />
+        <Input type={type} placeholder={placeholder} {...register} />
       </InputGroup>
     </FormControl>
   );

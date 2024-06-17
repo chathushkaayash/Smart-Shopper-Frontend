@@ -19,9 +19,11 @@ import GoogleIcon from "../assets/social-media-icons/google.svg";
 import LoginButton from "../components/Buttons/LoginButton";
 import LoginInput from "../components/Inputs/LoginInput";
 import MiddleContainer from "../components/MiddleContainer";
+import { useForm } from "react-hook-form";
 import SubmitButton from "../components/Buttons/SubmitButton";
 
 const Login = () => {
+  const { register, handleSubmit } = useForm();
   return (
     <MiddleContainer>
       <Grid gridTemplateColumns="1fr 1fr" h="100%">
@@ -45,14 +47,16 @@ const Login = () => {
             </Box>
           </VStack>
 
-          <form>
+          <form onSubmit={handleSubmit((data) => console.log(data))}>
             <LoginInput
+              register={register("email")}
               type="email"
               placeholder="Email"
               icon={FaEnvelope}
               label="Email"
             />
             <LoginInput
+              register={register("password")}
               type="password"
               placeholder="Password"
               icon={FaLock}

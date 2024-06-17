@@ -17,10 +17,28 @@ import MiddleContainer from "../components/MiddleContainer";
 import LoginInput from "../components/Inputs/LoginInput";
 
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+// import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  name: z
+    .string()
+    .min(3, { message: "name must be at least 3 characters" })
+    .max(50),
+  email: z.string().email(),
+  password: z.string().min(6),
+  reTypePassword: z.string().min(6),
+});
+type FormData = z.infer<typeof schema>;
 
 const SignUp = () => {
-  const {register,handleSubmit} = useForm();
-  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
   return (
     <MiddleContainer>
       <Grid gridTemplateColumns="1fr 1fr" h="100%">
@@ -44,35 +62,41 @@ const SignUp = () => {
             </Box>
           </VStack>
 
-          <form onSubmit={handleSubmit(data=>console.log(data))}>
+          <form onSubmit={handleSubmit((data) => console.log(data))}>
             <LoginInput
-            {...register('name')}
+              // {...register('name')}
+              register={register("name", { required: true, minLength: 3 })}
               type="text"
               placeholder="Name"
               icon={IoPersonSharp}
               label="Name"
             />
+            {errors.name && <p>{errors.name.message}</p>}
+
             <LoginInput
-             {...register('email')}
+              register={register("email")}
               type="email"
               placeholder="Email"
               icon={FaEnvelope}
               label="Email"
             />
+            {errors.email && <p>{errors.email.message}</p>}
             <LoginInput
-             {...register('password')}
+              register={register("password")}
               type="password"
               placeholder="Password"
               icon={FaLock}
               label="Password"
             />
+            {errors.password && <p>{errors.password.message}</p>}
             <LoginInput
-             {...register('reTypePassword')}
+              register={register("reTypePassword")}
               type="password"
               placeholder="Password"
               icon={FaLock}
               label="Re Type Password"
             />
+            {errors.reTypePassword && <p>{errors.reTypePassword.message}</p>}
 
             <Button type="submit" width="full" bg="#E9893B" mt={3}>
               Sign Up
