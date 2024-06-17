@@ -22,8 +22,19 @@ import MiddleContainer from "../components/Containers/MiddleContainer";
 import { useForm } from "react-hook-form";
 import SubmitButton from "../components/Buttons/SubmitButton";
 
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+// import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+});
+
+type FormData = z.infer<typeof schema>;
+
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
   return (
     <MiddleContainer>
       <Grid gridTemplateColumns="1fr 1fr" h="100%">
@@ -53,14 +64,14 @@ const Login = () => {
               type="email"
               placeholder="Email"
               icon={FaEnvelope}
-              label="Email"
+              // label="Email"
             />
             <LoginInput
               register={register("password")}
               type="password"
               placeholder="Password"
               icon={FaLock}
-              label="Password"
+              // label="Password"
             />
 
             {/* <Button
