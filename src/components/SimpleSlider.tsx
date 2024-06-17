@@ -17,11 +17,10 @@ export default function SimpleSlider({ children }: Props) {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 5000,
+    autoplay: true,
+    autoplaySpeed: 4000,
     speed: 1200,
-    fade: true,
-    dotsClass: "slick-dots",
+    // fade: true,
   };
   return (
     <Box paddingBottom={10} bg="background">

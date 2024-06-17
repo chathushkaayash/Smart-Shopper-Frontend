@@ -18,7 +18,7 @@ interface Props {
 
 const LoginInput = ({ register, type, label, placeholder, icon }: Props) => {
   return (
-    <FormControl marginY={5}>
+    <FormControl marginY={5} margin={0}>
       <FormLabel fontSize={15}>{label}</FormLabel>
       <InputGroup>
         <InputLeftElement>

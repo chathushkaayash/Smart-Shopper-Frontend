@@ -1,25 +1,19 @@
 
-import MainContainer from "../components/MainContainer";
-import IconButton from "../components/Buttons/IconButton";
-import Accordian from "../components/Accordian";
-import CartItemCard from "../components/CartItemCard";
-import TextButton from "../components/Buttons/TextButton"; 
+import { AddIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Button,
-  Center,
   Flex,
   Grid,
   GridItem,
-  HStack,
-  Image,
-  Text,
-  VStack,
   Heading,
   Spacer,
-  
+  Text,
+  VStack
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import Accordian from "../components/Accordian";
+import IconButton from "../components/Buttons/IconButton";
+import TextButton from "../components/Buttons/TextButton";
+import CartItemCard from "../components/CartItemCard";
+import MainContainer from "../components/MainContainer";
 
 const CardDetails = () => {
     const accordionItems = [

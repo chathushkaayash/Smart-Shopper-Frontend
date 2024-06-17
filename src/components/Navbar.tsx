@@ -9,12 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 import Banner from "../assets/smart-shopper-banner.svg";
 import ActionButton from "./Buttons/ActionButton";
-import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
-  const [user, setUser] = useState("");
+  const [user] = useState("");
   const location = useLocation();
 
   return (

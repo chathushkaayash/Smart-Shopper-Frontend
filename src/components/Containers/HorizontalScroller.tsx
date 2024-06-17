@@ -1,5 +1,5 @@
+import { HStack } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
-import { Box, HStack } from '@chakra-ui/react';
 
 interface AutoScrollHorizontalProps {
   children: React.ReactNode;

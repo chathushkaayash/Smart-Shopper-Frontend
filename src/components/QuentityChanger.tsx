@@ -1,5 +1,5 @@
 import { Box, Flex, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const QuantityChanger = () => {
   const [quantity, setQuantity] = useState(1);

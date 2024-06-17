@@ -1,4 +1,4 @@
-import { Card, CardBody, HStack, Heading, Image, Text } from "@chakra-ui/react";
+import { Card, CardBody, HStack, Image, Text } from "@chakra-ui/react";
 import { Product } from "../../hooks/useProducts";
 
 interface Props {

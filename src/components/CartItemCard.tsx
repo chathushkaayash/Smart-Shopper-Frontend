@@ -1,17 +1,17 @@
 import {
   Box,
-  Image,
   Card,
-  Heading,
-  GridItem,
   Grid,
+  GridItem,
+  Heading,
+  Image,
   Text,
 } from "@chakra-ui/react";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 
-import SupermarketLogoContainer from "./SupermarketLogoContainer";
 import QuentityChanger from "./QuentityChanger";
+import SupermarketLogoContainer from "./SupermarketLogoContainer";
 
 
 interface CartItemCardProps {
@@ -24,8 +24,6 @@ interface CartItemCardProps {
 const CartItemCard = ({
   imageSrc,
   itemName,
-  price,
-  quantity,
 }: CartItemCardProps) => {
   return (
     <Card

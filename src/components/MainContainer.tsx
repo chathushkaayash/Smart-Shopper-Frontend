@@ -7,7 +7,7 @@ interface Props {
 const MainContainer = ({ children }: Props) => {
   return (
     <Flex
-      width="100vw"
+      width="100%"
       minH={"100vh"}
       bg="#EFF2F6"
       justifyContent="center"

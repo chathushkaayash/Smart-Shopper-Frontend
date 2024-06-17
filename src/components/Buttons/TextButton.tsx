@@ -6,7 +6,7 @@ type TextButtonProps = {
     onClick: () => void;
 };
 
-const TextButton = ({ text, onClick }:TextButtonProps) => {
+const TextButton = ({ text }:TextButtonProps) => {
     return (
         <Button type="submit" width="full" bg="#E9893B" mt={10} borderRadius={20} color={"white"}>
             {text}

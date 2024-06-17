@@ -1,9 +1,11 @@
 import { Box, Flex } from "@chakra-ui/react";
-import BestPrices from "../components/Landing/Slides/BestPrices";
-import FastDelivery from "../components/Landing/Slides/FastDelivery";
-import SmartLists from "../components/Landing/Slides/SmartLists";
+import Slide from "../components/Landing/Slide";
 import ProductGrid from "../components/ProductGrid";
 import SimpleSlider from "../components/SimpleSlider";
+
+import BestPricesImage from "../assets/landing/online-ads-animate.svg";
+import FastDeliveryImage from "../assets/landing/in-no-time-animate (1).svg";
+import SmartListsImage from "../assets/landing/ecommerce-checkout-laptop-animate.svg";
 
 export interface ProductQuery {
   genreId?: number;
@@ -16,11 +18,10 @@ const Landing = () => {
   return (
     <>
       <SimpleSlider>
-        <SmartLists />
-        <BestPrices />
-        <FastDelivery />
+        <Slide image={SmartListsImage} title="SmartLists" />
+        <Slide image={BestPricesImage} title="BestPrices" />
+        <Slide image={FastDeliveryImage} title="FastDelivery" />
       </SimpleSlider>
-
 
       {/* <Image src={image1} width={400} />
       <Image src={image2} width={400} />

@@ -1,5 +1,4 @@
-import React from "react";
-import { Stack, Image } from "@chakra-ui/react";
+import { Image, Stack } from "@chakra-ui/react";
 import KeelsIcon from "../assets/supermarket-icons/keels.jpeg";
 
 // interface SupermarketLogoContainerProps {

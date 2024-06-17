@@ -1,4 +1,4 @@
-import { Button, border } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 interface Props {
   children: React.ReactNode;

@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { getProductsData, products } from "../../data/products";
 
 export interface FetchResponse<T> {
   count: number;

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { getProductsData, products } from "../../data/products";
+import { getProductsData } from "../../data/products";
 
 
 // export interface T {

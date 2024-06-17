@@ -16,15 +16,14 @@ import GroceryImage from "../assets/login/grocery-shopping-amico.svg";
 import FacebookIcon from "../assets/social-media-icons/facebook.svg";
 import GoogleIcon from "../assets/social-media-icons/google.svg";
 
-import LoginButton from "../components/Buttons/LoginButton";
-import LoginInput from "../components/Inputs/LoginInput";
-import MiddleContainer from "../components/Containers/MiddleContainer";
 import { useForm } from "react-hook-form";
+import LoginButton from "../components/Buttons/LoginButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import MiddleContainer from "../components/Containers/MiddleContainer";
+import LoginInput from "../components/Inputs/LoginInput";
 
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import TextButton from "../components/Buttons/TextButton";
+import { z } from "zod";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -38,7 +37,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {  },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   return (
     <MiddleContainer>
