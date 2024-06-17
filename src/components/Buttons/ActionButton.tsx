@@ -4,15 +4,24 @@ interface Props {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg";
   inverted?: boolean;
+  className?: string;
+  expanding?: boolean;
 }
 
-const ActionButton = ({ children, size, inverted = false }: Props) => {
+const ActionButton = ({
+  children,
+  size,
+  inverted = false,
+  expanding = false,
+  className,
+}: Props) => {
   const primaryColor = inverted ? "primary" : "white";
   const whiteColor = inverted ? "white" : "primary";
 
   return (
     <Button
       size={size}
+      width={expanding ? "100%" : "fit-content"}
       variant="outline"
       color={primaryColor}
       borderColor={primaryColor}
@@ -28,6 +37,7 @@ const ActionButton = ({ children, size, inverted = false }: Props) => {
         transform: "scale(0.98)",
         borderColor: primaryColor,
       }}
+      className={className}
     >
       {children}
     </Button>
