@@ -1,18 +1,21 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
 
-import React from "react";
+import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ProductQuery } from "../App";
 import useProducts from "../hooks/useProducts";
 import ProductCard from "./ProductGrid/ProductCard";
 import ProductCardContainer from "./ProductGrid/ProductCardContainer";
 import ProductCartSkelton from "./ProductGrid/ProductCartSkelton";
+import ActionButton from "./Buttons/ActionButton";
 
 interface Props {
   productQuery: ProductQuery;
 }
 
 const ProductGrid = ({ productQuery }: Props) => {
+  const [isLoadMore, setLoadMore] = useState(false);
+
   const {
     data: products,
     error,
@@ -47,30 +50,40 @@ const ProductGrid = ({ productQuery }: Props) => {
   };
 
   return (
-    <InfiniteScroll
-      dataLength={fetchProductsCount}
-      next={fetchNextPage}
-      hasMore={!!hasNextPage} // !! to convert to boolean
-      loader={<Loader />}
-    >
-      <SimpleGrid
-        columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-        spacing={6}
-        padding="10px"
-        bg="gray.100"
-        marginX={{ base: 0, md: "12%" }}
+    <>
+      <InfiniteScroll
+        dataLength={fetchProductsCount}
+        next={() => (isLoadMore ? fetchNextPage() : null)}
+        hasMore={!!hasNextPage} // !! to convert to boolean
+        loader={<Loader />}
       >
-        {products?.pages?.map((page, index) => (
-          <React.Fragment key={index}>
-            {page.results.map((product) => (
-              <ProductCardContainer key={product.itemID}>
-                <ProductCard product={product} />
-              </ProductCardContainer>
-            ))}
-          </React.Fragment>
-        ))}
-      </SimpleGrid>
-    </InfiniteScroll>
+        <SimpleGrid
+          columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+          spacing={6}
+          padding="10px"
+          bg="gray.100"
+          marginX={{ base: 0, md: "12%" }}
+        >
+          {products?.pages?.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results.map((product) => (
+                <ProductCardContainer key={product.itemID}>
+                  <ProductCard product={product} />
+                </ProductCardContainer>
+              ))}
+            </React.Fragment>
+          ))}
+        </SimpleGrid>
+      </InfiniteScroll>
+      <ActionButton
+        onClick={() => {
+          setLoadMore(true);
+          fetchNextPage();
+        }}
+      >
+        Load More
+      </ActionButton>
+    </>
   );
 };
 

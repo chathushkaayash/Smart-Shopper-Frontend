@@ -1,9 +1,10 @@
-import { Button } from "@chakra-ui/react";
+import { Button, border } from "@chakra-ui/react";
 
 interface Props {
   children: React.ReactNode;
   color?: string;
-  width?: "full" | "auto";
+  width?: "full" | "fit-content";
+  borderRadius?: number;
   className?: string;
 }
 
@@ -12,10 +13,12 @@ const SubmitButton = ({
   color = "secondary",
   width = "full",
   className,
+  borderRadius,
 }: Props) => {
   return (
     <Button
       type="submit"
+      borderRadius={borderRadius}
       width={width}
       bg={color}
       color="white"

@@ -24,6 +24,7 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import TextButton from "../components/Buttons/TextButton";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -34,7 +35,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Login = () => {
-  const { register, handleSubmit,formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
   return (
     <MiddleContainer>
       <Grid gridTemplateColumns="1fr 1fr" h="100%">
@@ -74,15 +79,6 @@ const Login = () => {
               // label="Password"
             />
 
-            {/* <Button
-              type="submit"
-              width="full"
-              bg="secondary"
-              mt={3}
-              color="white"
-            >
-              Login
-            </Button> */}
             <SubmitButton className="my-3">Login</SubmitButton>
           </form>
 

@@ -8,8 +8,8 @@ const MiddleContainer = ({ children }: Props) => {
   return (
     <Flex
       width="100vw"
-      height="90vh"
-      bg="#EFF2F6"
+      minHeight="90vh"
+      bg="background"
       justifyContent="center"
       alignItems="center"
     >
@@ -18,7 +18,7 @@ const MiddleContainer = ({ children }: Props) => {
         height="80vh"
         borderRadius={20}
         bg="white"
-        // overflow="hidden"
+        overflow="hidden"
       >
         {children}
       </Box>

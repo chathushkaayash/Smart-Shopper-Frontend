@@ -1,4 +1,12 @@
-import { Box, Center, Flex, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import FastDeliveryImage from "../../../assets/landing/in-no-time-animate (1).svg";
 import ActionButton from "../../Buttons/ActionButton";
@@ -8,18 +16,18 @@ const FastDelivery = () => {
     <Flex h="80vh" bg="background" paddingX={50}>
       <Box className="w-[50%]">
         <Stack
-        //   alignItems="flex-start"
+          //   alignItems="flex-start"
           fontSize="3xl"
           className="mt-[20vh]"
           ml={5}
-          marginTop='30vh'
+          marginTop="30vh"
         >
           <Box display="inline">
-            <Text color="primary" as="span">
-              Smart Lists.
-            </Text>
+            <Text as="span"> Smart Lists. </Text>
             <Text as="span"> Best Prices. </Text>
-            <Text as="span">Fast Delivery.</Text>
+            <Text color="primary" as="span">
+              Fast Delivery.
+            </Text>
           </Box>
           <Text fontSize="5xl" fontWeight={700}>
             Revolutionizing Shopping for a Smarter Tomorrow
@@ -29,10 +37,9 @@ const FastDelivery = () => {
           </ActionButton>
         </Stack>
       </Box>
-      
 
       <Box h="100%" className="w-[50%]" overflow="hidden">
-          <Image src={FastDeliveryImage} width={600} />
+        <Image src={FastDeliveryImage} width={600} />
       </Box>
     </Flex>
   );

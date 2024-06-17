@@ -11,9 +11,11 @@ import { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import Banner from "../assets/smart-shopper-banner.svg";
 import ActionButton from "./Buttons/ActionButton";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [user, setUser] = useState("");
+  const location = useLocation();
 
   return (
     <>
@@ -63,8 +65,12 @@ const Navbar = () => {
           </HStack>
         ) : (
           <HStack paddingX={0}>
-            <ActionButton>Login</ActionButton>
-            <ActionButton>Register</ActionButton>
+            {location.pathname !== "/login" ? (
+              <ActionButton url="/login">Login</ActionButton>
+            ) : null}
+            {location.pathname !== "/signup" ? (
+              <ActionButton url="/signup">Register</ActionButton>
+            ) : null}
           </HStack>
         )}
       </Flex>

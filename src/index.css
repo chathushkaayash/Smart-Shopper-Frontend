@@ -3,3 +3,27 @@
 @tailwind utilities;
 
 form {width:100%}
+
+/* .slick-dots button {
+    font-size: 1rem;
+    height: 1rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    border: none;
+    border-radius: 100%;
+    background-color: blue;
+    text-indent: -9999px;
+  } */
+  
+
+    .slick-dots li button:before{
+        color: #E46C0A !important;
+        font-size: 1rem;
+    }
+
+  .slick-dots li.slick-active button:before{
+
+      color: #E46C0A !important;
+  }
