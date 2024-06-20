@@ -16,17 +16,16 @@ import GroceryImage from "../assets/login/grocery-shopping-amico.svg";
 import FacebookIcon from "../assets/social-media-icons/facebook.svg";
 import GoogleIcon from "../assets/social-media-icons/google.svg";
 
-
 import LoginButton from "../components/Buttons/LoginButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import MiddleContainer from "../components/Containers/MiddleContainer";
 import LoginInput from "../components/Inputs/LoginInput";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Link } from "react-router-dom";
 import LinkButton from "../components/Buttons/LinkButton";
+import ErrorText from "../components/Errors/ErrorText";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -67,36 +66,44 @@ const Login = () => {
           </VStack>
 
           <form onSubmit={handleSubmit((data) => console.log(data))}>
-            <VStack spacing={2} mt={5}>
-              <LoginInput
-                register={register("email")}
-                type="email"
-                placeholder="Email"
-                icon={FaEnvelope}
-                // label="Email"
-              />
-              {errors.email && <p>{errors.email.message}</p>}
-              <LoginInput
-                register={register("password")}
-                type="password"
-                placeholder="Password"
-                icon={FaLock}
-                // label="Password"
-              />
-               {errors.password && <p>{errors.password.message}</p>}
-            </VStack>
+            <LoginInput
+              register={register("email")}
+              type="email"
+              placeholder="Email"
+              icon={FaEnvelope}
+              // label="Email"
+            />
+            {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+            <LoginInput
+              register={register("password")}
+              type="password"
+              placeholder="Password"
+              icon={FaLock}
+              // label="Password"
+            />
+            {errors.password && (
+              <ErrorText>{errors.password.message}</ErrorText>
+            )}
 
-            <LinkButton to="/forgot-password" className="mt-3 ml-1" fontSize={14}>
+            <LinkButton
+              to="/forgot-password"
+              className="mt-3 ml-1"
+              fontSize={14}
+            >
               Forgot Password?
             </LinkButton>
-
 
             <SubmitButton className="my-3">Login</SubmitButton>
           </form>
 
           <Text ml={2} fontSize={14}>
             Don't have an account?{" "}
-            <Button variant="link" color="primary" fontSize={14} fontWeight={700}>
+            <Button
+              variant="link"
+              color="primary"
+              fontSize={14}
+              fontWeight={700}
+            >
               Register
             </Button>
           </Text>

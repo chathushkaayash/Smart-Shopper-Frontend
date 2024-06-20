@@ -22,15 +22,18 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import LoginInput from "../Inputs/LoginInput";
 import SubmitButton from "../Buttons/SubmitButton";
 import LoginButton from "../Buttons/LoginButton";
+import ErrorText from "../Errors/ErrorText";
 
-const schema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const schema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type FormData = z.infer<typeof schema>;
 
@@ -74,21 +77,23 @@ const SendEmail = ({ setStage }: Props) => {
             placeholder="Email"
             icon={FaEnvelope}
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           <LoginInput
             register={register("password")}
             type="password"
             placeholder="Password"
             icon={FaLock}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
           <LoginInput
             register={register("confirmPassword")}
             type="password"
             placeholder="Confirm Password"
             icon={FaLock}
           />
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          {errors.confirmPassword && (
+            <ErrorText>{errors.confirmPassword.message}</ErrorText>
+          )}
 
           <SubmitButton className="my-3">Sign Up</SubmitButton>
         </form>
