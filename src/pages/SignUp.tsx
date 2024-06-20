@@ -25,6 +25,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import LoginButton from "../components/Buttons/LoginButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import ErrorText from "../components/Errors/ErrorText";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -77,7 +78,7 @@ const SignUp = () => {
               icon={IoPersonSharp}
               // label="Name"
             />
-            {errors.name && <p>{errors.name.message}</p>}
+            {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
 
             <LoginInput
               register={register("email")}
@@ -85,21 +86,25 @@ const SignUp = () => {
               placeholder="Email"
               icon={FaEnvelope}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
             <LoginInput
               register={register("password")}
               type="password"
               placeholder="Password"
               icon={FaLock}
             />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.password && (
+              <ErrorText>{errors.password.message}</ErrorText>
+            )}
             <LoginInput
               register={register("confirmPassword")}
               type="password"
               placeholder="Confirm Password"
               icon={FaLock}
             />
-            {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+            {errors.confirmPassword && (
+              <ErrorText>{errors.confirmPassword.message}</ErrorText>
+            )}
 
             <SubmitButton className="my-3">Sign Up</SubmitButton>
           </form>

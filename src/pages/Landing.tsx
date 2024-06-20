@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Center, Flex, VStack } from "@chakra-ui/react";
 import Slide from "../components/Landing/Slide";
 import ProductGrid from "../components/ProductGrid";
 import SimpleSlider from "../components/SimpleSlider";
@@ -6,6 +6,7 @@ import SimpleSlider from "../components/SimpleSlider";
 import BestPricesImage from "../assets/landing/online-ads-animate.svg";
 import FastDeliveryImage from "../assets/landing/in-no-time-animate (1).svg";
 import SmartListsImage from "../assets/landing/ecommerce-checkout-laptop-animate.svg";
+import Segment from "../components/Landing/Segment";
 
 export interface ProductQuery {
   genreId?: number;
@@ -26,16 +27,14 @@ const Landing = () => {
       {/* <Image src={image1} width={400} />
       <Image src={image2} width={400} />
       <Image src={image3} width={400} /> */}
-      <Flex
-        width="100%"
-        bg="background"
+      <VStack
         justifyContent="center"
         alignItems="center"
+        bg="background"
       >
-        <Box>
-          <ProductGrid productQuery={{} as ProductQuery} />
-        </Box>
-      </Flex>
+        <ProductGrid productQuery={{} as ProductQuery} />
+        <Segment />
+      </VStack>
     </>
   );
 };

@@ -1,9 +1,10 @@
-import { Button} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 interface Props {
-    Icon: React.ElementType;
+  Icon: React.ElementType;
+  className?: string;
 }
 
-const IconButton = ({ Icon}: Props) => {
+const IconButton = ({ Icon, className }: Props) => {
   return (
     <Button
       width="auto"
@@ -12,8 +13,9 @@ const IconButton = ({ Icon}: Props) => {
       padding={6}
       rounded="md"
       bg="#D9D9D9"
+      className={className}
     >
-        <Icon />
+      <Icon />
     </Button>
   );
 };

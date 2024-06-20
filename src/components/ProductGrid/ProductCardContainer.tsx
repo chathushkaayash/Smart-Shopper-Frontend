@@ -7,7 +7,7 @@ interface Props {
 
 const ProductCardContainer = ({ children }: Props) => {
   return (
-    <Box  overflow="hidden">
+    <Box w={260} h={350}>
       {children}
     </Box>
   );
