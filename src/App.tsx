@@ -9,7 +9,8 @@ import CartDetails from "./pages/CartDetails";
 import ProductDetail from "./pages/ProductDetail";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+import PaymentSuccessful from "./pages/PaymentSuccessful";
+import Footer from "./components/Footer";import SignUp from "./pages/SignUp";
 import Test from "./pages/Test";
 import Reviews from "./pages/Reviews";
 
@@ -31,10 +32,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/cart" element={<CartDetails />} />
-        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/test" element={<Test />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/paymentSuccessful" element={<PaymentSuccessful />} />
+        <Route path="/Footer" element={<Footer />} />
       </Routes>
       
     </Router>
