@@ -2,9 +2,11 @@ import { Box, Flex } from "@chakra-ui/react";
 
 interface Props {
   children: React.ReactNode;
+  width?: string;
+  className?: string;
 }
 
-const MiddleContainer = ({ children }: Props) => {
+const MiddleContainer = ({ children, width = "70vw", className }: Props) => {
   return (
     <Flex
       width="100vw"
@@ -14,11 +16,12 @@ const MiddleContainer = ({ children }: Props) => {
       alignItems="center"
     >
       <Box
-        width="70vw"
+        width={width}
         height="80vh"
         borderRadius={20}
         bg="white"
         overflow="hidden"
+        className={className}
       >
         {children}
       </Box>

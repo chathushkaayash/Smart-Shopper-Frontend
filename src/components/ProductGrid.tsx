@@ -62,8 +62,9 @@ const ProductGrid = ({ productQuery }: Props) => {
             setLoadMore(true);
             fetchNextPage();
           }}
+          className="my-8"
         >
-          Load More
+          View All Products
         </ActionButton>
         </Center>
       </InfiniteScroll>

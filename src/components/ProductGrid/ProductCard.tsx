@@ -6,12 +6,10 @@ import {
   IconButton,
   Image,
   Stack,
-  Text,
-  VStack,
+  Text
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { IoEyeOutline } from "react-icons/io5";
 import { Product } from "../../hooks/useProducts";
 import RatingStars from "../Inputs/Rating";
 
@@ -24,24 +22,18 @@ const ProductCard = ({ product }: Props) => {
   return (
     <Card h="full" boxShadow="" className="shadow-lg rounded-3xl">
       <Center h={240}>
-        <VStack
-          spacing={0}
-          className="absolute top-6 right-4 text-2xl p-1 bg-[#edf2f7] rounded-3xl "
-        >
-          <IconButton
-            borderRadius={25}
-            color="primary"
-            icon={isLiked ? <FaHeart /> : <FaRegHeart />}
-            aria-label="Search database"
-            size="sm"
-            onClick={() => setIsLiked(!isLiked)}
-          />
-          <IconButton
-            icon={<IoEyeOutline />}
-            aria-label="Search database"
-            size="sm"
-          />
-        </VStack>
+        <IconButton
+          borderRadius={5}
+          color="primary"
+          icon={isLiked ? <FaHeart /> : <FaRegHeart />}
+          aria-label="Search database"
+          size="md"
+          position={"absolute"}
+          top={6}
+          right={4}
+          bg="#edf2f7"
+          onClick={() => setIsLiked(!isLiked)}
+        />
 
         {/* <FaRegHeart className="absolute top-1 right-6 text-2xl" /> */}
         {/* <IconButton  className="absolute top-6 right-6 text-2xl"/> */}

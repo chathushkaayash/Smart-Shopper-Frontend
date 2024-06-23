@@ -9,11 +9,11 @@ interface Props {
 const RatingStars = ({ value, reviews, className }: Props) => {
   return (
     <Rating className={className}>
-      <Rating.Star />
-      <Rating.Star />
-      <Rating.Star />
-      <Rating.Star />
-      <Rating.Star filled={false} />
+      <Rating.Star filled={value >= 1} />
+      <Rating.Star filled={value >= 2} />
+      <Rating.Star filled={value >= 3} />
+      <Rating.Star filled={value >= 4} />
+      <Rating.Star filled={value >= 5} />
       <span className="mx-1.5 h-1 w-1 rounded-full bg-gray-500 dark:bg-gray-400" />
       <a
         href="#"

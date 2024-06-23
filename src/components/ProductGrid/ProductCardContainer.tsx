@@ -3,11 +3,12 @@ import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
+  className?: string;
 }
 
-const ProductCardContainer = ({ children }: Props) => {
+const ProductCardContainer = ({ children,className }: Props) => {
   return (
-    <Box w={260} h={350}>
+    <Box h='clamp(350px,350px,350px)' w='clamp(250px,250px,250px)' className={className}>
       {children}
     </Box>
   );

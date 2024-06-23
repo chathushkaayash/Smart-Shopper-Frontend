@@ -1,30 +1,54 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import Slider from "react-slick";
 
 import { Box } from "@chakra-ui/react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
-interface Props {
-  children: React.ReactNode;
+export interface SliderMethods {
+  next: () => void;
+  previous: () => void;
 }
 
-export default function SimpleSlider({ children }: Props) {
-  const settings = {
-    dots: true,
-    arrows: false,
-    pauseOnHover: false,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    speed: 1200,
-    // fade: true,
-  };
-  return (
-    <Box paddingBottom={10} bg="background">
-      <Slider {...settings}>{children}</Slider>
-    </Box>
-  );
+interface Props {
+  children: React.ReactNode;
+  config?: any;
+  className?: string;
 }
+
+const SimpleSlider = forwardRef(
+  ({ children, config, className }: Props, ref) => {
+    const sliderRef = useRef<Slider | null>(null);
+
+    useImperativeHandle(ref, () => ({
+      next() {
+        sliderRef.current?.slickNext();
+      },
+      previous() {
+        sliderRef.current?.slickPrev();
+      },
+    }));
+
+    const settings = config || {
+      dots: true,
+      arrows: false,
+      pauseOnHover: false,
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      speed: 1200,
+    };
+
+    return (
+      <Box paddingBottom={10} bg="background">
+        <Slider ref={sliderRef} {...settings} className={className}>
+          {children}
+        </Slider>
+      </Box>
+    );
+  }
+);
+
+export default SimpleSlider;
