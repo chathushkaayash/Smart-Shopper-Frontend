@@ -7,8 +7,6 @@ interface Props {
 }
 
 export const getProductsData = ({ page }: Props) => {
-  console.log("page", page);
-
   return keells_products.slice((page - 1) * 10, page * 10);
 };
 

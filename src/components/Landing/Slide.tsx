@@ -38,8 +38,8 @@ const Slide = ({ image, title }: Props) => {
             <Text as="span" color={title === "BestPrices" ? "white" : ""}>
               Best Prices.{" "}
             </Text> */}
-            {titles.map((t: string) => (
-              <Text as="span" color={t === title ? "primary" : ""}>
+            {titles.map((t, index) => (
+              <Text as="span" color={t === title ? "primary" : ""} key={index}>
                 {titlesMap[t] + " "}
               </Text>
             ))}
