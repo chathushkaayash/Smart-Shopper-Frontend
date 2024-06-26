@@ -2,10 +2,9 @@ import {
   Box,
   Center,
   HStack,
-  Icon,
   IconButton,
-  Image,
   Text,
+  useMediaQuery
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
@@ -13,13 +12,15 @@ import SimpleSlider, { SliderMethods } from "../SimpleSlider";
 
 import BeveragesIcon from "../../assets/landing/categoryIcons/beverages.svg?react";
 // import FrozenIcon from "../../assets/landing/categoryIcons/frozen.svg?react";
-import FrozenIcon from "../../assets/landing/categoryIcons/snow-svgrepo-com.svg?react";
 import GroceryIcon from "../../assets/landing/categoryIcons/grocery.svg?react";
+import FrozenIcon from "../../assets/landing/categoryIcons/snow-svgrepo-com.svg?react";
 
 import Section from "./Section";
 
 const BrowseByCategory = () => {
   const sliderRef = useRef<SliderMethods>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  console.log(isMobile[0]);
 
   const nextSlide = () => {
     sliderRef.current?.next();
@@ -34,7 +35,7 @@ const BrowseByCategory = () => {
     arrows: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 6,
+    slidesToShow: isMobile[0] ? 3 : 6,
     swipeToSlide: true,
   };
 

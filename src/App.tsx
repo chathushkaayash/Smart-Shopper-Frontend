@@ -16,6 +16,7 @@ import ConsumerProfile from "./pages/ConsumerProfile";
 import Reviews from "./pages/Reviews";
 import ShippingAddress from "./pages/ConsumerShippingAddress";
 import BottomNav from "./components/BottomNav";
+import { Show } from "@chakra-ui/react";
 
 export interface ProductQuery {
   genreId?: number;
@@ -28,7 +29,10 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        {/* <Show above="md"> */}
+          <Navbar />
+        {/* </Show> */}
+
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
@@ -43,7 +47,9 @@ function App() {
           <Route path="/test" element={<Test />} />
         </Routes>
       </Router>
-      <BottomNav />
+      <Show below="md">
+        <BottomNav />
+      </Show>
     </>
   );
 }

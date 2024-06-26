@@ -1,4 +1,13 @@
-import { Box, Center, Flex, Image, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Image,
+  Show,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import ActionButton from "../Buttons/ActionButton";
 
@@ -17,42 +26,73 @@ const Slide = ({ image, title }: Props) => {
   };
 
   return (
-    <Flex h="80vh" bg="">
-      <Box h="100%" className="w-[50%]" overflow="hidden">
-        <Center h="100%" justifyContent="flex-end" m={5}>
-          <Image src={image} width={title === "BestPrices" ? 500 : 600} />
-        </Center>
-      </Box>
-
-      <Box className="w-[50%]">
+    <Grid h="70vh" templateColumns={{ base: "1fr", md: "1fr 1fr" }}>
+      <GridItem h="100%" className="w-[100%]" overflow="hidden">
         <VStack
-          alignItems="flex-start"
-          fontSize="3xl"
-          className="mt-[20vh]"
-          ml={5}
+          h="100%"
+          alignItems={{ base: "center", md: "flex-end" }}
+          justifyContent="center"
+          m={5}
         >
-          <Box display="inline">
-            {/* <Text as="span" color={title === "SmartList" ? "white" : ""}>
-              Smart Lists.
+          {/* Show this text in the mobile screen */}
+          <Show below="md">
+            <Text fontSize="3xl" fontWeight={700}>
+              Revolutionizing Shopping
             </Text>
-            <Text as="span" color={title === "BestPrices" ? "white" : ""}>
-              Best Prices.{" "}
-            </Text> */}
-            {titles.map((t, index) => (
-              <Text as="span" color={t === title ? "primary" : ""} key={index}>
-                {titlesMap[t] + " "}
-              </Text>
-            ))}
-          </Box>
-          <Text fontSize="5xl" fontWeight={700}>
-            Revolutionizing Shopping for a Smarter Tomorrow
-          </Text>
-          <ActionButton className="mt-[5vh]" size="lg">
-            Explore More
-          </ActionButton>
+
+            <Text fontSize="3xl" fontWeight={700} lineHeight={0.7}>
+              For a Smarter Tomorrow
+            </Text>
+          </Show>
+
+          {/* <Image src={image} width={title === "BestPrices" ? 500 : 600} /> */}
+          <Image
+            src={image}
+            width={{
+              base: "70vw",
+              // md: `${title === "BestPrices" ? 500 : 600}`,
+              md: "clamp(60vh, 2.5vw, 40vw)",
+            }}
+            marginRight={{ base: 0, lg: "4vw" }}
+          />
         </VStack>
-      </Box>
-    </Flex>
+      </GridItem>
+
+      <Show above="md">
+        <GridItem className="w-[100%]">
+          <Stack justifyContent="center" fontSize="3xl" ml={5} h="full">
+            <Box display="inline">
+              {titles.map((t, index) => (
+                <Text
+                  as="span"
+                  color={t === title ? "primary" : ""}
+                  fontSize={{ md: "xl", xl: "3xl" }}
+                  key={index}
+                >
+                  {titlesMap[t]}
+                </Text>
+              ))}
+            </Box>
+
+            <Text fontSize={{ md: "3xl", xl: "5xl" }} fontWeight={700}>
+              Revolutionizing Shopping
+            </Text>
+
+            <Text
+              fontSize={{ md: "3xl", xl: "5xl" }}
+              fontWeight={700}
+              lineHeight={{ md: 0.7, xl: 6 }}
+            >
+              For a Smarter Tomorrow
+            </Text>
+
+            <ActionButton className="mt-[5vh]" size="lg">
+              Explore More
+            </ActionButton>
+          </Stack>
+        </GridItem>
+      </Show>
+    </Grid>
   );
 };
 

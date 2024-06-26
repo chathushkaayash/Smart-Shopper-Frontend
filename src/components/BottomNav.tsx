@@ -1,19 +1,14 @@
 import {
   Box,
-  Center,
-  Flex,
   HStack,
-  Stack,
   Text,
-  VStack,
-  position,
+  VStack
 } from "@chakra-ui/react";
 
-import { IoHomeOutline } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { CiUser } from "react-icons/ci";
 import { useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { CiSearch, CiUser } from "react-icons/ci";
+import { IoHomeOutline } from "react-icons/io5";
 
 const BottomNav = () => {
   const [active, setActive] = useState(0);

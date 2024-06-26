@@ -4,6 +4,7 @@ import {
   HStack,
   Icon,
   Image,
+  Show,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -40,15 +41,17 @@ const Navbar = () => {
           </Box> */}
           <Image src={Banner} />
 
-          <Text fontSize="lg" fontWeight="bold">
-            Home
-          </Text>
-          <Text fontSize="lg" fontWeight="bold">
-            Supermarkets
-          </Text>
-          <Text fontSize="lg" fontWeight="bold">
-            About Us
-          </Text>
+          <Show above="md">
+            <Text fontSize="lg" fontWeight="bold">
+              Home
+            </Text>
+            <Text fontSize="lg" fontWeight="bold">
+              Supermarkets
+            </Text>
+            <Text fontSize="lg" fontWeight="bold">
+              About Us
+            </Text>
+          </Show>
         </HStack>
 
         {user ? (

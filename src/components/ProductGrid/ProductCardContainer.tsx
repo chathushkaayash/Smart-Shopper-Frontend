@@ -17,7 +17,8 @@ const ProductCardContainer = ({ children, className }: Props) => {
         // transform: "scale(1.01)",
       }}
       className={
-        "hover:scale-105 transition-transform duration-300 ease-in-out shadow-red-500"
+        "hover:scale-105 transition-transform duration-300 ease-in-out shadow-red-500 " +
+        className
       }
     >
       {children}

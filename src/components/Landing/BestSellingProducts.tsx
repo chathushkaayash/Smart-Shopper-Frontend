@@ -39,14 +39,13 @@ const BestSellingProducts = () => {
         breakpoint: 778,
         settings: {
           slidesToShow: 1,
+          centerMode: true,
         },
       },
     ],
   };
 
   //   console.log(products?.pages[0].data.results);
-
- 
 
   const rightSide = (
     <HStack gap={5}>
@@ -64,7 +63,7 @@ const BestSellingProducts = () => {
         {products?.pages?.[0].results.map((product) => (
           <Box key={product.itemID}>
             {/*Added a margin right to remove the next items shadow */}
-            <ProductCardContainer key={product.itemID} className="mx-[5px]">
+            <ProductCardContainer key={product.itemID} className="!mx-auto">
               <ProductCard product={product} />
             </ProductCardContainer>
           </Box>
