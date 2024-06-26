@@ -17,7 +17,7 @@ const Slide = ({ image, title }: Props) => {
   };
 
   return (
-    <Flex h="80vh" bg="background">
+    <Flex h="80vh" bg="">
       <Box h="100%" className="w-[50%]" overflow="hidden">
         <Center h="100%" justifyContent="flex-end" m={5}>
           <Image src={image} width={title === "BestPrices" ? 500 : 600} />

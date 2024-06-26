@@ -42,7 +42,7 @@ const SimpleSlider = forwardRef(
     };
 
     return (
-      <Box paddingBottom={10} bg="background">
+      <Box paddingBottom={10}>
         <Slider ref={sliderRef} {...settings} className={className}>
           {children}
         </Slider>

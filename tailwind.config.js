@@ -11,6 +11,9 @@ export default {
   ],
   theme: {
     extend: {},
+    colors: {
+      'primary': '#ff7708',
+    }
   },
   plugins: [flowbite.plugin(),],
 }

@@ -1,11 +1,21 @@
-import { Box, Center, HStack, IconButton, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  HStack,
+  Icon,
+  IconButton,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import SimpleSlider, { SliderMethods } from "../SimpleSlider";
 
-import BeveragesIcon from "../../assets/landing/categoryIcons/beverages.svg";
-import FrozenIcon from "../../assets/landing/categoryIcons/frozen.svg";
-import GroceryIcon from "../../assets/landing/categoryIcons/grocery.svg";
+import BeveragesIcon from "../../assets/landing/categoryIcons/beverages.svg?react";
+// import FrozenIcon from "../../assets/landing/categoryIcons/frozen.svg?react";
+import FrozenIcon from "../../assets/landing/categoryIcons/snow-svgrepo-com.svg?react";
+import GroceryIcon from "../../assets/landing/categoryIcons/grocery.svg?react";
+
 import Section from "./Section";
 
 const BrowseByCategory = () => {
@@ -29,14 +39,14 @@ const BrowseByCategory = () => {
   };
 
   const categories = [
-    { name: "Beverages", icon: BeveragesIcon },
-    { name: "Frozen", icon: FrozenIcon },
-    { name: "Grocery", icon: GroceryIcon },
-    { name: "Household", icon: BeveragesIcon },
-    { name: "Personal Care", icon: BeveragesIcon },
-    { name: "Pharmacy", icon: BeveragesIcon },
-    { name: "Snacks", icon: BeveragesIcon },
-    { name: "Others", icon: BeveragesIcon },
+    { name: "Beverages", icon: <BeveragesIcon fill="#ff7708" /> },
+    { name: "Frozen", icon: <FrozenIcon fill="#ff7708" /> },
+    { name: "Grocery", icon: <GroceryIcon fill="#ff7708" /> },
+    { name: "Household", icon: <BeveragesIcon fill="#ff7708" /> },
+    { name: "Personal Care", icon: <BeveragesIcon fill="#ff7708" /> },
+    { name: "Pharmacy", icon: <BeveragesIcon fill="#ff7708" /> },
+    { name: "Snacks", icon: <BeveragesIcon fill="#ff7708" /> },
+    { name: "Others", icon: <BeveragesIcon fill="#ff7708" /> },
   ];
 
   const rightSide = (
@@ -80,7 +90,7 @@ const BrowseByCategory = () => {
                 flexDirection="column"
                 gap={2}
               >
-                <Image src={category.icon} boxSize={8} />
+                {category.icon}
                 <Text fontWeight={600}>{category.name}</Text>
               </Center>
             </Box>
