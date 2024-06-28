@@ -84,8 +84,9 @@ const BrowseByCategory = () => {
               <Center
                 height={120}
                 margin={2}
-                border="1px solid"
+                // border="1px solid"
                 // borderColor='primary'
+                bg='white'
                 borderRadius="lg"
                 padding={5}
                 flexDirection="column"

@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import ActionButton from "../Buttons/ActionButton";
+import TextWithLineBreaks from "../Containers/TextWithLineBreaks";
 
 interface Props {
   image: string;
@@ -20,9 +21,9 @@ const Slide = ({ image, title }: Props) => {
   const titles = ["SmartLists", "BestPrices", "FastDelivery"];
 
   const titlesMap: { [key: string]: string } = {
-    SmartLists: "Smart Lists.",
-    BestPrices: "Best Prices.",
-    FastDelivery: "Fast Delivery.",
+    SmartLists: "Smart Lists. ",
+    BestPrices: "Best Prices. ",
+    FastDelivery: "Fast Delivery. ",
   };
 
   return (
@@ -36,13 +37,14 @@ const Slide = ({ image, title }: Props) => {
         >
           {/* Show this text in the mobile screen */}
           <Show below="md">
-            <Text fontSize="3xl" fontWeight={700}>
-              Revolutionizing Shopping
-            </Text>
-
-            <Text fontSize="3xl" fontWeight={700} lineHeight={0.7}>
-              For a Smarter Tomorrow
-            </Text>
+            <TextWithLineBreaks
+              fontSize="3xl"
+              fontWeight={700}
+              gap={3}
+              align="center"
+            >
+              Revolutionizing Shopping\n For a Smarter Tomorrow
+            </TextWithLineBreaks>
           </Show>
 
           {/* <Image src={image} width={title === "BestPrices" ? 500 : 600} /> */}
@@ -74,17 +76,13 @@ const Slide = ({ image, title }: Props) => {
               ))}
             </Box>
 
-            <Text fontSize={{ md: "3xl", xl: "5xl" }} fontWeight={700}>
-              Revolutionizing Shopping
-            </Text>
-
-            <Text
+            <TextWithLineBreaks
               fontSize={{ md: "3xl", xl: "5xl" }}
               fontWeight={700}
-              lineHeight={{ md: 0.7, xl: 6 }}
+              gap={3}
             >
-              For a Smarter Tomorrow
-            </Text>
+              Revolutionizing Shopping\n For a Smarter Tomorrow
+            </TextWithLineBreaks>
 
             <ActionButton className="mt-[5vh]" size="lg">
               Explore More

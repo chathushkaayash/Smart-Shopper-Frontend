@@ -1,9 +1,4 @@
-import {
-  Box,
-  HStack,
-  Text,
-  VStack
-} from "@chakra-ui/react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 
 import { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -24,6 +19,13 @@ const BottomNav = () => {
     { icon: <CiUser fontSize={20} />, text: "Account" },
   ];
 
+  const handleOnClick = (e: any) => {
+    const bounds = e.target.getBoundingClientRect();
+
+    console.log(bounds);
+    setActive(iconsList.findIndex((icon) => icon.text === e.target.innerText));
+  };
+
   return (
     <HStack
       h="8vh"
@@ -41,13 +43,11 @@ const BottomNav = () => {
           key={index}
           h="full"
           className=" cursor-pointer relative"
-          onClick={() => setActive(index)}
+          onClick={handleOnClick}
         >
           <Box
             className={`${
-              active === index
-                ? "-translate-y-6 opacity-100"
-                : " opacity-0"
+              active === index ? "-translate-y-6 opacity-100" : " opacity-0"
             } duration-700 bg-primary border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
           ></Box>
           <Box
@@ -58,7 +58,7 @@ const BottomNav = () => {
             {icon.icon}
           </Box>
           <Text
-          fontSize={12}
+            fontSize={12}
             className={` absolute ${
               active === index
                 ? "translate-y-2 duration-700 opacity-100"

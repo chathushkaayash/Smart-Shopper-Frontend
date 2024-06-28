@@ -2,7 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-form {width:100%}
+form {
+  width: 100%;
+}
+
+/* Scroll bar styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ff7708;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ff7708;
+}
 
 /* .slick-dots button {
     font-size: 1rem;
@@ -16,14 +34,12 @@ form {width:100%}
     background-color: blue;
     text-indent: -9999px;
   } */
-  
 
-    .slick-dots li button:before{
-        color: #E46C0A !important;
-        font-size: 1rem;
-    }
+.slick-dots li button:before {
+  color: #e46c0a !important;
+  font-size: 1rem;
+}
 
-  .slick-dots li.slick-active button:before{
-
-      color: #E46C0A !important;
-  }
+.slick-dots li.slick-active button:before {
+  color: #e46c0a !important;
+}
