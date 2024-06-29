@@ -39,11 +39,11 @@ const ProductGrid = ({ productQuery }: Props) => {
         loader={null}
       >
         <SimpleGrid
-        
-          columns={{ sm: 1, md: 2, lg: 3, xl:4 }}
-          w='full'
+          columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+          w="full"
           spacing={6}
-          
+          justifyContent={"center"}
+
           // marginX={{ base: 0, md: "12%" }}
         >
           {products?.pages?.map((page, index) => (
@@ -57,15 +57,15 @@ const ProductGrid = ({ productQuery }: Props) => {
           ))}
         </SimpleGrid>
         <Center>
-        <ActionButton
-          onClick={() => {
-            setLoadMore(true);
-            fetchNextPage();
-          }}
-          className="my-8"
-        >
-          View All Products
-        </ActionButton>
+          <ActionButton
+            onClick={() => {
+              setLoadMore(true);
+              fetchNextPage();
+            }}
+            className="my-8"
+          >
+            View All Products
+          </ActionButton>
         </Center>
       </InfiniteScroll>
     </>

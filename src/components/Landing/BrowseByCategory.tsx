@@ -20,7 +20,6 @@ import Section from "./Section";
 const BrowseByCategory = () => {
   const sliderRef = useRef<SliderMethods>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  console.log(isMobile[0]);
 
   const nextSlide = () => {
     sliderRef.current?.next();

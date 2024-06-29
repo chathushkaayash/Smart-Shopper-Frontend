@@ -1,22 +1,26 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes
+} from "react-router-dom";
 
 import CartDetails from "./pages/CartDetails";
 
-import ProductDetail from "./pages/ProductDetail";
+import { Show } from "@chakra-ui/react";
+import BottomNav from "./components/BottomNav";
+import Footer from "./components/Footer";
+import ConsumerProfile from "./pages/ConsumerProfile";
+import ShippingAddress from "./pages/ConsumerShippingAddress";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import PaymentSuccessful from "./pages/PaymentSuccessful";
-import Footer from "./components/Footer";
+import ProductDetail from "./pages/ProductDetail";
+import Reviews from "./pages/Reviews";
 import SignUp from "./pages/SignUp";
 import Test from "./pages/Test";
-import ConsumerProfile from "./pages/ConsumerProfile";
-import Reviews from "./pages/Reviews";
-import ShippingAddress from "./pages/ConsumerShippingAddress";
-import BottomNav from "./components/BottomNav";
-import { Show } from "@chakra-ui/react";
 
 export interface ProductQuery {
   genreId?: number;
@@ -29,9 +33,9 @@ function App() {
   return (
     <>
       <Router>
-        {/* <Show above="md"> */}
+        <Show above="md">
           <Navbar />
-        {/* </Show> */}
+        </Show>
 
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -46,10 +50,11 @@ function App() {
           <Route path="/Footer" element={<Footer />} />
           <Route path="/test" element={<Test />} />
         </Routes>
+
+        <Show below="md">
+          <BottomNav />
+        </Show>
       </Router>
-      <Show below="md">
-        <BottomNav />
-      </Show>
     </>
   );
 }

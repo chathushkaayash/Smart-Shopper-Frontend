@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, Show, VStack } from "@chakra-ui/react";
 import Slide from "../components/Landing/Slide";
 import ProductGrid from "../components/ProductGrid";
 import SimpleSlider from "../components/SimpleSlider";
@@ -11,6 +11,7 @@ import AdvertisementGrid from "../components/Landing/AdvertisementGrid";
 import BestSellingProducts from "../components/Landing/BestSellingProducts";
 import BrowseByCategory from "../components/Landing/BrowseByCategory";
 import Section from "../components/Landing/Section";
+import Navbar from "../components/Navbar";
 
 export interface ProductQuery {
   genreId?: number;
@@ -22,6 +23,12 @@ export interface ProductQuery {
 const Landing = () => {
   return (
     <>
+      {/* Automatically show the Navbar component when the screen size is above medium */}
+      {/* But in this case the Navbar component is not shown because it is not imported in this file */}
+      <Show below="md">
+        <Navbar />
+      </Show>
+
       <Box
         w="100w"
         h="90vh"
@@ -43,10 +50,7 @@ const Landing = () => {
           {/* Make every section a snap point in side the component*/}
           <BrowseByCategory />
           <BestSellingProducts />
-          <Section
-            heading="This Month"
-            title="Best Selling Products"
-          >
+          <Section heading="New Arrivals" title="Product for you">
             <ProductGrid productQuery={{} as ProductQuery} />
           </Section>
           <AdvertisementGrid />

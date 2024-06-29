@@ -5,7 +5,11 @@ interface Props {
 }
 
 const ErrorText = ({ children }: Props) => {
-  return <Text color="red">{children}</Text>;
+  return (
+    <Text color="red" fontSize={{ base: "xs", md: "sm" }}>
+      {children}
+    </Text>
+  );
 };
 
 export default ErrorText;

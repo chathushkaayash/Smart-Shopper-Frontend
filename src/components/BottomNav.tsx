@@ -4,8 +4,13 @@ import { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CiSearch, CiUser } from "react-icons/ci";
 import { IoHomeOutline } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
 
 const BottomNav = () => {
+  const location = useLocation();
+  const hideNavbarPaths = ["/login", "/signup"];
+  const showBottomNav = !hideNavbarPaths.includes(location.pathname);
+
   const [active, setActive] = useState(0);
 
   const iconsList = [
@@ -19,57 +24,61 @@ const BottomNav = () => {
     { icon: <CiUser fontSize={20} />, text: "Account" },
   ];
 
-  const handleOnClick = (e: any) => {
-    const bounds = e.target.getBoundingClientRect();
+  const handleOnClick = (e: any, index: number) => {
+    // const bounds = e.target.getBoundingClientRect();
 
-    console.log(bounds);
-    setActive(iconsList.findIndex((icon) => icon.text === e.target.innerText));
+    // console.log(bounds);
+    setActive(index);
   };
 
   return (
-    <HStack
-      h="8vh"
-      w="100%"
-      position="fixed"
-      bottom={0}
-      justifyContent="space-around"
-      boxShadow={"0px -1px 5px 0px rgba(0,0,0,0.1)"}
-      className="bg-white max-h-[4.4rem] px-6 rounded-t-xl"
-    >
-      {iconsList.map((icon, index) => (
-        <VStack
-          justifyContent="center"
-          gap={0}
-          key={index}
-          h="full"
-          className=" cursor-pointer relative"
-          onClick={handleOnClick}
+    <>
+      {showBottomNav && (
+        <HStack
+          h="8vh"
+          w="100%"
+          position="fixed"
+          bottom={0}
+          justifyContent="space-around"
+          boxShadow={"0px -1px 5px 0px rgba(0,0,0,0.1)"}
+          className="bg-white max-h-[4.4rem] px-6 rounded-t-xl"
         >
-          <Box
-            className={`${
-              active === index ? "-translate-y-6 opacity-100" : " opacity-0"
-            } duration-700 bg-primary border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
-          ></Box>
-          <Box
-            className={`duration-500 ${
-              active === index ? " -translate-y-6" : ""
-            }`}
-          >
-            {icon.icon}
-          </Box>
-          <Text
-            fontSize={12}
-            className={` absolute ${
-              active === index
-                ? "translate-y-2 duration-700 opacity-100"
-                : " opacity-0 translate-y-10"
-            }`}
-          >
-            {icon.text}
-          </Text>
-        </VStack>
-      ))}
-    </HStack>
+          {iconsList.map((icon, index) => (
+            <VStack
+              justifyContent="center"
+              gap={0}
+              key={index}
+              h="full"
+              className=" cursor-pointer relative"
+              onClick={(e) => handleOnClick(e, index)}
+            >
+              <Box
+                className={`${
+                  active === index ? "-translate-y-6 opacity-100" : " opacity-0"
+                } duration-700 bg-primary border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
+              ></Box>
+              <Box
+                className={`duration-500 ${
+                  active === index ? " -translate-y-6" : ""
+                }`}
+              >
+                {icon.icon}
+              </Box>
+              <Text
+                fontSize={12}
+                className={` absolute ${
+                  active === index
+                    ? "translate-y-2 duration-700 opacity-100"
+                    : " opacity-0 translate-y-10"
+                }`}
+              >
+                {icon.text}
+              </Text>
+            </VStack>
+          ))}
+        </HStack>
+      )}
+    </>
   );
 };
 

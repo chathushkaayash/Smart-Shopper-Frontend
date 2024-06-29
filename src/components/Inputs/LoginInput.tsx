@@ -21,10 +21,15 @@ const LoginInput = ({ register, type, label, placeholder, icon }: Props) => {
     <FormControl marginY={5} margin={0}>
       <FormLabel fontSize={15}>{label}</FormLabel>
       <InputGroup>
-        <InputLeftElement>
+        <InputLeftElement h="full">
           <Icon as={icon} />
         </InputLeftElement>
-        <Input type={type} placeholder={placeholder} {...register} />
+        <Input
+          type={type}
+          placeholder={placeholder}
+          {...register}
+          h={{ base: "6vh", md: "full" }}
+        />
       </InputGroup>
     </FormControl>
   );

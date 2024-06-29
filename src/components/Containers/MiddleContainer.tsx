@@ -10,14 +10,14 @@ const MiddleContainer = ({ children, width = "70vw", className }: Props) => {
   return (
     <Flex
       width="100vw"
-      minHeight="90vh"
+      minHeight={{ base: "100vh", md: "90vh" }}
       bg="background"
       justifyContent="center"
       alignItems="center"
     >
       <Box
-        width={width}
-        height="80vh"
+        width={{ base: "100vh", md: "90vw", lg: width }}
+        height={{ base: "100vh", md: "80vh" }}
         borderRadius={20}
         bg="white"
         overflow="hidden"

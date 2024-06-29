@@ -7,6 +7,7 @@ import {
   GridItem,
   HStack,
   Image,
+  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -44,80 +45,99 @@ const Login = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   return (
     <MiddleContainer>
-      <Grid gridTemplateColumns="1fr 1fr" h="100%">
-        <GridItem h="100%">
-          <Center h="100%">
-            <Image src={GroceryImage} />
+      <Grid
+        gridTemplateColumns={{
+          base: "1fr",
+          md: "5fr 6fr",
+          xl: "1fr 1fr",
+        }}
+        h="100%"
+      >
+        <GridItem h={{ base: "35vh", md: "100%" }}>
+          <Center h="100%" p="2vw">
+            <Image src={GroceryImage} w={{ base: "60vw", md: "full" }} />
           </Center>
         </GridItem>
 
-        <GridItem px={55} py={10}>
-          <VStack alignItems="flex-start">
-            <Text fontSize="lg" fontWeight="bold">
-              {" "}
-              Welcome to
-            </Text>
-            <Box display="inline" fontSize="4xl" fontWeight="bold">
-              <Text as="span">Smart</Text>
-              <Text color="primary" as="span">
-                Shopper
+        <GridItem px="2vw">
+          <Stack
+            h={{ base: "auto", md: "full" }}
+            w={{ base: "80vw", md: "full" }}
+            justifyContent="center"
+            mx="auto"
+          >
+            <VStack alignItems={{ base: "center", md: "flex-start" }}>
+              <Text fontSize="lg" fontWeight="bold">
+                Welcome to
               </Text>
-            </Box>
-          </VStack>
+              <Box display="inline" fontSize="4xl" fontWeight="bold">
+                <Text as="span">Smart</Text>
+                <Text color="primary" as="span">
+                  Shopper
+                </Text>
+              </Box>
+            </VStack>
 
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
-            <LoginInput
-              register={register("email")}
-              type="email"
-              placeholder="Email"
-              icon={FaEnvelope}
-              // label="Email"
-            />
-            {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
-            <LoginInput
-              register={register("password")}
-              type="password"
-              placeholder="Password"
-              icon={FaLock}
-              // label="Password"
-            />
-            {errors.password && (
-              <ErrorText>{errors.password.message}</ErrorText>
-            )}
+            <form onSubmit={handleSubmit((data) => console.log(data))}>
+              <LoginInput
+                register={register("email")}
+                type="email"
+                placeholder="Email"
+                icon={FaEnvelope}
+                // label="Email"
+              />
+              {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+              <LoginInput
+                register={register("password")}
+                type="password"
+                placeholder="Password"
+                icon={FaLock}
+                // label="Password"
+              />
+              {errors.password && (
+                <ErrorText>{errors.password.message}</ErrorText>
+              )}
 
-            <LinkButton
-              to="/forgot-password"
-              className="mt-3 ml-1"
-              fontSize={14}
-            >
-              Forgot Password?
-            </LinkButton>
+              <LinkButton
+                to="/forgot-password"
+                className="mt-3 ml-1"
+                fontSize={14}
+              >
+                Forgot Password?
+              </LinkButton>
 
-            <SubmitButton className="my-3">Login</SubmitButton>
-          </form>
+              <SubmitButton className="my-3">Login</SubmitButton>
+            </form>
 
-          <Text ml={2} fontSize={14}>
-            Don't have an account?{" "}
-            <Button
-              variant="link"
-              color="primary"
-              fontSize={14}
-              fontWeight={700}
-            >
-              Register
-            </Button>
-          </Text>
+            <Text ml={2} fontSize={14}>
+              Don't have an account?{" "}
+              <Button
+                variant="link"
+                color="primary"
+                fontSize={14}
+                fontWeight={700}
+              >
+                Register
+              </Button>
+            </Text>
 
-          <Flex align="center" mt={3}>
-            <Box flex="1" h="1px" bg="gray.300"></Box>
-            <Box px={2}>or</Box>
-            <Box flex="1" h="1px" bg="gray.300"></Box>
-          </Flex>
+            <Flex align="center" mt={3}>
+              <Box flex="1" h="1px" bg="gray.300"></Box>
+              <Box px={2}>or continue with</Box>
+              <Box flex="1" h="1px" bg="gray.300"></Box>
+            </Flex>
 
-          <HStack marginTop={2}>
-            <LoginButton text="Google" image={GoogleIcon} />
-            <LoginButton text="Facebook" image={FacebookIcon} />
-          </HStack>
+            <HStack marginTop={2}>
+              <LoginButton
+                text={{ base: "", md: "Google" }}
+                image={GoogleIcon}
+              />
+              <LoginButton
+                text={{ base: "", md: "Facebook" }}
+                image={FacebookIcon}
+              />
+            </HStack>
+          </Stack>
         </GridItem>
       </Grid>
     </MiddleContainer>

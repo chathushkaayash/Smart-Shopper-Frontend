@@ -1,11 +1,13 @@
-import { Button, Image } from "@chakra-ui/react";
+import { Button, Image, useBreakpointValue } from "@chakra-ui/react";
 
 interface Props {
-  text: string;
+  text: string | { base?: string; sm?: string; md?: string; lg?: string };
   image: string;
 }
 
 const LoginButton = ({ text, image }: Props) => {
+  const buttonText = typeof text === "string" ? text : useBreakpointValue(text);
+
   return (
     <Button
       width="full"
@@ -20,10 +22,9 @@ const LoginButton = ({ text, image }: Props) => {
       bg="white"
     >
       <Image src={image} height={26} />
-      {text}
+      {buttonText}
     </Button>
   );
 };
-
 
 export default LoginButton;
