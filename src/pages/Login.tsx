@@ -54,13 +54,11 @@ const Login = () => {
       >
         <GridItem h={{ base: "35vh", md: "100%" }}>
           <Center h="100%" p="2vw">
-            <Image src={GroceryImage} />
-            {/* <Image src={GroceryImage} w={{ base: "60vw", md: "full" }} /> */}
+            <Image src={GroceryImage} w={{ base: "60vw", md: "25vw" }} />
           </Center>
         </GridItem>
 
-        <GridItem px={55} py={10}>
-        {/* <GridItem px="2vw"> */}
+        <GridItem px="2vw">
           <Stack
             h={{ base: "auto", md: "full" }}
             w={{ base: "80vw", md: "full" }}
@@ -99,11 +97,7 @@ const Login = () => {
                 <ErrorText>{errors.password.message}</ErrorText>
               )}
 
-              <LinkButton
-                to="/forgot-password"
-                className="mt-3 ml-1"
-                fontSize={14}
-              >
+              <LinkButton to="/forgot-password" className="mt-3 ml-1">
                 Forgot Password?
               </LinkButton>
 
@@ -112,7 +106,7 @@ const Login = () => {
 
             <Text ml={2} fontSize={14}>
               Don't have an account?{" "}
-              <LinkButton to="/signup" className="mt-3 ml-1" fontSize={14}>
+              <LinkButton to="/signup" className="mt-3 ml-1">
                 Register
               </LinkButton>
             </Text>

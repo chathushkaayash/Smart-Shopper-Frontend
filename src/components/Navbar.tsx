@@ -17,7 +17,7 @@ import ActionButton from "./Buttons/ActionButton";
 const Navbar = () => {
   const [user] = useState("");
   const location = useLocation();
-  const hideNavbarPaths = ["/login", "/signup"];
+  const hideNavbarPaths: string[] = [];
   const showBottomNav = !hideNavbarPaths.includes(location.pathname);
 
   return (

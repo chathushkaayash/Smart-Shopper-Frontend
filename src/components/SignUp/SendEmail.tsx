@@ -56,13 +56,11 @@ const SendEmail = ({ setStage }: Props) => {
     >
       <GridItem h={{ base: "35vh", md: "100%" }}>
         <Center h="100%" p="2vw">
-          <Image src={GroceryImage} />
-          {/* <Image src={GroceryImage} w={{ base: "60vw", md: "full" }} /> */}
+          <Image src={GroceryImage} w={{ base: "60vw", md: "25vw" }} />
         </Center>
       </GridItem>
 
-      {/* <GridItem px="2vw"> */}
-      <GridItem px={55} py={10}>
+      <GridItem px="2vw">
         <Stack
           h={{ base: "auto", md: "full" }}
           w={{ base: "80vw", md: "full" }}
@@ -114,7 +112,7 @@ const SendEmail = ({ setStage }: Props) => {
 
           <Text mt={3} fontSize={14}>
             Do you have an account?{" "}
-            <LinkButton to="/login" className="mt-3 ml-1" fontSize={14}>
+            <LinkButton to="/login" className="mt-3 ml-1">
               Login
             </LinkButton>
           </Text>

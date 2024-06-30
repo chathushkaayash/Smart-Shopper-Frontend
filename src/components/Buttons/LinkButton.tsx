@@ -14,7 +14,7 @@ const LinkButton = ({
   to,
   color = "primary",
   className,
-  fontSize = 15,
+  fontSize = 14,
 }: Props) => {
   return (
     <Link to={to}>
