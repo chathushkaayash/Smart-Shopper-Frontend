@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { FaEnvelope, FaLock } from "react-icons/fa6";
 
-import GroceryImage from "../../assets/login/grocery-shopping-amico.svg";
+import GroceryImage from "../../assets/signup-login/add-to-cart.svg";
 import FacebookIcon from "../../assets/social-media-icons/facebook.svg";
 import GoogleIcon from "../../assets/social-media-icons/google.svg";
 

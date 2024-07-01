@@ -11,7 +11,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import GroceryImage from "../../assets/login/grocery-shopping-amico.svg";
+import GroceryImage from "../../assets/signup-login/grocery-shopping-amico.svg";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";

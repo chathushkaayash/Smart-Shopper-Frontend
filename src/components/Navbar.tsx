@@ -17,12 +17,12 @@ import ActionButton from "./Buttons/ActionButton";
 const Navbar = () => {
   const [user] = useState("");
   const location = useLocation();
-  const hideNavbarPaths: string[] = [];
-  const showBottomNav = !hideNavbarPaths.includes(location.pathname);
+  const hideNavbarPaths = ["/driver"];
+  const showTopNav = !hideNavbarPaths.some((path) => location.pathname.startsWith(path));  
 
   return (
     <>
-      {showBottomNav && (
+      {showTopNav && (
         <Flex
           w={"100%"}
           bg={useColorModeValue("white", "gray.800")}

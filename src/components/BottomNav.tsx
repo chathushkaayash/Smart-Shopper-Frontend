@@ -8,8 +8,10 @@ import { useLocation } from "react-router-dom";
 
 const BottomNav = () => {
   const location = useLocation();
-  const hideNavbarPaths = ["/login", "/signup"];
-  const showBottomNav = !hideNavbarPaths.includes(location.pathname);
+  const hideNavbarPaths = ["/login", "/signup", "/driver"];
+  const showBottomNav = !hideNavbarPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   const [active, setActive] = useState(0);
 
@@ -24,11 +26,15 @@ const BottomNav = () => {
     { icon: <CiUser fontSize={20} />, text: "Account" },
   ];
 
-  const handleOnClick = (e: any, index: number) => {
+  const handleOnClick = (index: number) => {
     // const bounds = e.target.getBoundingClientRect();
 
     // console.log(bounds);
     setActive(index);
+
+    if (index === 3) {
+      window.location.href = "/driver/login_register";
+    }
   };
 
   return (
@@ -50,7 +56,7 @@ const BottomNav = () => {
               key={index}
               h="full"
               className=" cursor-pointer relative"
-              onClick={(e) => handleOnClick(e, index)}
+              onClick={() => handleOnClick(index)}
             >
               <Box
                 className={`${

@@ -7,9 +7,9 @@ interface Props {
   size?: "sm" | "md" | "lg";
   inverted?: boolean;
   className?: string;
-  expanding?: boolean;
+  width?: string;
   url?: string;
-  
+
   onClick?: () => void;
 }
 
@@ -17,7 +17,7 @@ const ActionButton = ({
   children,
   size,
   inverted = false,
-  expanding = false,
+  width = "fit-content",
   className,
   url, // Added url prop
   onClick,
@@ -28,7 +28,7 @@ const ActionButton = ({
   const button = (
     <Button
       size={size}
-      width={expanding ? "100%" : "fit-content"}
+      width={width}
       variant="outline"
       color={primaryColor}
       borderColor={primaryColor}
@@ -55,4 +55,3 @@ const ActionButton = ({
 };
 
 export default ActionButton;
-

@@ -1,11 +1,7 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import CartDetails from "./pages/CartDetails";
 
@@ -21,6 +17,8 @@ import ProductDetail from "./pages/ProductDetail";
 import Reviews from "./pages/Reviews";
 import SignUp from "./pages/SignUp";
 import Test from "./pages/Test";
+import LoginRegister from "./pages/DriverApp/LoginRegister/LoginRegister";
+import DriverLogin from "./pages/DriverApp/LoginRegister/Login/DriverLogin";
 
 export interface ProductQuery {
   genreId?: number;
@@ -49,6 +47,10 @@ function App() {
           <Route path="/paymentSuccessful" element={<PaymentSuccessful />} />
           <Route path="/Footer" element={<Footer />} />
           <Route path="/test" element={<Test />} />
+
+          <Route path="/driver/login_register" element={<LoginRegister />} />
+          <Route path="/driver/login" element={<DriverLogin />} />
+
         </Routes>
 
         <Show below="md">
