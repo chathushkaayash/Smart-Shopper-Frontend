@@ -3,9 +3,6 @@ import MiddleContainer from "../components/Containers/MiddleContainer";
 
 import SendEmail from "../components/SignUp/SendEmail";
 import SendOTP from "../components/SignUp/SendOTP";
-
-// import { zodResolver } from "@hookform/resolvers/zod";
-
 const SignUp = () => {
   const [stage, setStage] = useState(0);
 

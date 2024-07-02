@@ -1,17 +1,20 @@
 import { Box, Image, Text, VStack } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { useForm } from "react-hook-form";
-import { FaPhoneAlt } from "react-icons/fa";
+
+import { FaEnvelope } from "react-icons/fa";
 import { FaLock } from "react-icons/fa6";
-import { z } from "zod";
+
 import Logo from "../../../../assets/logo.svg";
 import LinkButton from "../../../../components/Buttons/LinkButton";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import ErrorText from "../../../../components/Errors/ErrorText";
 import LoginInput from "../../../../components/Inputs/LoginInput";
 
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { useForm } from "react-hook-form";
+
 const schema = z.object({
-  phonenumber: z.string(),
+  email: z.string().email("Invalid email address"),
   password: z.string().min(6),
 });
 
@@ -51,22 +54,18 @@ const DriverLogin = () => {
       >
         <Box w="full">
           <LoginInput
-            register={register("phonenumber")}
-            type="phonenumber"
-            placeholder="Phone Number"
-            icon={FaPhoneAlt}
-            // label="Email"
-            outerClassName="!mb-5"
+            register={register("email")}
+            type="email"
+            placeholder="Email"
+            icon={FaEnvelope}
           />
-          {errors.phonenumber && (
-            <ErrorText>{errors.phonenumber.message}</ErrorText>
-          )}
+          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           <LoginInput
             register={register("password")}
             type="password"
             placeholder="Password"
             icon={FaLock}
-            // label="Password"
+             outerClassName="!mt-5"
           />
           {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
 
