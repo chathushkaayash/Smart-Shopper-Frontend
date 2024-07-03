@@ -28,8 +28,7 @@ const LoginRegister = () => {
         alignItems="flex-end"
         justifyContent="flex-end"
       >
-        {/* <Image src={Driver} className="translate-x-[-18vw]" minW="120vw" /> */}
-        <Image src={Driver} className="translate-x-[-20vw]" minW="120vw" />
+        <Image src={Driver} className="translate-x-[-8vw]"  width="360px" />
       </Flex>
 
       <Box>

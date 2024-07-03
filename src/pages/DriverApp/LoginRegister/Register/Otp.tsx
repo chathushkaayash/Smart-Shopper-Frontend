@@ -78,11 +78,11 @@ const Otp = ({ setStage }: Props) => {
       </Box>
       <Image
         src={Phone}
-        width="350px"
-        className="translate-x-[6.5vw] translate-y-[-3vw]"
+        width="180px"
+        className=" "
         justifyContent="center"
       />
-      <Text mt="-12">
+      <Text >
         I didn't receive any code.{" "}
         <Button variant="link" color="primary">
           RESEND
