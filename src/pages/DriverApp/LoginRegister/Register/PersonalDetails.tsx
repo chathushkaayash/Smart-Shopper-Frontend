@@ -12,6 +12,7 @@ import {
   Text,
   VStack,
   useDisclosure,
+  Flex,
 } from "@chakra-ui/react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
@@ -122,7 +123,7 @@ const PersonalDetails = ({ setStage }: Props) => {
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent width="90vw">
+        <ModalContent width="80vw">
           <ModalHeader>Confirmation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -135,19 +136,22 @@ const PersonalDetails = ({ setStage }: Props) => {
             </Text>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" variant="ghost" onClick={onClose}>
+            <Button px={50} color="primary" variant="ghost" onClick={onClose}>
               Cancel
             </Button>
-            <Button
-              color="white"
-              bg="primary"
-              onClick={() => {
-                setStage(1);
-                onClose();
-              }}
-            >
-              Next
-            </Button>
+            <Flex justifyContent="center" w="full">
+              <Button
+                px={50}
+                color="white"
+                bg="primary"
+                onClick={() => {
+                  setStage(1);
+                  onClose();
+                }}
+              >
+                Next
+              </Button>
+            </Flex>
           </ModalFooter>
         </ModalContent>
       </Modal>
