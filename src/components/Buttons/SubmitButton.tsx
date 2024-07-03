@@ -7,6 +7,7 @@ interface Props {
   borderRadius?: number;
   disabled?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 const SubmitButton = ({
@@ -16,7 +17,14 @@ const SubmitButton = ({
   className,
   borderRadius,
   disabled = false,
+  onClick,
+
 }: Props) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
   if (disabled) {
     return (
       <Button
@@ -27,6 +35,7 @@ const SubmitButton = ({
         color="white"
         className={className}
         disabled={true}
+        onClick={handleClick}
       >
         {children}
       </Button>
@@ -44,6 +53,7 @@ const SubmitButton = ({
       _hover={{ bg: "white", color: "primary",border:'2px'}}
       className={className}
       disabled={false}
+      onClick={handleClick}
     >
       {children}
     </Button>

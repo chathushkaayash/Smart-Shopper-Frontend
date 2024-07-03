@@ -18,7 +18,11 @@ import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 import { useState } from "react";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
 
-const SelectCompany = () => {
+interface Props {
+    setStage: (n: number) => void;
+  }
+
+const SelectCompany = ({setStage}:Props) => {
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const companies = [
     "DHL",
@@ -28,15 +32,10 @@ const SelectCompany = () => {
     "TNT",
     "Aramex",
     "DPD",
-    "UPS",
-    "USPS",
-    "TNT",
-    "Aramex",
-    "DPD",
   ];
 
   return (
-    <VStack py="10vh" h="100vh">
+    <VStack py="10vh" h="100vh" gap="6vh">
       <VStack>
         <Image src={Logo} width="150px" />
         {/* <VStack> */}
@@ -105,7 +104,7 @@ const SelectCompany = () => {
         </List>
       </Box>
       <Box w="80vw">
-        <SubmitButton borderRadius={10}>Next</SubmitButton>
+        <SubmitButton borderRadius={10} onClick={()=>setStage(1)}>Next</SubmitButton>
       </Box>
     </VStack>
   );
