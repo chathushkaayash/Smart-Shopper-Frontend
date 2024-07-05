@@ -59,9 +59,10 @@ const BottomNav = () => {
               onClick={() => handleOnClick(index)}
             >
               <Box
+                bg="primary"
                 className={`${
                   active === index ? "-translate-y-6 opacity-100" : " opacity-0"
-                } duration-700 bg-primary border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
+                } duration-700  border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
               ></Box>
               <Box
                 className={`duration-500 ${
