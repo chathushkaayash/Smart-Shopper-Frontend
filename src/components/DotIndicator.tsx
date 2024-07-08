@@ -15,15 +15,14 @@ const DotIndicator = ({
 }: Props) => {
   let dots = Array.from({ length: total }, (_, i) => i + 1);
 
-  console.log(dots);
 
   return (
     <Center>
       {dots.map(
-        (dot) => (
-          console.log(dot, current),
+        (dot,index) => (
           (
             <Box
+            key={index}
               as="span"
               boxSize={size}
               bg={dot === current ? color : "gray.300"}

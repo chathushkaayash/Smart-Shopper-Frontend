@@ -31,9 +31,11 @@ const LoginInput = ({
     <FormControl marginY={5} margin={0} className={outerClassName}>
       <FormLabel fontSize={15}>{label}</FormLabel>
       <InputGroup>
-        <InputLeftElement h="full">
-          <Icon as={icon} />
-        </InputLeftElement>
+        {icon && (
+          <InputLeftElement h="full">
+            <Icon as={icon} />
+          </InputLeftElement>
+        )}
         <Input
           type={type}
           placeholder={placeholder}

@@ -63,7 +63,7 @@ const Otp = ({ setStage }: Props) => {
             placeholder=" "
             size="lg"
           >
-            {[...Array(4)].map((index) => (
+            {[...Array(4)].map((_, index) => (
               <PinInputField
                 key={index}
                 border="2px"
