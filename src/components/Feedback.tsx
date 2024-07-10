@@ -55,7 +55,7 @@ import {
         </CardBody>
         </Card>
 
-        {/* <Card mt={4}>
+        <Card mt={4}>
         <CardBody>
 
             <Flex>
@@ -89,7 +89,7 @@ import {
           </Box>
           
         </CardBody>
-        </Card> */}
+        </Card>
 
         </>
        

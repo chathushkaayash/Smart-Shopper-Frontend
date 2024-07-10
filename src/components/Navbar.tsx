@@ -13,12 +13,15 @@ import { FaCartShopping } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
 import Banner from "../assets/smart-shopper-banner.svg";
 import ActionButton from "./Buttons/ActionButton";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [user] = useState("");
   const location = useLocation();
   const hideNavbarPaths = ["/driver"];
-  const showTopNav = !hideNavbarPaths.some((path) => location.pathname.startsWith(path));  
+  const showTopNav = !hideNavbarPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <>
@@ -35,6 +38,9 @@ const Navbar = () => {
           borderColor={useColorModeValue("gray.200", "gray.900")}
           align={"center"}
           justifyContent="space-between"
+          pos={location.pathname === "/admin" ? "sticky" : "relative"}
+          top={0}
+          zIndex={10}
         >
           <HStack gap={5}>
             {/* <Box display="inline" fontSize="2xl" fontWeight="bold">
@@ -46,15 +52,21 @@ const Navbar = () => {
             <Image src={Banner} />
 
             <Show above="md">
-              <Text fontSize="lg" fontWeight="bold">
-                Home
-              </Text>
-              <Text fontSize="lg" fontWeight="bold">
-                Supermarkets
-              </Text>
-              <Text fontSize="lg" fontWeight="bold">
-                About Us
-              </Text>
+              <Link to="/">
+                <Text fontSize="lg" fontWeight="bold">
+                  Home
+                </Text>
+              </Link>
+              <Link to="/supermarkets">
+                <Text fontSize="lg" fontWeight="bold">
+                  Supermarkets
+                </Text>
+              </Link>
+              <Link to="/about_us">
+                <Text fontSize="lg" fontWeight="bold">
+                  About Us
+                </Text>
+              </Link>
             </Show>
           </HStack>
 
@@ -87,4 +99,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

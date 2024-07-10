@@ -29,17 +29,13 @@ const Landing = () => {
         <Navbar />
       </Show>
 
-      <Box
-        w="100w"
-        h="90vh"
-        className="w-[100vw] h-[90vh] overflow-y-scroll snap-y snap-proximity"
-      >
-        <SimpleSlider className="snap-start">
+      <Box w="100%" h="90vh" className="w-[100vw] h-[90vh] overflow-x-hidden">
+        <SimpleSlider>
           <Slide image={SmartListsImage} title="SmartLists" />
           <Slide image={BestPricesImage} title="BestPrices" />
           <Slide image={FastDeliveryImage} title="FastDelivery" />
         </SimpleSlider>
-        
+
         <VStack
           justifyContent="center"
           alignItems="center"
@@ -47,8 +43,6 @@ const Landing = () => {
           gap={0}
           pt="5vh"
         >
-          {/* all below components are using the section component */}
-          {/* Make every section a snap point in side the component*/}
           <BrowseByCategory />
           <BestSellingProducts />
           <Section heading="New Arrivals" title="Product for you">

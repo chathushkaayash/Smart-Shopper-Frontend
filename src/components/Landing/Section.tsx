@@ -14,8 +14,7 @@ const Section = ({ children, title, heading, rightSide }: Props) => {
       w="full"
       px={{ base: "5vw", sm: "14vw" }}
       my="5vh"
-      py='2vh'
-      className="snap-start"
+      py="2vh"
     >
       <HStack>
         <Box w={2} h={45} bg="primary" borderRadius="sm"></Box>

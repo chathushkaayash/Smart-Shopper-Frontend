@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose PWA to Install</title>
+  <link rel="manifest" href="/manifest.json" id="manifestUser">
+  <link rel="manifest" href="/driver_manifest.json" id="manifestDriver">
+</head>
+
+<body>
+  <h1>Choose which PWA to install:</h1>
+  <button id="btnInstallDriver" style="display: block;">Install Driver PWA</button>
+  <button id="btnInstallUser" style="display: block;">Install User PWA</button>
+  <div id="installPrompt"></div>
+
+  <script>
+    let choice;
+    let deferredPrompt;
+
+    function handleInstallPrompt(event) {
+      event.preventDefault();
+      deferredPrompt = event;
+      console.log('Install prompt fired');
+      if (choice) {
+        deferredPrompt.prompt();
+      }
+      showInstallUI();
+    }
+
+    function showInstallUI() {
+      const installPrompt = document.getElementById('installPrompt');
+      const btnInstallDriver = document.getElementById('btnInstallDriver');
+      const btnInstallUser = document.getElementById('btnInstallUser');
+
+      btnInstallDriver.addEventListener('click', () => {
+        if (!choice) {
+          document.getElementById('manifestUser').remove();
+          choice = true;
+        }
+        // if (deferredPrompt.user)
+      });
+
+      btnInstallUser.addEventListener('click', () => {
+        if (!choice) {
+          document.getElementById('manifestDriver').remove();
+          choice = true;
+        }
+
+      });
+    }
+
+    // Event listener for beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', handleInstallPrompt);
+  </script>
+</body>
+
+</html>

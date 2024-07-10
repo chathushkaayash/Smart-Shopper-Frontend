@@ -1,18 +1,18 @@
 {
-  "id": "/user",
+  "id": "/driver",
   "theme_color": "#ff7708",
   "background_color": "#ffffff",
   "icons": [
     {
       "purpose": "maskable",
       "sizes": "512x512",
-      "src": "icon512_maskable.png",
+      "src": "driver_icon512_maskable.png",
       "type": "image/png"
     },
     {
       "purpose": "any",
       "sizes": "512x512",
-      "src": "icon512_rounded.png",
+      "src": "driver_icon512_rounded.png",
       "type": "image/png"
     }
   ],
@@ -20,7 +20,7 @@
   "display": "standalone",
   "dir": "auto",
   "lang": "en-US",
-  "name": "Smart Shopper",
-  "start_url": "/?pwa=1",
-  "scope": "/?pwa=1"
+  "name": "Smart Shopper Driver",
+  "start_url": "/driver",
+  "scope": "/driver"
 }

@@ -6,26 +6,37 @@ import {
   HStack,
   Image,
   Text,
-  VStack,
-  Spacer,
+  VStack
 } from "@chakra-ui/react";
 
 import { FaStar } from "react-icons/fa";
 
-import SupermarketLogo from "../assets/Reviews/superMarketLogo.png";
+  import SupermarketLogo from "../assets/Reviews/superMarketLogo.png";
+import creamcracker from "../assets/creamcracker.svg";
 
+  import MiddleContainer from "../components/Containers/MiddleContainer";
 import Feedback from "../components/Feedback";
-import MiddleContainer from "../components/Containers/MiddleContainer";
 
-const Reviews = () => {
-  return (
-    <MiddleContainer>
-      <Grid gridTemplateColumns={{ base: "1fr", xl: "2fr 3fr" }}>
-        <GridItem px={85} py={10}>
+  const Reviews = () => {
+    return (
+        <MiddleContainer>
+        <Grid gridTemplateColumns={{base:"1fr",xl:"2fr 3fr"}} >
+
+          <GridItem px={85} py={10} >
+
           <VStack alignItems="flex-start">
-            <Box display="inline" fontSize="3xl" fontWeight="650">
-              <Text as="span">Reviews</Text>,
-            </Box>
+          
+          <Box p='1' fontSize={{base:"2xl",md:"3xl"}} fontWeight="650">
+          Munchee Cream Cracker
+          </Box>
+          
+          <Box pr={5} >
+          <Image src={SupermarketLogo} w={70} h={30} />
+          </Box>
+          
+            <Box pr={5} pt={5}>
+              <Image src={creamcracker} w={{base:"300px",xl:"200px"}} h={{base:"300px",xl:"200px"}} />
+              </Box>
 
             <HStack
               fontSize={{ base: "2xl", md: "3xl" }}
@@ -68,29 +79,23 @@ const Reviews = () => {
               </Flex>
             ))}
           </VStack>
-        </GridItem>
 
-        <GridItem px={5} py={10}>
-          <Flex>
-            <Box
-              p="1"
-              fontSize={{ base: "2xl", md: "3xl" }}
-              fontWeight="650"
-              mb={10}
-            >
-              Munchee Cream Cracker
-            </Box>
-            <Spacer />
-            <Box pr={5} pt={5}>
-              <Image src={SupermarketLogo} w={70} h={30} />
-            </Box>
-          </Flex>
+
+          </GridItem>
+  
+          <GridItem px={5} py={10}>
+
+          <Box display="inline" fontSize="3xl" fontWeight="650" mb={20}>
+                <Text as="span">Reviews</Text>
+          </Box>
 
           <Feedback />
-        </GridItem>
-      </Grid>
-    </MiddleContainer>
-  );
-};
 
-export default Reviews;
+          </GridItem>
+        </Grid>
+      </MiddleContainer>
+    );
+  };
+  
+  export default Reviews;
+  
