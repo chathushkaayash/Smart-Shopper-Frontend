@@ -14,8 +14,8 @@ const Opportunities = () => {
   ];
   return (
     <>
-        <VStack bg="background" h="93vh" p="10vw" gap="4vh">
-      {requests.map((request) => (
+      <VStack bg="background" h="full" p="10vw" gap="4vh">
+        {requests.map((request) => (
           <Box boxShadow="md" p={4} background="white" w="full">
             <VStack align="start">
               <Text fontWeight="bold">{request.name}</Text>
@@ -41,8 +41,8 @@ const Opportunities = () => {
               <SubmitButton>Accept</SubmitButton>
             </VStack>
           </Box>
-      ))}
-        </VStack>
+        ))}
+      </VStack>
     </>
   );
 };

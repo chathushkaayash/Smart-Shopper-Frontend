@@ -104,9 +104,8 @@ const SelectCompany = ({ setStage }: Props) => {
         <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
           Next
         </SubmitButton>
-        <DotIndicator current={1} total={4} />
+        <DotIndicator current={1} total={4}  className="absolute bottom-[2vh]"/>
       </VStack>
-      {/* <DotIndicator current={1} total={4} /> */}
     </VStack>
   );
 };

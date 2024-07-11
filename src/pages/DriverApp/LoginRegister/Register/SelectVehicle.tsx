@@ -36,7 +36,7 @@ import ErrorText from "@/components/Errors/ErrorText";
 
 const schema = z.object({
   name: z.string().min(1, "vehicle name is required"),
-  number: z.number().min(1, "vehicle number is required"),
+  number: z.string().min(1, "vehicle number is required"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -80,124 +80,140 @@ const SelectVehicle = ({ setStage }: Props) => {
   ];
 
   return (
-    <VStack py="5vh" h="100vh" gap="4vh">
-      <VStack gap="2vh">
-        <Box
-          position="absolute"
-          top="5vh"
-          right="10vw"
-          p={2}
-          borderRadius="lg"
-          boxShadow="lg"
-        >
-          <Icon
-            as={selectedVehicle.icon}
-            boxSize="50px"
-            color={selectedColor || undefined}
-          />
-        </Box>
-        <VStack>
-          <Image src={Logo} width="150px" />
-          <Box display="inline" fontSize="2xl" fontWeight="bold">
-            <Text fontSize="lg" fontWeight="bold">
-              Select Vehicle
-            </Text>
-          </Box>
-        </VStack>
-        <VStack as="form" onSubmit={handleSubmit(() => {})} gap="2vh">
-          <Text fontSize="md" color="gray" fontWeight="bold">
-            Pick your vehicle type
-          </Text>
+    <VStack py="6vh" h="100vh" gap="4vh">
+      {/* --------------- Vehicle Icon --------------- */}
+      <Box
+        position="absolute"
+        top="5vh"
+        right="10vw"
+        p={2}
+        borderRadius="lg"
+        boxShadow="lg"
+      >
+        <Icon
+          as={selectedVehicle.icon}
+          boxSize="50px"
+          color={selectedColor || undefined}
+        />
+      </Box>
 
-          <HStack spacing={5} justifyContent="center">
-            {vehicles.map((vehicle, index) => (
-              <VStack key={index}>
-                <Box
-                  key={index}
-                  p={2}
-                  borderRadius="lg"
-                  boxShadow="lg"
-                  onClick={() => setSelectedVehicle(vehicle)}
-                  borderColor={
-                    vehicle.icon === selectedVehicle.icon
-                      ? "primary"
-                      : "transparent"
-                  }
-                  border={
-                    selectedVehicle.icon === vehicle.icon
-                      ? "2px solid #ff7708"
-                      : "2px solid transparent"
-                  }
-                >
-                  <Icon as={vehicle.icon} boxSize="50px" />
-                </Box>
-                <Text fontSize="sm" color="gray" fontWeight="bold">
-                  {vehicle.name}
-                </Text>
-              </VStack>
-            ))}
-          </HStack>
-          <Text fontSize="md" color="gray" fontWeight="bold">
-            Vehicle color
+      {/* --------------- Smart Shopper Logo --------------- */}
+      <VStack>
+        <Image src={Logo} width="150px" />
+        <Box display="inline" fontSize="2xl" fontWeight="bold">
+          <Text fontSize="lg" fontWeight="bold">
+            Select Vehicle
           </Text>
-          <HStack spacing={3}>
-            {colors.map((color, index) => (
+        </Box>
+      </VStack>
+
+      {/* --------------- Form --------------- */}
+      <VStack
+        as="form"
+        onSubmit={handleSubmit(() => {
+          console.log(4);
+          setStage(4);
+        })}
+        gap="2vh"
+        px="10vw"
+        h="full"
+      >
+        <Text fontSize="md" color="gray" fontWeight="bold">
+          Pick your vehicle type
+        </Text>
+
+        <HStack spacing={5} justifyContent="center">
+          {vehicles.map((vehicle, index) => (
+            <VStack key={index}>
               <Box
                 key={index}
-                width="30px"
-                height="30px"
-                borderRadius="full"
-                bg={color}
-                border={
-                  selectedColor === color
-                    ? "3px solid #ff7708"
-                    : "1px solid gray"
+                p={2}
+                borderRadius="lg"
+                boxShadow="lg"
+                onClick={() => setSelectedVehicle(vehicle)}
+                borderColor={
+                  vehicle.icon === selectedVehicle.icon
+                    ? "primary"
+                    : "transparent"
                 }
-                onClick={() => handleColorSelection(color)}
-                cursor="pointer"
-              />
-            ))}
-            {/* Image for Color Wheel */}
+                border={
+                  selectedVehicle.icon === vehicle.icon
+                    ? "2px solid #ff7708"
+                    : "2px solid transparent"
+                }
+              >
+                <Icon as={vehicle.icon} boxSize="50px" />
+              </Box>
+              <Text fontSize="sm" color="gray" fontWeight="bold">
+                {vehicle.name}
+              </Text>
+            </VStack>
+          ))}
+        </HStack>
+        <Text fontSize="md" color="gray" fontWeight="bold">
+          Vehicle color
+        </Text>
+        <HStack spacing={3}>
+          {colors.map((color, index) => (
             <Box
+              key={index}
               width="30px"
               height="30px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
+              borderRadius="full"
+              bg={color}
+              border={
+                selectedColor === color ? "3px solid #ff7708" : "1px solid gray"
+              }
+              onClick={() => handleColorSelection(color)}
               cursor="pointer"
-              onClick={toggleColorPicker}
-            >
-              <Image src={colorwheel} alt="Color Wheel" />
-            </Box>
-          </HStack>
-          <Text fontSize="md" color="gray" fontWeight="bold">
-            Vehicle Name (ex: Maruti WagonR)
-          </Text>
+            />
+          ))}
+          {/*--------------- Image for Color Wheel--------------- */}
+          <Box
+            width="30px"
+            height="30px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            cursor="pointer"
+            onClick={toggleColorPicker}
+          >
+            <Image src={colorwheel} alt="Color Wheel" />
+          </Box>
+        </HStack>
+        <Text fontSize="md" color="gray" fontWeight="bold">
+          Vehicle Name (ex: Maruti WagonR)
+        </Text>
+        <Box w="full">
           <LoginInput
             register={register("name")}
             type="name"
             placeholder="Vehicle Name"
           />
           {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
-          <Text fontSize="md" color="gray" fontWeight="bold">
-            Vehicle Number (ex: VP 2233)
-          </Text>
+        </Box>
+        <Text fontSize="md" color="gray" fontWeight="bold">
+          Vehicle Number (ex: VP 2233)
+        </Text>
+        <Box w="full">
           <LoginInput
             register={register("number")}
             type="number"
             placeholder="Vehicle Number"
           />
-          {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
+          {errors.number && <ErrorText>{errors.number.message}</ErrorText>}
+        </Box>
+        <VStack w="80vw" mt="auto">
+          <SubmitButton borderRadius={10}>Next</SubmitButton>
+          <DotIndicator
+            current={2}
+            total={4}
+            className="absolute bottom-[2vh]"
+          />
         </VStack>
       </VStack>
-      <VStack w="80vw" mt="auto">
-        <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
-          Next
-        </SubmitButton>
-        <DotIndicator current={2} total={4} />
-      </VStack>
 
-      {/* Color Picker Modal */}
+      {/* ---------------Color Picker Modal ---------------*/}
       <Modal isOpen={showColorPicker} onClose={toggleColorPicker} isCentered>
         <ModalOverlay />
         <ModalContent

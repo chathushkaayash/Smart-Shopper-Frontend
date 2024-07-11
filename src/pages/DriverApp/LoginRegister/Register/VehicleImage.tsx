@@ -22,31 +22,37 @@ const VehicleImage = ({ setStage }: Props) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   return (
-    <VStack py="10vh" h="100vh">
-      <Image src={Logo} width="150px" />
+    <VStack py="6vh" h="100vh" gap="4vh">
+      {/* --------------- Smart Shopper Logo --------------- */}
+      <VStack>
+        <Image src={Logo} width="150px" />
 
-      <Box display="inline" fontSize="2xl" fontWeight="bold">
-        <Text fontSize="lg" fontWeight="bold">
-          Upload vehicle image
+        <Box fontSize="2xl" fontWeight="bold">
+          <Text fontSize="lg" fontWeight="bold">
+            Upload vehicle image
+          </Text>
+        </Box>
+        <Text
+          textAlign="center"
+          w="80vw"
+          fontSize="md"
+          color="gray"
+          fontWeight="bold"
+        >
+          Please upload a clear and legible image of your vehicle. Ensure the
+          image is less than 10MB.
         </Text>
-      </Box>
-      <Text
-        textAlign="center"
-        w="80vw"
-        fontSize="md"
-        color="gray"
-        fontWeight="bold"
-      >
-        Please upload a clear and legible image of your vehicle. Ensure the
-        image is less than 10MB.
-      </Text>
-
+      </VStack>
       <VStack
         w="80vw"
-        className="h-[100%] mt-5"
+        gap="2vh"
+        h="full"
         as="form"
-        justifyContent="space-between"
+        onSubmit={() => {
+          setStage(5);
+        }}
       >
+        {/* --------------- image upload --------------- */}
         <VStack justify="center" flex="1">
           <Box
             as="label"
@@ -81,11 +87,14 @@ const VehicleImage = ({ setStage }: Props) => {
             </VStack>
           </Box>
         </VStack>
+        {/* --------------- Submit button--------------- */}
         <VStack w="80vw">
-          <SubmitButton borderRadius={10} onClick={() => setStage(5)}>
-            Next
-          </SubmitButton>
-          <DotIndicator current={3} total={4} />
+          <SubmitButton borderRadius={10}>Next</SubmitButton>
+          <DotIndicator
+            current={3}
+            total={4}
+            className="absolute bottom-[2vh]"
+          />
         </VStack>
       </VStack>
     </VStack>
