@@ -2,39 +2,61 @@ import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 
 import { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { CiSearch, CiUser } from "react-icons/ci";
-import { IoHomeOutline } from "react-icons/io5";
-import { useLocation } from "react-router-dom";
+import { BsTruck } from "react-icons/bs";
+import { CiDollar, CiSearch, CiUser } from "react-icons/ci";
+import { IoHomeOutline, IoWalletOutline } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNav = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  const hideNavbarPaths = ["/login", "/signup", "/driver"];
+  const hideNavbarPaths = [
+    "/login",
+    "/signup",
+    "/driver/login_register",
+    "/driver/login",
+    "/driver/register",
+  ];
   const showBottomNav = !hideNavbarPaths.some((path) =>
     location.pathname.startsWith(path)
   );
 
   const [active, setActive] = useState(0);
 
-  const iconsList = [
+  const consumerIconsList = [
+    { icon: <IoHomeOutline fontSize={20} />, text: "Home", path: "/" },
+    { icon: <CiSearch fontSize={20} />, text: "Search", path: "/search" },
     {
-      icon: <IoHomeOutline fontSize={20} />,
-      text: "Home",
-      positionX: "0",
+      icon: <AiOutlineShoppingCart fontSize={20} />,
+      text: "Cart",
+      path: "/cart",
     },
-    { icon: <CiSearch fontSize={20} />, text: "Search" },
-    { icon: <AiOutlineShoppingCart fontSize={20} />, text: "Cart" },
-    { icon: <CiUser fontSize={20} />, text: "Account" },
+    { icon: <CiUser fontSize={20} />, text: "Account", path: "/driver" },
   ];
 
+  const driverIconsList = [
+    { icon: <IoHomeOutline fontSize={20} />, text: "Home", path: "/driver" },
+    {
+      icon: <BsTruck fontSize={20} />,
+      text: "Opportunities",
+      path: "/driver/opportunities",
+    },
+    {
+      icon: <IoWalletOutline fontSize={20} />,
+      text: "Wallet",
+      path: "/driver/wallet",
+    },
+    { icon: <CiDollar fontSize={20} />, text: "Earnings", path: "/driver/earnings" },
+    { icon: <CiUser fontSize={20} />, text: "Account", path: "/driver/account" },
+  ];
+
+  const iconsList = location.pathname.startsWith("/driver")
+    ? driverIconsList
+    : consumerIconsList;
+
   const handleOnClick = (index: number) => {
-    // const bounds = e.target.getBoundingClientRect();
-
-    // console.log(bounds);
     setActive(index);
-
-    if (index === 3) {
-      window.location.href = "/driver/login_register";
-    }
+    navigate(iconsList[index].path);
   };
 
   return (
