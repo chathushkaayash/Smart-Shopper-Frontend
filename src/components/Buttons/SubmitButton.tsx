@@ -12,7 +12,7 @@ interface Props {
 
 const SubmitButton = ({
   children,
-  color = "secondary",
+  color = "primary",
   width = "full",
   className,
   borderRadius,

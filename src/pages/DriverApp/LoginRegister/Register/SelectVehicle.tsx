@@ -56,7 +56,7 @@ const SelectVehicle = ({ setStage }: Props) => {
   ];
 
   const [selectedVehicle, setSelectedVehicle] = useState(vehicles[0]);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] = useState("#000000");
   const [showColorPicker, setShowColorPicker] = useState(false); // State to manage color picker visibility
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 }); // HSVa color state
 
@@ -151,7 +151,7 @@ const SelectVehicle = ({ setStage }: Props) => {
                 border={
                   selectedColor === color
                     ? "3px solid #ff7708"
-                    : "3px solid transparent"
+                    : "1px solid gray"
                 }
                 onClick={() => handleColorSelection(color)}
                 cursor="pointer"
@@ -191,7 +191,7 @@ const SelectVehicle = ({ setStage }: Props) => {
         </VStack>
       </VStack>
       <VStack w="80vw">
-        <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
+        <SubmitButton borderRadius={10} onClick={() => setStage(4)}>
           Next
         </SubmitButton>
         <DotIndicator current={2} total={4} />

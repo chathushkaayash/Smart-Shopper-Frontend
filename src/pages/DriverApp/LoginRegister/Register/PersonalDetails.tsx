@@ -51,9 +51,6 @@ const PersonalDetails = ({ setStage }: Props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const onSubmit = () => {
-    onOpen();
-  };
 
   return (
     <VStack py="10vh" h="100vh">
@@ -78,7 +75,7 @@ const PersonalDetails = ({ setStage }: Props) => {
         className="h-[100%] mt-5"
         as="form"
         justifyContent="space-between"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onOpen)}
       >
         <Box w="full">
           <LoginInput
