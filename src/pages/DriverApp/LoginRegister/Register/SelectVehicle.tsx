@@ -80,7 +80,7 @@ const SelectVehicle = ({ setStage }: Props) => {
   ];
 
   return (
-    <VStack py="10vh" h="100vh" gap="4vh">
+    <VStack py="5vh" h="100vh" gap="4vh">
       <VStack gap="2vh">
         <Box
           position="absolute"
@@ -190,8 +190,8 @@ const SelectVehicle = ({ setStage }: Props) => {
           {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
         </VStack>
       </VStack>
-      <VStack w="80vw">
-        <SubmitButton borderRadius={10} onClick={() => setStage(4)}>
+      <VStack w="80vw" mt="auto">
+        <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
           Next
         </SubmitButton>
         <DotIndicator current={2} total={4} />

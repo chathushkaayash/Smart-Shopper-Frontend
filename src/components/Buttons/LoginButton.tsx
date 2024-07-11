@@ -5,9 +5,10 @@ interface Props {
   image?: string;
   width?: string;
   color?: string;
+  className?: string;
 }
 
-const LoginButton = ({ text, image, width, color }: Props) => {
+const LoginButton = ({ text, image, width, color, className }: Props) => {
   const buttonText = typeof text === "string" ? text : useBreakpointValue(text);
 
   return (
@@ -23,6 +24,7 @@ const LoginButton = ({ text, image, width, color }: Props) => {
       rounded="md"
       bg={color || "white"}
       color={color ? "white" : "black"}
+      className={className}
     >
       <Image src={image} height={26} />
       {buttonText}

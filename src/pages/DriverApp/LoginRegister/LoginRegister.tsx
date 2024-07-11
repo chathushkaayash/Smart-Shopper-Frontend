@@ -8,11 +8,11 @@ const LoginRegister = () => {
     <VStack
       h="100vh"
       justifyContent="center"
-      gap="5vh"
+      gap="1vh"
       translateX="100vw"
-      py="2vh"
+      py="5vh"
     >
-      <VStack>
+      <VStack mt="5vh">
         <Image src={Logo} width="150px" />
         <Box display="inline" fontSize="3xl" fontWeight="bold" mt={2}>
           <Text as="span">Smart</Text>
@@ -22,13 +22,12 @@ const LoginRegister = () => {
         </Box>
       </VStack>
 
-      <Flex
-        h="30vh"
-        overflow="hidden"
-        alignItems="flex-end"
-        justifyContent="flex-end"
-      >
-        <Image src={Driver} className="translate-x-[-8vw]"  width="360px" />
+      <Flex h="35vh" alignItems="flex-end" justifyContent="flex-end">
+        <Image
+          src={Driver}
+          className="translate-x-[-8vw] h-full"
+          width="360px"
+        />
       </Flex>
 
       <Box>
@@ -41,9 +40,14 @@ const LoginRegister = () => {
         </Text>
       </Box>
 
-      <VStack w="full" mt="5vh">
+      <VStack w="full" mt="auto">
         <Link to="/driver/register">
-          <LoginButton text="Sign Up" width="80vw" color="primary" />
+          <LoginButton
+            text="Sign Up"
+            width="80vw"
+            color="primary"
+            className="!my-0"
+          />
         </Link>
         <Link to="/driver/login">
           <LoginButton text="Login" width="80vw" />
