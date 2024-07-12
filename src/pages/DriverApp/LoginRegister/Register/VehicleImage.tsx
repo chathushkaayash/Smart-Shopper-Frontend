@@ -24,6 +24,7 @@ const VehicleImage = ({ setStage }: Props) => {
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
       {/* --------------- Smart Shopper Logo --------------- */}
+
       <VStack>
         <Image src={Logo} width="150px" />
 
@@ -32,19 +33,18 @@ const VehicleImage = ({ setStage }: Props) => {
             Upload vehicle image
           </Text>
         </Box>
-        <Text
-          textAlign="center"
-          w="80vw"
-          fontSize="md"
-          color="gray"
-          fontWeight="bold"
-        >
-          Please upload a clear and legible image of your vehicle. Ensure the
-          image is less than 10MB.
-        </Text>
       </VStack>
-      <VStack
+      <Text
+        textAlign="center"
         w="80vw"
+        fontSize="md"
+        color="gray"
+        fontWeight="bold"
+      >
+        Please upload a clear and legible image of your vehicle. Ensure the
+        image is less than 10MB.
+      </Text>
+      <VStack
         gap="2vh"
         h="full"
         as="form"
@@ -53,6 +53,7 @@ const VehicleImage = ({ setStage }: Props) => {
         }}
       >
         {/* --------------- image upload --------------- */}
+
         <VStack justify="center" flex="1">
           <Box
             as="label"
@@ -78,16 +79,12 @@ const VehicleImage = ({ setStage }: Props) => {
               >
                 Browse Image
               </Button>
-              {/* <SubmitButton
-          borderRadius={10}
-          onClick={() => (inputFileRef.current as HTMLInputElement).click()}
-        >
-          Browse Image
-        </SubmitButton> */}
             </VStack>
           </Box>
         </VStack>
+
         {/* --------------- Submit button--------------- */}
+
         <VStack w="80vw">
           <SubmitButton borderRadius={10}>Next</SubmitButton>
           <DotIndicator

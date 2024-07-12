@@ -65,7 +65,7 @@ const Home = () => {
           Go Offline
         </Button>
       </Center>
-      <VStack bg="background" h="80vh" px="10vw" gap="4vh">
+      <VStack bg="background" h="80vh" px="8vw" gap="4vh">
         <HStack w="full" h="20vh" justifyContent={"space-between"} mt="2vh">
           {cards.map((card, index) => (
             <VStack

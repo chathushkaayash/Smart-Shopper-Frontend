@@ -1,18 +1,17 @@
-import { Route,  Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import DriverLogin from "../LoginRegister/Login/DriverLogin";
 import LoginRegister from "../LoginRegister/LoginRegister";
 import DriverRegister from "../LoginRegister/Register/DriverRegister";
 import Opportunities from "./Opportunities";
 import Home from "./Home";
-
-
-
+import RequestDetails from "./RequestDetails";
 
 const DriverMain = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/opportunities" element={<Opportunities />} />
+      <Route path="/opportunities/details" element={<RequestDetails />} />  {/* id should be at the end point instead of details */}
       <Route path="/login_register" element={<LoginRegister />} />
       <Route path="/login" element={<DriverLogin />} />
       <Route path="/register" element={<DriverRegister />} />
@@ -21,8 +20,3 @@ const DriverMain = () => {
 };
 
 export default DriverMain;
-
-
-
-
-

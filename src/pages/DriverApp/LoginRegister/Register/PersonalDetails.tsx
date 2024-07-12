@@ -51,11 +51,10 @@ const PersonalDetails = ({ setStage }: Props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
   return (
-    <VStack py="10vh" h="100vh">
-      <Image src={Logo} width="150px" />
+    <VStack py="6vh" h="100vh" gap="4vh">
       <VStack>
+        <Image src={Logo} width="150px" />
         <Text fontSize="lg" fontWeight="bold">
           Welcome to
         </Text>
@@ -65,14 +64,14 @@ const PersonalDetails = ({ setStage }: Props) => {
             Shopper
           </Text>
         </Box>
+        <Text fontSize="md" color="gray" fontWeight="bold">
+          Please enter your SignUp details
+        </Text>
       </VStack>
-      <Text fontSize="md" color="gray" fontWeight="bold">
-        Please enter your SignUp details
-      </Text>
 
       <VStack
+        h="full"
         w="80vw"
-        className="h-[100%] mt-5"
         as="form"
         justifyContent="space-between"
         onSubmit={handleSubmit(onOpen)}

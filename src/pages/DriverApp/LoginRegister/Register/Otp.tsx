@@ -41,7 +41,7 @@ const Otp = ({ setStage }: Props) => {
   }, [pin, setStage]);
 
   return (
-    <VStack py="10vh" h="100vh" gap="6vh">
+    <VStack py="6vh" h="100vh" gap="8vh">
       <VStack>
         <Image src={Logo} width="150px" />
         <Box display="inline" fontSize="2xl" fontWeight="bold">
@@ -76,13 +76,8 @@ const Otp = ({ setStage }: Props) => {
           </PinInput>
         </form>
       </Box>
-      <Image
-        src={Phone}
-        width="180px"
-        className=" "
-        justifyContent="center"
-      />
-      <Text >
+      <Image src={Phone} width="180px" className=" " justifyContent="center" />
+      <Text>
         I didn't receive any code.{" "}
         <Button variant="link" color="primary">
           RESEND

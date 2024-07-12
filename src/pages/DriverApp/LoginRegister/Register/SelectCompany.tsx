@@ -28,27 +28,31 @@ const SelectCompany = ({ setStage }: Props) => {
   const companies = ["DHL", "FedEx", "UPS", "USPS", "TNT", "Aramex", "DPD"];
 
   return (
-    <VStack py="10vh" h="100vh" justifyContent="space-between">
-      <VStack gap="5vh">
-        <VStack>
-          <Image src={Logo} width="150px" />
-          {/* <VStack> */}
-          <Box display="inline" fontSize="2xl" fontWeight="bold">
-            <Text fontSize="lg" fontWeight="bold">
-              Select Company
-            </Text>
-          </Box>
-
-          <Text fontSize="md" color="gray" fontWeight="bold">
-            Please Select your Courier Company
+    <VStack py="6vh" h="100vh" gap="4vh">
+      <VStack>
+        <Image src={Logo} width="150px" />
+        <Box display="inline" fontSize="2xl" fontWeight="bold">
+          <Text fontSize="lg" fontWeight="bold">
+            Select Company
           </Text>
-        </VStack>
-        <InputGroup borderColor="primary" w="80vw">
-          <InputLeftElement>
-            <Icon as={IoSearchSharp} color="primary" />
-          </InputLeftElement>
-          <Input placeholder="Search for a company" borderRadius="full" />
-        </InputGroup>
+        </Box>
+        <Text fontSize="md" color="gray" fontWeight="bold">
+          Please Select your Courier Company
+        </Text>
+      </VStack>
+
+      {/* --------------- Search Bar --------------- */}
+
+      <InputGroup borderColor="primary" w="80vw">
+        <InputLeftElement>
+          <Icon as={IoSearchSharp} color="primary" />
+        </InputLeftElement>
+        <Input placeholder="Search for a company" borderRadius="full" />
+      </InputGroup>
+
+      {/* --------------- form --------------- */}
+
+      <VStack as="form" gap="2vh" h="full" justifyContent="space-between">
         <Box
           w="80vw"
           h="40vh"
@@ -56,8 +60,6 @@ const SelectCompany = ({ setStage }: Props) => {
           borderWidth="1px"
           borderRadius="10"
           p={4}
-          // mt={4}
-
           boxShadow="lg"
           css={{
             //   '&::-webkit-scrollbar': { display: 'none' },
@@ -98,13 +100,16 @@ const SelectCompany = ({ setStage }: Props) => {
             ))}
           </List>
         </Box>
-      </VStack>
-
-      <VStack w="80vw" mt="auto">
-        <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
-          Next
-        </SubmitButton>
-        <DotIndicator current={1} total={4}  className="absolute bottom-[2vh]"/>
+        <VStack w="80vw">
+          <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
+            Next
+          </SubmitButton>
+          <DotIndicator
+            current={1}
+            total={4}
+            className="absolute bottom-[2vh]"
+          />
+        </VStack>
       </VStack>
     </VStack>
   );

@@ -50,7 +50,7 @@ const EnterPassword = ({ setStage }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <VStack py="10vh" h="100vh">
+    <VStack py="6vh" h="100vh" gap="4vh">
       <Image src={Logo} width="150px" />
 
       <Text fontSize="md" color="gray" fontWeight="bold">
@@ -58,9 +58,10 @@ const EnterPassword = ({ setStage }: Props) => {
       </Text>
 
       <VStack
-        w="80vw"
-        className="h-[100%] mt-5"
         as="form"
+        gap="2vh"
+        h="full"
+        px="10vw"
         justifyContent="space-between"
         onSubmit={handleSubmit(() => setStage(6))}
       >
@@ -97,7 +98,11 @@ const EnterPassword = ({ setStage }: Props) => {
           </Text>
 
           <SubmitButton borderRadius={10}>Request to SignUp</SubmitButton>
-          <DotIndicator current={4} total={4} />
+          <DotIndicator
+            current={4}
+            total={4}
+            className="absolute bottom-[2vh]"
+          />
         </VStack>
       </VStack>
 
