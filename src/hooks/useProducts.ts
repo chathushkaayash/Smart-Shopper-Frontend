@@ -1,20 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { CACHE_KEY_GAMES } from "../react-query/constants";
 import { ProductQuery } from "../App";
-import APIClient, { FetchResponse } from "../react-query/services/api-client";
+import APIClient, { FetchResponse } from "@/services/api-client";
 
-// import { Platform } from "./usePlatforms";
 
 export interface Product {
-    itemID: number;
+  itemID: number;
   name: string;
-  amount: number;
+  price: number;
   imageUrl: string;
 }
 
-// const apiClient = new APIClient<Product>("/products");
-
-// for keels api
 const apiClient = new APIClient<Product>("/products");
 
 const useProducts = (productQuery: ProductQuery) => {

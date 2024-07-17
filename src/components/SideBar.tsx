@@ -1,3 +1,4 @@
+import useAuthStore from "@/state-management/auth/store";
 import { Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { FaCartFlatbed, FaShop } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
@@ -6,6 +7,7 @@ import { IoSettings } from "react-icons/io5";
 import { MdViewSidebar } from "react-icons/md";
 import { RiAdvertisementFill } from "react-icons/ri";
 import { TbTransactionDollar, TbTruckDelivery } from "react-icons/tb";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface MenuItem {
   icon: React.ComponentType<any>;
@@ -13,35 +15,43 @@ interface MenuItem {
   path?: string;
 }
 
-interface Props {
-  adminPage: string;
-  setAdminPage: (page: string) => void;
-}
+const SideBar = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
 
-const SideBar = ({ adminPage, setAdminPage }: Props) => {
   const menuItems: MenuItem[] = [
-    { icon: MdViewSidebar, label: "Overview" },
-    { icon: IoMdPeople, label: "Customers" },
-    { icon: FaShop, label: "Super Markets" },
-    { icon: TbTruckDelivery, label: "Courier Services" },
-    { icon: FaCartFlatbed, label: "Orders", path: "/admin-Orders" },
-    { icon: TbTransactionDollar, label: "Transactions" },
-    { icon: RiAdvertisementFill, label: "Advertisements" },
-    { icon: IoSettings, label: "Settings" },
-    { icon: FiLogOut, label: "Logout" },
+    { icon: MdViewSidebar, label: "Overview", path: "/overview" },
+    { icon: IoMdPeople, label: "Customers", path: "/customers" },
+    { icon: FaShop, label: "Super Markets", path: "/supermarkets" },
+    {
+      icon: TbTruckDelivery,
+      label: "Courier Services",
+      path: "/courier-services",
+    },
+    { icon: FaCartFlatbed, label: "Orders", path: "/orders" },
+    { icon: TbTransactionDollar, label: "Transactions", path: "/transactions" },
+    {
+      icon: RiAdvertisementFill,
+      label: "Advertisements",
+      path: "/advertisements",
+    },
+    { icon: IoSettings, label: "Settings", path: "/settings" },
+    { icon: FiLogOut, label: "Logout", path: "/logout" },
   ];
+
+  console.log(location.pathname);
 
   return (
     <VStack
       w="14vw"
-      h="full"
+      h="90vh"
       pos="fixed"
       color="gray.800"
       fontWeight="500"
       spacing={3}
-      pl={2}
+      pl={1}
       shadow="lg"
-      bg="gray.50"
     >
       <Heading fontSize="2xl" color="primary" mt={2} p={2}>
         My Account
@@ -54,12 +64,19 @@ const SideBar = ({ adminPage, setAdminPage }: Props) => {
           p={2}
           w="full"
           cursor="pointer"
-          bg={adminPage === item.label ? "white" : ""}
-          borderLeft={adminPage === item.label ? "5px solid" : ""}
-          borderColor={adminPage === item.label ? "primary" : ""}
-          // borderLeftRadius="md"
+          bg={pathname === item.path ? "rgba(255, 119, 8, 0.2)" : ""}
+          borderLeft={pathname === item.path ? "5px solid" : ""}
+          borderColor={pathname === item.path ? "primary" : ""}
           _hover={{ bg: "gray.100" }}
-          onClick={() => setAdminPage(item.label)}
+          onClick={() => {
+            if (item.label === "Logout") {
+              logout();
+            } else {
+              navigate(`${item.path}`);
+            }
+          }}
+          mt={item.path === "/logout" ? 'auto' : 0}
+          mb={item.path === "/logout" ? 4 : 0}
         >
           <item.icon size={20} />
           <Text ml={2} fontSize="lg">

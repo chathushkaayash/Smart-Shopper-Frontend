@@ -40,10 +40,13 @@ form {
   } */
 
 .slick-dots li button:before {
-  color: #e46c0a !important;
-  font-size: 1rem;
+  color: #ff7708 !important;
+  font-size: 1rem !important;
+  opacity: 30% !important;
 }
 
 .slick-dots li.slick-active button:before {
-  color: #e46c0a !important;
+  color: #ff7708 !important;
+  font-size: 1rem !important;
+  opacity: 100% !important;
 }

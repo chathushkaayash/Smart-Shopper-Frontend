@@ -90,6 +90,8 @@ const BrowseByCategory = () => {
                 padding={5}
                 flexDirection="column"
                 gap={2}
+                shadow='md'
+                borderWidth='1.5px'
               >
                 {category.icon}
                 <Text fontWeight={600}>{category.name}</Text>

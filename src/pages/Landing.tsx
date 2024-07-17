@@ -39,7 +39,7 @@ const Landing = () => {
         <VStack
           justifyContent="center"
           alignItems="center"
-          bg="background"
+          bg=""
           gap={0}
           pt="5vh"
         >

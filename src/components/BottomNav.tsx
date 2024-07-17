@@ -1,6 +1,5 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 
-import { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsTruck } from "react-icons/bs";
 import { CiDollar, CiSearch, CiUser } from "react-icons/ci";
@@ -9,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNav = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const hideNavbarPaths = [
     "/login",
     "/signup",
@@ -20,8 +19,6 @@ const BottomNav = () => {
   const showBottomNav = !hideNavbarPaths.some((path) =>
     location.pathname.startsWith(path)
   );
-
-  const [active, setActive] = useState(0);
 
   const consumerIconsList = [
     { icon: <IoHomeOutline fontSize={20} />, text: "Home", path: "/" },
@@ -46,18 +43,26 @@ const BottomNav = () => {
       text: "Wallet",
       path: "/driver/wallet",
     },
-    { icon: <CiDollar fontSize={20} />, text: "Earnings", path: "/driver/earnings" },
-    { icon: <CiUser fontSize={20} />, text: "Account", path: "/driver/account" },
+    {
+      icon: <CiDollar fontSize={20} />,
+      text: "Earnings",
+      path: "/driver/earnings",
+    },
+    {
+      icon: <CiUser fontSize={20} />,
+      text: "Account",
+      path: "/driver/account",
+    },
   ];
 
   const iconsList = location.pathname.startsWith("/driver")
     ? driverIconsList
     : consumerIconsList;
 
-  const handleOnClick = (index: number) => {
-    setActive(index);
-    navigate(iconsList[index].path);
-  };
+  const currentIndex = iconsList.findIndex(
+    (icon, index) =>
+      pathname === icon.path || (pathname.startsWith(icon.path) && index !== 0)
+  );
 
   return (
     <>
@@ -78,17 +83,19 @@ const BottomNav = () => {
               key={index}
               h="full"
               className=" cursor-pointer relative"
-              onClick={() => handleOnClick(index)}
+              onClick={() => navigate(iconsList[index].path)}
             >
               <Box
                 bg="primary"
                 className={`${
-                  active === index ? "-translate-y-6 opacity-100" : " opacity-0"
+                  currentIndex === index
+                    ? "-translate-y-6 opacity-100"
+                    : " opacity-0"
                 } duration-700  border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
               ></Box>
               <Box
                 className={`duration-500 ${
-                  active === index ? " -translate-y-6" : ""
+                  currentIndex === index ? " -translate-y-6" : ""
                 }`}
               >
                 {icon.icon}
@@ -96,7 +103,7 @@ const BottomNav = () => {
               <Text
                 fontSize={12}
                 className={` absolute ${
-                  active === index
+                  currentIndex === index
                     ? "translate-y-2 duration-700 opacity-100"
                     : " opacity-0 translate-y-10"
                 }`}

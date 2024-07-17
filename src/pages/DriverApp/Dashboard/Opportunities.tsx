@@ -8,6 +8,7 @@ const Opportunities = () => {
 
   const requests = [
     {
+      id: 1,
       name: "John Doe",
       location: "New York",
       nOS: 5,
@@ -15,27 +16,15 @@ const Opportunities = () => {
       tripCost: 1000,
     },
     {
-      name: "John Doe",
-      location: "New York",
-      nOS: 5,
-      totalDistance: 100,
-      tripCost: 1000,
+      id: 2,
+      name: "Jane Doe",
+      location: "California",
+      nOS: 3,
+      totalDistance: 50,
+      tripCost: 500,
     },
     {
-      name: "John Doe",
-      location: "New York",
-      nOS: 5,
-      totalDistance: 100,
-      tripCost: 1000,
-    },
-    {
-      name: "John Doe",
-      location: "New York",
-      nOS: 5,
-      totalDistance: 100,
-      tripCost: 1000,
-    },
-    {
+      id: 3,
       name: "John Doe",
       location: "New York",
       nOS: 5,
@@ -63,7 +52,7 @@ const Opportunities = () => {
             background="white"
             w="full"
             borderRadius="10"
-            onClick={() => navigate("/driver/opportunities/details")}
+            onClick={() => navigate("/driver/opportunities/" + request.id)}
           >
             <VStack align="start">
               <Text fontWeight="bold">{request.name}</Text>

@@ -9,6 +9,9 @@ interface Props {
 const ProductCardContainer = ({ children, className }: Props) => {
   return (
     <Box
+      borderWidth="1.5px"
+      borderRadius="lg"
+      my={4}
       h="clamp(350px,350px,350px)"
       w="clamp(250px,250px,250px)"
       _hover={{

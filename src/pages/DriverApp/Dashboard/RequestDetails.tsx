@@ -6,21 +6,19 @@ import {
   Spacer,
   Step,
   StepDescription,
-  StepIcon,
   StepIndicator,
-  StepNumber,
   Stepper,
   StepSeparator,
   StepStatus,
   StepTitle,
   Text,
   useSteps,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { LuCircleDot } from "react-icons/lu";
-import { PiDotsThreeVerticalBold } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 interface Opportunity {
   id: string;
@@ -37,6 +35,8 @@ interface Opportunity {
 }
 
 const RequestDetails = () => {
+  const navigate = useNavigate();
+
   const opportunity: Opportunity = {
     id: "1",
     supermarketList: ["New York", "Los Angeles"],
@@ -85,6 +85,7 @@ const RequestDetails = () => {
           borderRadius="50%"
           shadow="xl"
           borderWidth={1}
+          onClick={() => navigate("/driver/opportunities")}
         >
           <Icon as={IoMdArrowRoundBack} w={10} h={10} p={1} />
         </Box>

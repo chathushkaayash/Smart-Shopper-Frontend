@@ -16,7 +16,7 @@ const theme = extendTheme({
   // },
   colors: {
     // primary: "#E46C0A",  //Orange
-    primary: "#ff7708",  //Orange lightest
+    primary: "#ff7708",  //Orange lightest rgb(255, 119, 8)
     secondary: "#E9893B",  //Light Orange
     // background: "#EFF2F6",  //Light Gray
     background: "#f2f2f2",  //Light Gray

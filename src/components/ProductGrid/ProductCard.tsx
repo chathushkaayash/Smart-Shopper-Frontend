@@ -46,8 +46,8 @@ const ProductCard = ({ product }: Props) => {
             {product.name}
           </Text>
           <Flex gap={3}>
-            <Text color="primary">Rs{product.amount}</Text>
-            <Text as="del">Rs{product.amount}</Text>
+            <Text color="primary">Rs{product.price}</Text>
+            <Text as="del">Rs{product.price}</Text>
           </Flex>
           <RatingStars className="mb-10" value={5} reviews={75} />
         </Stack>

@@ -11,9 +11,10 @@ const MiddleContainer = ({ children, width = "70vw", className }: Props) => {
     <Flex
       width="100vw"
       minHeight={{ base: "100vh", md: "90vh" }}
-      bg="background"
+      bg="white"
       justifyContent="center"
       alignItems="center"
+      
     >
       <Box
         width={{ base: "100vh", md: "90vw", lg: width }}
@@ -21,6 +22,8 @@ const MiddleContainer = ({ children, width = "70vw", className }: Props) => {
         borderRadius={20}
         bg="white"
         overflow="hidden"
+        boxShadow="md"
+        borderWidth={1}
         className={className}
       >
         {children}
