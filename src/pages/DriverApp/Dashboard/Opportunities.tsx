@@ -4,7 +4,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
 const Opportunities = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const requests = [
     {
@@ -20,19 +20,22 @@ const navigate = useNavigate();
       nOS: 5,
       totalDistance: 100,
       tripCost: 1000,
-    },  {
+    },
+    {
       name: "John Doe",
       location: "New York",
       nOS: 5,
       totalDistance: 100,
       tripCost: 1000,
-    },  {
+    },
+    {
       name: "John Doe",
       location: "New York",
       nOS: 5,
       totalDistance: 100,
       tripCost: 1000,
-    },  {
+    },
+    {
       name: "John Doe",
       location: "New York",
       nOS: 5,
@@ -50,9 +53,10 @@ const navigate = useNavigate();
 
   return (
     <>
-      <VStack minH="100vh" px="8vw" pt='5vh' pb='10vh' gap="4vh">
-        {requests.map((request) => (
+      <VStack minH="100vh" px="8vw" pt="5vh" pb="10vh" gap="4vh">
+        {requests.map((request, index) => (
           <Box
+            key={index}
             shadow="xl"
             borderWidth={1}
             p={4}
