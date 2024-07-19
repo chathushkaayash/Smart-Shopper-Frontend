@@ -1,5 +1,6 @@
+import DesktopWarning from "@/pages/DriverApp/DesktopWarning";
 import useAuthStore from "@/state-management/auth/store";
-import { Heading, useMediaQuery } from "@chakra-ui/react";
+import {useMediaQuery } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const DriverLayout = () => {
@@ -9,7 +10,7 @@ const DriverLayout = () => {
   if (user?.role !== "driver")
     return <Navigate to={"/driver/login_register"} />;
 
-  return <>{isMobile[0] ? <Outlet /> : <Heading>Please use a mobile Device</Heading>}</>;
+  return <>{isMobile[0] ? <Outlet /> : <DesktopWarning/>}</>;
 };
 
 export default DriverLayout;

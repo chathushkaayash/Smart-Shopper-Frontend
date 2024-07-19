@@ -3,10 +3,19 @@ import { Box, HStack, Icon, Spacer, Text, VStack } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
+interface Request{
+  id: number;
+  name: string;
+  location: string;
+  nOS : number;
+  totalDistance: number;
+  tripCost : number;
+}
+
 const Opportunities = () => {
   const navigate = useNavigate();
 
-  const requests = [
+  const requests:Request[] = [
     {
       id: 1,
       name: "John Doe",

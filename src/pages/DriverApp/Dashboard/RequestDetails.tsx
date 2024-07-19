@@ -13,7 +13,7 @@ import {
   StepTitle,
   Text,
   useSteps,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -28,7 +28,6 @@ interface Opportunity {
 
   orderPlacedOn: string;
   customer: string;
-  contactNumber: string;
   deliveryCost: number;
   startLocation: string;
   deliveryLocation: string;
@@ -44,7 +43,6 @@ const RequestDetails = () => {
     tripCost: 1000,
     orderPlacedOn: "2021-09-01",
     customer: "John Doe",
-    contactNumber: "1234567890",
     deliveryCost: 100,
     startLocation: "Moratuwa",
     deliveryLocation: "Nugegoda",
@@ -59,7 +57,6 @@ const RequestDetails = () => {
   const orderDetails = [
     { label: "Order Placed on", value: opportunity.orderPlacedOn },
     { label: "Customer", value: `${opportunity.customer}` },
-    { label: "Contact number", value: `${opportunity.contactNumber}` },
     { label: "Delivery Cost", value: `${opportunity.deliveryCost}` },
     { label: "Start Location", value: `${opportunity.startLocation}` },
     { label: "Delivery Location", value: `${opportunity.deliveryLocation}` },
@@ -136,18 +133,8 @@ const RequestDetails = () => {
           ))}
         </VStack>
       </Box>
-      <Text fontWeight="bold">Map</Text>
-      <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10">
-        Map
-      </Box>
       <Text fontWeight="bold">Route</Text>
       <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10">
-        {/* <HStack>
-          <Icon as={LuCircleDot} />
-          <Text></Text>
-        </HStack>
-        <Icon as={PiDotsThreeVerticalBold} />
-        <Icon as={FaLocationDot} /> */}
         <Stepper
           index={activeStep}
           orientation="vertical"
@@ -158,7 +145,7 @@ const RequestDetails = () => {
             <Step key={index}>
               <StepIndicator border={"none"}>
                 <StepStatus
-                  complete={<LuCircleDot />}
+                  // complete={<LuCircleDot />}
                   incomplete={<FaLocationDot />}
                   active={<LuCircleDot />}
                 />
@@ -173,6 +160,10 @@ const RequestDetails = () => {
             </Step>
           ))}
         </Stepper>
+      </Box>
+      <Text fontWeight="bold">Map</Text>
+      <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10">
+        Map
       </Box>
     </VStack>
   );
