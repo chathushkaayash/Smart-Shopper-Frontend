@@ -61,9 +61,9 @@ const BestSellingProducts = () => {
     >
       <SimpleSlider config={config}>
         {products?.pages?.[0].results.map((product) => (
-          <Box key={product.itemID}>
+          <Box key={product.id}>
             {/*Added a margin right to remove the next items shadow */}
-            <ProductCardContainer key={product.itemID} className="!mx-auto">
+            <ProductCardContainer className="!mx-auto">
               <ProductCard product={product} />
             </ProductCardContainer>
           </Box>

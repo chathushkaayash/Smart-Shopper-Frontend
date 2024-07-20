@@ -6,12 +6,13 @@ import {
   IconButton,
   Image,
   Stack,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Product } from "../../hooks/useProducts";
 import RatingStars from "../Inputs/Rating";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   product: Product;
@@ -19,8 +20,14 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const [isLiked, setIsLiked] = useState(false);
+  const navigate = useNavigate();
   return (
-    <Card h="full" boxShadow="" className="shadow-lg rounded-3xl">
+    <Card
+      h="full"
+      boxShadow=""
+      className="shadow-lg rounded-3xl"
+      onClick={() => navigate(`/products/${product.id}`)}
+    >
       <Center h={240}>
         <IconButton
           borderRadius={5}

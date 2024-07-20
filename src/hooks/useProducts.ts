@@ -5,11 +5,13 @@ import APIClient, { FetchResponse } from "@/services/api-client";
 
 
 export interface Product {
-  itemID: number;
+  id: number;
   name: string;
+  description: string;
   price: number;
   imageUrl: string;
 }
+
 
 const apiClient = new APIClient<Product>("/products");
 

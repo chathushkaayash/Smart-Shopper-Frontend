@@ -2,7 +2,7 @@ import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import { BsCartPlus } from "react-icons/bs";
 
 interface Props {
-    price: string;
+    price: number;
     image: string;
     distance: string;
 }
@@ -10,7 +10,7 @@ interface Props {
 const SupermarketPriceRow = ({ price, image, distance }: Props) => {
   return (
     <Flex align="center" gap="40px"  alignSelf="flex-start" mb={4}>
-      <Image src={image} />
+      <Image src={image} w='5vw' />
       <Text fontSize="18px" fontWeight="semibold" >{price}</Text>
       <Text fontSize="18px" fontWeight="semibold" >{distance}</Text>
       <Button 

@@ -49,7 +49,7 @@ const ProductGrid = ({ productQuery }: Props) => {
           {products?.pages?.map((page, index) => (
             <React.Fragment key={index}>
               {page.results.map((product) => (
-                <ProductCardContainer key={product.itemID}>
+                <ProductCardContainer key={product.id}>
                   <ProductCard product={product} />
                 </ProductCardContainer>
               ))}
