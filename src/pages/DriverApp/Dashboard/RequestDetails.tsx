@@ -80,8 +80,9 @@ const RequestDetails = () => {
           p={1}
           background="white"
           borderRadius="50%"
-          shadow="xl"
-          borderWidth={1}
+          // shadow="xl"
+          // borderWidth={1}
+          cursor="pointer"
           onClick={() => navigate("/driver/opportunities")}
         >
           <Icon as={IoMdArrowRoundBack} w={10} h={10} p={1} />

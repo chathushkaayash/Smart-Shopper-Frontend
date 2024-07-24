@@ -51,7 +51,7 @@ const Opportunities = () => {
 
   return (
     <>
-      <VStack minH="100vh" px="8vw" pt="5vh" pb="10vh" gap="4vh">
+      <VStack minH="100vh" px="8vw" pt="5vh" pb="10vh" gap="4vh"  >
         {requests.map((request, index) => (
           <Box
             key={index}
@@ -61,6 +61,7 @@ const Opportunities = () => {
             background="white"
             w="full"
             borderRadius="10"
+            
             onClick={() => navigate("/driver/opportunities/" + request.id)}
           >
             <VStack align="start">
