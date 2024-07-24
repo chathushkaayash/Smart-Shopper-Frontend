@@ -32,12 +32,16 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/cart" element={<CartDetails />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/ConsumerProfile" element={<ConsumerProfile />} />
-          <Route path="/ShippingAddress" element={<ShippingAddress />} />
+          <Route path="/profile" element={<ConsumerProfile />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/paymentSuccessful" element={<PaymentSuccessful />} />
+           <Route path="/orders" element={<Orders />} />
+          <Route path="/vieworders" element={<ViewOrders />} />
           <Route path="/Footer" element={<Footer />} />
           <Route path="/test" element={<Test />} />
+
+          <Route path="/driver/login_register" element={<LoginRegister />} />
+          <Route path="/driver/login" element={<DriverLogin />} />
 
           <Route path="/driver/*" element={<DriverMain />} />
 
