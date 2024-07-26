@@ -11,13 +11,43 @@ import {
   Stack,
   Image,
   IconButton,
+  useDisclosure,
+  Icon,
+  ModalHeader,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
+  Radio,
+  RadioGroup,
+  Spacer,
+  Textarea,
 } from "@chakra-ui/react";
-import { EditIcon, InfoIcon } from "@chakra-ui/icons";
+import { EditIcon, InfoIcon, SearchIcon } from "@chakra-ui/icons";
 import { IoIosArrowBack } from "react-icons/io";
-import { MdOutlineLocationOn } from "react-icons/md";
-import { FaRegUser } from "react-icons/fa";
+import {  MdOutlineLocationOn } from "react-icons/md";
+import {  FaRegUser } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import deliveryLoc from "../../../src/assets/deliveryToLocation.png";
+import delHome from "../../../src/assets/delHome.png";
 
 const Checkout = () => {
+  const {
+    isOpen: isOpen1,
+    onOpen: onOpen1,
+    onClose: onClose1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onClose: onClose2,
+  } = useDisclosure();
+
   return (
     <ChakraProvider>
       <Box maxWidth="1200px" margin="0 auto" padding="4">
@@ -69,6 +99,7 @@ const Checkout = () => {
                       }}
                       size="sm"
                       rightIcon={<EditIcon />}
+                      onClick={onOpen2}
                     >
                       Edit
                     </Button>
@@ -113,6 +144,7 @@ const Checkout = () => {
                         transform: "scale(0.98)",
                         borderColor: "orange.400",
                       }}
+                      onClick={onOpen1}
                     >
                       Edit
                     </Button>
@@ -200,6 +232,139 @@ const Checkout = () => {
           </Box>
         </Flex>
       </Box>
+       {/* /////////modal1 */}
+
+       <Modal blockScrollOnMount={false} isOpen={isOpen1} onClose={onClose1}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex direction={"column"} my={6}>
+              <Heading fontSize={"lg"} my={2}>
+                Addresses
+              </Heading>
+
+              <Box mb={3}>
+                <InputGroup>
+                  <InputLeftAddon>
+                    <Icon as={SearchIcon} boxSize={5} />
+                  </InputLeftAddon>
+                  <Input variant="filled" placeholder="Search for an address" />
+                </InputGroup>
+              </Box>
+
+              <Heading fontSize={"lg"} my={2}>
+                Saved Addresses
+              </Heading>
+              <Flex bg="gray.100" shadow={"sm"} px={2} py={2} borderRadius={5}>
+                <HStack>
+                  <Icon as={FaLocationDot} boxSize={5} />
+                  <Text>Kiribathgoda</Text>
+                </HStack>
+                <Spacer />
+                <Box>
+                  <Icon as={EditIcon} boxSize={5} />
+                </Box>
+              </Flex>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      {/* /////////modal1/////// */}
+
+      {/* /////////modal2 */}
+
+      <Modal blockScrollOnMount={false} isOpen={isOpen2} onClose={onClose2}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex direction={"column"}>
+              <Heading fontSize={"xl"} my={2}>
+                Drop off options
+              </Heading>
+              <Text fontSize={"xs"}>Delivery to Kiribathgoda</Text>
+
+              <Box
+                p={2}
+                border="2px"
+                borderColor={"black"}
+                borderRadius={10}
+                my={2}
+              >
+                <Flex alignItems={"center"}>
+                  <Image src={delHome} boxSize={9} />
+                  <Text mx={"2%"} fontWeight={"500"} fontSize="lg">
+                    Hand it to me
+                  </Text>
+                </Flex>
+
+                <RadioGroup colorScheme="blackAlpha" defaultValue="door">
+                  <Stack direction="column" fontWeight="500">
+                    <Flex
+                      justifyContent="space-between"
+                      px={3}
+                      py={2}
+                      borderRadius={5}
+                    >
+                      <Text>Meet at my door</Text>
+                      <Radio value="door" />
+                    </Flex>
+                    <Flex
+                      justifyContent="space-between"
+                      px={3}
+                      py={2}
+                      borderRadius={5}
+                    >
+                      <Text>Meet outside</Text>
+                      <Radio value="outside" />
+                    </Flex>
+                    <Flex
+                      justifyContent="space-between"
+                      px={3}
+                      py={2}
+                      borderRadius={5}
+                    >
+                      <Text>Meet in the lobby</Text>
+                      <Radio value="lobby" />
+                    </Flex>
+                  </Stack>
+                </RadioGroup>
+              </Box>
+
+              <Flex
+                alignItems={"center"}
+                p={2}
+                py={3}
+                boxShadow={"xs"}
+                borderRadius={5}
+              >
+                <Image src={deliveryLoc} boxSize={9} />
+                <Text mx={"2%"} fontWeight={"500"} fontSize="lg">
+                  Leave at location
+                </Text>
+              </Flex>
+
+              <Text fontWeight={"500"} fontSize={"sm"} my={3}>
+                Instructions for Delivery Person
+              </Text>
+
+              <Textarea
+                // value={value}
+                //onChange={handleInputChange}
+                placeholder="Example : please knock instead of ringing the doorbell"
+                size="sm"
+              />
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+            <Button bg="#ff7708" mr={3} color="white">
+              Update
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {/* /////////modal2/////// */}
     </ChakraProvider>
   );
 };
