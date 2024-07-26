@@ -9,11 +9,11 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react";
-import Accordian from "../components/Accordian";
-import IconButton from "../components/Buttons/IconButton";
-import TextButton from "../components/Buttons/TextButton";
-import CartItemCard from "../components/CartItemCard";
-import MainContainer from "../components/MainContainer";
+import Accordian from "../../components/Accordian";
+import IconButton from "../../components/Buttons/IconButton";
+import TextButton from "../../components/Buttons/TextButton";
+import CartItemCard from "../../components/CartItemCard";
+import MainContainer from "../../components/MainContainer";
 
 const CardDetails = () => {
     const accordionItems = [

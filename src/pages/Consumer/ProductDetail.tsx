@@ -1,9 +1,9 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 
-import AddToCartButton from "../components/Buttons/AddToCartButton";
-import BackArrow from "../components/PriceComparison/BackArrow";
-import PriceComparison from "../components/PriceComparison/PriceComparison";
-import ProductDescription from "../components/PriceComparison/ProductDescription";
+import AddToCartButton from "../../components/Buttons/AddToCartButton";
+import BackArrow from "../../components/PriceComparison/BackArrow";
+import PriceComparison from "../../components/PriceComparison/PriceComparison";
+import ProductDescription from "../../components/PriceComparison/ProductDescription";
 
 import useProduct from "@/hooks/useProduct";
 import { Spinner } from "flowbite-react";

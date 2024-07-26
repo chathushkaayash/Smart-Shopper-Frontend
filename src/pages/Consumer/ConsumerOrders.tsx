@@ -10,9 +10,9 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import AllView from "../components/ConsumerOrders/ViewAll";
-import ToPay from "../components/ConsumerOrders/ToPay";
-import Processed from "../components/ConsumerOrders/Processed";
+import AllView from "../../components/ConsumerOrders/ViewAll";
+import ToPay from "../../components/ConsumerOrders/ToPay";
+import Processed from "../../components/ConsumerOrders/Processed";
 
 const ConsumerOrders: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("View All");

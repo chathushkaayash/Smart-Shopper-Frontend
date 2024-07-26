@@ -1,5 +1,5 @@
-import OrderId from "../components/ViewOrders/OrderId";
-import OrderItems from "../components/ViewOrders/OrderItems";
+import OrderId from "../../components/ViewOrders/OrderId";
+import OrderItems from "../../components/ViewOrders/OrderItems";
 import { Box } from "@chakra-ui/react";
 
 const ViewOrders = () => {

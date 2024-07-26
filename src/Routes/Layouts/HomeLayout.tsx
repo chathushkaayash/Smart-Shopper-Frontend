@@ -1,4 +1,4 @@
-import Landing from "@/pages/Landing";
+import Landing from "@/pages/Consumer/Landing";
 import Login from "@/pages/Login";
 import useAuthStore from "@/state-management/auth/store";
 import { Navigate } from "react-router-dom";

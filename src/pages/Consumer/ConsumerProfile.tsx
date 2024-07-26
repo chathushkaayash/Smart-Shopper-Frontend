@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
-import ProfileDetail from "../components/ConsumerProfile/ProfileDetail";
-import ShippingAddress from "../components/ConsumerProfile/ShippingAddress";
+import ProfileDetail from "../../components/ConsumerProfile/ProfileDetail";
+import ShippingAddress from "../../components/ConsumerProfile/ShippingAddress";
 
 const ConsumerProfile: React.FC = () => {
   return (

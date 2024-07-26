@@ -1,11 +1,10 @@
-import React from "react";
 import {
   Box,
   Button,
   Flex,
   Grid,
   GridItem,
-  HStack,
+  HStack, 
   Image,
   Input,
   Modal,
@@ -14,17 +13,25 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 
-const ProfileDetail: React.FC = () => {
+const ProfileDetail = () => {
   const {
     isOpen: isEdit,
     onOpen: onEdit,
     onClose: onEditClose,
   } = useDisclosure();
+
+  const {
+    isOpen: isForgetPassword,
+    onOpen: onForgetPassword,
+    onClose: onForgetPasswordClose,
+  } = useDisclosure();
+
   return (
     <Box bg="white" borderRadius="10px" boxShadow="md" overflow="hidden" pb={4}>
       <Box bg="primary" position="relative" p={4} h="70">
@@ -106,6 +113,7 @@ const ProfileDetail: React.FC = () => {
           </GridItem>
         </Grid>
       </VStack>
+
       {/* Edit Personal Details Modal */}
       <Modal
         isOpen={isEdit}
@@ -114,15 +122,15 @@ const ProfileDetail: React.FC = () => {
         closeOnOverlayClick={false}
       >
         <ModalOverlay backdropFilter="blur(5px)" />
-        <ModalContent borderRadius="15px">
+        <ModalContent borderRadius="15px" maxW="60vw">
           <ModalHeader textAlign="left" fontWeight="semibold" fontSize="20">
-            Update Profile
-            <Flex justifyContent="flex-end">
+            <Flex justifyContent="space-between" mt={3}>
+              Update Profile
               <Button
                 w="auto"
-                mr={4}
-                mt={4}
-                onClick={onEdit}
+                mr={2}
+                mt={0}
+                onClick={onForgetPassword}
                 variant="outline"
                 color="white"
                 borderColor="primary"
@@ -144,25 +152,78 @@ const ProfileDetail: React.FC = () => {
             </Flex>
           </ModalHeader>
           <ModalBody>
-            <Box>
-              <HStack>
-                <Image />
-                <Text fontWeight="medium" color="black">
-                  T.B.A.Jayadewa
-                </Text>
-              </HStack>
-              <HStack>
-                <Text fontWeight="medium" color="black">
-                  Full Name 
-                </Text>
-                <Input placeholder="Full Name" />
-              </HStack>
+            <Box margin="0 auto">
+              <Box borderRadius="md" width="100%">
+                <Stack spacing={0}>
+                  <Flex justifyContent="center" alignItems="center">
+                    <VStack align="center" spacing={4} mr={8}>
+                      <Box
+                        borderWidth="1px"
+                        borderRadius="md"
+                        width="250px"
+                        height="250px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        mb={2}
+                        bgColor="#EDF2F6"
+                      >
+                        <Text>Upload your photo</Text>
+                      </Box>
+                      <Text>Jayadewa T.B. A</Text>
+                    </VStack>
+                    <Stack spacing={2} flex="1">
+                      <Text fontWeight="medium" color="gray.600">
+                        Full name:
+                      </Text>
+                      <Input
+                        placeholder="Please enter your full name"
+                        bgColor="#EDF2F6"
+                      />
+                      <Text fontWeight="medium" color="gray.600">
+                        Username:
+                      </Text>
+                      <Input
+                        placeholder="Please enter your username"
+                        bgColor="#EDF2F6"
+                      />
+                      <Text fontWeight="medium" color="gray.600">
+                        Email:
+                      </Text>
+                      <Input
+                        placeholder="Please enter your email"
+                        bgColor="#EDF2F6"
+                      />
+                      <Text fontWeight="medium" color="gray.600">
+                        Phone number:
+                      </Text>
+                      <Input
+                        placeholder="Please enter your phone number"
+                        bgColor="#EDF2F6"
+                      />
+                    </Stack>
+                  </Flex>
+                </Stack>
+              </Box>
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Flex width="100%" justifyContent="right" mt={-3}>
+            <Flex justifyContent="flex-end" gap={4} mt={0}>
               <Button
-                width="60%"
+                width="auto"
+                bg="primary"
+                color="white"
+                borderColor={"primary"}
+                borderWidth={1}
+                _hover={{ bg: "white", color: "primary" }}
+                _active={{ bg: "white", color: "primary" }}
+                borderRadius="12px"
+                onClick={onEditClose}
+              >
+                Update
+              </Button>
+              <Button
+                width="auto"
                 bg="white"
                 color="primary"
                 borderColor={"primary"}
@@ -172,10 +233,53 @@ const ProfileDetail: React.FC = () => {
                 borderRadius="12px"
                 onClick={onEditClose}
               >
-                Update
+                Cancel
+              </Button>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Forget Password Modal */}
+      <Modal
+        isOpen={isForgetPassword}
+        onClose={onForgetPasswordClose}
+        isCentered
+        closeOnOverlayClick={false}
+      >
+        <ModalOverlay backdropFilter="blur(5px)" />
+        <ModalContent borderRadius="15px" maxW="30vw">
+          <ModalHeader textAlign="left" fontWeight="semibold" fontSize="20">
+            Change Password
+          </ModalHeader>
+          <ModalBody>
+            <Box w="100%">
+              <HStack>
+                <VStack w="100%">
+                  <Input placeholder="Current Password" bgColor="#F5F5F5"/>
+                  <Input placeholder="New Password" bgColor="#F5F5F5"/>
+                  <Input placeholder="Confirm New Password" bgColor="#F5F5F5"/>
+                </VStack>
+              </HStack>
+            </Box>
+          </ModalBody>
+          <ModalFooter>
+            <Flex justifyContent="flex-end" gap={4} mt={0}>
+              <Button
+                width="auto"
+                bg="primary"
+                color="white"
+                borderColor={"primary"}
+                borderWidth={1}
+                _hover={{ bg: "white", color: "primary" }}
+                _active={{ bg: "white", color: "primary" }}
+                borderRadius="12px"
+                onClick={onForgetPasswordClose}
+              >
+                Update Password
               </Button>
               <Button
-                width="60%"
+                width="auto"
                 bg="white"
                 color="primary"
                 borderColor={"primary"}
@@ -183,7 +287,7 @@ const ProfileDetail: React.FC = () => {
                 _hover={{ bg: "primary", color: "white" }}
                 _active={{ bg: "primary", color: "white" }}
                 borderRadius="12px"
-                onClick={onEditClose}
+                onClick={onForgetPasswordClose}
               >
                 Cancel
               </Button>

@@ -10,9 +10,9 @@ import {
 } from "@chakra-ui/react";
 
 
-import PaymentImage from "../assets/Payment-successful/payment.svg";
-import BarcodeImage from "../assets/Payment-successful/clarity_qr-code-line.svg"
-import MiddleContainer from "../components/Containers/MiddleContainer";
+import PaymentImage from "../../assets/Payment-successful/payment.svg";
+import BarcodeImage from "../../assets/Payment-successful/clarity_qr-code-line.svg"
+import MiddleContainer from "../../components/Containers/MiddleContainer";
 
 
 

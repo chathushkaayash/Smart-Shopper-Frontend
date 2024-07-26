@@ -8,6 +8,8 @@ import ErrorPage from "./ErrorPage";
 import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
 
+
+
 const router = createBrowserRouter([
   {
     path: "/",
