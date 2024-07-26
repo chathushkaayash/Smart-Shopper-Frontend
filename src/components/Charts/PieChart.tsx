@@ -1,71 +1,37 @@
-import React from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Heading,Box,Center } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+import Chart from 'react-apexcharts';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-interface Props{
-  title: string;
-};
-
-const data = {
-  labels: ['Cargills', 'keells', 'Arpico', 'Glomark', 'Others'],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 0, 0, 1)',     // Cargills
-        'rgba(0, 128, 0, 1)',     // Keells
-        'rgba(0, 0, 255, 1)',     // Arpico
-        'rgba(255, 165, 0, 1)',   // Glomark
-        'rgba(128, 0, 128, 1)',   // Others
-        
-      ],
-      borderColor: [
-        'rgba(255, 0, 0, 0.2)',   // Cargills
-        'rgba(0, 128, 0, 0.2)',   // Keells
-        'rgba(0, 0, 255, 0.2)',   // Arpico
-        'rgba(255, 165, 0, 0.2)', // Glomark
-        'rgba(128, 0, 128, 0.2)', // Others
-      ],
-      borderWidth: 1,
+const PieChart = () => {
+  const data={
+    series: [44, 55, 13, 43, 22],
+    options: {
+      chart: {
+        width: 380,
+        type: 'pie',
+      },
+      labels: ['Keells', 'Cargills', 'Arpico', 'Glomark', 'Spar'],
+      colors: ['#FF4768', '#1E90FF', '#FFD700', '#00CED1', '#8A2BE2'],
+      legend: {
+        position: 'bottom', // Positioning the legend at the bottom
+        fontSize: '14px', // Setting the font size of the legend
     },
-  ],
-};
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom' as const,
-    },
-    title: {
-      display: false,
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+        }
+      }]
       
-    },
-  },
-};
-
-const PieChart: React.FC<Props> = ({ title }) => {
+    }
+  }
   return (
-
-<Box p={10} shadow='md'>
+    <Box  width="100%" pb={2}>
+      <Chart options={data.options} series={data.series} type="pie"/>
       
-<Heading as='h3' size='lg' >
-  {title}
-</Heading>
+    </Box>
+  )
+}
 
-
-<Center>
-<Box height="300px" width={"auto"} > 
-<Pie data={data} options={options}/>
-</Box>
-</Center>
-
-</Box>
-  );
-};
-
-export default PieChart;
+export default PieChart

@@ -5,8 +5,6 @@ import {
   CardBody,
   Center,
   Flex,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Icon,
@@ -29,14 +27,13 @@ import {
   Thead,
   Tr,
   useDisclosure,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { AiOutlineRise } from "react-icons/ai";
 import { FaCartFlatbed, FaLocationDot } from "react-icons/fa6";
 import { IoMdPeople } from "react-icons/io";
 import { MdPayment } from "react-icons/md";
 import LineChart from "../../components/Charts/LineChart";
-
 
 const AdminCustomers = () => {
   const cutomerCards = [
@@ -51,7 +48,7 @@ const AdminCustomers = () => {
     {
       title: "Current Customers",
       value: "5.8 k",
-      icon: IoMdPeople ,
+      icon: IoMdPeople,
       mainColor: "red",
       color: "red.100",
       percentage: "8.5% Up from yesterday",
@@ -59,7 +56,7 @@ const AdminCustomers = () => {
     {
       title: "New Customers",
       value: "5.8 k",
-      icon: IoMdPeople ,
+      icon: IoMdPeople,
       mainColor: "green",
       color: "green.100",
       percentage: "8.5% Down from yesterday",
@@ -68,181 +65,179 @@ const AdminCustomers = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Grid
-      templateAreas={{
-        base: `
-            "head"
-             "main"
-             "footer"`,
-        lg: `"head"
-            "main"
-            "footer"`,
-      }}
-      gridTemplateRows={"auto auto auto"}
-      gridTemplateColumns={{ base: "1fr", lg: "auto" }}
-      gap="1"
-      color="blackAlpha.700"
-      fontWeight="bold"
-      height="100%"
-      width="100%"
+    <VStack 
+      gap="8vh"
+      my="5vh"
+      px={10}
+      // justifyContent="center"
+      w="full"
+      fontWeight={"bold"}
     >
-      
-      <GridItem pl="2" my={5} area={"head"} mx={10}>
-        <Box bg="" m={10}>
-          <Center>
-            <HStack justifyContent='space-between' w='full'>
-              {cutomerCards.map((card, index) => (
-                <Card px={3} w={"20vw"} key={index}>
-                  <CardBody>
-                    <Flex gap={20}>
-                      <Heading size="lg">{card.title}</Heading>
-                      <Icon
-                        as={card.icon}
-                        boxSize={8}
-                        color={card.mainColor}
-                        bg={card.color}
-                        borderRadius={5}
-                      />
-                    </Flex>
-                    <Text fontSize="lg">{card.value}</Text>
-                    <Flex mt={2}>
-                      <Icon
-                        as={AiOutlineRise}
-                        boxSize={5}
-                        color="green.400"
-                        borderRadius={5}
-                      />
-                      <Text fontSize="sm" color="green.400" pl={2}>
-                        {card.percentage}
-                      </Text>
-                    </Flex>
-                  </CardBody>
-                </Card>
-              ))}
-            </HStack>
-          </Center>
-        </Box>
-      </GridItem>
-
-      <GridItem pl="2" bg={""} area={"main"} mx={20}>
-        <Center>
-          <LineChart topic="Customer Engagement" />
-        </Center>
-      </GridItem>
-
-      <GridItem pl="2" bg={""} area={"footer"} my={5} mx={10}>
-        <Box p={2} shadow="md" borderWidth="1px" m={10}>
-          <Flex justifyContent="space-between" px={20} py={10}>
-            <Heading as="h3" size="lg">
-              Customer Details
+      <Flex width="full">
+        
+        <Box px={5} pt={5} shadow="md" borderWidth="1px" w="70%" borderRadius={15}>
+            <Heading  size="md">
+            Customer Engagement
             </Heading>
-            <Flex>
-              <Box px={2}>
-                <Select placeholder="Select option">
-                  <option value="option1">August</option>
-                  <option value="option2">September</option>
-                  <option value="option3" selected>
-                    October
-                  </option>
-                </Select>
-              </Box>
-              <Button bg="primary" size="sm">
-                Add Customer
-              </Button>
-            </Flex>
-          </Flex>
 
-          <TableContainer
-            width={{ base: "100%", lg: "90%" }}
-            ml={{ base: "0%", lg: "1%" }}
-          >
-            <Table size="sm">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Address</Th>
-                  <Th>Contact Number</Th>
-                  <Th>Email</Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>
-                    <HStack>
-                      <Image
-                        src="https://via.placeholder.com/150"
-                        alt="Product Image"
-                        boxSize="50px"
-                        objectFit="cover"
-                        borderRadius="50%"
-                        mr={4}
-                      />
-                      <Text>Kaveesha Hettige</Text>
-                    </HStack>
-                  </Td>
-                  <Td>235/1,Kanampitiya Road,Galle</Td>
-                  <Td>0766245650</Td>
-                  <Td>kaveesha.hettige@gmail.com</Td>
-                  <Td>
-                    <Button bg="primary" size="sm" onClick={onOpen}>
-                      View More
-                    </Button>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>
-                    <HStack>
-                      <Image
-                        src="https://via.placeholder.com/150"
-                        alt="Product Image"
-                        boxSize="50px"
-                        objectFit="cover"
-                        borderRadius="50%"
-                        mr={4}
-                      />
-                      <Text>Kaveesha Hettige</Text>
-                    </HStack>
-                  </Td>
-                  <Td>235/1,Kanampitiya Road,Galle</Td>
-                  <Td>0766245650</Td>
-                  <Td>kaveesha.hettige@gmail.com</Td>
-                  <Td>
-                    <Button bg="primary" size="sm">
-                      View More
-                    </Button>
-                  </Td>
-                </Tr>
-              </Tbody>
-              <Tfoot>
-                <Tr>
-                  <Td>
-                    <HStack>
-                      <Image
-                        src="https://via.placeholder.com/150"
-                        alt="Product Image"
-                        boxSize="50px"
-                        objectFit="cover"
-                        borderRadius="50%"
-                        mr={4}
-                      />
-                      <Text>Kaveesha Hettige</Text>
-                    </HStack>
-                  </Td>
-                  <Td>235/1,Kanampitiya Road,Galle</Td>
-                  <Td>0766245650</Td>
-                  <Td>kaveesha.hettige@gmail.com</Td>
-                  <Td>
-                    <Button bg="primary" size="sm">
-                      View More
-                    </Button>
-                  </Td>
-                </Tr>
-              </Tfoot>
-            </Table>
-          </TableContainer>
+            <Center>
+              <LineChart  width="70%"/>
+            </Center>
+          </Box>
+
+        <Box w="30%">
+        <VStack w="full" gap={5}>
+        {cutomerCards.map((card, index) => (
+          <Card px={3} w={"20vw"} key={index}>
+            <CardBody>
+              <Flex gap={20}>
+                <Heading size="md">{card.title}</Heading>
+                <Icon
+                  as={card.icon}
+                  boxSize={8}
+                  color={card.mainColor}
+                  bg={card.color}
+                  borderRadius={5}
+                />
+              </Flex>
+              <Text fontSize="sm">{card.value}</Text>
+              <Flex mt={2}>
+                <Icon
+                  as={AiOutlineRise}
+                  boxSize={5}
+                  color="green.400"
+                  borderRadius={5}
+                />
+                <Text fontSize="sm" color="green.400" pl={2}>
+                  {card.percentage}
+                </Text>
+              </Flex>
+            </CardBody>
+          </Card>
+        ))}
+      </VStack>
+
         </Box>
-      </GridItem>
+        
+      </Flex>
+
+      <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
+        <Flex justifyContent="space-between" px={20} py={10}>
+          <Heading as="h3" size="md">
+            Customer Details
+          </Heading>
+          <Flex>
+            <Box px={2}>
+              <Select placeholder="Select option">
+                <option value="option1">August</option>
+                <option value="option2">September</option>
+                <option value="option3" selected>
+                  October
+                </option>
+              </Select>
+            </Box>
+            <Button bg="primary" size="sm">
+              Add Customer
+            </Button>
+          </Flex>
+        </Flex>
+
+          <Center>
+
+          
+        <TableContainer
+          width={{ base: "100%", lg: "90%" }}
+          ml={{ base: "0%", lg: "1%" }}
+        >
+          <Table size="sm">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Address</Th>
+                <Th>Contact Number</Th>
+                <Th>Email</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>
+                  <HStack>
+                    <Image
+                      src="https://via.placeholder.com/150"
+                      alt="Product Image"
+                      boxSize="50px"
+                      objectFit="cover"
+                      borderRadius="50%"
+                      mr={4}
+                    />
+                    <Text>Kaveesha Hettige</Text>
+                  </HStack>
+                </Td>
+                <Td>235/1,Kanampitiya Road,Galle</Td>
+                <Td>0766245650</Td>
+                <Td>kaveesha.hettige@gmail.com</Td>
+                <Td>
+                  <Button bg="primary" size="sm" onClick={onOpen}>
+                    View More
+                  </Button>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <HStack>
+                    <Image
+                      src="https://via.placeholder.com/150"
+                      alt="Product Image"
+                      boxSize="50px"
+                      objectFit="cover"
+                      borderRadius="50%"
+                      mr={4}
+                    />
+                    <Text>Kaveesha Hettige</Text>
+                  </HStack>
+                </Td>
+                <Td>235/1,Kanampitiya Road,Galle</Td>
+                <Td>0766245650</Td>
+                <Td>kaveesha.hettige@gmail.com</Td>
+                <Td>
+                  <Button bg="primary" size="sm">
+                    View More
+                  </Button>
+                </Td>
+              </Tr>
+            </Tbody>
+            <Tfoot>
+              <Tr>
+                <Td>
+                  <HStack>
+                    <Image
+                      src="https://via.placeholder.com/150"
+                      alt="Product Image"
+                      boxSize="50px"
+                      objectFit="cover"
+                      borderRadius="50%"
+                      mr={4}
+                    />
+                    <Text>Kaveesha Hettige</Text>
+                  </HStack>
+                </Td>
+                <Td>235/1,Kanampitiya Road,Galle</Td>
+                <Td>0766245650</Td>
+                <Td>kaveesha.hettige@gmail.com</Td>
+                <Td>
+                  <Button bg="primary" size="sm">
+                    View More
+                  </Button>
+                </Td>
+              </Tr>
+            </Tfoot>
+          </Table>
+        </TableContainer>
+        </Center>
+      </Box>
+
+      {/* --------------- POP UP --------------- */}
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -321,7 +316,7 @@ const AdminCustomers = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Grid>
+    </VStack>
   );
 };
 

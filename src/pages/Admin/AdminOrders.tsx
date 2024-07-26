@@ -34,162 +34,81 @@ import {
 import { FaShoppingBag } from "react-icons/fa";
 import { GiStorkDelivery } from "react-icons/gi";
 import { MdPayment } from "react-icons/md";
-import LoginButton from "../../components/Buttons/LoginButton";
-import PieChart from "../../components/Charts/PieChart";
+import ActionButton from "@/components/Buttons/ActionButton";
+import LineChart from "@/components/Charts/LineChart";
+import {itemsSold} from "@/data/itemsSold";
+import PieChart from "@/components/Charts/PieChart";
 
 const AdminOrders = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-    <Grid
-  templateAreas={{
-                base:`"main"
-                      "footer"`,
 
+          <VStack gap={"8vh"} fontWeight="bold" my="5vh" px={10}>
+            <Flex w='full' gap={5}>
 
-                lg:`"main"
-                    "footer"`,
-                
-                }}
-                gridTemplateRows={{ base: 'auto auto', lg: 'auto auto' }}
-                gridTemplateColumns={{ base: '1fr', lg: 'auto' }}
-  gap='1'
-  color='blackAlpha.700'
-  fontWeight='bold'
->
-  <GridItem pl='2' area={'main'} m={5} mx={10}>
-    <Grid templateAreas={{
-        base: `"main1"
-              "main2"`,
-       lg: `"main1 main2"`,
-       
-    }}
-    gridTemplateRows={{ base: 'auto auto', lg: '1fr' }}
-            gridTemplateColumns={{ base: '70%', lg: '65% 33%' }}
-            gap={5}
-    >
-        <GridItem area={'main1'} pb={2}>
-          <Heading size='lg' my={4}>Orders by Supermarkets</Heading>
-        <Box pt={10} boxShadow={'md'}>
-    <PieChart title=''/>
-    </Box>
-    
-  </GridItem>
-  <GridItem pl='2'  area={'main2'} mt={12}>
-  <Card mt={4} py={3}>
-  <CardBody>
-    
- 
-    <Box >
-      <Flex>
-        <Box px={3}>Item</Box>
-        <Spacer/>
-        <Box px={10}>Sold</Box>
-      </Flex>
-    </Box>
-    <Box mb={5}>
-      <Flex>
-        <HStack px={3}>
-        <Image
-                  src='https://via.placeholder.com/150'
-                  alt='Product Image'
-                  boxSize='40px'
-                  objectFit='cover'
-                />
-        
-        <Box px={3} py={2}>Munchee Super Cream Cracker</Box>
-        </HStack>
-        <Spacer/>
-        <Box px={10} py={2}>12</Box>
-      </Flex>
-    </Box>
-    <Box mb={5}>
-    <Flex>
-        <HStack px={3}>
-        <Image
-                  src='https://via.placeholder.com/150'
-                  alt='Product Image'
-                  boxSize='40px'
-                  objectFit='cover'
-                />
-        <Box px={3} py={2}>Anchor 1kg</Box>
-        </HStack>
-        <Spacer/>
-        <Box px={10} py={2}>35</Box>
-      </Flex>
-    </Box>
+            <Box p={5} shadow="md" borderWidth="1px" w="60%" borderRadius={15}>
+            <Heading size={"md"}>
+            Orders by Supermarkets
+          </Heading>
 
-    <Box mb={5}>
-    <Flex>
-        <HStack px={3}>
-        <Image
-                  src='https://via.placeholder.com/150'
-                  alt='Product Image'
-                  boxSize='40px'
-                  objectFit='cover'
-                />
-        <Box px={3} py={2}>Anchor 1kg</Box>
-        </HStack>
-        <Spacer/>
-        <Box px={10} py={2}>35</Box>
-      </Flex>
-    </Box>
+            <Center>
+              <LineChart  width="80%"/>
+              {/* <PieChart/> */}
+            </Center>
+          </Box>
 
-    <Box mb={5}>
-    <Flex>
-        <HStack px={3}>
-        <Image
-                  src='https://via.placeholder.com/150'
-                  alt='Product Image'
-                  boxSize='40px'
-                  objectFit='cover'
-                />
-                <Box px={3} py={2}>Sugar 500g</Box>
-        </HStack>
-        
-        <Spacer/>
-        <Box px={10} py={2}>20</Box>
-      </Flex>
-    </Box>
+            {/* ------- Number of items Card ------- */}
+          <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15}>
+            <Heading size="md">Top Items Sold</Heading>
+            {itemsSold.map((company, index) => (
+              <VStack mt={5} key={index}>
+                <HStack
+                  w="full"
+                  px="1vw"
+                  h="10vh"
+                  rounded={10}
+                  borderWidth="1px"
+                  borderColor="background"
+                  shadow="md"
+                >
+                  <Image
+                    src={company.image}
+                    alt="Product Image"
+                    boxSize="40px"
+                    objectFit="cover"
+                  />
+                  <Text ml='0.3rem'>{company.name}</Text>
+                  <Text ml="auto">{company.count}</Text>
+                </HStack>
+              </VStack>
+            ))}
+            <ActionButton inverted={true} className="!w-full mt-5">
+              View All
+            </ActionButton>
+          </Box>
+          </Flex>
 
-    <Box>
-      <Center>
-      <LoginButton text="View More" image=""/>
-      </Center>
-   
-    </Box>
+          <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
+          <Flex justifyContent="space-between" px={20} py={10}>
+            <Heading as="h3" size="md">
+              Order Details
+            </Heading>
+            <Flex>
+              <Box px={2}>
+                <Select placeholder="Select option">
+                  <option value="option1">August</option>
+                  <option value="option2">September</option>
+                  <option value="option3" selected>
+                    October
+                  </option>
+                </Select>
+              </Box>
+            </Flex>
+          </Flex>
 
-  </CardBody>
-</Card>
-  </GridItem>
-
-    </Grid>
-    
-   
-  </GridItem>
-  <GridItem pl='2' area={'footer'} mx={10} my={10}>
-
-  <Box p={2} shadow='md' borderWidth='1px' >
-    <Flex justifyContent="space-between" px={20} py={10}>
-    <Heading as='h3' size='lg' >
-    Order Details
-    </Heading>
-    <Flex>
-        <Box px={2}>
-        <Select placeholder='Select option' >
-        <option value='option1'>August</option>
-        <option value='option2'>September</option>
-        <option value='option3' selected>October</option>
-    </Select>
-
-        </Box>
-
-    </Flex>
-    
-    </Flex>
-
-  <TableContainer width={{ base: "100%", lg: "90%" }} ml={{ base: '0%', lg: '5%' }}>
-      <Table size='md'>
+          <TableContainer width={{ base: "100%", lg: "90%" }} ml={{ base: '0%', lg: '5%' }}>
+      <Table size='sm'>
         <Thead>
           <Tr>
             <Th>Customer</Th>
@@ -283,10 +202,14 @@ const AdminOrders = () => {
         </Tfoot>
       </Table>
     </TableContainer>
-    </Box>
-   
-    
-  </GridItem>
+
+
+
+          </Box>
+          </VStack>
+
+
+ 
   <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -448,7 +371,6 @@ const AdminOrders = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-</Grid>
     </>
   )
 }

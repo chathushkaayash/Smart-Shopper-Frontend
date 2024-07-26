@@ -1,51 +1,38 @@
-import React from "react";
-import { Box } from "@chakra-ui/react";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-const data = {
-  labels: [
-    "Current Customers",
-    "New Customers",
-    "Target Customers",
-    "Retarget Customers",
-  ],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5],
-      backgroundColor: [
-        "rgba(240, 128, 48, 1)",
-        "rgba(240, 128, 48, 0.8)",
-        "rgba(200, 84, 0, 1)",
-        "rgba(245, 151, 91, 0.8)",
-      ],
-
-      borderWidth: 1,
-    },
-  ],
-};
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "right" as const,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
+import React from 'react';
+import Chart from 'react-apexcharts';
+import { Box } from '@chakra-ui/react';
 
 const DoughnutChart: React.FC = () => {
-  return (
-    <Box height="250px">
-      <Doughnut data={data} options={options} width="full" />
-    </Box>
-  );
+    const data = {
+        series: [20, 20, 60],
+        options: {
+            chart: {
+                id: "basic-donut",
+                width: '100%', // Ensure the chart spans the full width of its container
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '70%', // Adjust the size of the donut here
+                    },
+                },
+            },
+            colors: ['#ff7708', '#ff3308', '#ff9908'], 
+            labels: ['Current Customers', 'New Customers', 'Target Customers'],
+            width: 'full', // Set the width of the chart
+            height:'full', // Set the height of the chart   
+            legend: {
+                position: 'bottom', // Positioning the legend at the bottom
+                fontSize: '14px', // Setting the font size of the legend
+            },
+        },
+    };
+
+    return (
+        <Box py={10} >
+            <Chart options={data.options} series={data.series} type="donut" width="100%" />
+        </Box>
+    );
 };
 
 export default DoughnutChart;

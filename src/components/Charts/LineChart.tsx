@@ -1,52 +1,39 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { Box ,Heading,Center} from '@chakra-ui/react';
-import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import Chart from 'react-apexcharts';
+import { Box } from '@chakra-ui/react';
 
+interface LineChartProps {
+    width: string;
+}
 
-ChartJS.register(LineElement, PointElement, LinearScale, Title, Tooltip, Legend);
+const LineChart: React.FC<LineChartProps> = ({ width }) => {
+    const data = {
+        series: [{
+            name: 'No of Customers',
+            data: [30, 40, 35, 50, 49, 60, 70, 91, 125, 150, 130, 160, 110, 120, 90, 80, 70, 60, 50, 55, 30, 80, 10, 5, 0, 100, 20, 30, 40, 50]
+        }],
+        options: {
+            chart: {
+                id: 'basic-line',
+                toolbar: {
+                    show: false
+                },
+                height: 400, // Adjust the height as needed
+                width: '100%' // Adjust the width as needed, '100%' for full width
+            },
+            colors: ['#ff7708'],
+            xaxis: {
+                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']
+            },
+            
+            
+        }
+    };
 
-interface Props{
-  topic: string;
-};
-
-const data = {
-  labels: Array.from({ length: 30 }, (_, i) => i + 1),
-  datasets: [
-    {
-      label: 'No of customers',
-      data: [65, 59, 80, 81, 56, 55, 40, 23, 56, 120, 45, 78, 90, 23, 45, 10, 89, 23, 33, 100, 89, 23, 40, 76, 89, 23, 45, 90, 89, 23, 66],
-      fill: false,
-      backgroundColor: 'rgba(240, 128, 48, 1)',
-      borderColor: 'rgba(240, 128, 48, 1)',
-    },
-  ],
-};
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {},
-  },
-};
-
-const LineChart: React.FC<Props> = ({ topic }) => {
-  return (
-    <Box width="full" py={2}  bg="white" boxShadow="md" borderRadius="md" mt={5}>
-      {/* <Box w="100%" width="900px" minHeight="450px" px="10" py={2}  bg="white" boxShadow="md" borderRadius="md"></Box> */}
-      <Heading px="10" size="lg" pb={1} py={2}>{topic}</Heading>
-      <Center>
-      <Box px="10" width="800px" py={2}  bg="white" borderRadius="md" mt={5}> 
-      <Line data={data} options={options}/>
-      </Box>
-      </Center>
-      
-      
-    </Box>
-  );
+    return (
+        <Box width={width} mt={2}>
+            <Chart options={data.options} series={data.series} type="line" />
+        </Box>
+    );
 };
 
 export default LineChart;
