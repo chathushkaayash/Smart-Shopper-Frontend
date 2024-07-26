@@ -1,4 +1,3 @@
-import ConsumerLanding from "@/pages/Consumer/Landing";
 import ConsumerProduct from "@/pages/Consumer/ProductDetail";
 import ConsumerCartDetails from "@/pages/Consumer/CartDetails";
 import ConsumerProfile from "@/pages/Consumer/ConsumerProfile";
@@ -13,11 +12,10 @@ const ConsumerRoutes = [
   {
     element: <ConsumerLayout />,
     children: [
-      // { path: "", element: <ConsumerLanding /> },
       { path: "product", element: <ConsumerProduct /> },
       { path: "profile", element: <ConsumerProfile /> },
       { path: "review", element: <ConsumerReviews /> },
-      { path: "orders", element: <ConsumerOrders /> },
+      { path: "myOrders", element: <ConsumerOrders /> },
       { path: "view-orders", element: <ConsumerViewOrders /> },
       { path: "cart", element: <ConsumerCartDetails /> },
       { path: "payment-success", element: <ConsumerPaymentSuccessful /> },
