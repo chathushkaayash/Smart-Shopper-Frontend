@@ -1,5 +1,7 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import data from "@/data/Driver/opportunity";
 import {
+  AspectRatio,
   Box,
   HStack,
   Icon,
@@ -20,7 +22,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { LuCircleDot } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
-interface Opportunity {
+export interface Opportunity {
   id: string;
   supermarketList: string[];
   totalDistance: number;
@@ -33,20 +35,9 @@ interface Opportunity {
   deliveryLocation: string;
 }
 
-const RequestDetails = () => {
+const ViewOpportunity = () => {
   const navigate = useNavigate();
-
-  const opportunity: Opportunity = {
-    id: "1",
-    supermarketList: ["New York", "Los Angeles"],
-    totalDistance: 100,
-    tripCost: 1000,
-    orderPlacedOn: "2021-09-01",
-    customer: "John Doe",
-    deliveryCost: 100,
-    startLocation: "Moratuwa",
-    deliveryLocation: "Nugegoda",
-  };
+  const opportunity: Opportunity = data[0];
 
   const details = [
     { label: "Number of Stops", value: opportunity.supermarketList.length },
@@ -163,11 +154,16 @@ const RequestDetails = () => {
         </Stepper>
       </Box>
       <Text fontWeight="bold">Map</Text>
-      <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10">
-        Map
+      <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
+        <AspectRatio ratio={16 / 9}>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9029768701894!2d79.85857797499636!3d6.902205493097101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721984297174!5m2!1sen!2slk"
+            loading="lazy"
+          ></iframe>
+        </AspectRatio>
       </Box>
     </VStack>
   );
 };
 
-export default RequestDetails;
+export default ViewOpportunity;

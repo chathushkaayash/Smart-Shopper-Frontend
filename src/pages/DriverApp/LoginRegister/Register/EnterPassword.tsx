@@ -119,8 +119,7 @@ const EnterPassword = ({ setStage }: Props) => {
               overflowY="scroll"
               borderWidth="1px"
               borderRadius="10"
-              p={4}
-              boxShadow="lg"
+              p={2}
               css={{
                 "-ms-overflow-style": "none",
                 "scrollbar-width": "none",

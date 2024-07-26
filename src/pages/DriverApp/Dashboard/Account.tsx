@@ -63,7 +63,7 @@ const Account = () => {
           </VStack>
         </HStack>
       </Stack>
-      <Stack p={5} divider={<Divider borderColor={"gray.400"} />}>
+      <Stack p={5} divider={<Divider borderColor={"gray.300"} />}>
         {rows.map((row, index) => (
           <HStack
             key={index}
