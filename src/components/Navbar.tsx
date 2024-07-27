@@ -7,7 +7,6 @@ import {
   HStack,
   Icon,
   Image,
-  Show,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -24,9 +23,10 @@ const Navbar = () => {
   const location = useLocation();
 
   const hideNavbarPaths = ["/driver"];
-  const showTopNav = !hideNavbarPaths.some((path) =>
-    location.pathname.startsWith(path)
-  );
+  const showTopNav = !hideNavbarPaths.some((path) => location.pathname.startsWith(path));
+  const consumerNavItems = ["Home", "Supermarkets", "About Us"];
+  const courierNavItems = ["Home", "Request", "Deliveries"];
+  const navItems = user?.role === "Courier Company" ? courierNavItems : consumerNavItems;
 
   return (
     <>
@@ -48,31 +48,15 @@ const Navbar = () => {
           zIndex={10}
         >
           <HStack gap={5}>
-            {/* <Box display="inline" fontSize="2xl" fontWeight="bold">
-            <Text as="span">Smart</Text>
-            <Text color="primary" as="span">
-              Shopper
-            </Text>
-          </Box> */}
             <Image src={Banner} />
 
-            <Show above="md">
-              <Link to="/">
+            {navItems.map((item) => (
+              <Link to={`/${item.toLowerCase()}`} key={item}>  {/* Use Link component for navigation */}
                 <Text fontSize="lg" fontWeight="bold">
-                  Home
+                  {item}
                 </Text>
               </Link>
-              <Link to="/supermarkets">
-                <Text fontSize="lg" fontWeight="bold">
-                  Supermarkets
-                </Text>
-              </Link>
-              <Link to="/about_us">
-                <Text fontSize="lg" fontWeight="bold">
-                  About Us
-                </Text>
-              </Link>
-            </Show>
+            ))}
           </HStack>
 
           {user ? (

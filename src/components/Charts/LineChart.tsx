@@ -9,7 +9,7 @@ const LineChart: React.FC<LineChartProps> = ({ width }) => {
     const data = {
         series: [{
             name: 'No of Customers',
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125, 150, 130, 160, 110, 120, 90, 80, 70, 60, 50, 55, 30, 80, 10, 5, 0, 100, 20, 30, 40, 50]
+            data: [30, 40, 35, 50, 49, 60, 70, 91, 125, 130,  110, 120, 90, 80, 70, 60, 50, 55, 30, 80, 10, 5, 0, 100, 20, 30, 40, 50]
         }],
         options: {
             chart: {
@@ -17,12 +17,12 @@ const LineChart: React.FC<LineChartProps> = ({ width }) => {
                 toolbar: {
                     show: false
                 },
-                height: 400, // Adjust the height as needed
+                height: '150', // Adjust the height as needed
                 width: '100%' // Adjust the width as needed, '100%' for full width
             },
             colors: ['#ff7708'],
             xaxis: {
-                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']
+                categories: ['5', '10', '15', '20', '25', '30', '35', '40', '45','50','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']
             },
             
             

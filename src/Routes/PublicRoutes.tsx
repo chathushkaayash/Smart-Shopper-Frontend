@@ -6,6 +6,7 @@ import ProductDetail from "@/pages/Consumer/ProductDetail";
 import SignUp from "@/pages/SignUp";
 import PublicLayout from "./Layouts/PublicLayout";
 
+
 const PublicRoutes = [
   {
     element: <PublicLayout />,
@@ -16,6 +17,7 @@ const PublicRoutes = [
       { path: "driver/login_register", element: <LoginRegister /> },
       { path: "driver/register", element: <DriverRegister /> },
       { path: "products/:id", element: <ProductDetail /> },
+    
     ],
   },
 ];
