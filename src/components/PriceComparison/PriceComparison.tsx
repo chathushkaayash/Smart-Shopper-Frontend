@@ -26,7 +26,7 @@ const PriceComparison = ({ productId }: Props) => {
           <Divider borderColor="gray.400" alignSelf="flex-start" w={570} />
         }
       >
-        {priceList?.results.map((item, index) => (
+        {priceList?.results?.map((item, index) => (
           <SupermarketPriceRow
             key={index}
             image={item.supermarket.logo}
