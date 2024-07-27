@@ -1,19 +1,15 @@
+import { EditIcon, InfoIcon, SearchIcon } from "@chakra-ui/icons";
 import {
-  ChakraProvider,
   Box,
+  Button,
+  ChakraProvider,
+  Divider,
   Flex,
   Heading,
-  Text,
-  Button,
-  Divider,
-  VStack,
   HStack,
-  Stack,
-  Image,
-  IconButton,
-  useDisclosure,
   Icon,
-  ModalHeader,
+  IconButton,
+  Image,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -26,15 +22,18 @@ import {
   Radio,
   RadioGroup,
   Spacer,
+  Stack,
+  Text,
   Textarea,
+  useDisclosure,
+  VStack
 } from "@chakra-ui/react";
-import { EditIcon, InfoIcon, SearchIcon } from "@chakra-ui/icons";
-import { IoIosArrowBack } from "react-icons/io";
-import {  MdOutlineLocationOn } from "react-icons/md";
-import {  FaRegUser } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import deliveryLoc from "../../../src/assets/deliveryToLocation.png";
+import { IoIosArrowBack } from "react-icons/io";
+import { MdOutlineLocationOn } from "react-icons/md";
 import delHome from "../../../src/assets/delHome.png";
+import deliveryLoc from "../../../src/assets/deliveryToLocation.png";
 
 const Checkout = () => {
   const {

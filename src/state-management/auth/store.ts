@@ -1,55 +1,50 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface Credentials {
+export interface Credentials {
   email: string;
   password: string;
 }
 
-interface User {
-  username: string;
-  role: string;
-  password?: string;
+export interface LoginResponse {
+  user: User;
+  jwtToken: string;
 }
 
-interface AuthStore {
+export interface User {
+  name: string;
+  role: string;
+  email: string
+  password?: string;
+  number: string;
+  profilePic: string;
+  status: string;
+}
+
+export interface AuthStore {
   user: User | null;
-  login: (formData: Credentials) => User | null;
+  login: (formData: LoginResponse) => User | null;
   logout: () => void;
 }
 
-const usersList: { [key: string]: User } = {
-  "admin@gmail.com": { password: "123456", username: "Admin", role: "admin" },
-  "consumer@gmail.com": {
-    password: "123456",
-    username: "Consumer",
-    role: "consumer",
-  },
+const authStore: StateCreator<AuthStore> = (set) => ({
+  user: null,
 
-  "driver@gmail.com": {
-    password: "123456",
-    username: "Driver",
-    role: "driver",
+  login: (res: LoginResponse) => {
+    if (!res.user) return null;
+    document.cookie = `token=${res.jwtToken}`;
+    set(() => ({ user: res.user }));
+    return res.user;
   },
-};
+  logout: () => {
+    (document.cookie = `token=""`), set(() => ({ user: null }));
+  },
+});
 
-const useAuthStore = create<AuthStore>()(
-  persist(
-    (set) => ({
-      user: null,
-      login: (formData: Credentials) => {
-        if (!usersList[formData.email]) return null;
-        if (usersList[formData.email].password !== formData.password)
-          return {} as User;
-        set(() => ({ user: usersList[formData.email] }));
-        return usersList[formData.email];
-      },
-      logout: () => set(() => ({ user: null })),
-    }),
-    {
-      name: "auth-store", 
-    }
-  )
-);
+const persistedAuthStore = persist<AuthStore>(authStore, {
+  name: "auth-store",
+});
+
+const useAuthStore = create(persistedAuthStore);
 
 export default useAuthStore;

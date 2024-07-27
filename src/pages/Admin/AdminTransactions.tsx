@@ -1,13 +1,39 @@
-import { Grid, GridItem,Card,CardBody,Box,Flex,Image,Spacer,Center,Select,Table,Thead,Tr,Th,Tbody,Td,Tfoot
-    ,Heading,Text,TableContainer,HStack,Circle,Button,useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter,
-    VStack,Icon,ListItem,List} from "@chakra-ui/react"
-   import LineChart from "../../components/Charts/LineChart"
-  import ActionButton from "../../components/Buttons/ActionButton" 
-  import { MdPayment } from "react-icons/md";
-  import { FaShoppingBag } from "react-icons/fa";
-  import { GiStorkDelivery } from "react-icons/gi";
-  import { FaUser } from "react-icons/fa6";
-  import {topBuyers} from "@/data/topBuyers";
+import { topBuyers } from "@/data/topBuyers";
+import {
+  Box,
+  Button,
+  Center,
+  Circle,
+  Flex,
+  Heading,
+  HStack,
+  Icon,
+  Image,
+  List,
+  ListItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Select, Table,
+  TableContainer,
+  Tbody, Td,
+  Text,
+  Tfoot,
+  Th,
+  Thead, Tr,
+  useDisclosure,
+  VStack
+} from "@chakra-ui/react";
+import { FaShoppingBag } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+import { GiStorkDelivery } from "react-icons/gi";
+import { MdPayment } from "react-icons/md";
+import ActionButton from "../../components/Buttons/ActionButton";
+import LineChart from "../../components/Charts/LineChart";
 
 
 const AdminTransactions = () => {

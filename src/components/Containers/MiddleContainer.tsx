@@ -3,18 +3,23 @@ import { Box, Flex } from "@chakra-ui/react";
 interface Props {
   children: React.ReactNode;
   width?: string;
+  bg?: string;
   className?: string;
 }
 
-const MiddleContainer = ({ children, width = "70vw", className }: Props) => {
+const MiddleContainer = ({
+  children,
+  width = "70vw",
+  bg,
+  className,
+}: Props) => {
   return (
     <Flex
-      width="100vw"
+      width="100%"
       minHeight={{ base: "100vh", md: "90vh" }}
-      bg="white"
+      bg={bg || "white"}
       justifyContent="center"
       alignItems="center"
-      
     >
       <Box
         width={{ base: "100vh", md: "90vw", lg: width }}
@@ -23,7 +28,7 @@ const MiddleContainer = ({ children, width = "70vw", className }: Props) => {
         bg="white"
         overflow="hidden"
         boxShadow="md"
-        borderWidth={1}
+        borderWidth={2}
         className={className}
       >
         {children}

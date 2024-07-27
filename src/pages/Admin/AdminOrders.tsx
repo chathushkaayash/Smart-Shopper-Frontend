@@ -1,11 +1,12 @@
+import ActionButton from "@/components/Buttons/ActionButton";
+import LineChart from "@/components/Charts/LineChart";
+import { itemsSold } from "@/data/itemsSold";
 import {
   Box,
   Button,
-  Card, CardBody,
   Center,
   Circle,
   Flex,
-  Grid, GridItem,
   Heading,
   HStack,
   Icon,
@@ -20,7 +21,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
-  Spacer,
   Table,
   TableContainer,
   Tbody, Td,
@@ -34,10 +34,6 @@ import {
 import { FaShoppingBag } from "react-icons/fa";
 import { GiStorkDelivery } from "react-icons/gi";
 import { MdPayment } from "react-icons/md";
-import ActionButton from "@/components/Buttons/ActionButton";
-import LineChart from "@/components/Charts/LineChart";
-import {itemsSold} from "@/data/itemsSold";
-import PieChart from "@/components/Charts/PieChart";
 
 const AdminOrders = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

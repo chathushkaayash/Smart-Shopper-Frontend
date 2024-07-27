@@ -1,19 +1,21 @@
+import useCartStore, { CartItem } from "@/state-management/cart/store";
 import { Box, Flex, Input } from "@chakra-ui/react";
-import { useState } from "react";
 
-const QuantityChanger = () => {
-  const [quantity, setQuantity] = useState(1);
+interface Props {
+  cartItem: CartItem;
+}
 
-  const handleIncrement = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
-  };
+const QuantityChanger = ({ cartItem }: Props) => {
+  const { incrementQuantity, decrementQuantity } = useCartStore();
 
-  const handleDecrement = () => {
-    setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-  };
-  
   return (
-    <Flex flexDirection="column" alignItems="center" justifyContent="flex-end" p={3} gap={2}>
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="flex-end"
+      p={3}
+      gap={2}
+    >
       <Box>Quantity</Box>
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Box
@@ -24,8 +26,9 @@ const QuantityChanger = () => {
           py="1"
           px="3.5"
           _hover={{ bg: "gray.200" }}
-          onClick={handleDecrement}
-          
+          onClick={() =>
+            decrementQuantity(cartItem.supermarketItem?.productId || -1)
+          }
         >
           -
         </Box>
@@ -38,8 +41,9 @@ const QuantityChanger = () => {
           type="number"
           min="1"
           size="md"
-          w="5ch"
-          value={quantity}
+          w="8ch"
+          value={cartItem.quantity}
+          readOnly
         />
         <Box
           as="button"
@@ -49,7 +53,9 @@ const QuantityChanger = () => {
           py="1"
           px="3"
           _hover={{ bg: "gray.200" }}
-          onClick={handleIncrement}
+          onClick={() =>
+            incrementQuantity(cartItem.supermarketItem?.productId || -1)
+          }
         >
           +
         </Box>

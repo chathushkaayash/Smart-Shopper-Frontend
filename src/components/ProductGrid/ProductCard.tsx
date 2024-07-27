@@ -10,9 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Product } from "../../hooks/useProducts";
 import RatingStars from "../Inputs/Rating";
 import { useNavigate } from "react-router-dom";
+import { Product } from "@/hooks/useProduct";
 
 interface Props {
   product: Product;

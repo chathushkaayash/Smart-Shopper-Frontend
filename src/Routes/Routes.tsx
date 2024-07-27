@@ -7,6 +7,7 @@ import DriverRoutes from "./DriverRoutes";
 import ErrorPage from "./ErrorPage";
 import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
+import CardDetails from "@/pages/Consumer/CartDetails";
 
 
 
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       // { path: "login", element: <Login /> },
       // { path: "signup", element: <SignUp /> },
 
-      // { path: "cart", element: <CartDetails /> },
+      { path: "cart", element: <CardDetails /> },
       // { path: "product/:id", element: <ProductDetail /> },
       // { path: "ConsumerProfile", element: <ConsumerProfile /> },
 

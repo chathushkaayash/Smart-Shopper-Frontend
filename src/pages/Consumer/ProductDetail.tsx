@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = useProduct(id || "");
+  const product = useProduct(Number(id));
 
   if (product.isLoading) return <Spinner />;
   if (product.isError) return <div>Error...</div>;

@@ -1,40 +1,43 @@
-import { Box, Image, Text } from "@chakra-ui/react";
-import { FaHeart } from "react-icons/fa";
-import { useState } from "react";
+import { SupermarketItem } from "@/hooks/usePriceLists";
+import { Product } from "@/hooks/useProduct";
+import useSupermarket from "@/hooks/useSupermarket";
+import { Box, Divider, HStack, Image, Text } from "@chakra-ui/react";
 
 interface Props {
-  topic: string;
-  detail: string;
-  image: string;
+  product: Product;
+  selectedSupermarketItem: SupermarketItem;
 }
 
-const ProductDescription = ({ topic, detail, image }: Props) => {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleHeartClick = () => {
-    setIsLiked(!isLiked);
-  };
+const ProductDescription = ({ product, selectedSupermarketItem }: Props) => {
+  const supermarket = selectedSupermarketItem.supermarketId
+    ? useSupermarket(selectedSupermarketItem.supermarketId)
+    : { data: null, isLoading: false, error: null };
 
   return (
     <Box>
-      <Text fontSize="3xl" fontWeight="bold" mb={4}>
-        {topic}
-      </Text>
-      <Box
-        fontSize="30px"
-        mb={4}
-        as="button"
-        color={isLiked ? "red" : "currentColor"}
-        onClick={handleHeartClick}
-        _hover={{ color: "red", transform: "scale(1.10)" }}
-        _active={{ transform: "scale(1.10)" }}
-      >
-        <FaHeart />
-      </Box>
       <Text fontSize="1xl" mb={4}>
-        {detail}
+        {product.description}
       </Text>
-      <Image src={image} alt="product" />
+      <Image
+        src={product.imageUrl}
+        alt="product"
+        boxSize={"40vh"}
+        border="1px"
+        borderColor="gray.200"
+      />
+      <Divider
+        mt={5}
+        mb={2}
+        borderColor="gray.400"
+        alignSelf="flex-start"
+        w={"50vh"}
+      />
+      <HStack>
+        <Text fontSize={"lg"}>Selected Store :</Text>
+        <Text fontSize={"lg"} fontWeight={600}>
+          {supermarket.data?.name}
+        </Text>
+      </HStack>
     </Box>
   );
 };

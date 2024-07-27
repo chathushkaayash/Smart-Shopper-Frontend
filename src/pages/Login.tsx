@@ -26,8 +26,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import LinkButton from "../components/Buttons/LinkButton";
 import ErrorText from "../components/Errors/ErrorText";
-import useAuthStore from "@/state-management/auth/store";
+import useAuthStore, {
+  Credentials,
+  LoginResponse,
+  User,
+} from "@/state-management/auth/store";
 import { useNavigate } from "react-router-dom";
+import APIClient from "@/services/api-client";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -49,16 +54,35 @@ const Login = () => {
   const navigate = useNavigate();
 
   const validate = (data: FormData) => {
-    const user = login(data);
-    if (user) {
-      switch (user.role) {
-        case "driver":
-          navigate("/driver");
-          break;
-        default:
-          navigate("/");
+    const credentials: Credentials = {
+      email: data.email,
+      password: data.password,
+    };
+    const apiClient = new APIClient<LoginResponse>("/login");
+
+    apiClient.login(credentials).then((res) => {
+      const user: User | null = login(res);
+      if (user) {
+        switch (user.role) {
+          case "driver":
+            navigate("/driver");
+            break;
+          default:
+            navigate("/");
+        }
       }
-    }
+    });
+
+    // const user = login(data);
+    // if (user) {
+    //   switch (user.role) {
+    //     case "driver":
+    //       navigate("/driver");
+    //       break;
+    //     default:
+    //       navigate("/");
+    //   }
+    // }
   };
 
   return (
