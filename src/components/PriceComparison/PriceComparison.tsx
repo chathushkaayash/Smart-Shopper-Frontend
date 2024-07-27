@@ -5,13 +5,13 @@ import SupermarketPriceRow from "./SupermarketPriceRow";
 import { SupermarketItem } from "@/hooks/usePriceLists";
 
 interface Props {
-  priceLists: SupermarketItem[];
+  supermarketItems: SupermarketItem[];
   selectedSupermarketItem: SupermarketItem | null;
   setSupermarketItem: (priceList: SupermarketItem) => void;
 }
 
 const PriceComparison = ({
-  priceLists,
+  supermarketItems,
   selectedSupermarketItem,
   setSupermarketItem,
 }: Props) => {
@@ -27,7 +27,7 @@ const PriceComparison = ({
           <Divider borderColor="gray.400" alignSelf="flex-start" w={570} />
         }
       >
-        {priceLists.map((item, index) => (
+        {supermarketItems.map((item, index) => (
           <SupermarketPriceRow
             key={index}
             supermarketItem={item}

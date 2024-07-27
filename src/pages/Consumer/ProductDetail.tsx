@@ -1,44 +1,98 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import MiddleContainer from "@/components/Containers/MiddleContainer";
+import useCartStore from "@/state-management/cart/store";
+import { AddIcon } from "@chakra-ui/icons";
+import {
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  HStack,
+  Spacer,
+  Text,
+  VStack
+} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import CartItemCard from "@/components/CartItemCard";
+import IconButton from "@/components/Buttons/IconButton";
+import Accordian from "@/components/Accordian";
+import TextButton from "@/components/Buttons/TextButton";
 
-import AddToCartButton from "../../components/Buttons/AddToCartButton";
-import BackArrow from "../../components/PriceComparison/BackArrow";
-import PriceComparison from "../../components/PriceComparison/PriceComparison";
-import ProductDescription from "../../components/PriceComparison/ProductDescription";
-
-import useProduct from "@/hooks/useProduct";
-import { Spinner } from "flowbite-react";
-import { useNavigate, useParams } from "react-router-dom";
-
-const ProductDetail = () => {
-  const { id } = useParams();
+const CartDetails = () => {
   const navigate = useNavigate();
-  const product = useProduct(Number(id));
+  const { items } = useCartStore();
 
-  if (product.isLoading) return <Spinner />;
-  if (product.isError) return <div>Error...</div>;
+  const accordionItems = [
+    {
+      title: "Item 1",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
+    },
+    {
+      title: "Item 1",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
+    },
+    {
+      title: "Item 1",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
+    },
+  ];
+  // return null;
+  console.log(items);
 
   return (
-    <Box pt={4} pl={20} pr={20}>
-      <Box fontSize="28px" onClick={() => navigate("/")}>
-        <BackArrow />
-      </Box>
-      <Grid templateColumns="45% 55%" gap={6} mt={4}>
-        <GridItem>
-          <ProductDescription
-            topic={product.data?.name}
-            detail={product.data?.description}
-            image={product.data?.imageUrl}
-          />
+    <MiddleContainer width="90vw" bg="background">
+      <Grid
+        gridTemplateColumns={{
+          base: "1fr",
+          md: "1fr 1fr",
+          lg: "repeat(2, 1fr)",
+        }}
+        h="100%"
+        gap={{ base: 4, md: 6, lg: 10 }}
+        pt="4vh"
+        px="6vw"
+      >
+        <GridItem h="100%">
+          <Flex>
+            <Flex flexDirection="column">
+              <Heading as="h2" size="lg">
+                Your shopping cart
+              </Heading>
+              <HStack>
+                <Text>Not ready to checkout?</Text>
+                <Text
+                  onClick={() => navigate("/")}
+                  color="primary"
+                  cursor="pointer"
+                >
+                  Continue Shopping
+                </Text>
+              </HStack>
+            </Flex>
+            <Spacer />
+
+            <IconButton Icon={AddIcon} />
+          </Flex>
+          <VStack spacing={5} mt={10}>
+            {items.map((item, index) => (
+              <CartItemCard key={index} cartItem={item} />
+            ))}
+          </VStack>
         </GridItem>
-        <GridItem ml={2}>
-          <Box alignSelf="flex-start" mb={6} mt={10}>
-            <AddToCartButton text="Add to Cart" />
-          </Box>
-          <PriceComparison productId={id} />
+
+        <GridItem>
+          <Heading as="h2" size="lg" mb={10}>
+            Order Information
+          </Heading>
+          <Accordian items={accordionItems} />
+          <Spacer />
+          <TextButton text="Proceed to checkout" onClick={() => {}} />
         </GridItem>
       </Grid>
-    </Box>
+    </MiddleContainer>
   );
 };
 
-export default ProductDetail;
+export default CartDetails;
