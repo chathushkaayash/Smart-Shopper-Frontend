@@ -1,5 +1,10 @@
+import Accordian from "@/components/Accordian";
+import IconButton from "@/components/Buttons/IconButton";
+import TextButton from "@/components/Buttons/TextButton";
+import CartItemCard from "@/components/CartItemCard";
 import MiddleContainer from "@/components/Containers/MiddleContainer";
-import useCartStore from "@/state-management/cart/store";
+import APIClient from "@/services/api-client";
+import useCartStore, { CartItem } from "@/state-management/cart/store";
 import { AddIcon } from "@chakra-ui/icons";
 import {
   Flex,
@@ -9,17 +14,23 @@ import {
   HStack,
   Spacer,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import CartItemCard from "@/components/CartItemCard";
-import IconButton from "@/components/Buttons/IconButton";
-import TextButton from "@/components/Buttons/TextButton";
-import Accordian from "@/components/Accordian";
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 
 const CartDetails = () => {
+  const apiClient = new APIClient<CartItem[]>("/carts");
   const navigate = useNavigate();
-  const { items } = useCartStore();
+  const { items, setItems } = useCartStore();
+
+  const { mutate } = useMutation({
+    mutationFn: () => apiClient.create(items),
+    onSuccess: (res) => {
+      setItems(res);
+      navigate("/cart-comparison");
+    },
+  });
 
   const accordionItems = [
     {
@@ -38,8 +49,10 @@ const CartDetails = () => {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
     },
   ];
-  // return null;
-  console.log(items);
+
+  const handleSubmit = () => {
+    navigate("/checkout");
+  };
 
   return (
     <MiddleContainer width="90vw" bg="background">
@@ -73,7 +86,9 @@ const CartDetails = () => {
             </Flex>
             <Spacer />
 
-            <IconButton Icon={AddIcon} />
+            <Link to="/">
+              <IconButton Icon={AddIcon} />
+            </Link>
           </Flex>
           <VStack spacing={5} mt={10}>
             {items.map((item, index) => (
@@ -88,7 +103,7 @@ const CartDetails = () => {
           </Heading>
           <Accordian items={accordionItems} />
           <Spacer />
-          <TextButton text="Proceed to checkout" onClick={() => {}} />
+          <TextButton text="Proceed to checkout" onClick={() => mutate()} />
         </GridItem>
       </Grid>
     </MiddleContainer>

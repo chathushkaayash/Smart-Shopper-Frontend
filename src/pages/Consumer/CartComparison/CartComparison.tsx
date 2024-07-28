@@ -10,18 +10,19 @@ import {
   VStack,
   Divider,
   AspectRatio,
+  Stack,
+  Flex,
 } from "@chakra-ui/react";
 
-import CreamCracker from "../assets/creamcracker.svg";
+import { CiBookmark } from "react-icons/ci";
+import ComparisonItem from "./ComparisonItem";
+import useCartStore from "@/state-management/cart/store";
 
-import KeelsLogo from "../assets/kells.svg";
-import DeleteImage from "../assets/delete.svg";
-import SparImage from "../assets/spar.svg";
-import CollarImage from "../assets/collor.svg";
+const CartComparison = () => {
+  const cartItems = useCartStore((state) => state.items);
 
-const CardComparison = () => {
   return (
-    <Grid gridTemplateColumns="1fr 1fr" h="100%">
+    <Grid gridTemplateColumns="1fr 1fr" h="100%" px="5vw" py="5vh">
       <GridItem h="100%" px={4}>
         <Box
           p={4}
@@ -34,117 +35,23 @@ const CardComparison = () => {
           alignItems="center"
           w="100%"
         >
-          <VStack>
-            <Grid gridTemplateColumns="2fr 1fr" width="100%">
-              <GridItem>
-                <Heading as="h4" size="md" mt={2} color="gray" fontSize="30px">
+          <VStack px={5}>
+            <Flex width="100%" justifyContent={"space-between"}>
+              <Stack gap={0}>
+                <Text fontSize="3xl" color="gray" fontWeight={700}>
                   Your Shopping Cart
-                </Heading>
-                <br />
-                <Text color="gray">
-                  <b>Not ready to checkout? Continue shopping</b>
                 </Text>
-              </GridItem>
-              <GridItem justifySelf="end" alignSelf="start" mt={2}>
-                <Image src={CollarImage} />
-              </GridItem>
-            </Grid>
-            <Box>
-              <Grid gridTemplateColumns="2fr 5fr 1fr">
-                <GridItem>
-                  <HStack mt={5}>
-                    <Image src={CreamCracker} />
-                  </HStack>
-                </GridItem>
-
-                <GridItem>
-                  <Text whiteSpace="nowrap" ml={4} mt={5} fontSize="20px">
-                    <b>Cream cracker 500g</b>
-                  </Text>
-                  <Grid gridTemplateColumns="1fr 1fr">
-                    <GridItem mt={2} ml={4}>
-                      <Image src={SparImage} mt={2} />
-                      <Text>quantity : 1</Text>
-                      <Text fontSize="20px">
-                        <b>: 150 LKR</b>
-                      </Text>
-                    </GridItem>
-                    <GridItem mt={8}>
-                      <Text>Distance : 2 Km</Text>
-                    </GridItem>
-                  </Grid>
-                </GridItem>
-                <GridItem mt={40} ml={10}>
-                  <Image src={DeleteImage} />
-                </GridItem>
-              </Grid>
-            </Box>
-
-            <Divider size="lg" my={4} borderColor="gray" borderWidth="2px" />
-
-            <Box>
-              <Grid gridTemplateColumns="2fr 5fr 1fr">
-                <GridItem>
-                  <HStack mt={5}>
-                    <Image src={CreamCracker} />
-                  </HStack>
-                </GridItem>
-
-                <GridItem>
-                  <Text whiteSpace="nowrap" ml={4} mt={5} fontSize="20px">
-                    <b>Cream cracker 500g</b>
-                  </Text>
-                  <Grid gridTemplateColumns="1fr 1fr">
-                    <GridItem mt={4} ml={4}>
-                      <Image src={KeelsLogo} mt={4} />
-                      <Text>quantity : 1</Text>
-                      <Text fontSize="20px">
-                        <b>: 150 LKR</b>
-                      </Text>
-                    </GridItem>
-                    <GridItem mt={8}>
-                      <Text>Distance : 2 Km</Text>
-                    </GridItem>
-                  </Grid>
-                </GridItem>
-                <GridItem mt={40} ml={10}>
-                  <Image src={DeleteImage} />
-                </GridItem>
-              </Grid>
-            </Box>
-
-            <Divider size="lg" my={4} borderColor="gray" borderWidth="2px" />
-
-            <Box>
-              <Grid gridTemplateColumns="2fr 5fr 1fr">
-                <GridItem>
-                  <HStack mt={5}>
-                    <Image src={CreamCracker} />
-                  </HStack>
-                </GridItem>
-
-                <GridItem>
-                  <Text whiteSpace="nowrap" ml={4} mt={5} fontSize="20px">
-                    <b>Cream cracker 500g</b>
-                  </Text>
-                  <Grid gridTemplateColumns="1fr 1fr">
-                    <GridItem mt={4} ml={4}>
-                      <Image src={KeelsLogo} mt={4} />
-                      <Text>quantity : 1</Text>
-                      <Text fontSize="20px">
-                        <b>: 150 LKR</b>
-                      </Text>
-                    </GridItem>
-                    <GridItem mt={8}>
-                      <Text>Distance : 2 Km</Text>
-                    </GridItem>
-                  </Grid>
-                </GridItem>
-                <GridItem mt={40} ml={10}>
-                  <Image src={DeleteImage} />
-                </GridItem>
-              </Grid>
-            </Box>
+                <Text color="gray">
+                  Not ready to checkout? Continue shopping
+                </Text>
+              </Stack>
+              <Box>
+                <CiBookmark size={30} />
+              </Box>
+            </Flex>
+            {cartItems.map((item,index) => (
+              <ComparisonItem key={index} cartItem={item} />
+            ))}
 
             <Button
               type="submit"
@@ -244,10 +151,10 @@ const CardComparison = () => {
                 </Text>
               </GridItem>
               <GridItem justifySelf="end" alignSelf="start" mt={2}>
-                <Image src={CollarImage} />
+                {/* <Image src={CollarImage} /> */}
               </GridItem>
             </Grid>
-            <Box>
+            {/* <Box>
               <Grid gridTemplateColumns="2fr 5fr 1fr">
                 <GridItem>
                   <HStack mt={5}>
@@ -342,7 +249,7 @@ const CardComparison = () => {
                   <Image src={DeleteImage} />
                 </GridItem>
               </Grid>
-            </Box>
+            </Box> */}
 
             <Button
               type="submit"
@@ -422,4 +329,4 @@ const CardComparison = () => {
   );
 };
 
-export default CardComparison;
+export default CartComparison;

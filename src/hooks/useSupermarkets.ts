@@ -8,6 +8,7 @@ const useSuperMarkets = () => {
   return useQuery<FetchResponse<Supermarket>, Error>({
     queryKey: ["supermarkets"],
     queryFn: () => apiClient.getAll({}),
+    staleTime: 1000 * 60 , // 1 minute
   });
 };
 
