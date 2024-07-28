@@ -1,22 +1,21 @@
-import React from "react";
 import {
+  Avatar,
   Box,
+  Button,
   Container,
+  Icon,
   SimpleGrid,
   Stat,
+  StatHelpText,
   StatLabel,
   StatNumber,
-  StatHelpText,
-  Icon,
   Table,
-  Thead,
   Tbody,
-  Tr,
-  Th,
   Td,
-  Button,
-  Avatar,
   Text,
+  Th,
+  Thead,
+  Tr,
 } from "@chakra-ui/react";
 import { FaClipboardList, FaTruck, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";

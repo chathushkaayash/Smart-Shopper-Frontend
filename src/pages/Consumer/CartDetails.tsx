@@ -50,9 +50,6 @@ const CartDetails = () => {
     },
   ];
 
-  const handleSubmit = () => {
-    navigate("/checkout");
-  };
 
   return (
     <MiddleContainer width="90vw" bg="background">

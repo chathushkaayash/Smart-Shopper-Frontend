@@ -5,11 +5,11 @@ import { SupermarketItem } from "./usePriceLists";
 const apiClient = new APIClient<SupermarketItem>("/storeprices");
 
 // get SupermarketItem by id
-const usePriceLists = (id: string) => {
+const usePriceList = (id: number) => {
   return useQuery({
     queryKey: ["store_price", id],
     queryFn: () => apiClient.get(id),
   });
 };
 
-export default usePriceLists;
+export default usePriceList;
