@@ -21,6 +21,14 @@ import { FaClipboardList, FaTruck, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LineChart from "../../components/Charts/LineChart";
 
+interface Person {
+  name: string;
+  phone: string;
+  completed: number;
+  earnings: string;
+  avatar: string;
+}
+
 const deliveryPersonnel = [
   {
     name: "Kaveesha Hettige",
@@ -48,7 +56,7 @@ const deliveryPersonnel = [
 const Home = () => {
   const navigate = useNavigate();
 
-  const handleViewMore = (person) => {
+  const handleViewMore = (person:Person) => {
     navigate("/PersonalDetails", { state: { person } });
   };
 

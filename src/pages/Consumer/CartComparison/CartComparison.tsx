@@ -7,30 +7,39 @@ import {
   Flex,
   Grid,
   GridItem,
+  HStack,
   Stack,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 
 import useCartStore from "@/state-management/cart/store";
 import { CiBookmark } from "react-icons/ci";
 import ComparisonItem from "./ComparisonItem";
 import OptimizedInfo from "./OptimizedInfo";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const CartComparison = () => {
   const cartItems = useCartStore((state) => state.items);
+  const navigate = useNavigate();
+  const [selectedCart, setSelectedCart] = useState(1);
 
   return (
     <Box px="5vw" py="5vh">
+      <VStack mb={2}>
+        <Text fontSize="3xl" fontWeight={700}>
+          Select Your Cart
+        </Text>
+      </VStack>
       <Grid gridTemplateColumns="1fr 1fr">
         <GridItem h="100%" px={4}>
           <Box
             p={4}
             border="2px solid"
-            borderColor="primary"
+            borderColor={selectedCart === 1 ? "primary" : "gray"}
             borderRadius="md"
-            // bg="background"
-            bg="white"
+            bg={selectedCart === 1 ? "lightOrange" : "white"}
             display="flex"
             alignItems="center"
             w="100%"
@@ -38,12 +47,10 @@ const CartComparison = () => {
             <VStack px={5} w={"full"}>
               <Flex width="100%" justifyContent={"space-between"}>
                 <Stack gap={0}>
-                  <Text fontSize="3xl" color="gray" fontWeight={700}>
+                  <Text fontSize="3xl" fontWeight={700}>
                     Your Shopping Cart
                   </Text>
-                  <Text color="gray">
-                    Not ready to checkout? Continue shopping
-                  </Text>
+                  <Text>Not ready to checkout? Continue shopping</Text>
                 </Stack>
                 <Box>
                   <CiBookmark size={30} />
@@ -73,19 +80,18 @@ const CartComparison = () => {
                   ></iframe>
                 </AspectRatio>
               </Box>
+              <OptimizedInfo index={1} />
             </VStack>
           </Box>
-
-          <OptimizedInfo index={1} />
         </GridItem>
 
         <GridItem h="100%" px={4}>
           <Box
             p={4}
             border="2px solid"
-            borderColor="primary"
+            borderColor={selectedCart === 2 ? "primary" : "gray.200"}
             borderRadius="md"
-            bg="lightOrange"
+            bg={selectedCart === 2 ? "lightOrange" : "white"}
             display="flex"
             alignItems="center"
             w="100%"
@@ -126,13 +132,30 @@ const CartComparison = () => {
                   ></iframe>
                 </AspectRatio>
               </Box>
+              <OptimizedInfo index={2} />
             </VStack>
           </Box>
-
-          <OptimizedInfo index={2} />
         </GridItem>
       </Grid>
 
+      <Center>
+        <HStack mt={4}>
+          <Button
+            bg={selectedCart === 1 ? "primary" : "white"}
+            onClick={() => setSelectedCart(1)}
+            ml={4}
+          >
+            Your Cart
+          </Button>
+          <Button
+            bg={selectedCart === 2 ? "primary" : "white"}
+            onClick={() => setSelectedCart(2)}
+            ml={4}
+          >
+            Optimized Cart
+          </Button>
+        </HStack>
+      </Center>
       <Center display="flex" w="100%">
         <Button
           width={200}
@@ -161,6 +184,7 @@ const CartComparison = () => {
           ml={6}
           mb={10}
           mt={6}
+          onClick={() => navigate("/checkout")}
         >
           Checkout
         </Button>

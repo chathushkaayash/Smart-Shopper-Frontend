@@ -22,7 +22,7 @@ const DoughnutChart: React.FC = () => {
             width: 'full', // Set the width of the chart
             height:'full', // Set the height of the chart   
             legend: {
-                position: 'bottom', // Positioning the legend at the bottom
+                position: 'bottom' as 'top' | 'right' | 'bottom' | 'left', // Positioning the legend at the bottom
                 fontSize: '14px', // Setting the font size of the legend
             },
         },
