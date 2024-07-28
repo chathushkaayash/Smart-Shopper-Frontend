@@ -70,7 +70,7 @@ const SupermarketPriceRow = ({
         </Stack>
       </VStack>
 
-      <Text fontSize="xl" fontWeight={700}>
+      <Text fontSize="xl" fontWeight={700} w="10%">
         {supermarketItem.price}
       </Text>
     </HStack>

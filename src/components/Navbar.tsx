@@ -15,6 +15,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Banner from "../assets/smart-shopper-banner.svg";
 import ActionButton from "./Buttons/ActionButton";
 
+interface NavItem {
+  text: string;
+  path: string;
+}
+
 const Navbar = () => {
   const { user, logout } = useAuthStore();
   const { items } = useCartStore();
@@ -23,10 +28,24 @@ const Navbar = () => {
   const location = useLocation();
 
   const hideNavbarPaths = ["/driver"];
-  const showTopNav = !hideNavbarPaths.some((path) => location.pathname.startsWith(path));
-  const consumerNavItems = ["Home", "Supermarkets", "About Us"];
-  const courierNavItems = ["Home", "Request", "Deliveries"];
-  const navItems = user?.role === "Courier Company" ? courierNavItems : consumerNavItems;
+  const showTopNav = !hideNavbarPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
+
+  const consumerNavItems: NavItem[] = [
+    { text: "Home", path: "/" },
+    { text: "Supermarkets", path: "/supermarkets" },
+    { text: "About Us", path: "/about" },
+  ];
+
+  const courierNavItems: NavItem[] = [
+    { text: "Home", path: "/" },
+    { text: "Request", path: "/requests" },
+    { text: "Deliveries", path: "/deliveries" },
+  ];
+
+  const navItems =
+    user?.role === "Courier Company" ? courierNavItems : consumerNavItems;
 
   return (
     <>
@@ -43,7 +62,7 @@ const Navbar = () => {
           borderColor={useColorModeValue("gray.200", "gray.900")}
           align={"center"}
           justifyContent="space-between"
-          pos={location.pathname === "/admin" ? "sticky" : "relative"}
+          pos={user?.role === "admin" ? "sticky" : "relative"}
           top={0}
           zIndex={10}
         >
@@ -51,9 +70,11 @@ const Navbar = () => {
             <Image src={Banner} />
 
             {navItems.map((item) => (
-              <Link to={`/${item.toLowerCase()}`} key={item}>  {/* Use Link component for navigation */}
+              <Link to={item.path} key={item.text}>
+                {" "}
+                {/* Use Link component for navigation */}
                 <Text fontSize="lg" fontWeight="bold">
-                  {item}
+                  {item.text}
                 </Text>
               </Link>
             ))}
