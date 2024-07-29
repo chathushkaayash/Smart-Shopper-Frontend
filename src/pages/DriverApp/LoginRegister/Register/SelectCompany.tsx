@@ -1,5 +1,6 @@
 import {
   Box,
+  Center,
   Icon,
   Image,
   Input,
@@ -15,7 +16,7 @@ import Logo from "../../../../assets/logo.svg";
 
 import { IoSearchSharp } from "react-icons/io5";
 import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
-import { useState } from "react";
+import {useState } from "react";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import DotIndicator from "@/components/DotIndicator";
 
@@ -24,9 +25,14 @@ interface Props {
 }
 
 const SelectCompany = ({ setStage }: Props) => {
+
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const companies = ["DHL", "FedEx", "UPS", "USPS", "TNT", "Aramex", "DPD"];
 
+  const filteredCompanies = companies.filter((company) =>
+    company.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
       <VStack>
@@ -43,12 +49,21 @@ const SelectCompany = ({ setStage }: Props) => {
 
       {/* --------------- Search Bar --------------- */}
 
-      <InputGroup borderColor="primary" w="80vw">
-        <InputLeftElement>
-          <Icon as={IoSearchSharp} color="primary" />
-        </InputLeftElement>
-        <Input placeholder="Search for a company" borderRadius="full" />
-      </InputGroup>
+      <Center as="form">
+        <InputGroup borderColor="primary" w="80vw">
+          <InputLeftElement>
+            <Icon as={IoSearchSharp} color="primary" />
+          </InputLeftElement>
+          <Input
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
+            placeholder="Search for a company"
+            borderRadius="full"
+          />
+        </InputGroup>
+      </Center>
 
       {/* --------------- form --------------- */}
 
@@ -62,13 +77,13 @@ const SelectCompany = ({ setStage }: Props) => {
           p={4}
           boxShadow="lg"
           css={{
-            //   '&::-webkit-scrollbar': { display: 'none' },
+            // '&::-webkit-scrollbar': { display: 'none' },
             "-ms-overflow-style": "none",
             "scrollbar-width": "none",
           }}
         >
           <List>
-            {companies.map((company, index) => (
+            {filteredCompanies.map((company, index) => (
               <ListItem
                 key={index}
                 p={2}
@@ -101,7 +116,7 @@ const SelectCompany = ({ setStage }: Props) => {
           </List>
         </Box>
         <VStack w="80vw">
-          <SubmitButton borderRadius={10} onClick={() => setStage(3)}>
+          <SubmitButton disabled={!selectedCompany} borderRadius={10} onClick={() => { if (selectedCompany) setStage(3);}}>
             Next
           </SubmitButton>
           <DotIndicator

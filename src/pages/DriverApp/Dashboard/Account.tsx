@@ -1,4 +1,4 @@
-// import useAuthStore from "@/state-management/auth/store";
+
 import {
   Divider,
   HStack,
@@ -16,7 +16,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
 const Account = () => {
-  // const { user, logout } = useAuthStore();
+  
   const navigate = useNavigate();
 
   const rows = [
@@ -83,11 +83,7 @@ const Account = () => {
           </HStack>
         ))}
       </Stack>
-      {/* <Heading>{user?.username}</Heading>
-      <button onClick={logout}>Logout</button>
-      <Box p={4}>
-        <Icon as={MdLogout} />
-      </Box> */}
+  
     </>
   );
 };

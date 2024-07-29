@@ -147,3 +147,4 @@ const EnterPassword = ({ setStage }: Props) => {
 };
 
 export default EnterPassword;
+

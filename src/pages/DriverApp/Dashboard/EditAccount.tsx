@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Center,
   Divider,
   HStack,
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { PiCaretRightThin } from "react-icons/pi";
 import { useRef } from "react";
 import { BsCameraFill } from "react-icons/bs";
+import useAuthStore from "@/state-management/auth/store";
 
 const userDetails = [
   { label: "NIC", value: "215439582242" },
@@ -26,6 +28,7 @@ const userDetails = [
 const EditAccount = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const { logout } = useAuthStore();
 
   return (
     <>
@@ -85,6 +88,11 @@ const EditAccount = () => {
           <Icon as={PiCaretRightThin} boxSize={5} />
         </HStack>
       </Stack>
+      <Center py={10}>
+        <Button bg="primary" color="white" onClick={logout}>
+          Logout
+        </Button>
+      </Center>
     </>
   );
 };
