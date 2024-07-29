@@ -67,7 +67,11 @@ const Navbar = () => {
           zIndex={10}
         >
           <HStack gap={5}>
-            <Image src={Banner} />
+            <Image
+              src={Banner}
+              onClick={() => navigate("/")}
+              cursor="pointer"
+            />
 
             {navItems.map((item) => (
               <Link to={item.path} key={item.text}>
@@ -91,7 +95,7 @@ const Navbar = () => {
               <Text fontSize="lg" fontWeight="bold">
                 {user.name}
               </Text>
-              <Box pos={"relative"}>
+              <Box pos={"relative"} cursor="pointer">
                 <Icon
                   as={FaCartShopping}
                   w={8}

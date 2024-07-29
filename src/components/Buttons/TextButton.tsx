@@ -12,7 +12,7 @@ const TextButton = ({ text, onClick }: TextButtonProps) => {
       width="full"
       bg="#E9893B"
       mt={10}
-      borderRadius={20}
+      borderRadius={5}
       color={"white"}
       onClick={onClick}
     >

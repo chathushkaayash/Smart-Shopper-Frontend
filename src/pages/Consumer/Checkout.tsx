@@ -1,8 +1,8 @@
-import { EditIcon, InfoIcon, SearchIcon } from "@chakra-ui/icons";
+import APIClient from "@/services/api-client";
+import { EditIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  ChakraProvider,
   Divider,
   Flex,
   Heading,
@@ -12,30 +12,50 @@ import {
   Image,
   Input,
   InputGroup,
-  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalOverlay,
   Radio,
   RadioGroup,
   Spacer,
   Stack,
   Text,
-  Textarea,
   useDisclosure,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import delHome from "../../../src/assets/delHome.png";
-import deliveryLoc from "../../../src/assets/deliveryToLocation.png";
+import pickupImg from "../../../src/assets/Grocery shopping-rafiki.svg";
+
+interface CheckoutRequest {
+  shippingAddress: string;
+  shippingMethod: string;
+}
 
 const Checkout = () => {
+  const apiClient = new APIClient<CheckoutRequest>("/orderToCart");
+  const navigate = useNavigate();
+
+  const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>({
+    shippingAddress: "66 Pandura Rd, Bandaragama",
+    shippingMethod: "Home Delivery",
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: () => apiClient.create(checkoutRequest),
+    onSuccess: () => {
+      navigate("/");
+    },
+  });
+
   const {
     isOpen: isOpen1,
     onOpen: onOpen1,
@@ -48,7 +68,7 @@ const Checkout = () => {
   } = useDisclosure();
 
   return (
-    <ChakraProvider>
+    <>
       <Box maxWidth="1200px" margin="0 auto" padding="4">
         <Flex justifyContent="space-between" alignItems="center" mb={4}>
           <Button variant="link" size="xxl" color={"black"}>
@@ -60,11 +80,11 @@ const Checkout = () => {
           {/* Left Column */}
           <Box flex="2">
             <VStack align="stretch" spacing={4}>
-              {/* Delivery Options */}
+              {/* Shipping  Method */}
               <Box border="1px" borderRadius="md" padding="4">
                 <HStack justify="space-between">
-                  <Heading size="md" color="orange.400">
-                    Delivery options
+                  <Heading size="md" color="primary">
+                    Shipping Method
                   </Heading>
                 </HStack>
                 <Divider my={2} />
@@ -74,27 +94,29 @@ const Checkout = () => {
                       <HStack>
                         <FaRegUser />
                         <VStack ml={3} alignItems={"unset"} spacing={0}>
-                          <Text fontWeight="bold">Meet at my door</Text>
-                          <Text>Add delivery instructions</Text>
+                          <Text fontWeight="bold">
+                            {checkoutRequest.shippingMethod}
+                          </Text>
+                          <Text>Change Shipping Method</Text>
                         </VStack>
                       </HStack>
                     </Box>
                     <Button
                       variant="outline"
                       colorScheme="white"
-                      color="orange.400"
-                      borderColor="orange.400"
+                      color="primary"
+                      borderColor="primary"
                       border="1px"
                       borderRadius="12px"
                       fontSize="15px"
                       fontWeight="bold"
                       bg="white"
-                      _hover={{ bg: "orange.400", color: "white" }}
+                      _hover={{ bg: "primary", color: "white" }}
                       _active={{
-                        bg: "orange.400",
+                        bg: "primary",
                         color: "white",
                         transform: "scale(0.98)",
-                        borderColor: "orange.400",
+                        borderColor: "primary",
                       }}
                       size="sm"
                       rightIcon={<EditIcon />}
@@ -108,56 +130,68 @@ const Checkout = () => {
 
               {/* Delivery Details */}
               <Box border="1px" borderRadius="md" padding="4">
-                <Heading size="md" color="orange.400">
+                <Heading size="md" color="primary">
                   Delivery details
                 </Heading>
                 <Divider my={2} />
                 <HStack justify="space-between">
-                    <Box>
-                      <HStack>
-                        <MdOutlineLocationOn />
-                        <VStack ml={3} alignItems={"unset"} spacing={0}>
-                          <Text fontWeight="bold">Bandaragama Junction</Text>
-                          <Text textAlign={"right"}>
-                            66 Pandura Rd, Bandaragama
-                          </Text>
-                        </VStack>
-                      </HStack>
-                    </Box>
-                    <Button
-                      size="sm"
-                      rightIcon={<EditIcon />}
-                      variant="outline"
-                      colorScheme="white"
-                      color="orange.400"
-                      borderColor="orange.400"
-                      border="1px"
-                      borderRadius="12px"
-                      fontSize="15px"
-                      fontWeight="bold"
-                      bg="white"
-                      _hover={{ bg: "orange.400", color: "white" }}
-                      _active={{
-                        bg: "orange.400",
-                        color: "white",
-                        transform: "scale(0.98)",
-                        borderColor: "orange.400",
-                      }}
-                      onClick={onOpen1}
-                    >
-                      Edit
-                    </Button>
-                  </HStack>
+                  <Box>
+                    <HStack>
+                      <MdOutlineLocationOn />
+                      <VStack ml={3} alignItems={"unset"} spacing={0}>
+                        {/* <Text fontWeight="bold">Bandaragama Junction</Text> */}
+                        <Text textAlign={"right"}>
+                          {checkoutRequest.shippingAddress}
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </Box>
+                  <Button
+                    size="sm"
+                    rightIcon={<EditIcon />}
+                    variant="outline"
+                    colorScheme="white"
+                    color="primary"
+                    borderColor="primary"
+                    border="1px"
+                    borderRadius="12px"
+                    fontSize="15px"
+                    fontWeight="bold"
+                    bg="white"
+                    _hover={{ bg: "primary", color: "white" }}
+                    _active={{
+                      bg: "primary",
+                      color: "white",
+                      transform: "scale(0.98)",
+                      borderColor: "primary",
+                    }}
+                    onClick={onOpen1}
+                  >
+                    Edit
+                  </Button>
+                </HStack>
               </Box>
 
               {/* Continue to payment */}
-              <Button bg="black" size="lg" width="full" color="white">
+              <Button
+                bg="secondary"
+                color="white"
+                size="lg"
+                width="full"
+                // color="white"
+                onClick={() => mutate()}
+              >
                 Continue to payment
               </Button>
-              
+
               {/* Note */}
               <Text fontSize="sm">
-              If you’re not around when the delivery person arrives, they’ll leave your order at the door. By placing your order, you agree to take full responsibility for it once it’s delivered. Orders containing alcohol or other restricted items may not be eligible for leave at door and will be returned to the store if you are not available.
+                If you’re not around when the delivery person arrives, they’ll
+                leave your order at the door. By placing your order, you agree
+                to take full responsibility for it once it’s delivered. Orders
+                containing alcohol or other restricted items may not be eligible
+                for leave at door and will be returned to the store if you are
+                not available.
               </Text>
             </VStack>
           </Box>
@@ -174,7 +208,7 @@ const Checkout = () => {
                     alt="Order Item"
                   />
                   <VStack>
-                    <Heading size="md" color="orange.400">
+                    <Heading size="md" color="primary">
                       Arpico Supermarket
                     </Heading>
                     <Text>Mirisswaththa, Piliyandala</Text>
@@ -190,12 +224,12 @@ const Checkout = () => {
                     fontSize="15px"
                     fontWeight="bold"
                     bg="white"
-                    _hover={{ bg: "orange.400", color: "white" }}
+                    _hover={{ bg: "primary", color: "white" }}
                     _active={{
-                      bg: "orange.400",
+                      bg: "primary",
                       color: "white",
                       transform: "scale(0.98)",
-                      borderColor: "orange.400",
+                      borderColor: "primary",
                     }}
                   />
                 </HStack>
@@ -203,7 +237,7 @@ const Checkout = () => {
 
               {/* Order Total */}
               <Box border="1px" borderRadius="md" padding="4">
-                <Heading size="md" color="orange.400">
+                <Heading size="md" color="primary">
                   Order total
                 </Heading>
                 <Divider my={2} />
@@ -231,9 +265,9 @@ const Checkout = () => {
           </Box>
         </Flex>
       </Box>
-       {/* /////////modal1 */}
+      {/* /////////modal1 */}
 
-       <Modal blockScrollOnMount={false} isOpen={isOpen1} onClose={onClose1}>
+      <Modal blockScrollOnMount={false} isOpen={isOpen1} onClose={onClose1}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
@@ -245,10 +279,20 @@ const Checkout = () => {
 
               <Box mb={3}>
                 <InputGroup>
-                  <InputLeftAddon>
+                  {/* <InputLeftAddon>
                     <Icon as={SearchIcon} boxSize={5} />
-                  </InputLeftAddon>
-                  <Input variant="filled" placeholder="Search for an address" />
+                  </InputLeftAddon> */}
+                  <Input
+                    variant="filled"
+                    placeholder="Search for an address"
+                    value={checkoutRequest.shippingAddress}
+                    onChange={(e) =>
+                      setCheckoutRequest({
+                        ...checkoutRequest,
+                        shippingAddress: e.target.value,
+                      })
+                    }
+                  />
                 </InputGroup>
               </Box>
 
@@ -256,9 +300,16 @@ const Checkout = () => {
                 Saved Addresses
               </Heading>
               <Flex bg="gray.100" shadow={"sm"} px={2} py={2} borderRadius={5}>
-                <HStack>
+                <HStack
+                  onClick={() =>
+                    setCheckoutRequest({
+                      ...checkoutRequest,
+                      shippingAddress: "66 Pandura Rd, Bandaragama",
+                    })
+                  }
+                >
                   <Icon as={FaLocationDot} boxSize={5} />
-                  <Text>Kiribathgoda</Text>
+                  <Text>Bandaragama</Text>
                 </HStack>
                 <Spacer />
                 <Box>
@@ -280,9 +331,8 @@ const Checkout = () => {
           <ModalBody>
             <Flex direction={"column"}>
               <Heading fontSize={"xl"} my={2}>
-                Drop off options
+                Shipping Method
               </Heading>
-              <Text fontSize={"xs"}>Delivery to Kiribathgoda</Text>
 
               <Box
                 p={2}
@@ -291,80 +341,65 @@ const Checkout = () => {
                 borderRadius={10}
                 my={2}
               >
-                <Flex alignItems={"center"}>
-                  <Image src={delHome} boxSize={9} />
-                  <Text mx={"2%"} fontWeight={"500"} fontSize="lg">
-                    Hand it to me
-                  </Text>
-                </Flex>
-
-                <RadioGroup colorScheme="blackAlpha" defaultValue="door">
+                <RadioGroup
+                  colorScheme="blackAlpha"
+                  defaultValue="door"
+                  onChange={(value) => {
+                    setCheckoutRequest({
+                      ...checkoutRequest,
+                      shippingMethod: value,
+                    });
+                  }}
+                  value={checkoutRequest.shippingMethod}
+                >
                   <Stack direction="column" fontWeight="500">
                     <Flex
                       justifyContent="space-between"
                       px={3}
                       py={2}
                       borderRadius={5}
+                      cursor={"pointer"}
+                      onClick={() => {
+                        setCheckoutRequest({
+                          ...checkoutRequest,
+                          shippingMethod: "Home Delivery",
+                        });
+                      }}
                     >
-                      <Text>Meet at my door</Text>
-                      <Radio value="door" />
+                      <HStack>
+                        <Image src={delHome} boxSize={9} />
+                        <Text>Home Delivery</Text>
+                      </HStack>
+                      <Radio value="Home Delivery" />
                     </Flex>
                     <Flex
                       justifyContent="space-between"
                       px={3}
                       py={2}
                       borderRadius={5}
+                      cursor={"pointer"}
+                      onClick={() => {
+                        setCheckoutRequest({
+                          ...checkoutRequest,
+                          shippingMethod: "Store Pickup",
+                        });
+                      }}
                     >
-                      <Text>Meet outside</Text>
-                      <Radio value="outside" />
-                    </Flex>
-                    <Flex
-                      justifyContent="space-between"
-                      px={3}
-                      py={2}
-                      borderRadius={5}
-                    >
-                      <Text>Meet in the lobby</Text>
-                      <Radio value="lobby" />
+                      <HStack>
+                        <Image src={pickupImg} boxSize={9} />
+                        <Text>Store Pickup</Text>
+                      </HStack>
+                      <Radio value="Store Pickup" />
                     </Flex>
                   </Stack>
                 </RadioGroup>
               </Box>
-
-              <Flex
-                alignItems={"center"}
-                p={2}
-                py={3}
-                boxShadow={"xs"}
-                borderRadius={5}
-              >
-                <Image src={deliveryLoc} boxSize={9} />
-                <Text mx={"2%"} fontWeight={"500"} fontSize="lg">
-                  Leave at location
-                </Text>
-              </Flex>
-
-              <Text fontWeight={"500"} fontSize={"sm"} my={3}>
-                Instructions for Delivery Person
-              </Text>
-
-              <Textarea
-                // value={value}
-                //onChange={handleInputChange}
-                placeholder="Example : please knock instead of ringing the doorbell"
-                size="sm"
-              />
             </Flex>
           </ModalBody>
-          <ModalFooter>
-            <Button bg="#ff7708" mr={3} color="white">
-              Update
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
       {/* /////////modal2/////// */}
-    </ChakraProvider>
+    </>
   );
 };
 
