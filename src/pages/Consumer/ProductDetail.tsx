@@ -77,7 +77,10 @@ const ProductDetail = () => {
 
   const removeCartItem = (item: CartItem) => {
     console.log(item);
-    if (item.id) apiClient.delete(item.id)
+    if (item.id)
+      apiClient
+        .delete(item.id)
+        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
   };
 
   if (isLoading) return <Spinner />;

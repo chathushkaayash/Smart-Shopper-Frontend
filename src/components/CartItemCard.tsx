@@ -16,6 +16,7 @@ import APIClient from "@/services/api-client";
 import { CartItem } from "@/state-management/cart/store";
 import { useNavigate } from "react-router-dom";
 import QuantityChanger from "./QuantityChanger";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   cartItem: CartItem;
@@ -24,6 +25,7 @@ const apiClient = new APIClient<CartItem>("/carts");
 
 const CartItemCard = ({ cartItem }: Props) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   if (!cartItem) return null;
   const product = useProduct(cartItem.supermarketItem?.productId || 0);
@@ -33,7 +35,10 @@ const CartItemCard = ({ cartItem }: Props) => {
 
   const removeCartItem = (item: CartItem) => {
     console.log(item);
-    if (item.id) apiClient.delete(item.id);
+    if (item.id)
+      apiClient
+        .delete(item.id)
+        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
   };
 
   return (
