@@ -12,6 +12,7 @@ import BestSellingProducts from "../../components/Landing/BestSellingProducts";
 import BrowseByCategory from "../../components/Landing/BrowseByCategory";
 import Section from "../../components/Landing/Section";
 import Navbar from "../../components/Navbar";
+import { useRef } from "react";
 
 export interface ProductQuery {
   genreId?: number;
@@ -21,6 +22,14 @@ export interface ProductQuery {
 }
 
 const Landing = () => {
+  const newArrivalsRef = useRef<HTMLDivElement>(null);
+
+  const handleExploreMoreClick = () => {
+    if (newArrivalsRef.current) {
+      newArrivalsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       <Show below="md">
@@ -29,9 +38,21 @@ const Landing = () => {
 
       <Box w="100%" h="90vh" className="w-[100vw] h-[90vh] overflow-x-hidden">
         <SimpleSlider>
-          <Slide image={SmartListsImage} title="SmartLists" />
-          <Slide image={BestPricesImage} title="BestPrices" />
-          <Slide image={FastDeliveryImage} title="FastDelivery" />
+          <Slide 
+            image={SmartListsImage} 
+            title="SmartLists" 
+            onExploreMoreClick={handleExploreMoreClick} 
+          />
+          <Slide 
+            image={BestPricesImage} 
+            title="BestPrices" 
+            onExploreMoreClick={handleExploreMoreClick} 
+          />
+          <Slide 
+            image={FastDeliveryImage} 
+            title="FastDelivery" 
+            onExploreMoreClick={handleExploreMoreClick} 
+          />
         </SimpleSlider>
 
         <VStack
@@ -43,9 +64,11 @@ const Landing = () => {
         >
           <BrowseByCategory />
           <BestSellingProducts />
-          <Section heading="New Arrivals" title="Product for you">
-            <ProductGrid productQuery={{} as ProductQuery} />
-          </Section>
+          <div ref={newArrivalsRef}>
+            <Section heading="New Arrivals" title="Product for you">
+              <ProductGrid productQuery={{} as ProductQuery} />
+            </Section>
+          </div>
           <AdvertisementGrid />
         </VStack>
         <Footer />

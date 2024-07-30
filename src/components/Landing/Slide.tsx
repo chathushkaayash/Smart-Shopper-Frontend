@@ -15,9 +15,10 @@ import TextWithLineBreaks from "../Containers/TextWithLineBreaks";
 interface Props {
   image: string;
   title: "SmartLists" | "BestPrices" | "FastDelivery";
+  onExploreMoreClick: () => void;
 }
 
-const Slide = ({ image, title }: Props) => {
+const Slide = ({ image, title,onExploreMoreClick }: Props) => {
   const titles = ["SmartLists", "BestPrices", "FastDelivery"];
 
   const titlesMap: { [key: string]: string } = {
@@ -84,7 +85,7 @@ const Slide = ({ image, title }: Props) => {
               Revolutionizing Shopping\n For a Smarter Tomorrow
             </TextWithLineBreaks>
 
-            <ActionButton className="mt-[5vh]" size="lg">
+            <ActionButton className="mt-[5vh]" size="lg" onClick={onExploreMoreClick}>
               Explore More
             </ActionButton>
           </Stack>
