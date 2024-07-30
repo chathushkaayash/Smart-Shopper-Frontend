@@ -13,24 +13,60 @@ import {
 } from "@chakra-ui/react";
 import GroceryImage from "../../assets/signup-login/grocery-shopping-amico.svg";
 
-import { useForm } from "react-hook-form";
+import APIClient from "@/services/api-client";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { z } from "zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { RegisterForm } from "@/pages/SignUp";
 
 const schema = z.object({
   otp: z.string().length(6, "OTP must be exactly 6 digits"),
 });
 
-type FormData = z.infer<typeof schema>;
+interface OtpMappingRequest {
+  contactNumber: string;
+  OTP: string;
+}
 
-const SendOTP = () => {
+type FormData = z.infer<typeof schema>;
+const apiClient = new APIClient<OtpMappingRequest | string>("/match_otp");
+
+interface Props {
+  registerForm: RegisterForm | null;
+}
+
+const SendOTP = ({ registerForm }: Props) => {
+  const navigate = useNavigate();
+  const [pin, setPin] = useState("");
+
   const { handleSubmit } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const [pin, setPin] = useState("");
   const handleChange = (value: string) => {
+    if (value.length === 6) {
+      matchOtp(value);
+    }
     setPin(value);
   };
+
+  const matchOtp = (otp: string) => {
+    apiClient
+      .create({
+        OTP: otp,
+        contactNumber: "+94" + registerForm?.contactNumber.slice(1),
+      })
+      .then((res) => {
+        if (res === "Success") navigate("/login");
+      });
+  };
+
+  const censoredNumber =
+    registerForm?.contactNumber || 0 >= 10
+      ? registerForm?.contactNumber.slice(0, 2) +
+        "*****" +
+        registerForm?.contactNumber.slice(7, 10)
+      : registerForm?.contactNumber;
 
   return (
     <Grid
@@ -39,13 +75,13 @@ const SendOTP = () => {
     >
       <GridItem h={{ base: "35vh", md: "100%" }}>
         <Center h="100%" p="2vw">
-          <Image src={GroceryImage}  />
+          <Image src={GroceryImage} />
           {/* <Image src={GroceryImage} w={{ base: "60vw", md: "full" }} /> */}
         </Center>
       </GridItem>
 
       <GridItem px={55} py={10}>
-      {/* <GridItem px="2vw"> */}
+        {/* <GridItem px="2vw"> */}
         <Stack
           h={{ base: "auto", md: "full" }}
           w={{ base: "80vw", md: "full" }}
@@ -66,24 +102,54 @@ const SendOTP = () => {
             </Box>
           </VStack>
           <VStack alignItems={{ base: "center", md: "flex-start" }} my={10}>
-            <Text>Enter the otp code from the email we sent to </Text>
-            <Text fontWeight="bold">ApeEmailEka@gmail.com</Text>
+            <Text>Enter the OTP code we have sent to </Text>
+            <Text fontWeight="bold">{censoredNumber}</Text>
           </VStack>
 
           <form onSubmit={handleSubmit((data) => console.log(data))}>
-              <Box textAlign={{ base: "center", md: "left" }} mb={10} >
+            <Box textAlign={{ base: "center", md: "left" }} mb={10}>
               <PinInput value={pin} onChange={handleChange} otp placeholder=" ">
-                <PinInputField border="2px" borderColor="primary" _hover={""} mr={2}/>
-                <PinInputField border="2px" borderColor="primary" _hover={""} mx={2}/>
-                <PinInputField border="2px" borderColor="primary" _hover={""} mx={2}/>
-                <PinInputField border="2px" borderColor="primary" _hover={""} mx={2}/>
-                <PinInputField border="2px" borderColor="primary" _hover={""} mx={2}/>
-                <PinInputField border="2px" borderColor="primary" _hover={""} mx={2}/>
+                <PinInputField
+                  border="2px"
+                  borderColor="primary"
+                  _hover={""}
+                  mr={2}
+                />
+                <PinInputField
+                  border="2px"
+                  borderColor="primary"
+                  _hover={""}
+                  mx={2}
+                />
+                <PinInputField
+                  border="2px"
+                  borderColor="primary"
+                  _hover={""}
+                  mx={2}
+                />
+                <PinInputField
+                  border="2px"
+                  borderColor="primary"
+                  _hover={""}
+                  mx={2}
+                />
+                <PinInputField
+                  border="2px"
+                  borderColor="primary"
+                  _hover={""}
+                  mx={2}
+                />
+                <PinInputField
+                  border="2px"
+                  borderColor="primary"
+                  _hover={""}
+                  mx={2}
+                />
               </PinInput>
-              </Box>
+            </Box>
           </form>
 
-          <Text mt={3} >
+          <Text mt={3}>
             I didn't receive any code.{" "}
             <Button variant="link" color="primary">
               RESEND

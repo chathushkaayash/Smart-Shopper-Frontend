@@ -1,48 +1,42 @@
 import {
   Box,
   Center,
-  Flex,
   Grid,
   GridItem,
-  HStack,
   Image,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { FaEnvelope, FaLock } from "react-icons/fa6";
+import { FaEnvelope, FaUser } from "react-icons/fa6";
 
 import GroceryImage from "../../assets/signup-login/add-to-cart.svg";
-import FacebookIcon from "../../assets/social-media-icons/facebook.svg";
-import GoogleIcon from "../../assets/social-media-icons/google.svg";
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { RegisterForm } from "@/pages/SignUp";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import LoginInput from "../Inputs/LoginInput";
-import SubmitButton from "../Buttons/SubmitButton";
-import LoginButton from "../Buttons/LoginButton";
-import ErrorText from "../Errors/ErrorText";
+import { useForm } from "react-hook-form";
+import { FaPhoneAlt } from "react-icons/fa";
+import { z } from "zod";
 import LinkButton from "../Buttons/LinkButton";
+import SubmitButton from "../Buttons/SubmitButton";
+import ErrorText from "../Errors/ErrorText";
+import LoginInput from "../Inputs/LoginInput";
 
-const schema = z
-  .object({
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const schema = z.object({
+  name: z.string(),
+  email: z.string().email("Invalid email address"),
+  contactNumber: z.string().regex(/^0\d{9}$/, "Invalid phone number"),
+});
 
 type FormData = z.infer<typeof schema>;
 
 interface Props {
-  setStage: (n: number) => void;
+  registerForm: RegisterForm | null;
+  setRegisterForm: (s: RegisterForm) => void;
+  setStage: (s: number) => void;
 }
 
-const SendEmail = ({ setStage }: Props) => {
+const SendEmail = ({ setRegisterForm, setStage }: Props) => {
   const {
     register,
     handleSubmit,
@@ -80,7 +74,27 @@ const SendEmail = ({ setStage }: Props) => {
             </Box>
           </VStack>
 
-          <form onSubmit={handleSubmit(() => setStage(1))}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              setRegisterForm({
+                name: data.name,
+                email: data.email,
+                contactNumber: data.contactNumber,
+                password: "",
+              });
+
+              setStage(1);
+            })}
+          >
+            <LoginInput
+              register={register("name")}
+              type="text"
+              placeholder="Name"
+              icon={FaUser}
+            />
+
+            {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
+
             <LoginInput
               register={register("email")}
               type="email"
@@ -88,23 +102,15 @@ const SendEmail = ({ setStage }: Props) => {
               icon={FaEnvelope}
             />
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+
             <LoginInput
-              register={register("password")}
-              type="password"
-              placeholder="Password"
-              icon={FaLock}
+              register={register("contactNumber")}
+              type="text"
+              placeholder="Ex- 0712345678"
+              icon={FaPhoneAlt}
             />
-            {errors.password && (
-              <ErrorText>{errors.password.message}</ErrorText>
-            )}
-            <LoginInput
-              register={register("confirmPassword")}
-              type="password"
-              placeholder="Confirm Password"
-              icon={FaLock}
-            />
-            {errors.confirmPassword && (
-              <ErrorText>{errors.confirmPassword.message}</ErrorText>
+            {errors.contactNumber && (
+              <ErrorText>{errors.contactNumber.message}</ErrorText>
             )}
 
             <SubmitButton className="my-3">Sign Up</SubmitButton>
@@ -117,7 +123,7 @@ const SendEmail = ({ setStage }: Props) => {
             </LinkButton>
           </Text>
 
-          <Flex align="center" mt={3}>
+          {/* <Flex align="center" mt={3}>
             <Box flex="1" h="1px" bg="gray.300"></Box>
             <Box px={2}>or</Box>
             <Box flex="1" h="1px" bg="gray.300"></Box>
@@ -129,7 +135,7 @@ const SendEmail = ({ setStage }: Props) => {
               text={{ base: "", md: "Facebook" }}
               image={FacebookIcon}
             />
-          </HStack>
+          </HStack> */}
         </Stack>
       </GridItem>
     </Grid>

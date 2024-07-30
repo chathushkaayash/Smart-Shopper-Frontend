@@ -33,6 +33,10 @@ class APIClient<T> {
     return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
 
+  patch = (data: T) => {
+    return axiosInstance.patch<T>(this.endpoint, data).then((res) => res.data);
+  };
+
   delete = (id: number) => {
     return axiosInstance
       .delete<T>(this.endpoint, { params: { id } })
@@ -40,6 +44,10 @@ class APIClient<T> {
   };
 
   login = (data: Credentials) => {
+    return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
+  };
+
+  register = (data: Credentials) => {
     return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
 }

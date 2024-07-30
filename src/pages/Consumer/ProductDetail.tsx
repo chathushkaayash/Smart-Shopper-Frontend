@@ -44,7 +44,7 @@ const ProductDetail = () => {
     useState<SupermarketItem | null>(null);
 
   useEffect(() => {
-    if (priceLists) {
+    if (priceLists && cartItems) {
       // find the index of the priceLists that matches
       const index = priceLists.results.findIndex(
         (i) => i.id === cartItemInCart?.supermarketItem?.id
@@ -57,7 +57,7 @@ const ProductDetail = () => {
         setSupermarketItem(priceLists.results[0]);
       }
     }
-  }, [priceLists]);
+  }, [priceLists?.results && cartItems]);
 
   // get the the cart Item that is already added to the cart
   const cartItemInCart = cartItems.find(
@@ -76,10 +76,20 @@ const ProductDetail = () => {
   };
 
   const removeCartItem = (item: CartItem) => {
-    console.log(item);
     if (item.id)
       apiClient
         .delete(item.id)
+        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
+  };
+
+  const updateCartItem = (carItemInCart: CartItem, item: SupermarketItem) => {
+    if (item.id)
+      apiClient
+        .create({
+          id: carItemInCart.id,
+          supermarketItem: selectedSupermarketItem,
+          quantity: 1,
+        })
         .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
   };
 
@@ -121,15 +131,19 @@ const ProductDetail = () => {
               }
               checked={!!cartItemInCart && !shouldUpdateCart}
               onClick={() => {
-                if (!shouldUpdateCart && cartItemInCart) {
-                  removeCartItem(cartItemInCart);
-                  priceLists && setSupermarketItem(priceLists.results[0]);
+                if (shouldUpdateCart) {
+                  updateCartItem(cartItemInCart, selectedSupermarketItem);
                 } else {
-                  selectedSupermarketItem &&
-                    addCartItem({
-                      supermarketItem: selectedSupermarketItem,
-                      quantity: 1,
-                    });
+                  if (cartItemInCart) {
+                    removeCartItem(cartItemInCart);
+                    priceLists && setSupermarketItem(priceLists.results[0]);
+                  } else {
+                    selectedSupermarketItem &&
+                      addCartItem({
+                        supermarketItem: selectedSupermarketItem,
+                        quantity: 1,
+                      });
+                  }
                 }
               }}
             />

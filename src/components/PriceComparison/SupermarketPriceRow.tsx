@@ -70,8 +70,8 @@ const SupermarketPriceRow = ({
         </Stack>
       </VStack>
 
-      <Text fontSize="xl" fontWeight={700} w="10%">
-        {supermarketItem.price}
+      <Text fontSize="xl" fontWeight={700} w="15  %" whiteSpace={"nowrap"}>
+        {supermarketItem.price} LKR
       </Text>
     </HStack>
   );
