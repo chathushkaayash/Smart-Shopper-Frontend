@@ -1,13 +1,14 @@
-import { Box, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import LoginInput from "@/components/Inputs/LoginInput";
 
 import { IoIosEyeOff } from "react-icons/io";
-
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
 import ErrorText from "@/components/Errors/ErrorText";
+import { useNavigate } from "react-router-dom";
 
 const schema = z
   .object({
@@ -27,9 +28,21 @@ const ChangePassword = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+  const navigate = useNavigate();
 
   return (
-    <VStack py="6vh" h="100vh" gap="4vh">
+    <VStack pt="3vh" h="100vh" gap="4vh">
+      <HStack w="full" pos="relative" left={-5} px="8vw">
+        <Box
+          p={1}
+          background="white"
+          borderRadius="50%"
+          onClick={() => navigate("/driver/account/edit")}
+          cursor="pointer"
+        >
+          <Icon as={IoMdArrowRoundBack} w={10} h={10} p={1} />
+        </Box>
+      </HStack>
       <Text fontSize="md" color="gray" fontWeight="bold">
         Please enter your Password
       </Text>

@@ -1,8 +1,12 @@
-import { Opportunity } from "@/pages/DriverApp/Dashboard/ViewOpportunity";
+import { Opportunity } from "@/hooks/useOpportunity";
 
-const opportunities:Opportunity[] = [{
+const opportunities: Opportunity[] = [
+  {
     id: "1",
-    supermarketList: ["New York", "Los Angeles"],
+    opportunitysupermarket: [
+      { id: "1", supermarketId: "New York" },
+      { id: "2", supermarketId: "Los Angeles" },
+    ],
     totalDistance: 100,
     tripCost: 1000,
     orderPlacedOn: "2021-09-01",
@@ -10,6 +14,8 @@ const opportunities:Opportunity[] = [{
     deliveryCost: 100,
     startLocation: "Moratuwa",
     deliveryLocation: "Nugegoda",
-  }];
-  
-  export default opportunities;
+    status: "Pending",
+  },
+];
+
+export default opportunities;

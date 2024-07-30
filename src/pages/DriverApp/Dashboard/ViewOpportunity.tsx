@@ -1,67 +1,53 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import data from "@/data/Driver/opportunity";
+import useOpportunity from "@/hooks/useOpportunity";
 import {
   AspectRatio,
   Box,
   HStack,
   Icon,
   Spacer,
-  Step,
-  StepDescription,
-  StepIndicator,
   Stepper,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
   Text,
   useSteps,
   VStack,
 } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { LuCircleDot } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
-
-export interface Opportunity {
-  id: string;
-  supermarketList: string[];
-  totalDistance: number;
-  tripCost: number;
-
-  orderPlacedOn: string;
-  customer: string;
-  deliveryCost: number;
-  startLocation: string;
-  deliveryLocation: string;
-}
+import { useNavigate, useParams } from "react-router-dom";
+import PickupLocation from "./PickupLocation";
 
 const ViewOpportunity = () => {
+  const { id } = useParams();
+  if (!id) return null;
+
   const navigate = useNavigate();
-  const opportunity: Opportunity = data[0];
+  const opportunity = useOpportunity(Number(id));
+  const supermarketsLength =
+    opportunity.data?.opportunitysupermarket.length || 0;
 
   const details = [
-    { label: "Number of Stops", value: opportunity.supermarketList.length },
-    { label: "Total Distance", value: `${opportunity.totalDistance} km` },
-    { label: "Trip Cost", value: `Rs.${opportunity.tripCost}` },
+    {
+      label: "Number of Stops",
+      value: supermarketsLength,
+    },
+    { label: "Total Distance", value: `${opportunity.data?.totalDistance} km` },
+    { label: "Trip Cost", value: `Rs.${opportunity.data?.tripCost}` },
   ];
 
   const orderDetails = [
-    { label: "Order Placed on", value: opportunity.orderPlacedOn },
-    { label: "Customer", value: `${opportunity.customer}` },
-    { label: "Delivery Cost", value: `${opportunity.deliveryCost}` },
-    { label: "Start Location", value: `${opportunity.startLocation}` },
-    { label: "Delivery Location", value: `${opportunity.deliveryLocation}` },
-  ];
-
-  const steps = [
-    { title: "First", description: "Contact Info" },
-    { title: "Second", description: "Date & Time" },
-    { title: "Third", description: "Select Rooms" },
+    { label: "Order Placed on", value: opportunity.data?.orderPlacedOn },
+    { label: "Customer", value: `${opportunity.data?.customer}` },
+    { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },
+    { label: "Start Location", value: `${opportunity.data?.startLocation}` },
+    {
+      label: "Delivery Location",
+      value: `${opportunity.data?.deliveryLocation}`,
+    },
   ];
 
   const { activeStep } = useSteps({
     index: 0,
-    count: steps.length,
+    count: supermarketsLength,
   });
 
   return (
@@ -91,10 +77,10 @@ const ViewOpportunity = () => {
         borderRadius="10"
       >
         <VStack align="start">
-          <Text fontWeight="bold">{opportunity.customer}</Text>
+          <Text fontWeight="bold">{opportunity.data?.customer}</Text>
           <HStack>
             <Icon as={FaLocationDot} color="primary" />{" "}
-            <Text>{opportunity.deliveryLocation}</Text>
+            <Text>{opportunity.data?.deliveryLocation}</Text>
           </HStack>
           {details.map((detail, index) => (
             <HStack key={index} w="full" align="space-between">
@@ -125,32 +111,24 @@ const ViewOpportunity = () => {
           ))}
         </VStack>
       </Box>
-      <Text fontWeight="bold">Route</Text>
+      <Text fontWeight="bold">Supermarkets</Text>
       <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10">
         <Stepper
           index={activeStep}
           orientation="vertical"
-          height="200px"
-          gap="0"
+          height={`${
+            supermarketsLength < 2 ? 6 : (supermarketsLength - 1) * 12
+          }vh`}
+          gap={0}
         >
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepIndicator border={"none"}>
-                <StepStatus
-                  // complete={<LuCircleDot />}
-                  incomplete={<FaLocationDot />}
-                  active={<LuCircleDot />}
-                />
-              </StepIndicator>
-
-              <Box flexShrink="0">
-                <StepTitle>{step.title}</StepTitle>
-                <StepDescription>{step.description}</StepDescription>
-              </Box>
-
-              <StepSeparator />
-            </Step>
-          ))}
+          {opportunity.data?.opportunitysupermarket.map(
+            (supermarket, index) => (
+              <PickupLocation
+                key={index}
+                supermarketId={Number(supermarket.supermarketId)}
+              />
+            )
+          )}
         </Stepper>
       </Box>
       <Text fontWeight="bold">Map</Text>

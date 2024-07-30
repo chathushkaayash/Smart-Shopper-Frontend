@@ -1,16 +1,17 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
+import useOpportunities from "@/hooks/useOpportunities";
 import { Box, HStack, Icon, Spacer, Text, VStack } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import opportunities from "@/data/Driver/opportunity";
 
 const Opportunities = () => {
   const navigate = useNavigate();
+  const opportunities = useOpportunities();
 
   return (
     <>
       <VStack minH="100vh" px="8vw" pt="5vh" pb="10vh" gap="4vh">
-        {opportunities.map((opportunity, index) => (
+        {opportunities.data?.results.map((opportunity, index) => (
           <Box
             key={index}
             shadow="xl"
@@ -30,7 +31,7 @@ const Opportunities = () => {
               <HStack w="full">
                 <Text>Number of Supermarkets </Text>
                 <Spacer />
-                <Text>{opportunity.supermarketList.length}</Text>
+                <Text>{opportunity.opportunitysupermarket.length}</Text>
               </HStack>
               <HStack w="full">
                 <Text>Total Distance </Text>

@@ -53,7 +53,7 @@ const Navbar = () => {
   }, [cart]);
 
   const navItems =
-    user?.role === "Courier Company" ? courierNavItems : consumerNavItems;
+    user?.role === "couriercompany" ? courierNavItems : consumerNavItems;
 
   return (
     <>
