@@ -1,30 +1,31 @@
+import Logo from '@/assets/logo.svg';
+import SubmitButton from '@/components/Buttons/SubmitButton';
 import {
+  Badge,
   Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Text,
+  Divider,
   Image,
   Link,
-  Badge,
-  Divider,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalOverlay,
-  ModalHeader,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
   useDisclosure
 } from "@chakra-ui/react";
-import ProductList from './ProductList';
-import DetailsBox from './DetailsBox';
-import Logo from '@/assets/logo.svg';
-import SubmitButton from '@/components/Buttons/SubmitButton';
 import { useState } from "react";
+import DetailsBox from './DetailsBox';
+import ProductList from './productList';
+// import ProductList from './ProductList';
 
 interface Product {
   id: number;

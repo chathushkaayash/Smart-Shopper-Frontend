@@ -1,19 +1,18 @@
+import { Order } from "@/hooks/useOrder";
 import {
   Box,
-  Text,
-  Flex,
-  Image,
   Button,
+  Flex,
   Modal,
-  useDisclosure,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
   ModalBody,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure
 } from "@chakra-ui/react";
 import AddProductReview from "./AddProductReview";
-import { Order } from "@/hooks/useOrder";
 import SupermarketItem from "./SupermarketItem";
 
 interface Props {
@@ -29,22 +28,22 @@ const OrderItems = ({ order }: Props) => {
 
   console.log(order);
 
-  const items = [
-    {
-      image: "https://via.placeholder.com/50",
-      name: "Munchee Super Cream Cracker",
-      price: 145,
-      supermarket: "Keells",
-      supermarketLogo: "https://via.placeholder.com/50",
-    },
-    {
-      image: "https://via.placeholder.com/50",
-      name: "Gradient Graphic T-shirt",
-      price: 145,
-      supermarket: "Spar",
-      supermarketLogo: "https://via.placeholder.com/50",
-    },
-  ];
+  // const items = [
+  //   {
+  //     image: "https://via.placeholder.com/50",
+  //     name: "Munchee Super Cream Cracker",
+  //     price: 145,
+  //     supermarket: "Keells",
+  //     supermarketLogo: "https://via.placeholder.com/50",
+  //   },
+  //   {
+  //     image: "https://via.placeholder.com/50",
+  //     name: "Gradient Graphic T-shirt",
+  //     price: 145,
+  //     supermarket: "Spar",
+  //     supermarketLogo: "https://via.placeholder.com/50",
+  //   },
+  // ];
 
   return (
     <Box

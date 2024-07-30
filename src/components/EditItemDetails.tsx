@@ -1,7 +1,4 @@
-import React from 'react';
 import { Box, Input, Text } from '@chakra-ui/react';
-import MiddleContainer from './Containers/MiddleContainer';
-import { Button } from 'flowbite-react';
 import SubmitButton from './Buttons/SubmitButton';
 import ProductPreviewCard from './ProductPreviewCard';
 interface props {

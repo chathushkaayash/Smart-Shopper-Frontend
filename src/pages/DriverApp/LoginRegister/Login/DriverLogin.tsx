@@ -9,16 +9,16 @@ import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import ErrorText from "../../../../components/Errors/ErrorText";
 import LoginInput from "../../../../components/Inputs/LoginInput";
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import APIClient from "@/services/api-client";
 import useAuthStore, {
   Credentials,
   LoginResponse,
   User,
 } from "@/state-management/auth/store";
-import APIClient from "@/services/api-client";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -39,7 +39,7 @@ const DriverLogin = () => {
 
   const validate = (data: FormData) => {
     const credentials: Credentials = {
-      email: data.email,
+      email_or_number: data.email,
       password: data.password,
     };
     const apiClient = new APIClient<LoginResponse>("/login");

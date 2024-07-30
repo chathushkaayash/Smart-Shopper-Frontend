@@ -1,6 +1,5 @@
-import { Box, Center, Flex, Spacer, Badge } from "@chakra-ui/react";
+import { Badge, Box, Flex, Spacer } from "@chakra-ui/react";
 
-import React from "react";
 
 interface props {
   image: string;

@@ -7,7 +7,6 @@ import "./App.css";
 import theme from "./components/theme.ts";
 import "./index.css";
 import router from "./Routes/Routes.tsx";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

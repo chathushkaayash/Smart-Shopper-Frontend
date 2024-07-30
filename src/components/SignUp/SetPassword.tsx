@@ -1,12 +1,12 @@
 import {
-    Box,
-    Center,
-    Grid,
-    GridItem,
-    Image,
-    Stack,
-    Text,
-    VStack,
+  Box,
+  Center,
+  Grid,
+  GridItem,
+  Image,
+  Stack,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { FaLock } from "react-icons/fa6";
 
@@ -54,7 +54,7 @@ const SetPassword = ({ registerForm, setRegisterForm, setStage }: Props) => {
       .create({
         name: data.name,
         email: data.email,
-        contactNumber: "+94" + data.contactNumber.slice(1),
+        contactNumber: data.contactNumber,
         password: data.password,
       })
       .then((res) => {

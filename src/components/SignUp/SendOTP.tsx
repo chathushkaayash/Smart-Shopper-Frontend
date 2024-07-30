@@ -54,7 +54,7 @@ const SendOTP = ({ registerForm }: Props) => {
     apiClient
       .create({
         OTP: otp,
-        contactNumber: "+94" + registerForm?.contactNumber.slice(1),
+        contactNumber: registerForm?.contactNumber || "",
       })
       .then((res) => {
         if (res === "Success") navigate("/login");

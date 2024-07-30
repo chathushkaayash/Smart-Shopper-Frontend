@@ -1,42 +1,37 @@
 import {
   Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Text,
+  Flex,
+  Icon,
   Image,
   Link,
-  Icon,
-  Center,
-  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalOverlay,
   ModalHeader,
-  ModalFooter
-
+  ModalOverlay,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useDisclosure
 } from "@chakra-ui/react";
-import { Badge } from "flowbite-react";
-import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import "reactjs-popup/dist/index.css";
 import EditItemDetails from "./EditItemDetails";
-import { Button, useDisclosure } from "@chakra-ui/react";
 
 
 const productTable = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedproducts, setSelectedproducts] = useState([]);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [selectedproducts, setSelectedproducts] = useState([]);
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  // const handleDropdownToggle = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
   const products = [
     {
