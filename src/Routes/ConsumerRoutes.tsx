@@ -17,7 +17,7 @@ const ConsumerRoutes = [
       { path: "profile", element: <ConsumerProfile /> },
       { path: "review", element: <ConsumerReviews /> },
       { path: "myOrders", element: <ConsumerOrders /> },
-      { path: "view-orders", element: <ConsumerViewOrders /> },
+      { path: "view-orders/:id", element: <ConsumerViewOrders /> },
       { path: "cart", element: <ConsumerCartDetails /> },
       { path: "payment-success", element: <ConsumerPaymentSuccessful /> },
       { path: "checkout", element: <ConsumerCheckout /> },

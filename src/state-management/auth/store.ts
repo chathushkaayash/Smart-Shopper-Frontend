@@ -12,6 +12,7 @@ export interface LoginResponse {
 }
 
 export interface User {
+  id?: number;
   name: string;
   role: string;
   email: string
@@ -19,6 +20,8 @@ export interface User {
   number: string;
   profilePic: string;
   status: string;
+
+  consumerId?: number;
 }
 
 export interface AuthStore {

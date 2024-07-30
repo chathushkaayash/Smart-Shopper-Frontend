@@ -34,17 +34,21 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import delHome from "../../../src/assets/delHome.png";
 import pickupImg from "../../../src/assets/Grocery shopping-rafiki.svg";
+import useAuthStore from "@/state-management/auth/store";
 
 interface CheckoutRequest {
+  consumerId: number;
   shippingAddress: string;
   shippingMethod: string;
 }
 
 const Checkout = () => {
-  const apiClient = new APIClient<CheckoutRequest>("/orderToCart");
+  const apiClient = new APIClient<CheckoutRequest>("/cartToOrder");
   const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
 
   const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>({
+    consumerId: user?.consumerId || -1,
     shippingAddress: "66 Pandura Rd, Bandaragama",
     shippingMethod: "Home Delivery",
   });

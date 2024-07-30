@@ -1,12 +1,33 @@
-import useCartStore, { CartItem } from "@/state-management/cart/store";
+import APIClient from "@/services/api-client";
+import { CartItem } from "@/state-management/cart/store";
 import { Box, Flex, Input } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
 interface Props {
   cartItem: CartItem;
 }
 
+const apiClient = new APIClient<CartItem>("/carts");
+
 const QuantityChanger = ({ cartItem }: Props) => {
-  const { incrementQuantity, decrementQuantity } = useCartStore();
+  const queryClient = useQueryClient();
+
+  const handleIncrement = (cartItem: CartItem) => {
+    const newCartItem = { ...cartItem, quantity: cartItem.quantity + 1 };
+    if (cartItem.quantity > 0)
+      apiClient
+        .create(newCartItem)
+        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
+  };
+
+  const handleDecrement = (cartItem: CartItem) => {
+    const newCartItem = { ...cartItem, quantity: cartItem.quantity - 1 };
+    if (cartItem.quantity > 0)
+      apiClient
+        .create(newCartItem)
+        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
+  };
 
   return (
     <Flex
@@ -21,16 +42,10 @@ const QuantityChanger = ({ cartItem }: Props) => {
         <Box
           as="button"
           cursor="pointer"
-          roundedLeft="md"
-          bg="gray.100"
-          py="1"
-          px="3.5"
-          _hover={{ bg: "gray.200" }}
-          onClick={() =>
-            decrementQuantity(cartItem.supermarketItem?.productId || -1)
-          }
+          px="2"
+          onClick={() => handleDecrement(cartItem)}
         >
-          -
+          <FaMinus />
         </Box>
         <Input
           textAlign="center"
@@ -48,16 +63,10 @@ const QuantityChanger = ({ cartItem }: Props) => {
         <Box
           as="button"
           cursor="pointer"
-          roundedRight="md"
-          bg="gray.100"
-          py="1"
-          px="3"
-          _hover={{ bg: "gray.200" }}
-          onClick={() =>
-            incrementQuantity(cartItem.supermarketItem?.productId || -1)
-          }
+          px="2"
+          onClick={() => handleIncrement(cartItem)}
         >
-          +
+          <FaPlus />
         </Box>
       </Flex>
     </Flex>

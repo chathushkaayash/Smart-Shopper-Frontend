@@ -15,6 +15,7 @@ const useProduct = (id: number) => {
   return useQuery({
     queryKey: ["product", id],
     queryFn: () => apiClient.get(id),
+    staleTime: 1000 * 60 * 30, // 30 minutes
   });
 };
 

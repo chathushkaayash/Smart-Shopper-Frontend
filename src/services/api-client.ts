@@ -33,10 +33,14 @@ class APIClient<T> {
     return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
 
-  login = (data: Credentials) => {
+  delete = (id: number) => {
     return axiosInstance
-      .post<T>(this.endpoint, data)
+      .delete<T>(this.endpoint, { params: { id } })
       .then((res) => res.data);
+  };
+
+  login = (data: Credentials) => {
+    return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
 }
 

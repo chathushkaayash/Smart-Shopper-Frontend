@@ -1,12 +1,12 @@
-import Accordian from "@/components/Accordian";
+import SupermarketInformation from "@/components/Accordian";
 import IconButton from "@/components/Buttons/IconButton";
 import TextButton from "@/components/Buttons/TextButton";
 import CartItemCard from "@/components/CartItemCard";
 import MiddleContainer from "@/components/Containers/MiddleContainer";
-import APIClient from "@/services/api-client";
-import useCartStore, { CartItem } from "@/state-management/cart/store";
+import useCartStore from "@/state-management/cart/store";
 import { AddIcon } from "@chakra-ui/icons";
 import {
+  Accordion,
   Flex,
   Grid,
   GridItem,
@@ -16,40 +16,22 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 
 const CartDetails = () => {
-  const apiClient = new APIClient<CartItem[]>("/carts");
   const navigate = useNavigate();
-  const { items, setItems } = useCartStore();
+  const { items } = useCartStore();
 
-  const { mutate } = useMutation({
-    mutationFn: () => apiClient.create(items),
-    onSuccess: (res) => {
-      setItems(res);
-      navigate("/cart-comparison");
-    },
+  const supermarketIdList: number[] = [];
+
+  items.forEach((item) => {
+    const supermarketId = item.supermarketItem?.id;
+    if (supermarketId) {
+      if (!supermarketIdList.includes(supermarketId)) {
+        supermarketIdList.push(supermarketId);
+      }
+    }
   });
-
-  const accordionItems = [
-    {
-      title: "Item 1",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
-    },
-    {
-      title: "Item 1",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
-    },
-    {
-      title: "Item 1",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat.",
-    },
-  ];
-
 
   return (
     <MiddleContainer width="90vw" bg="background">
@@ -98,9 +80,16 @@ const CartDetails = () => {
           <Heading as="h2" size="lg" mb={10}>
             Order Information
           </Heading>
-          <Accordian items={accordionItems} />
+          <Accordion allowToggle>
+            {supermarketIdList.map((i, index) => (
+              <SupermarketInformation key={index} supermarketId={i} />
+            ))}
+          </Accordion>
           <Spacer />
-          <TextButton text="Proceed to checkout" onClick={() => mutate()} />
+          <TextButton
+            text="Proceed to checkout"
+            onClick={() => navigate("/cart-comparison")}
+          />
         </GridItem>
       </Grid>
     </MiddleContainer>

@@ -2,13 +2,12 @@ import APIClient from "@/services/api-client";
 import { CartItem } from "@/state-management/cart/store";
 import { useQuery } from "@tanstack/react-query";
 
-const apiClient = new APIClient<CartItem[]>("/carts/6");
+const apiClient = new APIClient<CartItem>("/carts");
 
-const useCart = (cartItems: CartItem[]) => {
+const useCart = () => {
   return useQuery({
-    queryKey: ["cart"],
-    queryFn: () => apiClient.create(cartItems),
-    staleTime: 1000 * 5, // 2 seconds
+    queryKey: ["carts"],
+    queryFn: () => apiClient.getAll({}),
   });
 };
 

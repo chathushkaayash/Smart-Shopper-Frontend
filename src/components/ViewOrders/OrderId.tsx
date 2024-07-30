@@ -24,12 +24,13 @@ import OrderReceipt from "./OrderReceipt";
 import DriverDetailsPopup from "./DriveDetails";
 import AddDriverReview from "./AddDriverReview";
 import TrackOrder from "./TrackOrder";
+import { Order } from "@/hooks/useOrder";
 
-interface OrderIdProps {
-  status: string;
+interface Props {
+  order: Order;
 }
 
-const OrderId = ({ status }: OrderIdProps) => {
+const OrderId = ({ order }: Props) => {
   const {
     isOpen: isReceiptOpen,
     onOpen: onReceiptOpen,
@@ -71,7 +72,7 @@ const OrderId = ({ status }: OrderIdProps) => {
         >
           <Flex justify="space-between" align="center" flexWrap="wrap" mb={4}>
             <Text fontSize="2xl" fontWeight="bold">
-              Order ID: 223345678
+              Order ID: {order.id}
             </Text>
             <Flex align="center" gap={4}>
               <Button
@@ -116,11 +117,11 @@ const OrderId = ({ status }: OrderIdProps) => {
           </Flex>
           <Box
             bg={
-              status === "completed"
+              order.status === "completed"
                 ? "#5BFF89"
-                : status === "ready"
+                : order.status === "ready"
                 ? "yellow.200"
-                : status === "active"
+                : order.status === "active"
                 ? "blue.200"
                 : "red.200"
             }
@@ -130,7 +131,7 @@ const OrderId = ({ status }: OrderIdProps) => {
             maxWidth="200px"
           >
             <Text fontSize="md" fontWeight="bold">
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
             </Text>
           </Box>
 
@@ -149,7 +150,7 @@ const OrderId = ({ status }: OrderIdProps) => {
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Order Placed on</Text>
-                <Text>: 12.04.2024</Text>
+                <Text>: 01.08.2024</Text>
                 <Text>Payment method</Text>
                 <Text>: Credit/Debit Card</Text>
                 <Text>Order Total</Text>
@@ -256,7 +257,7 @@ const OrderId = ({ status }: OrderIdProps) => {
             </Text>
             <Grid templateColumns="1fr 2fr" gap={2}>
               <Text>Shipping Address</Text>
-              <Text>: Kaluthara, Western, Srilanka, 129987</Text>
+              <Text>: {order.shippingAddress}</Text>
               <Text>Contact Number</Text>
               <Text>: +993345887</Text>
               <Text>Name</Text>
@@ -350,7 +351,7 @@ const OrderId = ({ status }: OrderIdProps) => {
         closeOnOverlayClick={false}
       >
         <ModalOverlay backdropFilter="blur(5px)" />
-        <ModalContent borderRadius="15px" >
+        <ModalContent borderRadius="15px">
           <ModalHeader textAlign="center" fontWeight="bold" fontSize="25">
             Driver Details
           </ModalHeader>
@@ -366,7 +367,7 @@ const OrderId = ({ status }: OrderIdProps) => {
                 borderColor={"primary"}
                 borderWidth={1}
                 _hover={{ bg: "primary", color: "white" }}
-                _active={{ bg: "primary", color: "white"}}
+                _active={{ bg: "primary", color: "white" }}
                 borderRadius="12px"
                 onClick={onDriverClose}
               >
@@ -394,10 +395,16 @@ const OrderId = ({ status }: OrderIdProps) => {
             Add Product Review
           </ModalHeader>
           <ModalBody>
-            <AddDriverReview driverImage="https://via.placeholder.com/50" driverName="Bimsara Anjana Jayadewa" courierCompany="Uber pvt limited." driverID={123456} driverNumber="+94719944045"/>
+            <AddDriverReview
+              driverImage="https://via.placeholder.com/50"
+              driverName="Bimsara Anjana Jayadewa"
+              courierCompany="Uber pvt limited."
+              driverID={123456}
+              driverNumber="+94719944045"
+            />
           </ModalBody>
           <ModalFooter>
-            <Flex width="100%" justifyContent="center" columnGap={5} >
+            <Flex width="100%" justifyContent="center" columnGap={5}>
               <Button
                 variant="outline"
                 colorScheme="orange"

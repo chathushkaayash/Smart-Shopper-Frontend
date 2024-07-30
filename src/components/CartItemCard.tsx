@@ -8,27 +8,33 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { DeleteIcon } from "@chakra-ui/icons";
+import { AiOutlineClose } from "react-icons/ai";
 
-import useCartStore, { CartItem } from "@/state-management/cart/store";
-import QuantityChanger from "./QuantityChanger";
-import { useNavigate } from "react-router-dom";
 import useProduct from "@/hooks/useProduct";
 import useSupermarket from "@/hooks/useSupermarket";
+import APIClient from "@/services/api-client";
+import { CartItem } from "@/state-management/cart/store";
+import { useNavigate } from "react-router-dom";
+import QuantityChanger from "./QuantityChanger";
 
 interface Props {
   cartItem: CartItem;
 }
+const apiClient = new APIClient<CartItem>("/carts");
 
 const CartItemCard = ({ cartItem }: Props) => {
   const navigate = useNavigate();
-  const removeItem = useCartStore((state) => state.removeItem);
 
   if (!cartItem) return null;
   const product = useProduct(cartItem.supermarketItem?.productId || 0);
   const supermarket = useSupermarket(
     cartItem.supermarketItem?.supermarketId || 0
   );
+
+  const removeCartItem = (item: CartItem) => {
+    console.log(item);
+    if (item.id) apiClient.delete(item.id);
+  };
 
   return (
     <Card
@@ -75,12 +81,16 @@ const CartItemCard = ({ cartItem }: Props) => {
         <GridItem>
           <QuantityChanger cartItem={cartItem} />
         </GridItem>
-        <GridItem>
-          <DeleteIcon
-            onClick={() => removeItem(product.data?.id || -1)}
+        <GridItem alignSelf={"flex-start"}>
+          {/* <DeleteIcon
+            mt="2vh"
             cursor="pointer"
             boxSize={6}
             _hover={{ color: "red.600" }}
+          /> */}
+          <AiOutlineClose
+            fontSize={20}
+            onClick={() => removeCartItem(cartItem)}
           />
         </GridItem>
       </Grid>

@@ -8,12 +8,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-
-
 import MiddleContainer from "@/components/Containers/MiddleContainer";
 import usePriceLists, { SupermarketItem } from "@/hooks/usePriceLists";
 import useProduct, { Product } from "@/hooks/useProduct";
-import useCartStore from "@/state-management/cart/store";
+import useCartStore, { CartItem } from "@/state-management/cart/store";
 import { Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
@@ -21,10 +19,14 @@ import { useParams } from "react-router-dom";
 import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import ProductDescription from "@/components/PriceComparison/ProductDescription";
 import PriceComparison from "@/components/PriceComparison/PriceComparison";
+import APIClient from "@/services/api-client";
+import { useQueryClient } from "@tanstack/react-query";
+
+const apiClient = new APIClient<CartItem>("/carts");
 
 const ProductDetail = () => {
-  const { addItem, removeItem, items: cartItems } = useCartStore();
-  console.log(cartItems);
+  const { items: cartItems } = useCartStore();
+  const queryClient = useQueryClient();
 
   const { id } = useParams();
   if (!id) return null;
@@ -67,8 +69,16 @@ const ProductDetail = () => {
     cartItemInCart &&
     selectedSupermarketItem?.id !== cartItemInCart.supermarketItem?.id;
 
-  // console.log(cartItemInCart);
-  // console.log(shouldUpdateCart);
+  const addCartItem = (item: CartItem) => {
+    apiClient
+      .create(item)
+      .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
+  };
+
+  const removeCartItem = (item: CartItem) => {
+    console.log(item);
+    if (item.id) apiClient.delete(item.id)
+  };
 
   if (isLoading) return <Spinner />;
   if (error) return <Text>Error</Text>;
@@ -109,11 +119,11 @@ const ProductDetail = () => {
               checked={!!cartItemInCart && !shouldUpdateCart}
               onClick={() => {
                 if (!shouldUpdateCart && cartItemInCart) {
-                  removeItem(cartItemInCart.supermarketItem?.id || 0);
+                  removeCartItem(cartItemInCart);
                   priceLists && setSupermarketItem(priceLists.results[0]);
                 } else {
                   selectedSupermarketItem &&
-                    addItem({
+                    addCartItem({
                       supermarketItem: selectedSupermarketItem,
                       quantity: 1,
                     });
