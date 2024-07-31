@@ -1,5 +1,8 @@
+import CheckoutAccordion from "@/components/CheckoutAccordion";
+import useCart from "@/hooks/useCart";
 import APIClient from "@/services/api-client";
-import { EditIcon, InfoIcon } from "@chakra-ui/icons";
+import useAuthStore from "@/state-management/auth/store";
+import { EditIcon } from "@chakra-ui/icons";
 import {
   Accordion,
   Box,
@@ -34,10 +37,6 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import delHome from "../../../src/assets/delHome.png";
 import pickupImg from "../../../src/assets/Grocery shopping-rafiki.svg";
-import useAuthStore from "@/state-management/auth/store";
-import useCart from "@/hooks/useCart";
-import SupermarketInformation from "@/components/Accordian";
-import CheckoutAccordion from "@/components/CheckoutAccordion";
 
 interface CheckoutRequest {
   consumerId: number;

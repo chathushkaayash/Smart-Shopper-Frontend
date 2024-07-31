@@ -5,9 +5,8 @@ import {
   Grid,
   GridItem,
   Heading,
-  HStack,
   Image,
-  Text,
+  Text
 } from "@chakra-ui/react";
 
 import { AiOutlineClose } from "react-icons/ai";
@@ -16,9 +15,9 @@ import useProduct from "@/hooks/useProduct";
 import useSupermarket from "@/hooks/useSupermarket";
 import APIClient from "@/services/api-client";
 import { CartItem } from "@/state-management/cart/store";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import QuantityChanger from "./QuantityChanger";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   cartItem: CartItem;
@@ -86,8 +85,8 @@ const CartItemCard = ({ cartItem }: Props) => {
           </Box>
         </GridItem>
         <GridItem>
-          <Center w="full" gap={2}>
-            <Text mb={4}>Price: </Text>
+          <Center w="full" gap={2} mb={4}>
+            <Text>Total: </Text>
             <Text fontWeight={700}>
               {(cartItem.supermarketItem?.price || 1) * cartItem.quantity} LKR
             </Text>
@@ -95,7 +94,11 @@ const CartItemCard = ({ cartItem }: Props) => {
 
           <QuantityChanger cartItem={cartItem} />
         </GridItem>
-        <GridItem alignSelf={"flex-start"}>
+        <GridItem
+          alignSelf={"flex-start"}
+          cursor={"pointer"}
+          _hover={{ color: "primary" }}
+        >
           {/* <DeleteIcon
             mt="2vh"
             cursor="pointer"

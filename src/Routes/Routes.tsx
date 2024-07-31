@@ -1,5 +1,5 @@
 import App from "@/App";
-import Reviews from "@/components/Feedback";
+import CardDetails from "@/pages/Consumer/CartDetails";
 import { createBrowserRouter } from "react-router-dom";
 import AdminRoutes from "./AdminRoutes";
 import ConsumerRoutes from "./ConsumerRoutes";
@@ -7,7 +7,6 @@ import DriverRoutes from "./DriverRoutes";
 import ErrorPage from "./ErrorPage";
 import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
-import CardDetails from "@/pages/Consumer/CartDetails";
 
 
 
@@ -31,21 +30,7 @@ const router = createBrowserRouter([
       // { path: "signup", element: <SignUp /> },
 
       { path: "cart", element: <CardDetails /> },
-      // { path: "product/:id", element: <ProductDetail /> },
-      // { path: "ConsumerProfile", element: <ConsumerProfile /> },
-
-      // { path: "ShippingAddress", element: <ShippingAddress /> },
       // { path: "reviews", element: <Reviews /> },
-      // { path: "paymentSuccessful", element: <PaymentSuccessful /> },
-
-      // { path: "Footer", element: <Footer /> },
-      // { path: "test", element: <Test /> },
-
-      // { path: "driver", element: <LoginRegister /> },
-      // { path: "driver/login_register", element: <LoginRegister /> },
-      // { path: "driver/login", element: <DriverLogin /> },
-      // { path: "driver/register", element: <DriverRegister /> },
-      { path: "reviews", element: <Reviews /> },
     ],
   },
 ]);

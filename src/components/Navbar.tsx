@@ -52,12 +52,28 @@ const Navbar = () => {
     { text: "Deliveries", path: "/deliveries" },
   ];
 
+  const adminNavItems: NavItem[] = [];
+
   useEffect(() => {
     if (cart?.results) setItems(cart.results);
   }, [cart]);
 
-  const navItems =
-    user?.role === "couriercompany" ? courierNavItems : consumerNavItems;
+  let navItems: NavItem[];
+
+  switch (user?.role) {
+    case "couriercompany":
+      navItems = courierNavItems;
+      break;
+    case "admin":
+      navItems = adminNavItems;
+      break;
+    case "supermarket":
+      navItems = adminNavItems;
+      break;
+    default:
+      navItems = consumerNavItems;
+      break;
+  }
 
   return (
     <>
@@ -106,7 +122,7 @@ const Navbar = () => {
                   />
                 </MenuButton>
                 <MenuList
-                py={0}
+                  py={0}
                   bg="white"
                   borderColor={"primary"}
                   borderWidth={3}
@@ -115,8 +131,18 @@ const Navbar = () => {
                   <MenuItem
                     bg="white"
                     color="primary"
-                    _hover={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500" }}
-                    _focus={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
+                    _hover={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                    }}
+                    _focus={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                      bg: "primary",
+                      color: "white",
+                    }}
                     // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
                     onClick={() => navigate("/myOrders")}
                   >
@@ -125,8 +151,18 @@ const Navbar = () => {
                   <MenuItem
                     bg="white"
                     color="primary"
-                    _hover={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500" }}
-                    _focus={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
+                    _hover={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                    }}
+                    _focus={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                      bg: "primary",
+                      color: "white",
+                    }}
                     // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
                     onClick={() => navigate("/profile")}
                   >
@@ -135,8 +171,18 @@ const Navbar = () => {
                   <MenuItem
                     bg="white"
                     color="primary"
-                    _hover={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500" }}
-                    _focus={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
+                    _hover={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                    }}
+                    _focus={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                      bg: "primary",
+                      color: "white",
+                    }}
                     // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
                     onClick={logout}
                   >
@@ -147,30 +193,32 @@ const Navbar = () => {
               <Text fontSize="lg" fontWeight="bold">
                 {user.name}
               </Text>
-              <Box pos={"relative"} cursor="pointer">
-                <Icon
-                  as={FaCartShopping}
-                  w={8}
-                  h={8}
-                  color="black"
-                  onClick={() => navigate("/cart")}
-                />
-                <Text
-                  as="div"
-                  fontSize={"xs"}
-                  px={2}
-                  py={1}
-                  color="white"
-                  fontWeight={"bold"}
-                  pos={"absolute"}
-                  bottom={0}
-                  right={-5}
-                  bg="primary"
-                  rounded={"full"}
-                >
-                  {items.length}
-                </Text>
-              </Box>
+              {user.role === "consumer" && (
+                <Box pos={"relative"} cursor="pointer">
+                  <Icon
+                    as={FaCartShopping}
+                    w={8}
+                    h={8}
+                    color="black"
+                    onClick={() => navigate("/cart")}
+                  />
+                  <Text
+                    as="div"
+                    fontSize={"xs"}
+                    px={2}
+                    py={1}
+                    color="white"
+                    fontWeight={"bold"}
+                    pos={"absolute"}
+                    bottom={0}
+                    right={-5}
+                    bg="primary"
+                    rounded={"full"}
+                  >
+                    {items.length}
+                  </Text>
+                </Box>
+              )}
             </HStack>
           ) : (
             <HStack paddingX={0}>

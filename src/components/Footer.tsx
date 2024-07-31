@@ -11,7 +11,7 @@ import {
 import Logo from "../assets/logo.svg";
 const Footer = () => {
   return (
-    <Box as="footer" bg="white" p={8} boxShadow="md">
+    <Box as="footer" bg="white" p={8} boxShadow="md" borderTop="1px solid" borderColor={"gray.200"}>
       <Grid templateColumns={{ base: "1fr", md: "3fr 1fr 1fr 1fr" }} gap={8}>
         <GridItem>
           <Center flexDirection="column">

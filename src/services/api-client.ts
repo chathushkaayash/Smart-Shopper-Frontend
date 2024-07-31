@@ -8,7 +8,8 @@ export interface FetchResponse<T> {
 }
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:9090",
+  // baseURL: "http://localhost:9090",
+  baseURL: "https://on-exactly-worm.ngrok-free.app",
   withCredentials: true,
 });
 

@@ -4,7 +4,6 @@ import TextButton from "@/components/Buttons/TextButton";
 import CartItemCard from "@/components/CartItemCard";
 import MiddleContainer from "@/components/Containers/MiddleContainer";
 import useCartStore from "@/state-management/cart/store";
-import cartImage from "../../assets/cart.png";
 import { AddIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -20,6 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
+import cartImage from "../../assets/cart.png";
 
 const CartDetails = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const CartDetails = () => {
   totalAmount = Number((Math.round(totalAmount * 100) / 100).toFixed(2));
 
   return (
-    <MiddleContainer width="90vw" bg="background">
+    <MiddleContainer width="90vw" bg="background" height="fit-content">
       {items.length === 0 ? (
         <Flex flexDirection="column" pt="4vh" px="4vw">
           <Heading as="h2" size="lg">
