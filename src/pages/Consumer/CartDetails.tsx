@@ -28,13 +28,18 @@ const CartDetails = () => {
   const supermarketIdList: number[] = [];
 
   items.forEach((item) => {
-    const supermarketId = item.supermarketItem?.id;
+    const supermarketId = item.supermarketItem?.supermarketId;
     if (supermarketId) {
       if (!supermarketIdList.includes(supermarketId)) {
         supermarketIdList.push(supermarketId);
       }
     }
   });
+
+  const totalAmount = items.reduce(
+    (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
+    0
+  );
 
   return (
     <MiddleContainer width="90vw" bg="background">
@@ -127,8 +132,8 @@ const CartDetails = () => {
           </GridItem>
 
           <GridItem>
-            <Heading as="h2" size="lg" mb={10}>
-              Order Information
+            <Heading as="h3" fontSize={25} mb={16} mt={5}>
+              Supermarket Information
             </Heading>
             <Accordion allowToggle>
               {supermarketIdList.map((i, index) => (
@@ -136,8 +141,12 @@ const CartDetails = () => {
               ))}
             </Accordion>
             <Spacer />
+            <Text mt={8} fontSize={"lg"} fontWeight={700} textAlign={"right"}>
+              Total Amount : {totalAmount} LKR
+            </Text>
             <TextButton
               text="Proceed to checkout"
+              hoverColor="primary"
               onClick={() => navigate("/cart-comparison")}
             />
           </GridItem>

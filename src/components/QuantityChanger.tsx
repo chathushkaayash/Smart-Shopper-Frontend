@@ -15,7 +15,7 @@ const QuantityChanger = ({ cartItem }: Props) => {
 
   const handleIncrement = (cartItem: CartItem) => {
     const newCartItem = { ...cartItem, quantity: cartItem.quantity + 1 };
-    if (cartItem.quantity > 0)
+    if (newCartItem.quantity > 0)
       apiClient
         .create(newCartItem)
         .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
@@ -23,7 +23,7 @@ const QuantityChanger = ({ cartItem }: Props) => {
 
   const handleDecrement = (cartItem: CartItem) => {
     const newCartItem = { ...cartItem, quantity: cartItem.quantity - 1 };
-    if (cartItem.quantity > 0)
+    if (newCartItem.quantity > 0)
       apiClient
         .create(newCartItem)
         .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
@@ -35,6 +35,7 @@ const QuantityChanger = ({ cartItem }: Props) => {
       alignItems="center"
       justifyContent="flex-end"
       p={3}
+      pt={0}
       gap={2}
     >
       <Box>Quantity</Box>

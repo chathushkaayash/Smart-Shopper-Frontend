@@ -1,9 +1,11 @@
 import {
   Box,
   Card,
+  Center,
   Grid,
   GridItem,
   Heading,
+  HStack,
   Image,
   Text,
 } from "@chakra-ui/react";
@@ -84,6 +86,13 @@ const CartItemCard = ({ cartItem }: Props) => {
           </Box>
         </GridItem>
         <GridItem>
+          <Center w="full" gap={2}>
+            <Text mb={4}>Price: </Text>
+            <Text fontWeight={700}>
+              {(cartItem.supermarketItem?.price || 1) * cartItem.quantity} LKR
+            </Text>
+          </Center>
+
           <QuantityChanger cartItem={cartItem} />
         </GridItem>
         <GridItem alignSelf={"flex-start"}>

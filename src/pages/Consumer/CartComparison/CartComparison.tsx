@@ -67,6 +67,7 @@ const CartComparison = () => {
                   <ComparisonItem key={index} cartItem={item} />
                 ))}
               </VStack>
+              <Divider borderColor="gray.400" mb={3}/>
               {cartItems.length >= 4 && (
                 <Button width="lg" bg="primary" color="white" mt={4} mb={4}>
                   View More
@@ -120,6 +121,7 @@ const CartComparison = () => {
                   <ComparisonItem key={index} cartItem={item} />
                 ))}
               </VStack>
+              <Divider borderColor="gray.400" mb={3}/>
               {cartItems.length > 4 && (
                 <Button width="lg" bg="primary" color="white" mt={4} mb={4}>
                   View More

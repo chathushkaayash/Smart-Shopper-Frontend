@@ -14,6 +14,7 @@ interface Props {
 
 const SupermarketInformation = ({ supermarketId }: Props) => {
   const supermarket = useSupermarket(supermarketId);
+  console.log(supermarket);
 
   return (
     <AccordionItem>

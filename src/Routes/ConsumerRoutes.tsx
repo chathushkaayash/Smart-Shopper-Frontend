@@ -13,7 +13,7 @@ const ConsumerRoutes = [
   {
     element: <ConsumerLayout />,
     children: [
-      { path: "product", element: <ConsumerProduct /> },
+      { path: "products/:id", element: <ConsumerProduct /> },
       { path: "profile", element: <ConsumerProfile /> },
       { path: "review", element: <ConsumerReviews /> },
       { path: "myOrders", element: <ConsumerOrders /> },

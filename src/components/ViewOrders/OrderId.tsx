@@ -123,7 +123,7 @@ const OrderId = ({ order }: Props) => {
                 ? "yellow.200"
                 : order.status === "active"
                 ? "blue.200"
-                : "red.200"
+                : "yellow.300"
             }
             borderRadius="full"
             textAlign="center"

@@ -2,10 +2,12 @@ import { Button } from "@chakra-ui/react";
 
 type TextButtonProps = {
   text: string;
+  hoverColor?: string;
   onClick: () => void;
 };
 
-const TextButton = ({ text, onClick }: TextButtonProps) => {
+const TextButton = ({ text, hoverColor, onClick }: TextButtonProps) => {
+  console.log(hoverColor);
   return (
     <Button
       type="submit"
@@ -15,6 +17,7 @@ const TextButton = ({ text, onClick }: TextButtonProps) => {
       borderRadius={5}
       color={"white"}
       onClick={onClick}
+      _hover={{ bg: hoverColor, color: "white" }}
     >
       {text}
     </Button>
