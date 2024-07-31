@@ -25,7 +25,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -48,6 +48,7 @@ interface CheckoutRequest {
 const Checkout = () => {
   const apiClient = new APIClient<CheckoutRequest>("/cartToOrder");
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const user = useAuthStore((state) => state.user);
 
   const { data: cart } = useCart();
@@ -58,7 +59,7 @@ const Checkout = () => {
       0
     ) || 0;
 
-    subTotal = Number((Math.round(subTotal * 100) / 100).toFixed(2));
+  subTotal = Number((Math.round(subTotal * 100) / 100).toFixed(2));
 
   const deliveryFee = 250;
 
@@ -80,7 +81,10 @@ const Checkout = () => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: () => apiClient.create(checkoutRequest),
+    mutationFn: () =>
+      apiClient
+        .create(checkoutRequest)
+        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] })),
     onSuccess: () => {
       navigate("/payment-success");
     },

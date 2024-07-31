@@ -70,7 +70,6 @@ const Landing = () => {
               <ProductGrid productQuery={{} as ProductQuery} />
             </Section>
           </div>
-          <AdvertisementGrid />
         </VStack>
         <Footer />
       </Box>

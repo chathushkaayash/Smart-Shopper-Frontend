@@ -116,22 +116,23 @@ const OrderId = ({ order }: Props) => {
             </Flex>
           </Flex>
           <Box
-            bg={
-              order.status === "completed"
-                ? "#5BFF89"
-                : order.status === "ready"
-                ? "yellow.200"
-                : order.status === "active"
-                ? "blue.200"
-                : "yellow.300"
-            }
+            bg="#5BFF89"
+              // order.status === "completed"
+              //   ? "#5BFF89"
+              //   : order.status === "ready"
+              //   ? "yellow.200"
+              //   : order.status === "active"
+              //   ? "blue.200"
+              //   : "yellow.300"
+            
             borderRadius="full"
             textAlign="center"
             p={2}
             maxWidth="200px"
           >
             <Text fontSize="md" fontWeight="bold">
-              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+              {/* {order.status.charAt(0).toUpperCase() + order.status.slice(1)} */}
+              Complete
             </Text>
           </Box>
 

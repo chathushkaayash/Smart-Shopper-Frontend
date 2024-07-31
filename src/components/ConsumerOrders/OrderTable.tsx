@@ -181,7 +181,7 @@ const OrderTable = () => {
                     aria-label="View Order"
                     variant="outline"
                     colorScheme="blue"
-                    onClick={() => navigate("/view-orders")}
+                    onClick={() => navigate("/view-orders/"+index)}
                     mr={2}
                   />
                   <IconButton

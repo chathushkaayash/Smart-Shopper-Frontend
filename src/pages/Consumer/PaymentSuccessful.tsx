@@ -46,8 +46,8 @@ const PaymentSuccessful = () => {
             <Image src={BarcodeImage} />
           </Center>
 
-          <Button type="submit" width="full" bg="primary" color="white" mt={3} onClick={() => navigate("/view-orders/")}>
-            Track your Oder
+          <Button type="submit" width="full" bg="primary" color="white" mt={3} onClick={() => navigate("/myOrders")}>
+            Track your Orders
           </Button>
         </GridItem>
       </Grid>
