@@ -8,6 +8,24 @@ import ConsumerPaymentSuccessful from "@/pages/Consumer/PaymentSuccessful";
 import ConsumerLayout from "./Layouts/ConsumerLayout";
 import ConsumerCheckout from "@/pages/Consumer/Checkout";
 import CartComparison from "@/pages/Consumer/CartComparison/CartComparison";
+import SupermarketLogo from "../assets/Reviews/superMarketLogo.png";
+const reviewData = {
+  date: "June 17, 2024",
+  title: "Delightful Crispiness in Every Bite",
+  reviewer: "Kaveesha Hettige",
+  reviewText: "I recently had the pleasure of trying Cream Cracker Biscuits, and they have quickly become a staple in my pantry. Here's a detailed review of my experience: The packaging is simple yet effective, keeping the biscuits fresh and crispy. The resealable pack is a thoughtful touch.",
+  rating: 5,
+};
+
+const productName = "Munchee Cream Cracker";
+
+const reviews = [
+  { stars: 5, count: 5 },
+  { stars: 4, count: 3 },
+  { stars: 3, count: 1 },
+  { stars: 2, count: 0 },
+  { stars: 1, count: 0 },
+];
 
 const ConsumerRoutes = [
   {
@@ -15,7 +33,7 @@ const ConsumerRoutes = [
     children: [
       { path: "products/:id", element: <ConsumerProduct /> },
       { path: "profile", element: <ConsumerProfile /> },
-      { path: "review", element: <ConsumerReviews /> },
+      { path: "review", element: <ConsumerReviews feedbackData={reviewData} productName={productName} reviews={reviews} superMarketLogo={SupermarketLogo}/> },
       { path: "myOrders", element: <ConsumerOrders /> },
       { path: "view-orders/:id", element: <ConsumerViewOrders /> },
       { path: "cart", element: <ConsumerCartDetails /> },

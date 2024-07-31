@@ -111,7 +111,7 @@ const AdminOrders = () => {
             <Th>Order ID</Th>
             <Th>Date</Th>
             <Th>Status</Th>
-            <Th>Cost</Th>
+            <Th>Price</Th>
             <Th></Th>
           </Tr>
         </Thead>
@@ -154,7 +154,7 @@ const AdminOrders = () => {
                   borderRadius="50%"
                   mr={4}
                 />
-                <Text>Kaveesha Hettige</Text>
+                <Text>Nethmi Kaveesha</Text>
               </HStack>
             </Td>
             <Td>#1234</Td>
@@ -181,7 +181,7 @@ const AdminOrders = () => {
                   borderRadius="50%"
                   mr={4}
                 />
-                <Text>Kaveesha Hettige</Text>
+                <Text>Ayash Chathushka</Text>
               </HStack>
             </Td>
             <Td>#1234</Td>

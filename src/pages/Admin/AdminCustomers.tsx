@@ -46,7 +46,7 @@ const AdminCustomers = () => {
       percentage: "8.5% Up from yesterday",
     },
     {
-      title: "Current Customers",
+      title: "Active Customers",
       value: "5.8 k",
       icon: IoMdPeople,
       mainColor: "red",
@@ -54,12 +54,12 @@ const AdminCustomers = () => {
       percentage: "8.5% Up from yesterday",
     },
     {
-      title: "New Customers",
-      value: "5.8 k",
+      title: "Churned Customers",
+      value: "0.6 k",
       icon: IoMdPeople,
       mainColor: "green",
       color: "green.100",
-      percentage: "8.5% Down from yesterday",
+      percentage: "6.5% Down from yesterday",
     },
   ];
 
@@ -136,9 +136,9 @@ const AdminCustomers = () => {
                 </option>
               </Select>
             </Box>
-            <Button bg="primary" size="sm">
+            {/* <Button bg="primary" size="sm">
               Add Customer
-            </Button>
+            </Button> */}
           </Flex>
         </Flex>
 
@@ -194,12 +194,12 @@ const AdminCustomers = () => {
                       borderRadius="50%"
                       mr={4}
                     />
-                    <Text>Kaveesha Hettige</Text>
+                    <Text>Bimsara Anjana</Text>
                   </HStack>
                 </Td>
-                <Td>235/1,Kanampitiya Road,Galle</Td>
-                <Td>0766245650</Td>
-                <Td>kaveesha.hettige@gmail.com</Td>
+                <Td>60/3,Temple Road,Gampaha</Td>
+                <Td>076694658</Td>
+                <Td>bim.jaya@gmail.com</Td>
                 <Td>
                   <Button bg="primary" size="sm">
                     View More
@@ -219,12 +219,12 @@ const AdminCustomers = () => {
                       borderRadius="50%"
                       mr={4}
                     />
-                    <Text>Kaveesha Hettige</Text>
+                    <Text>Milinda Shehan</Text>
                   </HStack>
                 </Td>
-                <Td>235/1,Kanampitiya Road,Galle</Td>
-                <Td>0766245650</Td>
-                <Td>kaveesha.hettige@gmail.com</Td>
+                <Td>Madampe Road,Matara</Td>
+                <Td>0781245567</Td>
+                <Td>milinda.amb@gmail.com</Td>
                 <Td>
                   <Button bg="primary" size="sm">
                     View More

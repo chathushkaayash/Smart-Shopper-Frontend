@@ -146,9 +146,9 @@ const AdminOverview = () => {
             <Thead>
               <Tr>
                 <Th>Product</Th>
-                <Th>Inventory</Th>
+                <Th>Super Market</Th>
+                <Th>Branch</Th>
                 <Th>Sales</Th>
-                <Th>Price</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -165,9 +165,9 @@ const AdminOverview = () => {
                     <Text>Munchee Cream Cracker</Text>
                   </HStack>
                 </Td>
-                <Td>45</Td>
-                <Td>140</Td>
-                <Td>300 Rupees</Td>
+                <Td>Keels</Td>
+                <Td>Maharagama</Td>
+                <Td>250</Td>
               </Tr>
               <Tr>
                 <Td>
@@ -179,12 +179,12 @@ const AdminOverview = () => {
                       objectFit="cover"
                       mr={2}
                     />
-                    <Text>Munchee Cream Cracker</Text>
+                    <Text>Prima kottu mee</Text>
                   </HStack>
                 </Td>
-                <Td>45</Td>
-                <Td>140</Td>
-                <Td>300 Rupees</Td>
+                <Td>Cargills</Td>
+                <Td>Galle</Td>
+                <Td>270</Td>
               </Tr>
             </Tbody>
           </Table>

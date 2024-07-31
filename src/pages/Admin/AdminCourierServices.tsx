@@ -35,6 +35,7 @@ import { MdFeedback } from "react-icons/md";
 import { SiCashapp } from "react-icons/si";
 import { TbTruckDelivery } from "react-icons/tb";
 import LineChart from "../../components/Charts/LineChart";
+import { IoStarSharp } from "react-icons/io5";
 
 const AdminCourierServices = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,9 +60,9 @@ const AdminCourierServices = () => {
         value: "80",
       },
       {
-        icon: <Icon as={TbTruckDelivery} boxSize={6} color={"primary"} />,
-        title: "Deliveries",
-        value: "80",
+        icon: <Icon as={IoStarSharp} boxSize={6} color={"primary"} />,
+        title: "Ratings",
+        value: "4/5",
       },
     ],
   ];

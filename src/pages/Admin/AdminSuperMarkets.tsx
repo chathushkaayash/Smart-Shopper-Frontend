@@ -144,11 +144,11 @@ const AdminSuperMarkets = () => {
                       borderRadius="50%"
                       mr={4}
                     />
-                    <Text>Keells</Text>
+                    <Text>cargills</Text>
                   </HStack>
                 </Td>
-                <Td>235/1,Kanampitiya Road,Galle</Td>
-                <Td>Kaveesha Hettige</Td>
+                <Td>235/1,High level Road Road,Colobo 6</Td>
+                <Td>Pasan Perera</Td>
                 <Td>07523458901</Td>
                 <Td>
                   <Button bg="primary" size="sm">
@@ -169,12 +169,12 @@ const AdminSuperMarkets = () => {
                       borderRadius="50%"
                       mr={4}
                     />
-                    <Text>Keells</Text>
+                    <Text>Arpico</Text>
                   </HStack>
                 </Td>
-                <Td>235/1,Kanampitiya Road,Galle</Td>
-                <Td>Kaveesha Hettige</Td>
-                <Td>07523458901</Td>
+                <Td>235/1,Temple Road,Galle</Td>
+                <Td>Milan Bhanuka</Td>
+                <Td>07528458401</Td>
 
                 <Td>
                   <Button bg="primary" size="sm">

@@ -110,7 +110,7 @@ const AdminTransactions = () => {
             <Th>Name</Th>
             <Th>Type</Th>
             <Th>Date</Th>
-            <Th>Transaction Type</Th>
+            <Th>Status</Th>
             <Th>Amount</Th>
             <Th></Th>
           </Tr>
