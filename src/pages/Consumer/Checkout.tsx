@@ -52,11 +52,13 @@ const Checkout = () => {
 
   const { data: cart } = useCart();
 
-  const subTotal =
+  let subTotal =
     cart?.results.reduce(
       (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
       0
     ) || 0;
+
+    subTotal = Number((Math.round(subTotal * 100) / 100).toFixed(2));
 
   const deliveryFee = 250;
 

@@ -1,16 +1,16 @@
 import useCart from "@/hooks/useCart";
 import useProduct from "@/hooks/useProduct";
 import useSupermarket from "@/hooks/useSupermarket";
+import { CartItem } from "@/state-management/cart/store";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  Box,
   HStack,
   Image,
-  Stack,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 
 interface Props {
@@ -19,28 +19,40 @@ interface Props {
 
 // ProductAccordionItem function component
 interface ProductAccordionItemProps {
-  productId: number;
+  cartItem: CartItem;
 }
 
-const ProductAccordionItem = ({ productId }: ProductAccordionItemProps) => {
-  const product = useProduct(productId);
+const ProductAccordionItem = ({ cartItem }: ProductAccordionItemProps) => {
+  const product = useProduct(cartItem.supermarketItem?.productId || 0);
+
+  //   const supermarketItem=usePriceList(cartItem.id);
+  // console.log(cartItem);
+  //console.log(cartItem.supermarketItem.price);
+
   return (
-    <VStack>
-      {/* <Text>{product.data?.name}</Text> */}
-      <Image src={product.data?.imageUrl} w={"4vw"} />
-      <Text>{product.data?.price}</Text>
-    </VStack>
+    <HStack justifyContent="space-between">
+      <HStack>
+        <Image src={product.data?.imageUrl} w={"3vw"} />
+        <Text>{product.data?.name.slice(0, 15)}...</Text>
+      </HStack>
+      <Box>
+        <Text fontWeight={600}>
+          Total {(cartItem.supermarketItem?.price || 1) * cartItem.quantity} LKR
+        </Text>
+      </Box>
+    </HStack>
   );
 };
 
 const CheckoutAccordion = ({ supermarketId }: Props) => {
   const { data: cart } = useCart();
   const supermarket = useSupermarket(supermarketId);
-  console.log(supermarket);
 
   const filteredItems = cart?.results.filter(
     (item) => item.supermarketItem?.supermarketId === supermarketId
   );
+
+  console.log(filteredItems);
 
   return (
     <AccordionItem>
@@ -61,10 +73,7 @@ const CheckoutAccordion = ({ supermarketId }: Props) => {
           </h2>
           <AccordionPanel pb={4}>
             {filteredItems?.map((item, index) => (
-              <ProductAccordionItem
-                key={index}
-                productId={item.supermarketItem?.productId || 0}
-              />
+              <ProductAccordionItem key={index} cartItem={item} />
             ))}
           </AccordionPanel>
         </>

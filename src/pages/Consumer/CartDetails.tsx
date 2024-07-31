@@ -36,10 +36,11 @@ const CartDetails = () => {
     }
   });
 
-  const totalAmount = items.reduce(
+  let totalAmount: number = items.reduce(
     (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
     0
   );
+  totalAmount = Number((Math.round(totalAmount * 100) / 100).toFixed(2));
 
   return (
     <MiddleContainer width="90vw" bg="background">
