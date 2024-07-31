@@ -63,6 +63,7 @@ const Landing = () => {
           pt="5vh"
         >
           <BrowseByCategory />
+          <AdvertisementGrid />
           <BestSellingProducts />
           <div ref={newArrivalsRef}>
             <Section heading="New Arrivals" title="Product for you">

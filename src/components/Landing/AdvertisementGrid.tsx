@@ -11,10 +11,11 @@ const AdvertisementGrid = () => {
   );
 
   const images = [
+    "https://www.gavi.lk/wp-content/uploads/2019/03/bannercuts2.jpg",
+    "https://essstr.blob.core.windows.net/uiimg/Carousel/slide9.jpg",
     "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600",
-    "https://images.unsplash.com/photo-1542759564-7ccbb6ac450a?auto=format&q=75&fit=crop&w=1000",
-    "https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?auto=format&q=75&fit=crop&w=1000",
-    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&q=75&fit=crop&w=600",
+    // "https://images.unsplash.com/photo-1542759564-7ccbb6ac450a?auto=format&q=75&fit=crop&w=1000",
+    "https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?auto=format&q=75&fit=crop&w=1000"
   ];
 
   return (

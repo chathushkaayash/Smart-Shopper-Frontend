@@ -29,11 +29,11 @@ const ShippingAddress: React.FC<{
   city?: string;
   phoneNumber?: string;
 }> = ({
-  addressLine1 = "123 Main St",
-  addressLine2 = "Apt 4B",
-  district = "Downtown",
-  city = "Metropolis",
-  phoneNumber = "123-456-7890",
+  addressLine1 = "73/c Koskanda, Halthota",
+  addressLine2 = "43/B Nawala, Rajagiriya",
+  district = "Colombo",
+  city = "Piliyandala",
+  phoneNumber = "0719944045",
 }) => {
   const { isOpen: isAdd, onOpen: onAdd, onClose: onAddClose } = useDisclosure();
   const {

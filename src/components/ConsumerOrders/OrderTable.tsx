@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Table,
@@ -14,6 +14,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { DeleteIcon, ViewIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 interface Order {
   id: string;
@@ -98,7 +99,8 @@ const statusColor: Record<Order["status"], string> = {
   Cancelled: "red",
 };
 
-const OrderTable: React.FC = () => {
+const OrderTable = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
 
@@ -179,6 +181,7 @@ const OrderTable: React.FC = () => {
                     aria-label="View Order"
                     variant="outline"
                     colorScheme="blue"
+                    onClick={() => navigate("/view-orders")}
                     mr={2}
                   />
                   <IconButton
@@ -186,6 +189,7 @@ const OrderTable: React.FC = () => {
                     aria-label="Delete Order"
                     variant="outline"
                     colorScheme="red"
+                    // onClick={ }
                   />
                 </Td>
               </Tr>

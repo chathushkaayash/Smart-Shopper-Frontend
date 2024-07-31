@@ -1,7 +1,6 @@
-import React from "react";
 import OrderTable from "./OrderTable";
 
-const ViewAll: React.FC = () => {
+const ViewAll = () => {
   return <OrderTable />;
 };
 

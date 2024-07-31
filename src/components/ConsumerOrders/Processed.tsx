@@ -1,7 +1,6 @@
-import React from "react";
 import OrderTable from "./OrderTable";
 
-const Processed: React.FC = () => {
+const Processed = () => {
   return <OrderTable />;
 };
 

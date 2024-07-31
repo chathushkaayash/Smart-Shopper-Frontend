@@ -51,7 +51,7 @@ const ProfileDetail = () => {
       </Box>
       <Flex justifyContent="space-between" alignItems="center" mb={4} mr={4}>
         <Text fontSize="xl" fontWeight="bold" ml="40">
-          Jessica Sympson
+          Bimsara Anjana
         </Text>
         <Button
           w="auto"
@@ -85,7 +85,7 @@ const ProfileDetail = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">Jessica</Text>
+            <Text color="gray.800">Bimsara</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">

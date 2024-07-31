@@ -92,6 +92,7 @@ const BrowseByCategory = () => {
                 gap={2}
                 shadow='md'
                 borderWidth='1.5px'
+                _hover={{ borderWidth: 2, borderColor: "primary" }}
               >
                 {category.icon}
                 <Text fontWeight={600}>{category.name}</Text>

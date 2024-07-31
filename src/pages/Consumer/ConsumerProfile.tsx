@@ -36,26 +36,17 @@ const ConsumerProfile: React.FC = () => {
               </Text>
               <VStack gap={0} pl={4} pr={4}>
                 {[
-                  {
-                    description: "Submitted report",
-                    date: "2024-06-30",
-                    time: "17:00",
-                  },
-                  {
-                    description: "Submitted report",
-                    date: "2024-06-30",
-                    time: "17:00",
-                  },
-                  {
-                    description: "Submitted report",
-                    date: "2024-06-30",
-                    time: "17:00",
-                  },
-                  {
-                    description: "Submitted report",
-                    date: "2024-06-30",
-                    time: "17:00",
-                  },
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
+                  { description: "Submitted report", date: "2024-06-30", time: "17:00",}
                 ].map((item, index) => (
                   <Box
                     w="full"

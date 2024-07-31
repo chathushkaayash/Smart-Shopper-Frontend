@@ -56,7 +56,7 @@ const Checkout = () => {
   const { mutate } = useMutation({
     mutationFn: () => apiClient.create(checkoutRequest),
     onSuccess: () => {
-      navigate("/");
+      navigate("/payment-success");
     },
   });
 
@@ -143,7 +143,6 @@ const Checkout = () => {
                     <HStack>
                       <MdOutlineLocationOn />
                       <VStack ml={3} alignItems={"unset"} spacing={0}>
-                        {/* <Text fontWeight="bold">Bandaragama Junction</Text> */}
                         <Text textAlign={"right"}>
                           {checkoutRequest.shippingAddress}
                         </Text>
@@ -182,7 +181,7 @@ const Checkout = () => {
                 color="white"
                 size="lg"
                 width="full"
-                // color="white"
+                _hover={{ bg: "primary", color: "white" }}
                 onClick={() => mutate()}
               >
                 Continue to payment
@@ -256,7 +255,7 @@ const Checkout = () => {
                   </HStack>
                   <HStack justify="space-between">
                     <Text>Taxes & Other Fees</Text>
-                    <Text>LKR 386.40</Text>
+                    <Text>LKR 186.40</Text>
                   </HStack>
                   <Divider my={2} />
                   <HStack justify="space-between">
