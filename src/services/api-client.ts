@@ -9,7 +9,7 @@ export interface FetchResponse<T> {
 
 const axiosInstance = axios.create({
   // baseURL: "http://localhost:9090",
-  baseURL: "https://on-exactly-worm.ngrok-free.app",
+  baseURL: "https://daring-romantic-macaque.ngrok-free.app",
   withCredentials: true,
 });
 
