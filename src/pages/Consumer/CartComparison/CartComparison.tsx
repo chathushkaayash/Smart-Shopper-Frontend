@@ -80,7 +80,7 @@ const CartComparison = () => {
                   ></iframe>
                 </AspectRatio>
               </Box>
-              <OptimizedInfo index={1} />
+              <OptimizedInfo index={1} cartItems={cartItems} />
             </VStack>
           </Box>
         </GridItem>
@@ -132,7 +132,7 @@ const CartComparison = () => {
                   ></iframe>
                 </AspectRatio>
               </Box>
-              <OptimizedInfo index={2} />
+              <OptimizedInfo index={2} cartItems={cartItems} />
             </VStack>
           </Box>
         </GridItem>

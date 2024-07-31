@@ -1,9 +1,17 @@
+import { CartItem } from "@/state-management/cart/store";
 import { Box, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 interface Props {
   index: number;
+  cartItems: CartItem[];
 }
 
-const OptimizedInfo = ({ index }: Props) => {
+const OptimizedInfo = ({ index, cartItems }: Props) => {
+  const deliveryFee = 250;
+  const totalPrice =
+    cartItems.reduce(
+      (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
+      0
+    ) + deliveryFee;
   return (
     <Box
       p={4}
@@ -24,9 +32,9 @@ const OptimizedInfo = ({ index }: Props) => {
         </GridItem>
         <GridItem>
           <Stack gap={2} alignItems={"flex-end"}>
-            <Text color="gray">2 KM</Text>
-            <Text color="gray">250 LKR</Text>
-            <Text fontWeight={700}>850 LKR</Text>
+            <Text color="gray">2.4 KM</Text>
+            <Text color="gray">{deliveryFee} LKR</Text>
+            <Text fontWeight={700}>{totalPrice} LKR</Text>
           </Stack>
         </GridItem>
       </Grid>
