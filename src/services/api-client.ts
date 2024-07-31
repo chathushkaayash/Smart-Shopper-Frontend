@@ -11,6 +11,12 @@ const axiosInstance = axios.create({
   // baseURL: "http://localhost:9090",
   baseURL: "https://daring-romantic-macaque.ngrok-free.app",
   withCredentials: true,
+  headers: {
+    "ngrok-skip-browser-warning": true,
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+  },
+  
+  
 });
 
 class APIClient<T> {

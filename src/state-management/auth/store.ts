@@ -15,7 +15,7 @@ export interface User {
   id?: number;
   name: string;
   role: string;
-  email: string
+  email: string;
   password?: string;
   number: string;
   profilePic: string;
@@ -35,12 +35,15 @@ const authStore: StateCreator<AuthStore> = (set) => ({
 
   login: (res: LoginResponse) => {
     if (!res.user) return null;
-    document.cookie = `token=${res.jwtToken}`;
+    document.cookie = `token=${res.jwtToken}; path=/; SameSite=None;`;
+    localStorage.setItem("token", res.jwtToken);
     set(() => ({ user: res.user }));
     return res.user;
   },
   logout: () => {
-    (document.cookie = `token=""`), set(() => ({ user: null }));
+    document.cookie = `token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None;`;
+    localStorage.removeItem("token");
+    set(() => ({ user: null }));
   },
 });
 

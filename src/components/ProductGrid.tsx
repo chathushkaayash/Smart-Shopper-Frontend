@@ -28,7 +28,7 @@ const ProductGrid = ({ productQuery }: Props) => {
 
   // sum of products in each page
   const fetchProductsCount =
-    products?.pages.reduce((acc, page) => acc + page.results.length, 0) || 0;
+    products?.pages?.reduce((acc, page) => acc + page.results.length, 0) || 0;
 
   return (
     <>
