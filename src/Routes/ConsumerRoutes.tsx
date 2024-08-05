@@ -9,6 +9,7 @@ import ConsumerLayout from "./Layouts/ConsumerLayout";
 import ConsumerCheckout from "@/pages/Consumer/Checkout";
 import CartComparison from "@/pages/Consumer/CartComparison/CartComparison";
 import SupermarketLogo from "../assets/Reviews/superMarketLogo.png";
+import AboutUs from "@/pages/Consumer/AboutUs";
 const reviewData = {
   date: "June 17, 2024",
   title: "Delightful Crispiness in Every Bite",
@@ -40,6 +41,7 @@ const ConsumerRoutes = [
       { path: "payment-success", element: <ConsumerPaymentSuccessful /> },
       { path: "checkout", element: <ConsumerCheckout /> },
       { path: "cart-comparison", element: <CartComparison /> },
+      { path: "about", element: <AboutUs /> },
     ],
   },
 ];

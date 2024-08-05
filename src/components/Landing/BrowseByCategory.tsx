@@ -11,7 +11,6 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import SimpleSlider, { SliderMethods } from "../SimpleSlider";
 
 import BeveragesIcon from "../../assets/landing/categoryIcons/beverages.svg?react";
-// import FrozenIcon from "../../assets/landing/categoryIcons/frozen.svg?react";
 import GroceryIcon from "../../assets/landing/categoryIcons/grocery.svg?react";
 import FrozenIcon from "../../assets/landing/categoryIcons/snow-svgrepo-com.svg?react";
 

@@ -45,7 +45,7 @@ const CartDetails = () => {
   return (
     <MiddleContainer width="90vw" bg="background" height="fit-content">
       {items.length === 0 ? (
-        <Flex flexDirection="column" pt="4vh" px="4vw">
+        <Flex flexDirection="column" pt="3vh" px="4vw">
           <Heading as="h2" size="lg">
             Your shopping cart
           </Heading>
@@ -74,7 +74,6 @@ const CartDetails = () => {
               type="submit"
               width="auto"
               bg="#E9893B"
-              mt={10}
               borderRadius={5}
               color={"white"}
               _hover={{ bg: "#E46C0A", color: "#FFFFFF" }}
@@ -98,7 +97,7 @@ const CartDetails = () => {
           }}
           h="100%"
           gap={{ base: 4, md: 6, lg: 10 }}
-          pt="4vh"
+          pt="3vh"
           px="6vw"
         >
           <GridItem h="100%">

@@ -9,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 
 import Logo from "../assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <Box as="footer" bg="white" p={8} boxShadow="md" borderTop="1px solid" borderColor={"gray.200"}>
       <Grid templateColumns={{ base: "1fr", md: "3fr 1fr 1fr 1fr" }} gap={8}>
@@ -34,9 +36,9 @@ const Footer = () => {
         <GridItem>
           <VStack alignItems="flex-start" spacing={2}>
             <Text fontWeight="bold">Quick Links</Text>
-            <Text>Home</Text>
-            <Text>Super Markets</Text>
-            <Text>About Us</Text>
+            <Text cursor="pointer" onClick={() => navigate("/")} _hover={{ fontcolor: "primary"}}>Home</Text>
+            <Text cursor="pointer" onClick={() => navigate("/supermarkets")}>Super Markets</Text>
+            <Text cursor="pointer" onClick={() => navigate("/about")}>About Us</Text>
           </VStack>
         </GridItem>
         <GridItem>
@@ -51,8 +53,8 @@ const Footer = () => {
         <GridItem>
           <VStack alignItems="flex-start" spacing={2}>
             <Text fontWeight="bold">About</Text>
-            <Text>About Us</Text>
-            <Text>Contact Us</Text>
+            <Text cursor="pointer" onClick={() => navigate("/about")}>About Us</Text>
+            <Text cursor="pointer" onClick={() => navigate("/contactUs")}>Contact Us</Text>
           </VStack>
         </GridItem>
       </Grid>
