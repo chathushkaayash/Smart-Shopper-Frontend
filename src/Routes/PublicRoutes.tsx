@@ -4,6 +4,8 @@ import DriverRegister from "@/pages/DriverApp/LoginRegister/Register/DriverRegis
 import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
 import PublicLayout from "./Layouts/PublicLayout";
+import Supermarkets from "@/pages/Supermarkets";
+import path from "path";
 
 
 const PublicRoutes = [
@@ -15,6 +17,7 @@ const PublicRoutes = [
       { path: "driver/login", element: <DriverLogin /> },
       { path: "driver/login_register", element: <LoginRegister /> },
       { path: "driver/register", element: <DriverRegister /> },
+      {path : "supermarket", element: <Supermarkets/>},
     
     ],
   },
