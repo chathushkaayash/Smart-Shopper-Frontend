@@ -45,8 +45,9 @@ interface CheckoutRequest {
   shippingMethod: string;
 }
 
+const apiClient = new APIClient<CheckoutRequest>("/cartToOrder");
+
 const Checkout = () => {
-  const apiClient = new APIClient<CheckoutRequest>("/cartToOrder");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = useAuthStore((state) => state.user);

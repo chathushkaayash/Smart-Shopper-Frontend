@@ -1,4 +1,5 @@
-import SideBar from "@/pages/SupermarketManager/SideBar";
+
+import SideBar from "@/components/SideBar";
 import useAuthStore from "@/state-management/auth/store";
 import { Box, Flex } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
@@ -13,7 +14,7 @@ const AdminLayout = () => {
       <Box w="16vw" top="10vh">
         <SideBar />
       </Box>
-      <Box w="full" px="2%">
+      <Box w="full">
         <Outlet />
       </Box>
     </Flex>

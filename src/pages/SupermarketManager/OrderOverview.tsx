@@ -1,3 +1,5 @@
+import { Order } from "@/hooks/useOrder";
+import { getDateTime } from "@/utils/Time";
 import {
   Box,
   Button,
@@ -14,15 +16,20 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-interface OrderIdProps {
-  status: string;
+interface Props {
+  order: Order;
 }
 
-const OrderId = ({}: OrderIdProps) => {
+const OrderOverview = ({ order }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openPopUp = () => {
     onOpen();
   };
+
+  let totalAmount: number = order.orderItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   return (
     <>
@@ -31,17 +38,15 @@ const OrderId = ({}: OrderIdProps) => {
           bg="white"
           boxShadow="md"
           borderRadius="24"
-          pt={7}
-          pb={10}
-          pl={20}
-          pr={20}
+          px="3vw"
+          py="5vh"
           width="100%"
           maxWidth="1200px"
           mx="auto"
         >
           <Flex justify="space-between" align="center" flexWrap="wrap" mb={4}>
             <Text fontSize="2xl" fontWeight="bold">
-              Order ID: 223345678
+              Order ID: #{order.id}
             </Text>
             <Flex align="center" gap={4} onClick={openPopUp}>
               <Button
@@ -64,25 +69,6 @@ const OrderId = ({}: OrderIdProps) => {
               </Button>
             </Flex>
           </Flex>
-          {/* <Box
-              bg={
-                status === "completed"
-                  ? "#5BFF89"
-                  : status === "ready"
-                  ? "yellow.200"
-                  : status === "active"
-                  ? "blue.200"
-                  : "red.200"
-              }
-              borderRadius="full"
-              textAlign="center"
-              p={1}
-              maxWidth="200px"
-            >
-              <Text fontSize="md" fontWeight="bold">
-                {status.charAt(0).toUpperCase() + status.slice(1)}
-              </Text>
-            </Box> */}
 
           <Divider my={4} />
 
@@ -99,13 +85,9 @@ const OrderId = ({}: OrderIdProps) => {
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Order Placed on</Text>
-                <Text>: 12.04.2024</Text>
-                <Text>Payment method</Text>
-                <Text>: Credit/Debit Card</Text>
+                <Text>: {getDateTime(order.orderPlacedOn)}</Text>
                 <Text>Order Total</Text>
-                <Text>: 2547.00 LKR</Text>
-                <Text>Delivery Cost</Text>
-                <Text>: 300.00 LKR</Text>
+                <Text>: {totalAmount} LKR</Text>
               </Grid>
             </Box>
             <Box
@@ -114,38 +96,23 @@ const OrderId = ({}: OrderIdProps) => {
               borderWidth="1px"
               borderRadius="15"
               borderColor="gray.300"
+              bg="red"
             >
               <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
                 Driver Details
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Driver name</Text>
-                <Text>: 12.04.2024</Text>
+                <Text>: Nethmi Kaveesha</Text>
                 <Text>Contact Number</Text>
-                <Text>: Credit/Debit Card</Text>
+                <Text>: 071122244</Text>
                 <Text>Vehicle Type</Text>
-                <Text>: 2547.00 LKR</Text>
+                <Text>: Bike</Text>
                 <Text>Vehicle Number</Text>
-                <Text>: 300.00 LKR</Text>
+                <Text>: BAY 5050</Text>
               </Grid>
             </Box>
           </Flex>
-
-          <Divider my={4} />
-
-          <Box p={4} borderWidth="1px" borderRadius="15" borderColor="gray.300">
-            <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
-              Shipping Details
-            </Text>
-            <Grid templateColumns="1fr 2fr" gap={2}>
-              <Text>Shipping Address</Text>
-              <Text>: Kaluthara, Western, Srilanka, 129987</Text>
-              <Text>Contact Number</Text>
-              <Text>: +993345887</Text>
-              <Text>Name</Text>
-              <Text>: Chathusika Ayantha</Text>
-            </Grid>
-          </Box>
         </Box>
       </Box>
 
@@ -172,4 +139,4 @@ const OrderId = ({}: OrderIdProps) => {
     </>
   );
 };
-export default OrderId;
+export default OrderOverview;

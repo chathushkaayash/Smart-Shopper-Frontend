@@ -3,7 +3,7 @@ import { Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { FaCartFlatbed, FaShop } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
 import { IoMdPeople } from "react-icons/io";
-import { IoSettings } from "react-icons/io5";
+import { IoSettings, IoHome } from "react-icons/io5";
 import { MdViewSidebar } from "react-icons/md";
 import { RiAdvertisementFill } from "react-icons/ri";
 import { TbTransactionDollar, TbTruckDelivery } from "react-icons/tb";
@@ -16,11 +16,12 @@ interface MenuItem {
 }
 
 const SideBar = () => {
+  const user = useAuthStore((state) => state.user);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
 
-  const menuItems: MenuItem[] = [
+  const adminMenuItems: MenuItem[] = [
     { icon: MdViewSidebar, label: "Overview", path: "/overview" },
     { icon: IoMdPeople, label: "Customers", path: "/customers" },
     { icon: FaShop, label: "Super Markets", path: "/supermarkets" },
@@ -40,7 +41,16 @@ const SideBar = () => {
     { icon: FiLogOut, label: "Logout", path: "/logout" },
   ];
 
-  console.log(location.pathname);
+  const supermarketManagerMenuItems: MenuItem[] = [
+    { icon: IoHome, label: "Dashboard", path: "/dashboard" },
+    { icon: MdViewSidebar, label: "Orders", path: "/orders" },
+    { icon: IoMdPeople, label: "Products", path: "/products" },
+    { icon: IoSettings, label: "Settings", path: "/settings" },
+    { icon: FiLogOut, label: "Logout", path: "/logout" },
+  ];
+
+  const menuItems =
+    user?.role === "admin" ? adminMenuItems : supermarketManagerMenuItems;
 
   return (
     <VStack
@@ -75,7 +85,7 @@ const SideBar = () => {
               navigate(`${item.path}`);
             }
           }}
-          mt={item.path === "/logout" ? 'auto' : 0}
+          mt={item.path === "/logout" ? "auto" : 0}
           mb={item.path === "/logout" ? 4 : 0}
         >
           <item.icon size={20} />

@@ -23,6 +23,9 @@ export interface User {
   status: string;
 
   consumerId?: number;
+  supermarketId?: number;
+  driverId?: number;
+  adminId?: number;
 }
 
 interface AuthStore {

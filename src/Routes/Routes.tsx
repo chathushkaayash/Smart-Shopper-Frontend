@@ -8,6 +8,7 @@ import ErrorPage from "./ErrorPage";
 import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
 import SupermarketManagerRoutes from "./SupermarketmanagerRoutes";
+import SharedRoutes from "./SharedRoutes";
 
 
 
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       ...PublicRoutes,
       ...ConsumerRoutes,
       ...SupermarketManagerRoutes,
+      ...SharedRoutes,
 
 
       // { path: "", element: <Landing /> },
