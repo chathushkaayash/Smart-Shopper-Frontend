@@ -90,7 +90,7 @@ const Navbar = () => {
           borderColor={useColorModeValue("gray.200", "gray.900")}
           align={"center"}
           justifyContent="space-between"
-          pos={user?.role === "admin" ? "sticky" : "relative"}
+          pos={(user?.role === "admin" ||user?.role === "supermarket")  ? "sticky" : "relative"}
           top={0}
           zIndex={10}
         >
