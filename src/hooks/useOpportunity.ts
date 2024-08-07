@@ -19,6 +19,7 @@ const useOpportunity = (id: number) => {
   return useQuery({
     queryKey: ["opportunity", id],
     queryFn: () => apiClient.get(id),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
 

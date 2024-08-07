@@ -9,15 +9,16 @@ export interface FetchResponse<T> {
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9090",
-  // baseURL: "https://daring-romantic-macaque.ngrok-free.app",
-  withCredentials: true,
-  headers: {
-    "ngrok-skip-browser-warning": true,
-    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-  },
-  
-  
 });
+
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return config;
+});
+
 
 class APIClient<T> {
   endpoint: string;
@@ -26,9 +27,8 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  getAll = async (requestConfig: AxiosRequestConfig) => {
-    // console.log(token.state);
-    return await axiosInstance
+  getAll = (requestConfig: AxiosRequestConfig) => {
+    return axiosInstance
       .get<FetchResponse<T>>(this.endpoint, { ...requestConfig })
       .then((res) => res.data);
   };
@@ -40,7 +40,7 @@ class APIClient<T> {
     return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
 
-  patch = (data: T) => {
+  update = (data: T) => {
     return axiosInstance.patch<T>(this.endpoint, data).then((res) => res.data);
   };
 
@@ -50,6 +50,7 @@ class APIClient<T> {
       .then((res) => res.data);
   };
 
+  // ------------------------------------------- Special methods -------------------------------------------
   login = (data: Credentials) => {
     return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };

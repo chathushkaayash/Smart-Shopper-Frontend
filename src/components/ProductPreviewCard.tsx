@@ -16,8 +16,7 @@ const ProductPreviewCard = ({ image, name, description, available }: props) => {
         className="product-card border rounded m-5"
         borderColor={"primary"}
         maxW={{ base: "100%" }}
-        // p={{ base: 2, md: 4 }}
-        borderRadius={10}
+        p={{ base: 2, md: 4 }}
       >
         <Flex
           width="auto"

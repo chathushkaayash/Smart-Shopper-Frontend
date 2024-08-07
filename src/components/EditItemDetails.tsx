@@ -5,13 +5,9 @@ interface props {
     // Define the props for the component here
     Price: number;
     Stock: number;
-    image: string;
-    name: string;
-    description: string;
-    available: boolean;
 }
 
-const EditItemDetails  = ({Price , Stock , image , name , description, available}:props) => {
+const EditItemDetails  = ({Price , Stock}:props) => {
 
    
   console.log(Price, Stock);
@@ -20,8 +16,8 @@ const EditItemDetails  = ({Price , Stock , image , name , description, available
     return (
         <>
         
-        <Box className='border' borderRadius={7}>
-            <ProductPreviewCard image={image} name={name} description={description} available={available} />
+        <Box className='border rounded' borderRadius='lg'>
+            <ProductPreviewCard image='https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/114839--01--1623926509.webp' name='Munchee Super Cream Cracker' description='200g' available={true} />
             {/* Add your JSX code here */}
             <div className="edit-item-details p-5">
             <Text mb='8px'>Price</Text>

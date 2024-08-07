@@ -1,4 +1,4 @@
-import { SupermarketItem } from "@/hooks/usePriceLists";
+import { SupermarketItem } from "@/hooks/useSupermarketItems";
 import {
   Box,
   Divider,
@@ -14,13 +14,13 @@ import useSupermarket from "@/hooks/useSupermarket";
 
 interface Props {
   supermarketItem: SupermarketItem;
-  selectedPriceList: SupermarketItem | null;
+  selectedSupermarketItem: SupermarketItem | null;
   onClick: () => void;
 }
 
 const SupermarketPriceRow = ({
   supermarketItem,
-  selectedPriceList,
+  selectedSupermarketItem: selectedSupermarketItem,
   onClick,
 }: Props) => {
   const supermarket = supermarketItem?.supermarketId
@@ -30,7 +30,7 @@ const SupermarketPriceRow = ({
   return (
     <HStack
       borderColor="primary"
-      borderWidth={selectedPriceList?.id === supermarketItem.id ? "2px" : ""}
+      borderWidth={selectedSupermarketItem?.id === supermarketItem.id ? "2px" : ""}
       justifyContent={"space-between"}
       px={10}
       py={3}

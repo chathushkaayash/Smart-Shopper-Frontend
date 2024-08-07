@@ -39,6 +39,7 @@ import delHome from "../../../src/assets/delHome.png";
 import pickupImg from "../../../src/assets/Grocery shopping-rafiki.svg";
 
 interface CheckoutRequest {
+  id?: number;
   consumerId: number;
   shippingAddress: string;
   shippingMethod: string;
@@ -81,11 +82,12 @@ const Checkout = () => {
 
   const { mutate } = useMutation({
     mutationFn: () =>
-      apiClient
-        .create(checkoutRequest)
-        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] })),
-    onSuccess: () => {
-      navigate("/payment-success");
+      apiClient.create(checkoutRequest).then((res) => {
+        queryClient.invalidateQueries({ queryKey: ["carts"] });
+        return res;
+      }),
+    onSuccess: (res) => {
+      navigate("/payment-success/" + res.id);
     },
   });
 

@@ -22,8 +22,6 @@ const useProducts = (productQuery: ProductQuery) => {
         },
       }),
 
-    // return products.ts file as fake data
-    //   return { data: products, count: products.length, next: null, results: products };
 
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;

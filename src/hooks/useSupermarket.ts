@@ -17,6 +17,7 @@ const useSupermarket = (id: number) => {
   return useQuery({
     queryKey: ["Supermarket", id],
     queryFn: () => apiClient.get(id),
+    staleTime: 1000 * 60 * 30, // 30 minute
   });
 };
 

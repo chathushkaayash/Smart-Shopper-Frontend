@@ -1,5 +1,5 @@
-import APIClient from "@/services/api-client";
-import { CartItem } from "@/state-management/cart/store";
+import { CartItem } from "@/hooks/useCartItem";
+import useCartStore from "@/state-management/cart/store";
 import { Box, Flex, Input } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { FaMinus, FaPlus } from "react-icons/fa6";
@@ -8,25 +8,23 @@ interface Props {
   cartItem: CartItem;
 }
 
-const apiClient = new APIClient<CartItem>("/carts");
 
 const QuantityChanger = ({ cartItem }: Props) => {
+  const { updateItem } = useCartStore();
   const queryClient = useQueryClient();
 
   const handleIncrement = (cartItem: CartItem) => {
     const newCartItem = { ...cartItem, quantity: cartItem.quantity + 1 };
-    if (newCartItem.quantity > 0)
-      apiClient
-        .create(newCartItem)
-        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
+    if (newCartItem.quantity > 0) updateItem(newCartItem, invalidateQueries);
   };
 
   const handleDecrement = (cartItem: CartItem) => {
     const newCartItem = { ...cartItem, quantity: cartItem.quantity - 1 };
-    if (newCartItem.quantity > 0)
-      apiClient
-        .create(newCartItem)
-        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
+    if (newCartItem.quantity > 0) updateItem(newCartItem, invalidateQueries);
+  };
+
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries({ queryKey: ["carts"] });
   };
 
   return (

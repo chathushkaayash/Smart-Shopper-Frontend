@@ -7,7 +7,6 @@ import DriverRoutes from "./DriverRoutes";
 import ErrorPage from "./ErrorPage";
 import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
-import SupermarketManagerRoutes from "./SupermarketmanagerRoutes";
 
 
 
@@ -25,8 +24,6 @@ const router = createBrowserRouter([
       ...DriverRoutes,
       ...PublicRoutes,
       ...ConsumerRoutes,
-      ...SupermarketManagerRoutes,
-
 
       // { path: "", element: <Landing /> },
       // { path: "login", element: <Login /> },

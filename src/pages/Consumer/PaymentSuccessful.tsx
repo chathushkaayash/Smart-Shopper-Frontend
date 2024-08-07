@@ -12,10 +12,11 @@ import {
 import PaymentImage from "../../assets/Payment-successful/payment.svg";
 import BarcodeImage from "../../assets/Payment-successful/clarity_qr-code-line.svg";
 import MiddleContainer from "../../components/Containers/MiddleContainer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PaymentSuccessful = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   return (
     <MiddleContainer>
       <Grid gridTemplateColumns="1fr 1fr" h="100%">
@@ -46,7 +47,14 @@ const PaymentSuccessful = () => {
             <Image src={BarcodeImage} />
           </Center>
 
-          <Button type="submit" width="full" bg="primary" color="white" mt={3} onClick={() => navigate("/myOrders")}>
+          <Button
+            type="submit"
+            width="full"
+            bg="primary"
+            color="white"
+            mt={3}
+            onClick={() => navigate("/view-orders/" + id)}
+          >
             Track your Orders
           </Button>
         </GridItem>

@@ -25,12 +25,32 @@ import DriverDetailsPopup from "./DriveDetails";
 import AddDriverReview from "./AddDriverReview";
 import TrackOrder from "./TrackOrder";
 import { Order } from "@/hooks/useOrder";
+import useSupermarket from "@/hooks/useSupermarket";
 
 interface Props {
   order: Order;
 }
+interface SupermarketInfoRowProps {
+  supermarketId: number;
+}
+
+const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
+  const supermarket = useSupermarket(supermarketId);
+  console.log(supermarket.data);
+
+  return (
+    <Text textAlign="left" paddingLeft={10}>
+      {supermarket.data?.name}
+      <br />
+    </Text>
+  );
+};
 
 const OrderId = ({ order }: Props) => {
+  const supermarketList: number[] = order.supermarketIdList
+    .split(",")
+    .map(Number);
+
   const {
     isOpen: isReceiptOpen,
     onOpen: onReceiptOpen,
@@ -117,14 +137,14 @@ const OrderId = ({ order }: Props) => {
           </Flex>
           <Box
             bg="#5BFF89"
-              // order.status === "completed"
-              //   ? "#5BFF89"
-              //   : order.status === "ready"
-              //   ? "yellow.200"
-              //   : order.status === "active"
-              //   ? "blue.200"
-              //   : "yellow.300"
-            
+            // order.status === "completed"
+            //   ? "#5BFF89"
+            //   : order.status === "ready"
+            //   ? "yellow.200"
+            //   : order.status === "active"
+            //   ? "blue.200"
+            //   : "yellow.300"
+
             borderRadius="full"
             textAlign="center"
             p={2}
@@ -170,13 +190,14 @@ const OrderId = ({ order }: Props) => {
               <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
                 Supermarkets
               </Text>
-              <Text textAlign="left" paddingLeft={10}>
-                Keells Supermarket, Pannipitiya
-                <br />
-                Spar Supermarket, Maharagama
-                <br />
-                Arpico Supermarket, Moragahahena
-              </Text>
+              <Box>
+                {supermarketList.map((supermarketId) => (
+                  <SupermarketInfoRow
+                    key={supermarketId}
+                    supermarketId={supermarketId}
+                  />
+                ))}
+              </Box>
             </Box>
           </Flex>
 

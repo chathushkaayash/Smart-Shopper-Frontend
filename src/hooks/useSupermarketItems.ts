@@ -13,11 +13,12 @@ export interface SupermarketItem {
 const apiClient = new APIClient<SupermarketItem>("/storeprices");
 
 // get SupermarketItem[] for a product
-const usePriceLists = ({ productId }: { productId: string }) => {
+const useSupermarketItems = (productId: number) => {
   return useQuery({
     queryKey: ["store_prices_for_product", productId],
     queryFn: () => apiClient.getAll({ params: { productId } }),
+    staleTime: 1000 * 60 * 2, // 2 minute
   });
 };
 
-export default usePriceLists;
+export default useSupermarketItems;

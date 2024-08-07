@@ -1,6 +1,6 @@
 import APIClient from "@/services/api-client";
-import { CartItem } from "@/state-management/cart/store";
 import { useQuery } from "@tanstack/react-query";
+import { CartItem } from "./useCartItem";
 
 const apiClient = new APIClient<CartItem>("/carts");
 

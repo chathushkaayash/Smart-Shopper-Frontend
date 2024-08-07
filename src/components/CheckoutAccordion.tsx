@@ -25,9 +25,6 @@ interface ProductAccordionItemProps {
 const ProductAccordionItem = ({ cartItem }: ProductAccordionItemProps) => {
   const product = useProduct(cartItem.supermarketItem?.productId || 0);
 
-  //   const supermarketItem=usePriceList(cartItem.id);
-  // console.log(cartItem);
-  //console.log(cartItem.supermarketItem.price);
 
   return (
     <HStack justifyContent="space-between">

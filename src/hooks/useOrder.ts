@@ -2,11 +2,11 @@ import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 
 export interface OrderItems {
-    id: number;
-    supermarketItemId: number;
-    productId: number;
-    quantity: number;
-    price: number;
+  id: number;
+  supermarketItemId: number;
+  productId: number;
+  quantity: number;
+  price: number;
 }
 
 export interface Order {
@@ -17,6 +17,8 @@ export interface Order {
   shippingMethod: string;
   location: string;
   orderItems: OrderItems[];
+
+  supermarketIdList: string;
 }
 
 const apiClient = new APIClient<Order>("/orders");

@@ -14,10 +14,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import useProduct from "@/hooks/useProduct";
 import useSupermarket from "@/hooks/useSupermarket";
 import APIClient from "@/services/api-client";
-import { CartItem } from "@/state-management/cart/store";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import QuantityChanger from "./QuantityChanger";
+import { CartItem } from "@/hooks/useCartItem";
 
 interface Props {
   cartItem: CartItem;

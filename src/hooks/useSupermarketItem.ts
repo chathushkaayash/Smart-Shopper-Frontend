@@ -1,15 +1,16 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { SupermarketItem } from "./usePriceLists";
+import { SupermarketItem } from "./useSupermarketItems";
 
 const apiClient = new APIClient<SupermarketItem>("/storeprices");
 
 // get SupermarketItem by id
-const usePriceList = (id: number) => {
+const useSupermarketItem = (id: number) => {
   return useQuery({
     queryKey: ["store_price", id],
     queryFn: () => apiClient.get(id),
+    staleTime: 1000 * 60 * 2, // 2 minute
   });
 };
 
-export default usePriceList;
+export default useSupermarketItem;

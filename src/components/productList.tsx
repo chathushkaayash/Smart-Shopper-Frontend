@@ -1,4 +1,4 @@
-import { Box, Checkbox, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, TableContainer, Tbody, Td, Th, Thead, Tr, Table, Badge, Flex, Text } from "@chakra-ui/react";
 
 interface Product {
   id: number;
@@ -20,8 +20,8 @@ const ProductList = ({ productList }:ProductListProps) => {
           <Thead>
             <Tr>
               <Th>Item Name</Th>
-              <Th>QTY</Th>
-              <Th textAlign="center">Status</Th>
+              <Th>Price</Th>
+              <Th textAlign="right">Status</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -29,8 +29,12 @@ const ProductList = ({ productList }:ProductListProps) => {
               <Tr key={product.id}>
                 <Td>{product.name}</Td>
                 <Td>{product.price}</Td>
-                <Td textAlign="center">
-                <Checkbox disabled></Checkbox>
+                <Td textAlign="right">
+                  <Badge color="white" bg={product.status === "active" ? "green.400" : "red.400"} minW="6rem">
+                    <Flex justify="center">
+                      {product.status === "active" ? "done" : "pending"}
+                    </Flex>
+                  </Badge>
                 </Td>
               </Tr>
             ))}

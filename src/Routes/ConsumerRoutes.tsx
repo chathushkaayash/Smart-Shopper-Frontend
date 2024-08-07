@@ -1,4 +1,3 @@
-import ConsumerProduct from "@/pages/Consumer/ProductDetail";
 import ConsumerCartDetails from "@/pages/Consumer/CartDetails";
 import ConsumerProfile from "@/pages/Consumer/ConsumerProfile";
 import ConsumerReviews from "@/pages/Consumer/Reviews";
@@ -9,12 +8,14 @@ import ConsumerLayout from "./Layouts/ConsumerLayout";
 import ConsumerCheckout from "@/pages/Consumer/Checkout";
 import CartComparison from "@/pages/Consumer/CartComparison/CartComparison";
 import SupermarketLogo from "../assets/Reviews/superMarketLogo.png";
+import ViewProduct from "@/pages/Consumer/ViewProduct";
 import AboutUs from "@/pages/Consumer/AboutUs";
 const reviewData = {
   date: "June 17, 2024",
   title: "Delightful Crispiness in Every Bite",
   reviewer: "Kaveesha Hettige",
-  reviewText: "I recently had the pleasure of trying Cream Cracker Biscuits, and they have quickly become a staple in my pantry. Here's a detailed review of my experience: The packaging is simple yet effective, keeping the biscuits fresh and crispy. The resealable pack is a thoughtful touch.",
+  reviewText:
+    "I recently had the pleasure of trying Cream Cracker Biscuits, and they have quickly become a staple in my pantry. Here's a detailed review of my experience: The packaging is simple yet effective, keeping the biscuits fresh and crispy. The resealable pack is a thoughtful touch.",
   rating: 5,
 };
 
@@ -32,13 +33,23 @@ const ConsumerRoutes = [
   {
     element: <ConsumerLayout />,
     children: [
-      { path: "products/:id", element: <ConsumerProduct /> },
+      { path: "products/:id", element: <ViewProduct /> },
       { path: "profile", element: <ConsumerProfile /> },
-      { path: "review", element: <ConsumerReviews feedbackData={reviewData} productName={productName} reviews={reviews} superMarketLogo={SupermarketLogo}/> },
+      {
+        path: "review",
+        element: (
+          <ConsumerReviews
+            feedbackData={reviewData}
+            productName={productName}
+            reviews={reviews}
+            superMarketLogo={SupermarketLogo}
+          />
+        ),
+      },
       { path: "myOrders", element: <ConsumerOrders /> },
       { path: "view-orders/:id", element: <ConsumerViewOrders /> },
       { path: "cart", element: <ConsumerCartDetails /> },
-      { path: "payment-success", element: <ConsumerPaymentSuccessful /> },
+      { path: "payment-success/:id", element: <ConsumerPaymentSuccessful /> },
       { path: "checkout", element: <ConsumerCheckout /> },
       { path: "cart-comparison", element: <CartComparison /> },
       { path: "about", element: <AboutUs /> },

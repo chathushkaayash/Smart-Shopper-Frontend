@@ -24,8 +24,7 @@ import LoginInput from "../components/Inputs/LoginInput";
 import APIClient from "@/services/api-client";
 import useAuthStore, {
   Credentials,
-  LoginResponse,
-  User,
+  LoginResponse
 } from "@/state-management/auth/store";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
@@ -59,7 +58,7 @@ const Login = () => {
   const { login } = useAuthStore();
   const navigate = useNavigate();
 
-  const validate = (data: FormData) => {
+  const handleLogin = (data: FormData) => {
     const credentials: Credentials = {
       email_or_number: data.email_or_number,
       password: data.password,
@@ -67,28 +66,9 @@ const Login = () => {
     const apiClient = new APIClient<LoginResponse>("/login");
 
     apiClient.login(credentials).then((res) => {
-      const user: User | null = login(res);
-      if (user) {
-        switch (user.role) {
-          case "driver":
-            navigate("/driver");
-            break;
-          default:
-            navigate("/");
-        }
-      }
+      login(res);
+      navigate("/");
     });
-
-    // const user = login(data);
-    // if (user) {
-    //   switch (user.role) {
-    //     case "driver":
-    //       navigate("/driver");
-    //       break;
-    //     default:
-    //       navigate("/");
-    //   }
-    // }
   };
 
   return (
@@ -126,7 +106,7 @@ const Login = () => {
               </Box>
             </VStack>
 
-            <form onSubmit={handleSubmit(validate)}>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <LoginInput
                 register={register("email_or_number")}
                 type="text"

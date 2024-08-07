@@ -22,7 +22,6 @@ import {
 import { FaEdit } from "react-icons/fa";
 import "reactjs-popup/dist/index.css";
 import EditItemDetails from "./EditItemDetails";
-import { useState } from "react";
 
 
 const productTable = () => {
@@ -32,26 +31,7 @@ const productTable = () => {
 
   // const handleDropdownToggle = () => {
   //   setDropdownOpen(!dropdownOpen);
-
-  const [image , setImage] = useState<string>('');
-  const [name , setName] = useState<string>('');
-  const [description , setDescription] = useState<string>('');
-  const [available , setAvailable] = useState<boolean>(true);
-  // const [Price , setPrice] = useState<number>(0);
-  // const [Stock , setStock] = useState<number>(0);
-
-
-  const handleEdit = (product: any) => {
-    setImage(product.imgSrc);
-    setName(product.name);
-    setDescription(product.qty);
-    setAvailable(true);
-    // setPrice(product.price);
-    // setStock(product.stock);
-    onOpen();
-  }
-
-
+  // };
 
   const products = [
     {
@@ -66,93 +46,93 @@ const productTable = () => {
     },
     {
       id: 2,
-      name: "Lanka Soy",
+      name: "Kist Mango Juice",
       qty: "1L",
       price: 350,
       stock: 15,
       sold: 20,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic96986.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/104839--01--1623926509.webp",
     },
     {
       id: 3,
-      name: "Sunlight Light",
+      name: "Ceylon Tea Bags",
       qty: "100 bags",
       price: 500,
       stock: 10,
       sold: 30,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic116196.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/110839--01--1623926509.webp",
     },
     {
       id: 4,
-      name: "EGB ",
-      qty: "500ml",
+      name: "Nestle Milk Powder",
+      qty: "400g",
       price: 450,
       stock: 20,
       sold: 50,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic99367.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/102839--01--1623926509.webp",
     },
     {
       id: 5,
-      name: "Munchee Snack Cracker",
+      name: "Lays Potato Chips",
       qty: "100g",
       price: 150,
       stock: 25,
       sold: 40,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic19124.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/115839--01--1623926509.webp",
     },
     {
       id: 6,
-      name: "Kohomba Soap",
+      name: "Sunlight Detergent Powder",
       qty: "1kg",
       price: 300,
       stock: 12,
       sold: 15,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic120704.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/106839--01--1623926509.webp",
     },
     {
       id: 7,
-      name: "Lisol Bathroom cleaner",
+      name: "Lifebuoy Soap",
       qty: "100g",
       price: 50,
       stock: 50,
       sold: 70,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic12304.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/103839--01--1623926509.webp",
     },
     {
       id: 8,
-      name: "Small Blend Tea",
+      name: "Colgate Toothpaste",
       qty: "150g",
       price: 200,
       stock: 30,
       sold: 45,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic73441.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/115464--01--1623926539.webp",
     },
     {
       id: 9,
-      name: "Ginger Buiscuits",
+      name: "Milo Energy Drink",
       qty: "500g",
       price: 600,
       stock: 18,
       sold: 25,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/ItemAsset/Pic4845.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/108839--01--1623926509.webp",
     },
     {
       id: 10,
-      name: "Preema Stella Noodles",
+      name: "Anchor Butter",
       qty: "250g",
       price: 400,
       stock: 8,
       sold: 12,
       imgSrc:
-        "https://essstr.blob.core.windows.net/essimg/350x/Small/Pic112825.jpg",
+        "https://objectstorage.ap-mumbai-1.oraclecloud.com/n/softlogicbicloud/b/cdn/o/products/109839--01--1623926509.webp",
     },
   ];
 
@@ -273,7 +253,7 @@ const productTable = () => {
                     }}
                   >
                     <Flex alignItems="center">
-                      <Icon as={FaEdit} onClick={() => handleEdit(product)}/>
+                      <Icon as={FaEdit} onClick={onOpen}/>
                     </Flex>
                   </Link>
                 </Td>
@@ -284,13 +264,13 @@ const productTable = () => {
       </Box>
 
 
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} size={'2xl'} >
+      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} size={'2xl'}>
         <ModalOverlay />
-        <ModalContent borderRadius={15}>
+        <ModalContent>
           <ModalHeader>Edit Item Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <EditItemDetails Price={10} Stock={20} image={image} name={name} description={description} available={available} />
+            <EditItemDetails Price={10} Stock={20} />
             
           </ModalBody>
 
