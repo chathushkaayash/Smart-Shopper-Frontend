@@ -1,6 +1,6 @@
 import Logo from "@/assets/logo.svg";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import { Order, OrderItems } from "@/hooks/useOrder";
+import { Order, OrderItem } from "@/hooks/useOrder";
 import useProduct from "@/hooks/useProduct";
 import useAuthStore from "@/state-management/auth/store";
 import { getDateTime } from "@/utils/Time";
@@ -126,7 +126,7 @@ const OrderItemsTable = ({ order }: Props) => {
   );
 };
 
-const OrderItemRow = ({ orderItem }: { orderItem: OrderItems }) => {
+const OrderItemRow = ({ orderItem }: { orderItem: OrderItem }) => {
   const product = useProduct(orderItem.productId);
   const orderItemPrice = orderItem.price * orderItem.quantity;
 

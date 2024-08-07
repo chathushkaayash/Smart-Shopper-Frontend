@@ -1,4 +1,5 @@
 import useOrders from "@/hooks/useOrders";
+import useAuthStore from "@/state-management/auth/store";
 import { getDateTime } from "@/utils/Time";
 import {
   Badge,
@@ -15,6 +16,15 @@ import { Link } from "react-router-dom";
 
 const OrderTable = () => {
   const orders = useOrders();
+  const user = useAuthStore((state) => state.user);
+
+  const supermarketOrderStatus: string[] =
+    orders.data?.results.map(
+      (order) =>
+        order.supermarketOrders?.find(
+          (i) => i.supermarketId === user?.supermarketId
+        )?.status || ""
+    ) || [];
 
   return (
     <>
@@ -64,7 +74,9 @@ const OrderTable = () => {
                   {getDateTime(order.orderPlacedOn)}
                 </Td>
                 <Td px={6} py={4}>
-                  {order.status}
+                  {user?.role === "supermarket"
+                    ? supermarketOrderStatus[index]
+                    : order.status}
                 </Td>
                 <Td px={6} py={4}>
                   {order.shippingMethod}

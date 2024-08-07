@@ -11,9 +11,10 @@ const SupermarketViewOrder = () => {
   if (order.isLoading) return <p>Loading...</p>;
   if (order.isError) return <p>Error</p>;
 
+  if (!order.data) return <p>No data</p>;
   return (
     <>
-      <Box bg="background" h="100%" w="100%" pt={7} pb={10} pl={20} pr={20}>
+      <Box h="100%" w="100%" pt={7} pb={10} pl={20} pr={20}>
         <OrderOverview order={order.data} />
         <OrderItemsTable order={order.data} />
       </Box>

@@ -2,8 +2,8 @@ import { Grid, GridItem, HStack, Image, Stack, Text } from "@chakra-ui/react";
 
 import useProduct from "@/hooks/useProduct";
 import useSupermarket from "@/hooks/useSupermarket";
-import { CartItem } from "@/state-management/cart/store";
 import DeleteImage from "../../../assets/delete.svg";
+import { CartItem } from "@/hooks/useCartItem";
 
 interface Props {
   cartItem: CartItem;

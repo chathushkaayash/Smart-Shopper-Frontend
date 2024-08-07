@@ -9,12 +9,13 @@ const OrdersPage = () => {
     return (
       <>
         <Box
-          p={3}
-          bg={"white"}
-          borderRadius={3}
-          overflow="hidden"
-          boxShadow="md"
+          p={8}
+          borderRadius={15}
+          shadow="lg"
+          border={"1px solid"}
+          borderColor={"gray.200"}
           m={5}
+          minH={"80vh"}
         >
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Orders

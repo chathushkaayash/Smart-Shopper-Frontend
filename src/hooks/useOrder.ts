@@ -2,12 +2,20 @@ import APIClient from "@/services/api-client";
 import { DateTime } from "@/utils/Time";
 import { useQuery } from "@tanstack/react-query";
 
-export interface OrderItems {
+export interface OrderItem {
   id: number;
   supermarketId: number;
   productId: number;
   quantity: number;
   price: number;
+}
+
+export interface SupermarketOrder {
+  id: number
+  status: string
+  qrCode: string
+  _orderId: number
+  supermarketId: number
 }
 
 export interface Order {
@@ -17,9 +25,9 @@ export interface Order {
   shippingAddress: string;
   shippingMethod: string;
   location: string;
-  orderItems: OrderItems[];
+  orderItems: OrderItem[];
 
-  supermarketIdList: string;
+  supermarketOrders: SupermarketOrder[];
   orderPlacedOn: DateTime;
 }
 

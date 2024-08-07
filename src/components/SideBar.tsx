@@ -74,9 +74,9 @@ const SideBar = () => {
           p={2}
           w="full"
           cursor="pointer"
-          bg={pathname === item.path ? "rgba(255, 119, 8, 0.2)" : ""}
-          borderLeft={pathname === item.path ? "5px solid" : ""}
-          borderColor={pathname === item.path ? "primary" : ""}
+          bg={pathname.startsWith(item.path || "") ? "rgba(255, 119, 8, 0.2)" : ""}
+          borderLeft={pathname.startsWith(item.path || "") ? "5px solid" : ""}
+          borderColor={pathname.startsWith(item.path || "") ? "primary" : ""}
           _hover={{ bg: "gray.100" }}
           onClick={() => {
             if (item.label === "Logout") {

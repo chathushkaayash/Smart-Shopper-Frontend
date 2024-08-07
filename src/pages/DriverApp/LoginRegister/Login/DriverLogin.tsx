@@ -12,8 +12,7 @@ import LoginInput from "../../../../components/Inputs/LoginInput";
 import APIClient from "@/services/api-client";
 import useAuthStore, {
   Credentials,
-  LoginResponse,
-  User,
+  LoginResponse
 } from "@/state-management/auth/store";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
@@ -43,18 +42,10 @@ const DriverLogin = () => {
       password: data.password,
     };
     const apiClient = new APIClient<LoginResponse>("/login");
-
+    
     apiClient.login(credentials).then((res) => {
-      const user: User | null = login(res);
-      if (user) {
-        switch (user.role) {
-          case "driver":
-            navigate("/driver");
-            break;
-          default:
-            navigate("/");
-        }
-      }
+      login(res);
+      navigate("/");
     });
   };
 

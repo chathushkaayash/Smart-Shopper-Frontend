@@ -1,4 +1,6 @@
 import { Order } from "@/hooks/useOrder";
+import APIClient from "@/services/api-client";
+import useAuthStore from "@/state-management/auth/store";
 import { getDateTime } from "@/utils/Time";
 import {
   Box,
@@ -15,13 +17,19 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   order: Order;
 }
 
 const OrderOverview = ({ order }: Props) => {
+  const user = useAuthStore((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const openPopUp = () => {
     onOpen();
   };
@@ -30,6 +38,28 @@ const OrderOverview = ({ order }: Props) => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const supermarketOrder = order.supermarketOrders?.find(
+    (i) => i.supermarketId === user?.supermarketId
+  );
+
+  console.log(supermarketOrder);
+
+  const handleSubmit = () => {
+    const apiClient = new APIClient<{ supermarketOrderId: number }>(
+      "/supermarket_order_ready"
+    );
+
+    apiClient
+      .create({ supermarketOrderId: supermarketOrder?.id || -1 })
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: ["order", order.id] });
+        navigate("/orders");
+      });
+
+    console.log("Order Ready");
+    onClose();
+  };
 
   return (
     <>
@@ -48,24 +78,38 @@ const OrderOverview = ({ order }: Props) => {
             <Text fontSize="2xl" fontWeight="bold">
               Order ID: #{order.id}
             </Text>
-            <Flex align="center" gap={4} onClick={openPopUp}>
+            <Flex align="center" gap={4}>
               <Button
                 size="md"
-                color="white"
-                bg="primary"
+                color={
+                  supermarketOrder?.status === "Processing"
+                    ? "white"
+                    : "primary"
+                }
+                bg={
+                  supermarketOrder?.status === "Processing"
+                    ? "primary"
+                    : "white"
+                }
                 borderWidth={2}
                 borderColor="primary"
-                onClick={onOpen}
+                onClick={() => {
+                  if (supermarketOrder?.status === "Processing") {
+                    openPopUp();
+                  }
+                }}
                 borderRadius={10}
                 _hover={{ bg: "white", color: "primary" }}
                 _active={{
-                  bg: "#E46C0A",
+                  bg: "primary",
                   color: "#FFFFFF",
                   transform: "scale(0.98)",
                   borderColor: "#E46C0A",
                 }}
               >
-                Order Ready
+                {supermarketOrder?.status === "Processing"
+                  ? "Order Ready"
+                  : "Processed"}
               </Button>
             </Flex>
           </Flex>
@@ -124,13 +168,15 @@ const OrderOverview = ({ order }: Props) => {
           <ModalBody>
             <Flex justify={"space-between"}>
               <Text fontSize="xl" mb={4} textAlign="center" fontWeight={600}>
-                Are you Sure to Confirm order?
+                Are you Sure ?
               </Text>
             </Flex>
           </ModalBody>
           <ModalFooter>
             <Flex justifyContent="center" gap={3}>
-              <Button bg={"primary"}>Yes</Button>
+              <Button bg={"primary"} onClick={handleSubmit}>
+                Yes
+              </Button>
               <Button onClick={onClose}>No</Button>
             </Flex>
           </ModalFooter>

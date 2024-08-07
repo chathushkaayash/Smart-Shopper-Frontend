@@ -1,4 +1,4 @@
-import { CartItem } from "@/state-management/cart/store";
+import { CartItem } from "@/hooks/useCartItem";
 import { Box, Divider, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 interface Props {
   index: number;
@@ -30,7 +30,7 @@ const OptimizedInfo = ({ index, cartItems }: Props) => {
             <Text color="primary">Total Distance</Text>
             <Text color="gray">Sub Total</Text>
             <Text color="gray">Deliveries</Text>
-            <Divider borderColor="gray.400" mb={0}/>
+            <Divider borderColor="gray.400" mb={0} />
             <Text fontWeight={700}>Total</Text>
           </Stack>
         </GridItem>
@@ -39,7 +39,7 @@ const OptimizedInfo = ({ index, cartItems }: Props) => {
             <Text color="primary">2.4 KM</Text>
             <Text color="gray">{subTotal} LKR</Text>
             <Text color="gray">{deliveryFee} LKR</Text>
-            <Divider borderColor="gray.400" mb={0}/>
+            <Divider borderColor="gray.400" mb={0} />
             <Text fontWeight={700}>{totalPrice} LKR</Text>
           </Stack>
         </GridItem>
