@@ -1,6 +1,5 @@
 import { Badge, Box, Flex, Spacer } from "@chakra-ui/react";
 
-
 interface props {
   image: string;
   name: string;
@@ -11,12 +10,10 @@ interface props {
 const ProductPreviewCard = ({ image, name, description, available }: props) => {
   return (
     <>
-      
       <Box
         className="product-card border rounded m-5"
         borderColor={"primary"}
         maxW={{ base: "100%" }}
-        // p={{ base: 2, md: 4 }}
         borderRadius={10}
       >
         <Flex

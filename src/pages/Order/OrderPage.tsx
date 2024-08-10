@@ -5,7 +5,7 @@ const OrderPage = () => {
     const user = useAuthStore((state) => state.user);
 
     // if (user?.role === "consumer") return <ConsumerOrders />;
-    if (user?.role === "supermarket") return <SupermarketViewOrder />;
+    if (user?.role === "Supermarket Manager") return <SupermarketViewOrder />;
 
 
 }

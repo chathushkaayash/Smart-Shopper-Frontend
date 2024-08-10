@@ -74,7 +74,7 @@ const OrderTable = () => {
                   {getDateTime(order.orderPlacedOn)}
                 </Td>
                 <Td px={6} py={4}>
-                  {user?.role === "supermarket"
+                  {user?.role === "Supermarket Manager"
                     ? supermarketOrderStatus[index]
                     : order.status}
                 </Td>

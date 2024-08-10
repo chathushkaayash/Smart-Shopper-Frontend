@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 const OrdersPage = () => {
   const user = useAuthStore((state) => state.user);
 
-  if (user?.role === "supermarket")
+  if (user?.role === "Supermarket Manager")
     return (
       <>
         <Box

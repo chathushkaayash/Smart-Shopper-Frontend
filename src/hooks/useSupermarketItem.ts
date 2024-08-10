@@ -2,7 +2,7 @@ import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 import { SupermarketItem } from "./useSupermarketItems";
 
-const apiClient = new APIClient<SupermarketItem>("/storeprices");
+const apiClient = new APIClient<SupermarketItem>("/supermarketitems");
 
 // get SupermarketItem by id
 const useSupermarketItem = (id: number) => {

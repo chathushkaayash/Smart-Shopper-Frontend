@@ -5,8 +5,8 @@ import SupermarketManagerLayout from "./SupermarketManagerLayout";
 const SharedLayout = () => {
   const { user } = useAuthStore();
 
-  if (user?.role === "admin") return <AdminLayout />;
-  if (user?.role === "supermarket") return <SupermarketManagerLayout />;
+  if (user?.role === "Admin") return <AdminLayout />;
+  if (user?.role === "Supermarket Manager") return <SupermarketManagerLayout />;
 };
 
 export default SharedLayout;

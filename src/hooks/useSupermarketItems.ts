@@ -10,10 +10,10 @@ export interface SupermarketItem {
   availableQuantity: number;
 }
 
-const apiClient = new APIClient<SupermarketItem>("/storeprices");
+const apiClient = new APIClient<SupermarketItem>("/supermarketitems");
 
 // get SupermarketItem[] for a product
-const useSupermarketItems = (productId: number) => {
+const useSupermarketItems = (productId: number = 0) => {
   return useQuery({
     queryKey: ["store_prices_for_product", productId],
     queryFn: () => apiClient.getAll({ params: { productId } }),
