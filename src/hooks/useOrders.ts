@@ -8,7 +8,6 @@ const useOrders = () => {
   return useQuery<FetchResponse<Order>, Error>({
     queryKey: ["orders"],
     queryFn: () => apiClient.getAll({}),
-    staleTime: 1000 * 60 * 30, // 30 minute
   });
 };
 
