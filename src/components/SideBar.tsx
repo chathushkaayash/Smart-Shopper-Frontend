@@ -50,7 +50,7 @@ const SideBar = () => {
   ];
 
   const menuItems =
-    user?.role === "admin" ? adminMenuItems : supermarketManagerMenuItems;
+    user?.role === "Admin" ? adminMenuItems : supermarketManagerMenuItems;
 
   return (
     <VStack
