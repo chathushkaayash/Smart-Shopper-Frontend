@@ -197,7 +197,7 @@ const Navbar = () => {
               <Text fontSize="lg" fontWeight="bold">
                 {user.name}
               </Text>
-              {user.role === "consumer" && (
+              {user.role === "Consumer" && (
                 <Box pos={"relative"} cursor="pointer">
                   <Icon
                     as={FaCartShopping}
