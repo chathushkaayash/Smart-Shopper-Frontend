@@ -1,15 +1,14 @@
 import {
-  Flex,
   Box,
+  Flex,
   Heading,
-  Text,
-  Spacer,
   Image,
-  Divider,
+  Spacer,
+  Text
 } from "@chakra-ui/react";
 
-import { IoLocation } from "react-icons/io5";
 import { FaPhone } from "react-icons/fa";
+import { IoLocation } from "react-icons/io5";
 import { TbWorld } from "react-icons/tb";
 
 import AddressBox from "@/components/AddressBox";
@@ -50,15 +49,7 @@ const supermarkets = [
     }
   ];
 
-interface SupermarketsProps {
-    name: string;
-    description: string;
-    address: string;
-    phone: string;
-    website: string;
-    image: string;
 
-}
 
 function Supermarkets() {
 

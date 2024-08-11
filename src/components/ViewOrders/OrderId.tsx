@@ -47,9 +47,7 @@ const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
 };
 
 const OrderId = ({ order }: Props) => {
-  const supermarketList: number[] = order.supermarketIdList
-    .split(",")
-    .map(Number);
+  const supermarketList: number[] = order.supermarketOrders.map(i=>i.supermarketId);
 
   const {
     isOpen: isReceiptOpen,
