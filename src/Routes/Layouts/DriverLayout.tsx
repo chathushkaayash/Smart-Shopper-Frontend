@@ -7,7 +7,7 @@ const DriverLayout = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const { user } = useAuthStore();
 
-  if (user?.role !== "driver")
+  if (user?.role !== "Driver")
     return <Navigate to={"/driver/login_register"} />;
 
   return <>{isMobile[0] ? <Outlet /> : <DesktopWarning/>}</>;
