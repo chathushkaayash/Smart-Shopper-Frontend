@@ -7,16 +7,10 @@ export interface FetchResponse<T> {
   results: T[];
 }
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
-
-console.log(VITE_BASE_URL);
 
 const axiosInstance = axios.create({
   baseURL: VITE_BASE_URL || "http://localhost:9090",
 
-  headers: {
-    "API-Key": VITE_API_KEY || "",
-  },
 });
 
 axiosInstance.interceptors.request.use((config) => {

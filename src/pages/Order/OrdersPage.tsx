@@ -1,9 +1,12 @@
 import OrderTable from "@/components/OrderTable";
 import useAuthStore from "@/state-management/auth/store";
 import { Box, Text } from "@chakra-ui/react";
+import ConsumerOrders from "../Consumer/ConsumerOrders";
 
 const OrdersPage = () => {
   const user = useAuthStore((state) => state.user);
+
+  if (user?.role === "Consumer") return <ConsumerOrders />;
 
   if (user?.role === "Supermarket Manager")
     return (

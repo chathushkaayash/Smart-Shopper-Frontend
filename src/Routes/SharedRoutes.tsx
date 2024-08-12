@@ -6,8 +6,8 @@ const SharedRoutes = [
   {
     element: <SharedLayout />,
     children: [
-      { path: "orders/:id", element: <OrderPage /> },
       { path: "orders", element: <OrdersPage /> },
+      { path: "orders/:id", element: <OrderPage /> },
     ],
   },
 ];

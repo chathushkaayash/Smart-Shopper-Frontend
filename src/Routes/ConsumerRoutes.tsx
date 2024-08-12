@@ -46,7 +46,6 @@ const ConsumerRoutes = [
           />
         ),
       },
-      { path: "myOrders", element: <ConsumerOrders /> },
       { path: "view-orders/:id", element: <ConsumerViewOrders /> },
       { path: "cart", element: <ConsumerCartDetails /> },
       { path: "payment-success/:id", element: <ConsumerPaymentSuccessful /> },

@@ -148,7 +148,7 @@ const Navbar = () => {
                       color: "white",
                     }}
                     // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
-                    onClick={() => navigate("/myOrders")}
+                    onClick={() => navigate("/orders")}
                   >
                     Orders
                   </MenuItem>
