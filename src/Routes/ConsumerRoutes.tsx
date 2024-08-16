@@ -1,7 +1,7 @@
 import ConsumerCartDetails from "@/pages/Consumer/CartDetails";
 import ConsumerProfile from "@/pages/Consumer/ConsumerProfile";
 import ConsumerReviews from "@/pages/Consumer/Reviews";
-import ConsumerOrders from "@/pages/Consumer/ConsumerOrders";
+// import ConsumerOrders from "@/pages/Consumer/ConsumerOrders";
 import ConsumerViewOrders from "@/pages/Consumer/ViewOrders";
 import ConsumerPaymentSuccessful from "@/pages/Consumer/PaymentSuccessful";
 import ConsumerLayout from "./Layouts/ConsumerLayout";

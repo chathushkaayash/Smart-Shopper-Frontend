@@ -19,9 +19,12 @@ import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 import {useState } from "react";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import DotIndicator from "@/components/DotIndicator";
+import { DriverDetails } from "./DriverRegister";
 
 interface Props {
   setStage: (n: number) => void;
+  driverDetails: DriverDetails;
+  setDriverDetails: (s: DriverDetails) => void;
 }
 
 const SelectCompany = ({ setStage }: Props) => {

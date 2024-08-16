@@ -25,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
 import ErrorText from "@/components/Errors/ErrorText";
 import termsAndConditions from "./TermsAndConditions";
+import { DriverDetails } from "./DriverRegister";
 
 const schema = z
   .object({
@@ -38,6 +39,8 @@ const schema = z
 type FormData = z.infer<typeof schema>;
 interface Props {
   setStage: (n: number) => void;
+  driverDetails: DriverDetails;
+  setDriverDetails: (s: DriverDetails) => void;
 }
 
 const EnterPassword = ({ setStage }: Props) => {

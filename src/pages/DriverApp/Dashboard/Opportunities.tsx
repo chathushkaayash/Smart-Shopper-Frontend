@@ -7,11 +7,15 @@ import { useNavigate } from "react-router-dom";
 const Opportunities = () => {
   const navigate = useNavigate();
   const opportunities = useOpportunities();
+  const pendingOpportunities = opportunities.data?.results.filter(
+    (opportunity) => opportunity.status === "Pending"
+  );
+  
 
   return (
     <>
       <VStack minH="100vh" px="8vw" pt="5vh" pb="10vh" gap="4vh">
-        {opportunities.data?.results.map((opportunity, index) => (
+        {pendingOpportunities?.map((opportunity, index) => (
           <Box
             key={index}
             shadow="xl"
@@ -20,7 +24,6 @@ const Opportunities = () => {
             background="white"
             w="full"
             borderRadius="10"
-            onClick={() => navigate("/driver/opportunities/" + opportunity.id)}
           >
             <VStack align="start">
               <Text fontWeight="bold">{opportunity.customer}</Text>
@@ -36,14 +39,15 @@ const Opportunities = () => {
               <HStack w="full">
                 <Text>Total Distance </Text>
                 <Spacer />
-                <Text>{opportunity.totalDistance}</Text>
+                <Text>{opportunity.totalDistance} km</Text>
               </HStack>
               <HStack w="full">
                 <Text>Trip Cost </Text>
                 <Spacer />
                 <Text>{opportunity.tripCost}</Text>
               </HStack>
-              <SubmitButton>Accept</SubmitButton>
+              
+              <SubmitButton onClick={() => navigate("/driver/opportunities/" + opportunity.id)}>View Order</SubmitButton>
             </VStack>
           </Box>
         ))}

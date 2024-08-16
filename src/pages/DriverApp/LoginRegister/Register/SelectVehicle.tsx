@@ -26,6 +26,8 @@ import { hsvaToHex } from "@uiw/color-convert";
 
 interface Props {
   setStage: (n: number) => void;
+  driverDetails: DriverDetails;
+  setDriverDetails: (s: DriverDetails) => void;
 }
 
 import { z } from "zod";
@@ -33,6 +35,7 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
 import LoginInput from "@/components/Inputs/LoginInput";
 import ErrorText from "@/components/Errors/ErrorText";
+import { DriverDetails } from "./DriverRegister";
 
 const schema = z.object({
   name: z.string().min(1, "vehicle name is required"),

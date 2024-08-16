@@ -9,6 +9,7 @@ import Deliveries from "@/pages/DriverApp/Dashboard/Deliveries";
 import Ratings from "@/pages/DriverApp/Dashboard/Ratings";
 import Support from "@/pages/DriverApp/Dashboard/Support";
 import ChangePassword from "@/pages/DriverApp/Dashboard/ChangePassword";
+import ViewMap from "@/pages/DriverApp/Dashboard/ViewMap";
 
 const DriverRoutes = [
   {
@@ -24,6 +25,7 @@ const DriverRoutes = [
       { path: "driver/account/deliveries", element: <Deliveries /> },
       { path: "driver/account/ratings", element: <Ratings /> },
       { path: "driver/account/support", element: <Support /> },
+      { path: "driver/opportunities/viewmap/:id", element: <ViewMap /> },
     ],
   },
 ];

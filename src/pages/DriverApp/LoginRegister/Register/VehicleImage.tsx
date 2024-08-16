@@ -13,9 +13,12 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 
 import Logo from "../../../../assets/logo.svg";
 import DotIndicator from "@/components/DotIndicator";
+import { DriverDetails } from "./DriverRegister";
 
 interface Props {
   setStage: (n: number) => void;
+  driverDetails: DriverDetails;
+  setDriverDetails: (s: DriverDetails) => void;
 }
 
 const VehicleImage = ({ setStage }: Props) => {

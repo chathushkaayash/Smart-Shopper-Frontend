@@ -22,7 +22,7 @@ import SubmitButton from "../Buttons/SubmitButton";
 import ErrorText from "../Errors/ErrorText";
 import LoginInput from "../Inputs/LoginInput";
 
-const schema = z.object({
+const schema = z.object({ 
   name: z.string(),
   email: z.string().email("Invalid email address"),
   contactNumber: z.string().regex(/^0\d{9}$/, "Invalid phone number"),

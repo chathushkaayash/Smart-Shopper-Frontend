@@ -3,7 +3,7 @@ import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsTruck } from "react-icons/bs";
 import { CiDollar, CiSearch, CiUser } from "react-icons/ci";
-import { IoHomeOutline, IoWalletOutline } from "react-icons/io5";
+import { IoHomeOutline} from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNav = () => {
@@ -15,6 +15,7 @@ const BottomNav = () => {
     "/driver/login_register",
     "/driver/login",
     "/driver/register",
+    "/driver/opportunities/viewmap"
   ];
   const showBottomNav = !hideNavbarPaths.some((path) =>
     location.pathname.startsWith(path)
@@ -38,11 +39,11 @@ const BottomNav = () => {
       text: "Opportunities",
       path: "/driver/opportunities",
     },
-    {
-      icon: <IoWalletOutline fontSize={20} />,
-      text: "Wallet",
-      path: "/driver/wallet",
-    },
+    // {
+    //   icon: <IoWalletOutline fontSize={20} />,
+    //   text: "Wallet",
+    //   path: "/driver/wallet",
+    // },
     {
       icon: <CiDollar fontSize={20} />,
       text: "Earnings",

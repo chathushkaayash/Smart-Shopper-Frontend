@@ -18,14 +18,14 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { z } from "zod"; 
 import { RegisterForm } from "@/pages/SignUp";
 
 const schema = z.object({
   otp: z.string().length(6, "OTP must be exactly 6 digits"),
 });
 
-interface OtpMappingRequest {
+export interface OtpMappingRequest { 
   contactNumber: string;
   OTP: string;
 }

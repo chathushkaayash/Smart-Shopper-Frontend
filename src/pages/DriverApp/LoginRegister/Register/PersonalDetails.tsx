@@ -26,23 +26,28 @@ import LoginInput from "../../../../components/Inputs/LoginInput";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import APIClient from "@/services/api-client";
+import { DriverDetails } from "./DriverRegister";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
   nic: z.string().min(1, "NIC is required"),
   email: z.string().email("Invalid email address"),
-  phonenumber: z
-    .string()
-    .min(10, "Phone number must be at least 10 characters"),
+  contactNo: z.string().regex(/^0\d{9}$/, "Enter valid phone number"),
 });
 
 type FormData = z.infer<typeof schema>;
 
 interface Props {
   setStage: (n: number) => void;
+  setDriverDetails: (s: DriverDetails) => void;
+  driverDetails: DriverDetails;
 }
 
-const PersonalDetails = ({ setStage }: Props) => {
+const apiClient = new APIClient<FormData | number>("/driver_otp");
+
+const PersonalDetails = ({driverDetails, setStage, setDriverDetails }: Props) => {
   const {
     register,
     handleSubmit,
@@ -50,6 +55,17 @@ const PersonalDetails = ({ setStage }: Props) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [personalDetails, setPersonalDetails] = useState<FormData>();
+
+  const sendData = () => {
+    if (personalDetails)
+      apiClient.create(personalDetails).then((res) => {
+        if (typeof res==="number") 
+        setDriverDetails({...driverDetails ,id:res});
+        setStage(1);
+        onClose();
+      });
+  };
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
@@ -74,7 +90,10 @@ const PersonalDetails = ({ setStage }: Props) => {
         w="80vw"
         as="form"
         justifyContent="space-between"
-        onSubmit={handleSubmit(onOpen)}
+        onSubmit={handleSubmit((data) => {
+          setPersonalDetails(data);
+          onOpen();
+        })}
       >
         <Box w="full">
           <LoginInput
@@ -101,14 +120,14 @@ const PersonalDetails = ({ setStage }: Props) => {
           />
           {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           <LoginInput
-            register={register("phonenumber")}
-            type="phonenumber"
+            register={register("contactNo")}
+            type="contactNo"
             placeholder="Phone Number"
             icon={FaPhoneAlt}
             outerClassName="!mt-5"
           />
-          {errors.phonenumber && (
-            <ErrorText>{errors.phonenumber.message}</ErrorText>
+          {errors.contactNo && (
+            <ErrorText>{errors.contactNo.message}</ErrorText>
           )}
         </Box>
 
@@ -136,15 +155,7 @@ const PersonalDetails = ({ setStage }: Props) => {
               Cancel
             </Button>
             <Flex justifyContent="center" w="full">
-              <Button
-                px={50}
-                color="white"
-                bg="primary"
-                onClick={() => {
-                  setStage(1);
-                  onClose();
-                }}
-              >
+              <Button px={50} color="white" bg="primary" onClick={sendData}>
                 Next
               </Button>
             </Flex>

@@ -10,7 +10,7 @@ export interface RegisterForm {
   email: string;
   contactNumber: string;
   password: string;
-}
+} 
 
 
 
