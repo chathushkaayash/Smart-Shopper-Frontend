@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Footer from "@/components/Footer";
 import OrderFood from "../../assets/AboutUs/Order food-pana.svg";
-import GroceryShopping from "../../assets/AboutUs/Grocery shopping-amico (1).svg";
+import GroceryShopping from "../../assets/AboutUs/Grocery shopping-amico.svg";
 import ActionButton from "@/components/Buttons/ActionButton";
 
 import Keels from "../../assets/supermarket-icons/Keels.svg";

@@ -53,7 +53,7 @@ const PaymentSuccessful = () => {
             bg="primary"
             color="white"
             mt={3}
-            onClick={() => navigate("/view-orders/" + id)}
+            onClick={() => navigate("/orders/" + id)}
           >
             Track your Orders
           </Button>
