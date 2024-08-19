@@ -16,7 +16,7 @@ import Logo from "../../../../assets/logo.svg";
 
 import { IoSearchSharp } from "react-icons/io5";
 import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
-import {useState } from "react";
+import { useState } from "react";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import DotIndicator from "@/components/DotIndicator";
 import { DriverDetails } from "./DriverRegister";
@@ -27,15 +27,19 @@ interface Props {
   setDriverDetails: (s: DriverDetails) => void;
 }
 
-const SelectCompany = ({ setStage }: Props) => {
+const SelectCompany = ({
+  setStage,
+  driverDetails,
+  setDriverDetails,
+}: Props) => {
 
-  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const companies = ["DHL", "FedEx", "UPS", "USPS", "TNT", "Aramex", "DPD"];
 
   const filteredCompanies = companies.filter((company) =>
     company.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
       <VStack>
@@ -91,27 +95,38 @@ const SelectCompany = ({ setStage }: Props) => {
                 key={index}
                 p={2}
                 borderRadius="md"
-                onClick={() => setSelectedCompany(company)}
+                onClick={() =>
+                  setDriverDetails({
+                    ...driverDetails,
+                    courierCompany: company,
+                  })
+                }
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
                 border={
-                  selectedCompany === company
+                  driverDetails.courierCompany === company
                     ? "1px solid "
                     : "1px solid transparent"
                 }
                 borderColor={
-                  selectedCompany === company ? "primary" : "transparent"
+                  driverDetails.courierCompany === company
+                    ? "primary"
+                    : "transparent"
                 }
               >
                 {company}
                 <Icon
                   as={
-                    company === selectedCompany
+                    company === driverDetails.courierCompany
                       ? MdRadioButtonChecked
                       : MdRadioButtonUnchecked
                   }
-                  color={selectedCompany === company ? "primary" : "gray.400"}
+                  color={
+                    driverDetails.courierCompany === company
+                      ? "primary"
+                      : "gray.400"
+                  }
                   boxSize={5}
                 />
               </ListItem>
@@ -119,7 +134,13 @@ const SelectCompany = ({ setStage }: Props) => {
           </List>
         </Box>
         <VStack w="80vw">
-          <SubmitButton disabled={!selectedCompany} borderRadius={10} onClick={() => { if (selectedCompany) setStage(3);}}>
+          <SubmitButton
+            disabled={!driverDetails.courierCompany}
+            borderRadius={10}
+            onClick={() => {
+              if (driverDetails.courierCompany) setStage(3);
+            }}
+          >
             Next
           </SubmitButton>
           <DotIndicator

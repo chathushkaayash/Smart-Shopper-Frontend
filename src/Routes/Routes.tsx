@@ -9,6 +9,7 @@ import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
 import SupermarketManagerRoutes from "./SupermarketmanagerRoutes";
 import SharedRoutes from "./SharedRoutes";
+import CourierCompanyRoutes from "./CourierCompanyRoutes";
 
 
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       ...ConsumerRoutes,
       ...SupermarketManagerRoutes,
       ...SharedRoutes,
+      ...CourierCompanyRoutes,
 
 
       // { path: "", element: <Landing /> },
