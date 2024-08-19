@@ -30,7 +30,7 @@ const Account = () => {
     {
       Icon: TbTruckDelivery,
       label: "Deliveries",
-      path: "/driver/account/deliveries",
+      path: "/driver/deliveries",
     },
     { Icon: MdStarRate, label: "Ratings", path: "/driver/account/ratings" },
     {

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export interface Opportunity {
   id: string;
-  opportunitysupermarket: { id: string; supermarketId: string }[];
+  opportunitysupermarket: { id: string; supermarketId: number }[];
   totalDistance: number;
   tripCost: number;
 

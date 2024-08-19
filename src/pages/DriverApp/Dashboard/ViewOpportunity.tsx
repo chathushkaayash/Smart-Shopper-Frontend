@@ -18,7 +18,6 @@ import PickupLocation from "./PickupLocation";
 import APIClient from "@/services/api-client";
 
 const ViewOpportunity = () => {
-  
   const { id } = useParams(); // recieve the id from the url
   if (!id) return null;
 

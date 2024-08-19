@@ -14,9 +14,7 @@ import {
   ModalFooter,
   useDisclosure,
   Center,
-  HStack,
 } from "@chakra-ui/react";
-import { FaPhoneAlt } from "react-icons/fa";
 import { PiNotepad } from "react-icons/pi";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
@@ -28,8 +26,7 @@ import AddDriverReview from "./AddDriverReview";
 import TrackOrder from "./TrackOrder";
 import { Order } from "@/hooks/useOrder";
 import useSupermarket from "@/hooks/useSupermarket";
-import { getDateTime } from "@/utils/Time";
-import useAuthStore from "@/state-management/auth/store";
+
 interface Props {
   order: Order;
 }
@@ -42,27 +39,15 @@ const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
   console.log(supermarket.data);
 
   return (
-    <HStack gap={8} ml={5}>
-      <Image src={supermarket.data?.logo} width={30} />
-      <Text>{supermarket.data?.name}</Text>
-      <HStack>
-        <FaPhoneAlt />
-        <Text>{supermarket.data?.contactNo}</Text>
-      </HStack>
-    </HStack>
+    <Text textAlign="left" paddingLeft={10}>
+      {supermarket.data?.name}
+      <br />
+    </Text>
   );
 };
 
 const OrderId = ({ order }: Props) => {
-  const user = useAuthStore((state) => state.user);
-  const supermarketList: number[] = order.supermarketOrders.map(
-    (i) => i.supermarketId
-  );
-
-  const totalCost = order.orderItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const supermarketList: number[] = order.supermarketOrders.map(i=>i.supermarketId);
 
   const {
     isOpen: isReceiptOpen,
@@ -105,7 +90,7 @@ const OrderId = ({ order }: Props) => {
         >
           <Flex justify="space-between" align="center" flexWrap="wrap" mb={4}>
             <Text fontSize="2xl" fontWeight="bold">
-              Order ID: #{order.id}
+              Order ID: {order.id}
             </Text>
             <Flex align="center" gap={4}>
               <Button
@@ -149,22 +134,23 @@ const OrderId = ({ order }: Props) => {
             </Flex>
           </Flex>
           <Box
-            bg={
-              order.status === "Completed"
-                ? "#5BFF89"
-                : order.status === "ToPay"
-                ? "primary"
-                : order.status === "Processing"
-                ? "blue.200"
-                : "black"
-            }
+            bg="#5BFF89"
+            // order.status === "completed"
+            //   ? "#5BFF89"
+            //   : order.status === "ready"
+            //   ? "yellow.200"
+            //   : order.status === "active"
+            //   ? "blue.200"
+            //   : "yellow.300"
+
             borderRadius="full"
             textAlign="center"
             p={2}
             maxWidth="200px"
           >
             <Text fontSize="md" fontWeight="bold">
-              {order.status}
+              {/* {order.status.charAt(0).toUpperCase() + order.status.slice(1)} */}
+              Complete
             </Text>
           </Box>
 
@@ -183,13 +169,13 @@ const OrderId = ({ order }: Props) => {
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Order Placed on</Text>
-                <Text>: {getDateTime(order.orderPlacedOn)}</Text>
-                <Text>Shipping Method</Text>
-                <Text>: {order.shippingMethod}</Text>
+                <Text>: 01.08.2024</Text>
+                <Text>Payment method</Text>
+                <Text>: Credit/Debit Card</Text>
                 <Text>Order Total</Text>
-                <Text>: {totalCost} LKR</Text>
+                <Text>: 2547.00 LKR</Text>
                 <Text>Delivery Cost</Text>
-                <Text>: 200 LKR</Text>
+                <Text>: 300.00 LKR</Text>
               </Grid>
             </Box>
             <Box
@@ -221,7 +207,6 @@ const OrderId = ({ order }: Props) => {
             borderRadius="15"
             borderColor="gray.300"
             mb={4}
-            bg="red"
           >
             <Flex
               justify="space-between"
@@ -286,7 +271,6 @@ const OrderId = ({ order }: Props) => {
             </Flex>
           </Box>
 
-          {/* ------------------------------------ Shipping Details ------------------------------------ */}
           <Box p={4} borderWidth="1px" borderRadius="15" borderColor="gray.300">
             <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
               Shipping Details
@@ -295,9 +279,9 @@ const OrderId = ({ order }: Props) => {
               <Text>Shipping Address</Text>
               <Text>: {order.shippingAddress}</Text>
               <Text>Contact Number</Text>
-              <Text>: {user?.number}</Text>
+              <Text>: +993345887</Text>
               <Text>Name</Text>
-              <Text>: {user?.name}</Text>
+              <Text>: Chathusika Ayantha</Text>
             </Grid>
           </Box>
         </Box>

@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
 import AddProductReview from "./AddProductReview";
 import SupermarketItem from "./SupermarketItem";
@@ -26,10 +26,7 @@ const OrderItems = ({ order }: Props) => {
     onClose: onAddReviewClose,
   } = useDisclosure();
 
-  const totalCost = order.orderItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  console.log(order);
 
   // const items = [
   //   {
@@ -75,7 +72,7 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Delivery Fee:{" "}
           <Text as="span" fontWeight="bold">
-            200 LKR
+            200.00 LKR
           </Text>
         </Text>
       </Flex>
@@ -83,7 +80,7 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Total:{" "}
           <Text as="span" fontWeight="bold">
-            {totalCost} LKR
+            24 500.00 LKR
           </Text>
         </Text>
       </Flex>
