@@ -20,7 +20,7 @@ import {
 import { useState } from "react";
 
 import APIClient from "@/services/api-client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import MiddleContainer from "../../components/Containers/MiddleContainer";
 
 interface DriverRequest {
@@ -41,14 +41,24 @@ interface DriverRequest {
 }
 
 const apiClient = new APIClient<DriverRequest>("/driver_requests");
+const acceptApiClient = new APIClient<{ id: number }>("/accept_driver_request");
 
 const Request = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedPerson, setSelectedPerson] = useState<DriverRequest>();
+  const queryClient = useQueryClient();
 
   const driverRequests = useQuery({
     queryKey: ["driver_requests"],
     queryFn: () => apiClient.getAll({}),
+  });
+
+  const { mutate: acceptDriverRequest } = useMutation({
+    mutationFn: () =>
+      acceptApiClient.create({ id: selectedPerson?.id || -1 }).then(() => {
+        onClose();
+        queryClient.invalidateQueries({ queryKey: ["driver_requests"] });
+      }),
   });
 
   const handleViewClick = (person: DriverRequest) => {
@@ -68,11 +78,12 @@ const Request = () => {
               key={index}
               p={4}
               boxShadow="md"
-              borderRadius="md"
+              borderRadius={15}
               bg="white"
               display="flex"
               alignItems="center"
               w="100%"
+              borderWidth={1}
             >
               <Avatar src={person.profilePic} size="lg" />
               <Box ml={4} flex="1">
@@ -97,7 +108,7 @@ const Request = () => {
       {selectedPerson && (
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
-          <ModalContent maxW="500px">
+          <ModalContent maxW="40vw">
             <ModalHeader>Driver Request</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -105,13 +116,14 @@ const Request = () => {
                 display="flex"
                 alignItems="center"
                 mb={4}
-                borderWidth="1px"
-                borderRadius="lg"
+                borderWidth={1}
+                borderRadius={15}
+                boxShadow={"md"}
                 p={4}
               >
                 <Avatar src={selectedPerson.profilePic} size="xl" mr={4} />
                 <Box>
-                  <Text fontSize="lg" fontWeight="bold">
+                  <Text fontSize="lg" fontWeight="bold" mb={5}>
                     Driver Personal Details
                   </Text>
                   <Grid templateColumns="150px 1fr" gap={2}>
@@ -129,8 +141,9 @@ const Request = () => {
               <Box
                 display="flex"
                 mb={4}
-                borderWidth="1px"
-                borderRadius="lg"
+                borderWidth={1}
+                borderRadius={15}
+                boxShadow={"md"}
                 p={4}
               >
                 <Box flex="1">
@@ -159,7 +172,7 @@ const Request = () => {
                 />
               </Box>
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter justifyContent={"center"} >
               <Button
                 type="submit"
                 width="200px"
@@ -179,6 +192,7 @@ const Request = () => {
                 color="white"
                 mt={3}
                 ml={2}
+                onClick={() => acceptDriverRequest()}
               >
                 Accept
               </Button>

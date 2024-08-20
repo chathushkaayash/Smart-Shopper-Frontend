@@ -32,7 +32,7 @@ import ProductPreviewCard from "./ProductPreviewCard";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "@/services/api-client";
 
-const apiClient = new APIClient("/supermarketitems");
+const apiClient = new APIClient<SupermarketItem>("/supermarketitems");
 
 const SupermarketManagerProductTable = () => {
   const supermarketItems = useSupermarketItems();
@@ -46,10 +46,17 @@ const SupermarketManagerProductTable = () => {
 
   const { mutate } = useMutation({
     mutationFn: () =>
-      apiClient.create(selectedSupermarketItem).then(() => {
-        queryClient.invalidateQueries({ queryKey: ["store_prices_for_product"] });
-        onClose();
-      }),
+      apiClient
+        .update(selectedSupermarketItem?.id || -1, {
+          price: selectedSupermarketItem?.price || 0,
+          availableQuantity: selectedSupermarketItem?.availableQuantity || 0,
+        })
+        .then(() => {
+          queryClient.invalidateQueries({
+            queryKey: ["store_prices_for_product"],
+          });
+          onClose();
+        }),
   });
 
   const handleEdit = (supermarketItem: SupermarketItem, product: Product) => {
@@ -57,7 +64,6 @@ const SupermarketManagerProductTable = () => {
     setSelectedProduct(product);
     onOpen();
   };
-
 
   return (
     <>

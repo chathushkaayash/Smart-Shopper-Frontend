@@ -28,17 +28,15 @@ interface NavItem {
 }
 
 const Navbar = () => {
+  const { pathname } = useLocation();
   const { user, logout } = useAuthStore();
   const { items, setItems } = useCartStore();
   const { data: cart } = useCart();
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const hideNavbarPaths = ["/driver"];
-  const showTopNav = !hideNavbarPaths.some((path) =>
-    location.pathname.startsWith(path)
-  );
+  const showTopNav = !hideNavbarPaths.some((path) => pathname.startsWith(path));
 
   const consumerNavItems: NavItem[] = [
     { text: "Home", path: "/" },
@@ -107,7 +105,13 @@ const Navbar = () => {
 
             {navItems.map((item) => (
               <Link to={item.path} key={item.text}>
-                <Text fontSize="lg" fontWeight="bold">
+                <Text
+                  fontSize="lg"
+                  fontWeight="bold"
+                  textDecoration={pathname === item.path ? "underline 2px" : ""}
+                  color={pathname === item.path ? "primary" : ""}
+                  textDecorationColor="primary"
+                >
                   {item.text}
                 </Text>
               </Link>
@@ -226,10 +230,10 @@ const Navbar = () => {
             </HStack>
           ) : (
             <HStack paddingX={0}>
-              {location.pathname !== "/login" ? (
+              {pathname !== "/login" ? (
                 <ActionButton url="/login">Login</ActionButton>
               ) : null}
-              {location.pathname !== "/signup" ? (
+              {pathname !== "/signup" ? (
                 <ActionButton url="/signup">Register</ActionButton>
               ) : null}
             </HStack>
