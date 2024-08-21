@@ -1,11 +1,18 @@
-import DriverLogin from "@/pages/DriverApp/LoginRegister/Login/DriverLogin";
-import LoginRegister from "@/pages/DriverApp/LoginRegister/LoginRegister";
-import DriverRegister from "@/pages/DriverApp/LoginRegister/Register/DriverRegister";
-import Login from "@/pages/Login";
-import SignUp from "@/pages/SignUp";
-import Supermarkets from "@/pages/Supermarkets";
-import PublicLayout from "./Layouts/PublicLayout";
+import loadable from "@loadable/component";
 
+const DriverLogin = loadable(
+  () => import("@/pages/DriverApp/LoginRegister/Login/DriverLogin")
+);
+const LoginRegister = loadable(
+  () => import("@/pages/DriverApp/LoginRegister/LoginRegister")
+);
+const DriverRegister = loadable(
+  () => import("@/pages/DriverApp/LoginRegister/Register/DriverRegister")
+);
+const Login = loadable(() => import("@/pages/Login"));
+const SignUp = loadable(() => import("@/pages/SignUp"));
+const Supermarkets = loadable(() => import("@/pages/Supermarkets"));
+const PublicLayout = loadable(() => import("./Layouts/PublicLayout"));
 
 const PublicRoutes = [
   {
@@ -16,8 +23,7 @@ const PublicRoutes = [
       { path: "driver/login", element: <DriverLogin /> },
       { path: "driver/login_register", element: <LoginRegister /> },
       { path: "driver/register", element: <DriverRegister /> },
-      {path : "supermarket", element: <Supermarkets/>},
-    
+      { path: "supermarket", element: <Supermarkets /> },
     ],
   },
 ];

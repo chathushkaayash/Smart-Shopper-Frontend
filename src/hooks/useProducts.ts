@@ -1,27 +1,26 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { ProductQuery } from "../App";
 import APIClient, { FetchResponse } from "@/services/api-client";
+import useProductQueryStore from "@/state-management/productQuery/store";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Product } from "./useProduct";
-
-
-
 
 const apiClient = new APIClient<Product>("/products");
 
-const useProducts = (productQuery: ProductQuery) => {
+const useProducts = () => {
+  const productQuery = useProductQueryStore((s) => s.productQuery);
+
   return useInfiniteQuery<FetchResponse<Product>, Error>({
-    queryKey: ['Products', productQuery],
+    
+    queryKey: ["Products", productQuery],
     queryFn: ({ pageParam = 1 }) =>
       apiClient.getAll({
         params: {
-          genres: productQuery.genreId,
-          platforms: productQuery.platformId,
+          category: productQuery.category,
+          price: productQuery.price,
           ordering: productQuery.sortOrder,
-          search: productQuery.searchText,
+          searchText: productQuery.searchText,
           page: pageParam,
         },
       }),
-
 
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;

@@ -1,15 +1,29 @@
-import ConsumerCartDetails from "@/pages/Consumer/CartDetails";
-import ConsumerProfile from "@/pages/Consumer/ConsumerProfile";
-import ConsumerReviews from "@/pages/Consumer/Reviews";
-// import ConsumerOrders from "@/pages/Consumer/ConsumerOrders";
-import ConsumerViewOrders from "@/pages/Consumer/ViewOrders";
-import ConsumerPaymentSuccessful from "@/pages/Consumer/PaymentSuccessful";
-import ConsumerLayout from "./Layouts/ConsumerLayout";
-import ConsumerCheckout from "@/pages/Consumer/Checkout";
-import CartComparison from "@/pages/Consumer/CartComparison/CartComparison";
+import loadable from "@loadable/component";
+
+const ConsumerCartDetails = loadable(
+  () => import("@/pages/Consumer/CartDetails")
+);
+const ConsumerProfile = loadable(
+  () => import("@/pages/Consumer/ConsumerProfile")
+);
+const ConsumerReviews = loadable(() => import("@/pages/Consumer/Reviews"));
+// const ConsumerOrders = loadable(() => import("@/pages/Consumer/ConsumerOrders"));
+const ConsumerViewOrders = loadable(
+  () => import("@/pages/Consumer/ViewOrders")
+);
+const ConsumerPaymentSuccessful = loadable(
+  () => import("@/pages/Consumer/PaymentSuccessful")
+);
+const ConsumerLayout = loadable(() => import("./Layouts/ConsumerLayout"));
+const ConsumerCheckout = loadable(() => import("@/pages/Consumer/Checkout"));
+const CartComparison = loadable(
+  () => import("@/pages/Consumer/CartComparison/CartComparison")
+);
+const ViewProduct = loadable(() => import("@/pages/Consumer/ViewProduct"));
+const AboutUs = loadable(() => import("@/pages/Consumer/AboutUs"));
+
 import SupermarketLogo from "../assets/Reviews/superMarketLogo.png";
-import ViewProduct from "@/pages/Consumer/ViewProduct";
-import AboutUs from "@/pages/Consumer/AboutUs";
+
 const reviewData = {
   date: "June 17, 2024",
   title: "Delightful Crispiness in Every Bite",

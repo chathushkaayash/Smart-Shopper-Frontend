@@ -1,10 +1,14 @@
-import AdminAdvertisements from "@/pages/Admin/AdminAdvertisements";
-import AdminCourierServices from "@/pages/Admin/AdminCourierServices";
-import AdminCustomers from "@/pages/Admin/AdminCustomers";
-import AdminOverview from "@/pages/Admin/AdminOverview";
-import AdminSettings from "@/pages/Admin/AdminSettings";
-import AdminSuperMarkets from "@/pages/Admin/AdminSuperMarkets";
-import AdminTransactions from "@/pages/Admin/AdminTransactions";
+import loadable from "@loadable/component";
+
+
+const AdminAdvertisements = loadable(() => import("@/pages/Admin/AdminAdvertisements"));
+const AdminCourierServices = loadable(() => import("@/pages/Admin/AdminCourierServices"));
+const AdminCustomers = loadable(() => import("@/pages/Admin/AdminCustomers"));
+const AdminOverview = loadable(() => import("@/pages/Admin/AdminOverview"));
+const AdminSettings = loadable(() => import("@/pages/Admin/AdminSettings"));
+const AdminSuperMarkets = loadable(() => import("@/pages/Admin/AdminSuperMarkets"));
+const AdminTransactions = loadable(() => import("@/pages/Admin/AdminTransactions"));
+
 import AdminLayout from "./Layouts/AdminLayout";
 
 const AdminRoutes = [

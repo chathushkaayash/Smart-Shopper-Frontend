@@ -36,7 +36,7 @@ class APIClient<T, R = T> {
   get = (id: string | number) =>
     axiosInstance.get<T>(this.endpoint + "/" + id).then((res) => res.data);
 
-  create = (data: T) => {
+  create = (data: Omit<T,"id">) => {
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
 
@@ -48,7 +48,7 @@ class APIClient<T, R = T> {
 
   delete = (id: number) => {
     return axiosInstance
-      .delete<R>(this.endpoint, { params: { id } })
+      .delete<R>(this.endpoint + "/" + id)
       .then((res) => res.data);
   };
 

@@ -1,3 +1,4 @@
+import { itemsSold } from "@/data/itemsSold";
 import { CartItem } from "@/hooks/useCartItem";
 import APIClient from "@/services/api-client";
 import { create } from "zustand";
@@ -46,7 +47,7 @@ const useCartStore = create<CartStore>()((set) => ({
   },
 
   updateItem: (item: CartItem, invalidateQueries: () => void) => {
-    apiClient.update(item).then(() => {
+    apiClient.update(item.id, {...item}).then(() => {
       invalidateQueries();
     });
 

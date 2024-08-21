@@ -2,25 +2,15 @@ import { Center, SimpleGrid, Text } from "@chakra-ui/react";
 
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ProductQuery } from "../App";
 import useProducts from "../hooks/useProducts";
 import ActionButton from "./Buttons/ActionButton";
 import ProductCard from "./ProductGrid/ProductCard";
 import ProductCardContainer from "./ProductGrid/ProductCardContainer";
 
-interface Props {
-  productQuery: ProductQuery;
-}
-
-const ProductGrid = ({ productQuery }: Props) => {
+const ProductGrid = () => {
   const [isLoadMore, setLoadMore] = useState(false);
 
-  const {
-    data: products,
-    error,
-    fetchNextPage,
-    hasNextPage,
-  } = useProducts(productQuery);
+  const { data: products, error, fetchNextPage, hasNextPage } = useProducts();
 
   // const skeletons = [1, 2, 3, 4];
 
@@ -43,6 +33,7 @@ const ProductGrid = ({ productQuery }: Props) => {
           w="full"
           spacing={6}
           justifyContent={"center"}
+          px={4}
 
           // marginX={{ base: 0, md: "12%" }}
         >

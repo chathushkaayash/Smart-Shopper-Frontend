@@ -7,12 +7,7 @@ import BottomNav from "./components/BottomNav";
 import { useEffect } from "react";
 import useAuthStore from "./state-management/auth/store";
 
-export interface ProductQuery {
-  genreId?: number;
-  platformId?: number;
-  sortOrder: string;
-  searchText: string;
-}
+
 
 function App() {
   const { expireToken } = useAuthStore();

@@ -1,16 +1,30 @@
-import Home from "@/pages/DriverApp/Dashboard/Home";
-import Opportunities from "@/pages/DriverApp/Dashboard/Opportunities";
-import ViewOpportunity from "@/pages/DriverApp/Dashboard/ViewOpportunity";
-import DriverLayout from "./Layouts/DriverLayout";
-import Account from "@/pages/DriverApp/Dashboard/Account";
-import EditAccount from "@/pages/DriverApp/Dashboard/EditAccount";
-import VehicleDetails from "@/pages/DriverApp/Dashboard/VehicleDetails";
-import Deliveries from "@/pages/DriverApp/Dashboard/Deliveries";
-import Ratings from "@/pages/DriverApp/Dashboard/Ratings";
-import Support from "@/pages/DriverApp/Dashboard/Support";
-import ChangePassword from "@/pages/DriverApp/Dashboard/ChangePassword";
-import ViewMap from "@/pages/DriverApp/Dashboard/ViewMap";
-import Earnings from "@/pages/DriverApp/Dashboard/Earnings";
+import loadable from "@loadable/component";
+
+const Home = loadable(() => import("@/pages/DriverApp/Dashboard/Home"));
+const DriverLayout = loadable(() => import("./Layouts/DriverLayout"));
+const Account = loadable(() => import("@/pages/DriverApp/Dashboard/Account"));
+const Ratings = loadable(() => import("@/pages/DriverApp/Dashboard/Ratings"));
+const Support = loadable(() => import("@/pages/DriverApp/Dashboard/Support"));
+const ViewMap = loadable(() => import("@/pages/DriverApp/Dashboard/ViewMap"));
+const Earnings = loadable(() => import("@/pages/DriverApp/Dashboard/Earnings"));
+const ViewOpportunity = loadable(
+  () => import("@/pages/DriverApp/Dashboard/ViewOpportunity")
+);
+const EditAccount = loadable(
+  () => import("@/pages/DriverApp/Dashboard/EditAccount")
+);
+const VehicleDetails = loadable(
+  () => import("@/pages/DriverApp/Dashboard/VehicleDetails")
+);
+const ChangePassword = loadable(
+  () => import("@/pages/DriverApp/Dashboard/ChangePassword")
+);
+const Opportunities = loadable(
+  () => import("@/pages/DriverApp/Dashboard/Opportunities")
+);
+const Deliveries = loadable(
+  () => import("@/pages/DriverApp/Dashboard/Deliveries")
+);
 
 const DriverRoutes = [
   {
