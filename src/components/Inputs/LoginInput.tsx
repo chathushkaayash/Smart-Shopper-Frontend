@@ -40,7 +40,6 @@ const LoginInput = ({
           type={type}
           placeholder={placeholder}
           {...register}
-          h={{ base: "6vh", md: "full" }}
           className={className}
         />
       </InputGroup>
