@@ -1,5 +1,6 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
+import { Consumer } from "./useConsumer";
 
 export interface Opportunity {
   id: string;
@@ -8,11 +9,14 @@ export interface Opportunity {
   tripCost: number;
 
   orderPlacedOn: string;
-  customer: string;
+  consumer: Consumer;
   deliveryCost: number;
   startLocation: string;
   deliveryLocation: string;
   status: string;
+
+  orderId: number;
+  driverId: number;
 }
 const apiClient = new APIClient<Opportunity>("/opportunities");
 const useOpportunity = (id: number) => {
