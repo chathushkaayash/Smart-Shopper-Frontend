@@ -28,10 +28,10 @@ interface NavItem {
 }
 
 const Navbar = () => {
-  const { pathname } = useLocation();
+  const { data: cart } = useCart();
   const { user, logout } = useAuthStore();
   const { items, setItems } = useCartStore();
-  const { data: cart } = useCart();
+  const { pathname } = useLocation();
 
   const navigate = useNavigate();
 

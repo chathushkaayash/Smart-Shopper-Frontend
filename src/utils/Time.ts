@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export interface DateTime {
   year: number;
   month: number;
@@ -18,3 +20,15 @@ export const getTime = (dateTime: DateTime): string => {
 export const getDateTime = (dateTime: DateTime): string => {
   return `${getDate(dateTime)} ${getTime(dateTime)}`;
 };
+
+
+export const getMoment = (dateTime: DateTime): moment.Moment => {
+  return moment({
+    year: dateTime.year,
+    month: dateTime.month - 1,
+    day: dateTime.day,
+    hour: dateTime.hour,
+    minute: dateTime.minute,
+    second: Math.floor(dateTime.second),
+  });
+}

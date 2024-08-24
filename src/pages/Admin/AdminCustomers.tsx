@@ -1,3 +1,7 @@
+import SearchBar from "@/components/SearchBar";
+import { lastMonths } from "@/data/months";
+import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
+import { getMoment } from "@/utils/Time";
 import {
   Box,
   Button,
@@ -9,37 +13,43 @@ import {
   HStack,
   Icon,
   Image,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Select,
   Table,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
-  useDisclosure,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { AiOutlineRise } from "react-icons/ai";
-import { FaCartFlatbed, FaLocationDot } from "react-icons/fa6";
 import { IoMdPeople } from "react-icons/io";
-import { MdPayment } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import LineChart from "../../components/Charts/LineChart";
 
 const AdminCustomers = () => {
-  const cutomerCards = [
+  const navigate = useNavigate();
+  const [consumerQuery, setConsumerQuery] = useState<ConsumerQuery>(
+    {} as ConsumerQuery
+  );
+
+  const consumers = useConsumers(consumerQuery);
+
+  const totalConsumers = consumers.data?.results.length || 0;
+
+  const activeConsumers = consumers.data?.results.filter((consumer) =>
+    consumer.user.lastLogin !== null
+      ? getMoment(consumer.user.lastLogin).isAfter(30, "days")
+      : false
+  ).length || 0;
+
+  const consumerCards = [
     {
       title: "Total Customers",
-      value: "10.8 k",
+      value: totalConsumers,
       icon: IoMdPeople,
       mainColor: "orange",
       color: "orange.100",
@@ -47,7 +57,7 @@ const AdminCustomers = () => {
     },
     {
       title: "Active Customers",
-      value: "5.8 k",
+      value: activeConsumers,
       icon: IoMdPeople,
       mainColor: "red",
       color: "red.100",
@@ -55,7 +65,7 @@ const AdminCustomers = () => {
     },
     {
       title: "Churned Customers",
-      value: "0.6 k",
+      value: totalConsumers - activeConsumers,
       icon: IoMdPeople,
       mainColor: "green",
       color: "green.100",
@@ -63,9 +73,8 @@ const AdminCustomers = () => {
     },
   ];
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <VStack 
+    <VStack
       gap="8vh"
       my="5vh"
       px={10}
@@ -74,66 +83,91 @@ const AdminCustomers = () => {
       fontWeight={"bold"}
     >
       <Flex width="full">
-        
-        <Box px={5} pt={5} shadow="md" borderWidth="1px" w="70%" borderRadius={15}>
-            <Heading  size="md">
-            Customer Engagement
-            </Heading>
+        <Box
+          px={5}
+          pt={5}
+          shadow="md"
+          borderWidth="1px"
+          w="70%"
+          borderRadius={15}
+        >
+          <Heading size="md">Customer Engagement</Heading>
 
-            <Center>
-              <LineChart  width="70%"/>
-            </Center>
-          </Box>
+          <Center>
+            <LineChart width="70%" />
+          </Center>
+        </Box>
 
         <Box w="30%">
-        <VStack w="full" gap={5}>
-        {cutomerCards.map((card, index) => (
-          <Card px={3} w={"20vw"} key={index}>
-            <CardBody>
-              <Flex gap={20}>
-                <Heading size="md">{card.title}</Heading>
-                <Icon
-                  as={card.icon}
-                  boxSize={8}
-                  color={card.mainColor}
-                  bg={card.color}
-                  borderRadius={5}
-                />
-              </Flex>
-              <Text fontSize="sm">{card.value}</Text>
-              <Flex mt={2}>
-                <Icon
-                  as={AiOutlineRise}
-                  boxSize={5}
-                  color="green.400"
-                  borderRadius={5}
-                />
-                <Text fontSize="sm" color="green.400" pl={2}>
-                  {card.percentage}
-                </Text>
-              </Flex>
-            </CardBody>
-          </Card>
-        ))}
-      </VStack>
-
+          <VStack w="full" gap={5}>
+            {consumerCards.map((card, index) => (
+              <Card px={3} w={"20vw"} key={index} bg={"green.200"}>
+                <CardBody>
+                  <Flex gap={20}>
+                    <Heading size="md">{card.title}</Heading>
+                    <Icon
+                      as={card.icon}
+                      boxSize={8}
+                      color={card.mainColor}
+                      bg={card.color}
+                      borderRadius={5}
+                    />
+                  </Flex>
+                  <Text fontSize="sm">{card.value}</Text>
+                  <Flex mt={2}>
+                    <Icon
+                      as={AiOutlineRise}
+                      boxSize={5}
+                      color="green.400"
+                      borderRadius={5}
+                    />
+                    <Text fontSize="sm" color="green.400" pl={2}>
+                      {/* {card.percentage} */}
+                    </Text>
+                  </Flex>
+                </CardBody>
+              </Card>
+            ))}
+          </VStack>
         </Box>
-        
       </Flex>
 
-      <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
-        <Flex justifyContent="space-between" px={20} py={10}>
+      <Box
+        py={5}
+        shadow="md"
+        borderWidth="1px"
+        w="full"
+        borderRadius={15}
+        bg="green.200"
+      >
+        <Flex justifyContent="space-between" px={10} py={10}>
           <Heading as="h3" size="md">
             Customer Details
           </Heading>
+          <SearchBar
+            width="65%"
+            value={consumerQuery.searchText || ""}
+            setValue={(value) => {
+              setConsumerQuery({ searchText: value });
+            }}
+          />
           <Flex>
             <Box px={2}>
-              <Select placeholder="Select option">
-                <option value="option1">August</option>
-                <option value="option2">September</option>
-                <option value="option3" selected>
-                  October
-                </option>
+              <Select
+                placeholder="Select option"
+                value={consumerQuery.month || ""}
+                onChange={(e) => {
+                  setConsumerQuery({
+                    ...consumerQuery,
+                    month: Number(e.target.value),
+                  });
+                }}
+              >
+                {lastMonths(7).map((month, index) => (
+                  <option key={index} value={month.value}>
+                    {month.name}
+                  </option>
+                ))}
               </Select>
             </Box>
             {/* <Button bg="primary" size="sm">
@@ -142,180 +176,61 @@ const AdminCustomers = () => {
           </Flex>
         </Flex>
 
-          <Center>
-
-          
-        <TableContainer
-          width={{ base: "100%", lg: "90%" }}
-          ml={{ base: "0%", lg: "1%" }}
-        >
-          <Table size="sm">
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Address</Th>
-                <Th>Contact Number</Th>
-                <Th>Email</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>
-                  <HStack>
-                    <Image
-                      src="https://via.placeholder.com/150"
-                      alt="Product Image"
-                      boxSize="50px"
-                      objectFit="cover"
-                      borderRadius="50%"
-                      mr={4}
-                    />
-                    <Text>Kaveesha Hettige</Text>
-                  </HStack>
-                </Td>
-                <Td>235/1,Kanampitiya Road,Galle</Td>
-                <Td>0766245650</Td>
-                <Td>kaveesha.hettige@gmail.com</Td>
-                <Td>
-                  <Button bg="primary" size="sm" onClick={onOpen}>
-                    View More
-                  </Button>
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <HStack>
-                    <Image
-                      src="https://via.placeholder.com/150"
-                      alt="Product Image"
-                      boxSize="50px"
-                      objectFit="cover"
-                      borderRadius="50%"
-                      mr={4}
-                    />
-                    <Text>Bimsara Anjana</Text>
-                  </HStack>
-                </Td>
-                <Td>60/3,Temple Road,Gampaha</Td>
-                <Td>076694658</Td>
-                <Td>bim.jaya@gmail.com</Td>
-                <Td>
-                  <Button bg="primary" size="sm">
-                    View More
-                  </Button>
-                </Td>
-              </Tr>
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Td>
-                  <HStack>
-                    <Image
-                      src="https://via.placeholder.com/150"
-                      alt="Product Image"
-                      boxSize="50px"
-                      objectFit="cover"
-                      borderRadius="50%"
-                      mr={4}
-                    />
-                    <Text>Milinda Shehan</Text>
-                  </HStack>
-                </Td>
-                <Td>Madampe Road,Matara</Td>
-                <Td>0781245567</Td>
-                <Td>milinda.amb@gmail.com</Td>
-                <Td>
-                  <Button bg="primary" size="sm">
-                    View More
-                  </Button>
-                </Td>
-              </Tr>
-            </Tfoot>
-          </Table>
-        </TableContainer>
+        <Center>
+          <TableContainer
+            width={{ base: "100%", lg: "90%" }}
+            ml={{ base: "0%", lg: "1%" }}
+          >
+            <Table size="sm">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Address</Th>
+                  <Th>Contact Number</Th>
+                  <Th>Email</Th>
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {consumers.data?.results.map((consumer, index) => (
+                  <Tr key={index}>
+                    <Td>
+                      <HStack>
+                        <Image
+                          src={consumer.user.profilePic}
+                          alt="Consumer Image"
+                          boxSize="50px"
+                          objectFit="cover"
+                          borderRadius="50%"
+                          mr={4}
+                        />
+                        <Text>{consumer.user.name}</Text>
+                      </HStack>
+                    </Td>
+                    <Td>
+                      {consumer.addresses.length
+                        ? consumer.addresses[0].address
+                        : "Not Found"}
+                    </Td>
+                    <Td>{consumer.user.number}</Td>
+                    <Td>{consumer.user.email}</Td>
+                    <Td>
+                      <Button
+                        bg="primary"
+                        size="sm"
+                        onClick={() => navigate("/profile/" + consumer.userId)}
+                        color="white"
+                      >
+                        View More
+                      </Button>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         </Center>
       </Box>
-
-      {/* --------------- POP UP --------------- */}
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Box borderBottomWidth={"1px"} p={2}>
-              <VStack>
-                <Image
-                  src="https://via.placeholder.com/150"
-                  alt="Product Image"
-                  boxSize="100px"
-                  objectFit="cover"
-                  borderRadius="50%"
-                  mr={4}
-                />
-                <Text fontSize={"xl"}>Kaveesha Hettige</Text>
-                <Text fontSize={"sm"}>kaveesha.hettige@gmail.com</Text>
-              </VStack>
-            </Box>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Center>
-              <HStack>
-                <Box mr={1}>
-                  <VStack>
-                    <Box mb={9}>
-                      <Icon as={FaLocationDot} boxSize={5} color={"primary"} />
-                    </Box>
-                    <Box mb={8}>
-                      <Icon as={MdPayment} boxSize={5} color={"primary"} />
-                    </Box>
-                    <Box mb={7}>
-                      <Icon as={FaCartFlatbed} boxSize={5} color={"primary"} />
-                    </Box>
-                    <Box mb={7}>
-                      <Icon as={FaCartFlatbed} boxSize={5} color={"primary"} />
-                    </Box>
-                  </VStack>
-                </Box>
-                <Box ml={1}>
-                  <VStack>
-                    <VStack>
-                      <Text fontSize={"lg"} fontWeight={"500"}>
-                        Address
-                      </Text>
-                      <Text fontSize={"sm"}>235/1,Kanampitiya Road,Galle</Text>
-                    </VStack>
-                    <VStack>
-                      <Text fontSize={"lg"} fontWeight={"500"}>
-                        Payments
-                      </Text>
-                      <Text fontSize={"sm"}>Rs 9000</Text>
-                    </VStack>
-                    <VStack>
-                      <Text fontSize={"lg"} fontWeight={"500"}>
-                        First Order
-                      </Text>
-                      <Text fontSize={"sm"}>2023.04.01</Text>
-                    </VStack>
-                    <VStack>
-                      <Text fontSize={"lg"} fontWeight={"500"}>
-                        Latest Order
-                      </Text>
-                      <Text fontSize={"sm"}>2024.05.06</Text>
-                    </VStack>
-                  </VStack>
-                </Box>
-              </HStack>
-            </Center>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button bg="primary" color="white" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </VStack>
   );
 };

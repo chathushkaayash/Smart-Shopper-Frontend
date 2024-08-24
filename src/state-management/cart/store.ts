@@ -1,4 +1,3 @@
-import { itemsSold } from "@/data/itemsSold";
 import { CartItem } from "@/hooks/useCartItem";
 import APIClient from "@/services/api-client";
 import { create } from "zustand";

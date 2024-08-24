@@ -1,25 +1,20 @@
 import {
   Box,
-  Center,
   HStack,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Show,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import ProductGrid from "../../components/ProductGrid";
 
 import DropDown from "@/components/Buttons/DropDown";
+import SearchBar from "@/components/SearchBar";
 import useProductQueryStore from "@/state-management/productQuery/store";
-import useDebounce from "@/utils/useDebounce";
-import { useEffect, useState } from "react";
-import { IoSearchSharp } from "react-icons/io5";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 
 const ConsumerHome = () => {
+  const { productQuery, setSearchText } = useProductQueryStore();
+
   return (
     <>
       <Show below="md">
@@ -41,7 +36,10 @@ const ConsumerHome = () => {
             py={5}
             gap={5}
           >
-            <SearchBar />
+            <SearchBar
+              value={productQuery.searchText || ""}
+              setValue={setSearchText}
+            />
             <FilterProducts />
           </VStack>
 
@@ -54,39 +52,6 @@ const ConsumerHome = () => {
 };
 
 export default ConsumerHome;
-
-const SearchBar = () => {
-  const { productQuery, setSearchText } = useProductQueryStore();
-  const [SearchValue, setSearchValue] = useState("");
-
-  const debouncedSearch = useDebounce(SearchValue);
-
-  useEffect(() => {
-    setSearchText(debouncedSearch);
-  }, [debouncedSearch]);
-
-  return (
-    <Center w="full">
-      <InputGroup
-        borderColor={productQuery.searchText !== "" ? "primary" : ""}
-        w="80%"
-      >
-        <InputLeftElement>
-          <Icon as={IoSearchSharp} color="primary" />
-        </InputLeftElement>
-        <Input
-          value={SearchValue}
-          onChange={(e) => {
-            setSearchValue(e.target.value);
-          }}
-          placeholder="Search..."
-          borderRadius="full"
-          focusBorderColor="primary"
-        />
-      </InputGroup>
-    </Center>
-  );
-};
 
 const FilterProducts = () => {
   const { productQuery, setCategory, setPrice, setSortOrder } =
