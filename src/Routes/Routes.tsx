@@ -36,7 +36,6 @@ const router = createBrowserRouter([
       // { path: "signup", element: <SignUp /> },
 
       { path: "cart", element: <CardDetails /> },
-      // { path: "reviews", element: <Reviews /> },
     ],
   },
 ]);

@@ -122,7 +122,7 @@ const AdminCustomers = () => {
                       borderRadius={5}
                     />
                     <Text fontSize="sm" color="green.400" pl={2}>
-                      {/* {card.percentage} */}
+                      {card.percentage}
                     </Text>
                   </Flex>
                 </CardBody>
