@@ -34,16 +34,21 @@ const OrderOverview = ({ order }: Props) => {
     onOpen();
   };
 
-  let totalAmount: number = order.orderItems.reduce(
+  const orderItems = order.orderItems.filter(
+    (item) => item.supermarketId === user?.supermarketId
+  );
+
+  let totalAmount: number = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+  totalAmount = Math.round(totalAmount * 100) / 100;
 
   const supermarketOrder = order.supermarketOrders?.find(
     (i) => i.supermarketId === user?.supermarketId
   );
 
-  console.log(supermarketOrder);
+  const driver = order.opportunity.length > 0;
 
   const handleSubmit = () => {
     const apiClient = new APIClient<{ supermarketOrderId: number }>(
@@ -57,7 +62,6 @@ const OrderOverview = ({ order }: Props) => {
         navigate("/orders");
       });
 
-    console.log("Order Ready");
     onClose();
   };
 
@@ -145,16 +149,20 @@ const OrderOverview = ({ order }: Props) => {
               <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
                 Driver Details
               </Text>
-              <Grid templateColumns="1fr 2fr" gap={2}>
-                <Text>Driver name</Text>
-                <Text>: Nethmi Kaveesha</Text>
-                <Text>Contact Number</Text>
-                <Text>: 071122244</Text>
-                <Text>Vehicle Type</Text>
-                <Text>: Bike</Text>
-                <Text>Vehicle Number</Text>
-                <Text>: BAY 5050</Text>
-              </Grid>
+              {driver ? (
+                <Grid templateColumns="1fr 2fr" gap={2}>
+                  <Text>Driver name</Text>
+                  <Text>: Nethmi Kaveesha</Text>
+                  <Text>Contact Number</Text>
+                  <Text>: 071122244</Text>
+                  <Text>Vehicle Type</Text>
+                  <Text>: Bike</Text>
+                  <Text>Vehicle Number</Text>
+                  <Text>: BAY 5050</Text>
+                </Grid>
+              ) : (
+                <Text>No Driver Assigned</Text>
+              )}
             </Box>
           </Flex>
         </Box>

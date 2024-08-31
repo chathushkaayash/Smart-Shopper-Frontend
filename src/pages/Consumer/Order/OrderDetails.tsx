@@ -53,16 +53,20 @@ const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
   );
 };
 
-const OrderId = ({ order }: Props) => {
+const OrderDetails = ({ order }: Props) => {
   const user = useAuthStore((state) => state.user);
   const supermarketList: number[] = order.supermarketOrders.map(
     (i) => i.supermarketId
   );
 
-  const totalCost = order.orderItems.reduce(
+  // const driver = order.
+
+  let totalCost = order.orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  totalCost = Math.round(totalCost * 100) / 100;
 
   const {
     isOpen: isReceiptOpen,
@@ -108,25 +112,27 @@ const OrderId = ({ order }: Props) => {
               Order ID: #{order.id}
             </Text>
             <Flex align="center" gap={4}>
-              <Button
-                size="md"
-                color="primary"
-                bg="white"
-                borderWidth={2}
-                borderColor="primary"
-                onClick={onTrackOrderOpen}
-                borderRadius={10}
-                _hover={{ bg: "#E46C0A", color: "#FFFFFF" }}
-                _active={{
-                  bg: "#E46C0A",
-                  color: "#FFFFFF",
-                  transform: "scale(0.98)",
-                  borderColor: "#E46C0A",
-                }}
-              >
-                <MdOutlineLocationOn size={22} />
-                Track Order
-              </Button>
+              {order.status === "Processing" && (
+                <Button
+                  size="md"
+                  color="primary"
+                  bg="white"
+                  borderWidth={2}
+                  borderColor="primary"
+                  onClick={onTrackOrderOpen}
+                  borderRadius={10}
+                  _hover={{ bg: "#E46C0A", color: "#FFFFFF" }}
+                  _active={{
+                    bg: "#E46C0A",
+                    color: "#FFFFFF",
+                    transform: "scale(0.98)",
+                    borderColor: "#E46C0A",
+                  }}
+                >
+                  <MdOutlineLocationOn size={22} />
+                  Track Order
+                </Button>
+              )}
               <Button
                 size="md"
                 color="primary"
@@ -189,7 +195,7 @@ const OrderId = ({ order }: Props) => {
                 <Text>Order Total</Text>
                 <Text>: {totalCost} LKR</Text>
                 <Text>Delivery Cost</Text>
-                <Text>: 200 LKR</Text>
+                <Text>: {order.deliveryFee} LKR</Text>
               </Grid>
             </Box>
             <Box
@@ -215,76 +221,79 @@ const OrderId = ({ order }: Props) => {
 
           <Divider my={4} />
 
-          <Box
-            p={4}
-            borderWidth="1px"
-            borderRadius="15"
-            borderColor="gray.300"
-            mb={4}
-            bg="red"
-          >
-            <Flex
-              justify="space-between"
-              alignItems="center"
+          {/* ------------------------------------ Driver Details ------------------------------------ */}
+          {["Completed","Processing"].includes(order.status) && (
+            <Box
+              p={4}
+              borderWidth="1px"
+              borderRadius="15"
+              borderColor="gray.300"
               mb={4}
-              color={"primary"}
+              bg="red"
             >
-              <Box>
-                <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
-                  Driver Details
-                </Text>
-              </Box>
-              <Box onClick={onDriverOpen} cursor="pointer">
-                <RiArrowRightSLine size={27} />
-              </Box>
-            </Flex>
-            <Flex justifyContent="space-between" flexWrap="wrap" gap={4}>
-              <Flex align="center" gap={4}>
-                <Image
-                  src="https://via.placeholder.com/79x86"
-                  borderRadius="full"
-                  boxSize="76px"
-                />
+              <Flex
+                justify="space-between"
+                alignItems="center"
+                mb={4}
+                color={"primary"}
+              >
                 <Box>
-                  <Text fontSize="xl" fontWeight="bold">
-                    Bimsara Jayadewa
+                  <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
+                    Driver Details
                   </Text>
-                  <Text fontSize="md" fontWeight="semibold">
-                    Jayadewa gedaratama service
-                  </Text>
-                  <Text>Driver ID: 22345667</Text>
+                </Box>
+                <Box onClick={onDriverOpen} cursor="pointer">
+                  <RiArrowRightSLine size={27} />
                 </Box>
               </Flex>
-              <Flex
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="flex-end"
-                gap={2}
-              >
-                <Text fontSize="xl" fontWeight="semibold">
-                  +94 225566789
-                </Text>
-                <Button
-                  size="md"
-                  color="primary"
-                  bg="white"
-                  borderWidth={2}
-                  borderColor="primary"
-                  borderRadius={10}
-                  onClick={onAddReviewOpen}
-                  _hover={{ bg: "#E46C0A", color: "#FFFFFF" }}
-                  _active={{
-                    bg: "#E46C0A",
-                    color: "#FFFFFF",
-                    transform: "scale(0.98)",
-                    borderColor: "#E46C0A",
-                  }}
+              <Flex justifyContent="space-between" flexWrap="wrap" gap={4}>
+                <Flex align="center" gap={4}>
+                  <Image
+                    src="https://via.placeholder.com/79x86"
+                    borderRadius="full"
+                    boxSize="76px"
+                  />
+                  <Box>
+                    <Text fontSize="xl" fontWeight="bold">
+                      Bimsara Jayadewa
+                    </Text>
+                    <Text fontSize="md" fontWeight="semibold">
+                      Jayadewa gedaratama service
+                    </Text>
+                    <Text>Driver ID: 22345667</Text>
+                  </Box>
+                </Flex>
+                <Flex
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-end"
+                  gap={2}
                 >
-                  Add Reviews
-                </Button>
+                  <Text fontSize="xl" fontWeight="semibold">
+                    +94 225566789
+                  </Text>
+                  <Button
+                    size="md"
+                    color="primary"
+                    bg="white"
+                    borderWidth={2}
+                    borderColor="primary"
+                    borderRadius={10}
+                    onClick={onAddReviewOpen}
+                    _hover={{ bg: "#E46C0A", color: "#FFFFFF" }}
+                    _active={{
+                      bg: "#E46C0A",
+                      color: "#FFFFFF",
+                      transform: "scale(0.98)",
+                      borderColor: "#E46C0A",
+                    }}
+                  >
+                    Add Reviews
+                  </Button>
+                </Flex>
               </Flex>
-            </Flex>
-          </Box>
+            </Box>
+          )}
 
           {/* ------------------------------------ Shipping Details ------------------------------------ */}
           <Box p={4} borderWidth="1px" borderRadius="15" borderColor="gray.300">
@@ -460,4 +469,4 @@ const OrderId = ({ order }: Props) => {
     </>
   );
 };
-export default OrderId;
+export default OrderDetails;

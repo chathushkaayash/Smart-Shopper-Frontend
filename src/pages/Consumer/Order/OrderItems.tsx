@@ -26,24 +26,12 @@ const OrderItems = ({ order }: Props) => {
     onClose: onAddReviewClose,
   } = useDisclosure();
 
-  console.log(order);
-
-  // const items = [
-  //   {
-  //     image: "https://via.placeholder.com/50",
-  //     name: "Munchee Super Cream Cracker",
-  //     price: 145,
-  //     supermarket: "Keells",
-  //     supermarketLogo: "https://via.placeholder.com/50",
-  //   },
-  //   {
-  //     image: "https://via.placeholder.com/50",
-  //     name: "Gradient Graphic T-shirt",
-  //     price: 145,
-  //     supermarket: "Spar",
-  //     supermarketLogo: "https://via.placeholder.com/50",
-  //   },
-  // ];
+  let totalCost = order.orderItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  
+  totalCost = Math.round(totalCost * 100) / 100;
 
   return (
     <Box
@@ -72,7 +60,7 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Delivery Fee:{" "}
           <Text as="span" fontWeight="bold">
-            200.00 LKR
+            {order.deliveryFee} LKR
           </Text>
         </Text>
       </Flex>
@@ -80,7 +68,7 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Total:{" "}
           <Text as="span" fontWeight="bold">
-            24 500.00 LKR
+            {totalCost} LKR
           </Text>
         </Text>
       </Flex>
