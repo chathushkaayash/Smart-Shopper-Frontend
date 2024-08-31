@@ -1,16 +1,16 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 
-const apiClient = new APIClient<{name:string,earning:number}>("stats/earnings");
+const apiClient = new APIClient<{ name: string; earning: number }>(
+  "stats/supermarket_earnings"
+);
 
-const useEarnings = () => {
+const useSupermarketEarnings = () => {
   return useQuery({
-    queryKey: ["earnings"],
-    queryFn: () =>
-      apiClient.getAll({
-      }),
+    queryKey: ["supermarket_earnings"],
+    queryFn: () => apiClient.getAll({}),
     staleTime: 1000 * 5, // 5 seconds
   });
 };
 
-export default useEarnings;
+export default useSupermarketEarnings;

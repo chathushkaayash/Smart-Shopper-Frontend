@@ -51,7 +51,7 @@ const ConsumerOrders = () => {
   const [activeTab, setActiveTab] = useState("View All");
 
   const orders = useOrders();
-  console.log(orders);
+  console.log(orders.data);
 
   const filteredOrders = (): Order[] => {
     switch (activeTab) {

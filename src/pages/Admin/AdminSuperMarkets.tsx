@@ -41,22 +41,24 @@ import { SupermarketWithRelations } from "@/hooks/useSupermarket";
 import { useState } from "react";
 import useOrders from "@/hooks/useOrders";
 import { Order } from "@/hooks/useOrder";
-import useEarning from "@/hooks/useSupermarketEarning";
+import useSupermarketEarning from "@/hooks/useSupermarketEarning";
 //import Earnings from "../DriverApp/Dashboard/Earnings";
-import useEarnings from "@/hooks/useSupermarketEarnings";
+import useSupermarketEarnings from "@/hooks/useSupermarketEarnings";
+import APIClient from "@/services/api-client";
+import { Review } from "@/hooks/reviews/useReview";
 
 const AdminSuperMarkets = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const Supermarkets  = useSuperMarkets();
-  const [selectedSm, setSelectedSm] =useState<SupermarketWithRelations | null>();
-  console.log("supermerkts",Supermarkets);
+  const supermarkets = useSuperMarkets();
+  const [selectedSm, setSelectedSm] =
+    useState<SupermarketWithRelations | null>();
 
   const handleEditClick = (supermarket: SupermarketWithRelations) => {
     setSelectedSm(supermarket);
     onOpen();
   };
-
-  const earningBySupermarketName=useEarnings();
+  const earningBySupermarketName = useSupermarketEarnings();
+  console.log(earningBySupermarketName.data);
 
   return (
     <>
@@ -104,12 +106,10 @@ const AdminSuperMarkets = () => {
             </Heading>
             <Flex>
               <Box px={2}>
-                <Select placeholder="Select option">
+                <Select placeholder="Select option" defaultValue={"August"}>
                   <option value="option1">August</option>
                   <option value="option2">September</option>
-                  <option value="option3" selected>
-                    October
-                  </option>
+                  <option value="option3">October</option>
                 </Select>
               </Box>
               {/* <ActionButton url="/addcustomer">Add Customer</ActionButton> */}
@@ -132,37 +132,37 @@ const AdminSuperMarkets = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {Supermarkets &&
-                    Array.isArray(Supermarkets) &&
-                    Supermarkets.map((supermarket) => (
-                      <Tr>
-                        <Td>
-                          <HStack>
-                            <Image
-                              src={supermarket.logo}
-                              alt="SM Image"
-                              boxSize="50px"
-                              objectFit="cover"
-                              borderRadius="50%"
-                              mr={4}
-                            />
-                            <Text>{supermarket.name}</Text>
-                          </HStack>
-                        </Td>
-                        <Td>{supermarket.address}</Td>
-                        <Td>{supermarket.supermarketManager.name}</Td>
-                        <Td>{supermarket.contactNo}</Td>
-                        <Td>
-                          <Button
-                            bg="primary"
-                            size="sm"
-                            onClick={() => handleEditClick(supermarket)}
-                          >
-                            View More
-                          </Button>
-                        </Td>
-                      </Tr>
-                    ))}
+                  {supermarkets.data?.results.map((supermarket, index) => (
+                    <Tr key={index}>
+                      <Td>
+                        <HStack>
+                          <Image
+                            src={supermarket.logo}
+                            alt="SM Image"
+                            boxSize="30px"
+                            objectFit="contain"
+                            aspectRatio={16 / 9}
+                            borderRadius="50%"
+                            mr={4}
+                          />
+                          <Text>{supermarket.name}</Text>
+                        </HStack>
+                      </Td>
+                      <Td>{supermarket.address}</Td>
+                      <Td>{supermarket.supermarketManager.name}</Td>
+                      <Td>{supermarket.contactNo}</Td>
+                      <Td>
+                        <Button
+                          bg="primary"
+                          size="sm"
+                          onClick={() => handleEditClick(supermarket)}
+                          color={"white"}
+                        >
+                          View More
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
                 </Tbody>
               </Table>
             </TableContainer>
@@ -170,7 +170,7 @@ const AdminSuperMarkets = () => {
         </Box>
       </VStack>
       {selectedSm && (
-        <Popup isOpen={isOpen} onClose={onClose} selectedSm={selectedSm}/>
+        <Popup isOpen={isOpen} onClose={onClose} selectedSm={selectedSm} />
       )}
     </>
   );
@@ -183,13 +183,18 @@ interface PopupProps {
   //earning:number;
 }
 
-const Popup = ({ onClose, isOpen, selectedSm}: PopupProps) => {
+const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
   const orders = useOrders(selectedSm.id);
-  const customerCount = new Set(orders.data?.results.map((order) => order.consumerId)).size;
-   console.log(orders);
-   const earingBySupermarket=useEarning(selectedSm.id);
+  const customerCount = new Set(
+    orders.data?.results.map((order) => order.consumerId)
+  ).size;
+  console.log(orders);
+  const earingBySupermarket = useSupermarketEarning(selectedSm.id);
 
+  // const apiClient = new APIClient<Review>("stats/feedbacks_by_supermarket_id");
 
+  // const reviews = apiClient.getAll({ supermarketId: selectedSm.id });
+  // console.log(reviews.data);
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -338,20 +343,22 @@ const Popup = ({ onClose, isOpen, selectedSm}: PopupProps) => {
 
 export default AdminSuperMarkets;
 
-const totalEarningsByName = (orders:Order[],supermarketName:string)=>(orders.reduce((acc, order) => {
-  // Filter orderItems by supermarketId and sum up the prices
-  const earningsFromOrder = order.orderItems
+const totalEarningsByName = (orders: Order[], supermarketName: string) =>
+  orders.reduce((acc, order) => {
+    // Filter orderItems by supermarketId and sum up the prices
+    const earningsFromOrder = order.orderItems
       //.filter(item => item. === supermarketName)
       .reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  return acc + earningsFromOrder;
-}, 0))
+    return acc + earningsFromOrder;
+  }, 0);
 
-const totalEarningsById = (orders:Order[],supermarketId:number)=>(orders.reduce((acc, order) => {
-  // Filter orderItems by supermarketId and sum up the prices
-  const earningsFromOrder = order.orderItems
-      .filter(item => item.supermarketId === supermarketId)
+const totalEarningsById = (orders: Order[], supermarketId: number) =>
+  orders.reduce((acc, order) => {
+    // Filter orderItems by supermarketId and sum up the prices
+    const earningsFromOrder = order.orderItems
+      .filter((item) => item.supermarketId === supermarketId)
       .reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  return acc + earningsFromOrder;
-}, 0))
+    return acc + earningsFromOrder;
+  }, 0);

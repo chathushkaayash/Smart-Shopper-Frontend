@@ -4,12 +4,11 @@ import { Order } from "./useOrder";
 
 const apiClient = new APIClient<Order>("/orders");
 
-const useOrders = (supermarketId=-1) => {
+const useOrders = (supermarketId = -1) => {
   return useQuery({
-    queryKey: ["orders",supermarketId],
-    queryFn: () => apiClient.getAll({params: {supermarketId: supermarketId
-    }},)
-
+    queryKey: ["orders", supermarketId],
+    queryFn: () =>
+      apiClient.getAll({ params: { supermarketId: supermarketId } }),
   });
 };
 
