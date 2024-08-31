@@ -1,11 +1,11 @@
-import APIClient, { FetchResponse } from "@/services/api-client";
+import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { Supermarket } from "./useSupermarket";
+import { SupermarketWithRelations } from "./useSupermarket";
 
-const apiClient = new APIClient<Supermarket>("/supermarkets");
+const apiClient = new APIClient<SupermarketWithRelations>("/supermarkets");
 
 const useSuperMarkets = () => {
-  return useQuery<FetchResponse<Supermarket>, Error>({
+  return useQuery({
     queryKey: ["supermarkets"],
     queryFn: () => apiClient.getAll({}),
     staleTime: 1000 * 60 * 30, // 30 minute

@@ -1,3 +1,6 @@
+import QrScanner from "@/components/Qr/QrScanner";
+import AboutPage from "@/pages/Public/AboutUs";
+import Test from "@/pages/Test";
 import loadable from "@loadable/component";
 
 const DriverLogin = loadable(
@@ -11,7 +14,7 @@ const DriverRegister = loadable(
 );
 const Login = loadable(() => import("@/pages/Login"));
 const SignUp = loadable(() => import("@/pages/SignUp"));
-const Supermarkets = loadable(() => import("@/pages/Supermarkets"));
+
 const PublicLayout = loadable(() => import("./Layouts/PublicLayout"));
 
 const PublicRoutes = [
@@ -23,7 +26,10 @@ const PublicRoutes = [
       { path: "driver/login", element: <DriverLogin /> },
       { path: "driver/login_register", element: <LoginRegister /> },
       { path: "driver/register", element: <DriverRegister /> },
-      { path: "supermarket", element: <Supermarkets /> },
+      { path: "about", element: <AboutPage /> },
+
+      { path: "qr", element: <QrScanner /> },
+      { path: "test", element: <Test /> },
     ],
   },
 ];

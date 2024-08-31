@@ -36,9 +36,16 @@ import { SiCashapp } from "react-icons/si";
 import { TbTruckDelivery } from "react-icons/tb";
 import LineChart from "../../components/Charts/LineChart";
 import { IoStarSharp } from "react-icons/io5";
-
+import useDrivers from "@/hooks/useDrivers";
+import { Driver } from "@/hooks/useDriver";
+import { useState } from "react";
 const AdminCourierServices = () => {
+
+  const drivers=useDrivers();
+  const driverArray=drivers.data?.results;
+  //console.log("drivers",drivers.data?.results);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedDriver,setSelecteddriver]=useState<Driver | null>();
 
   const deliveryPersonPopup = [
     [
@@ -66,6 +73,11 @@ const AdminCourierServices = () => {
       },
     ],
   ];
+
+  const handleEditClick = (driver: Driver) => {
+    setSelecteddriver(driver);
+    onOpen();
+  };
 
   return (
     <>
@@ -141,87 +153,42 @@ const AdminCourierServices = () => {
                   <Th>Name</Th>
                   <Th>Company</Th>
                   <Th>Contact Number</Th>
-                  <Th>Deliveries Completed</Th>
-                  <Th>Earning</Th>
+                  <Th>Vehicle Type</Th>
+                  <Th>Vehicle Model</Th>
                   <Th></Th>
                 </Tr>
               </Thead>
               <Tbody>
+                {driverArray && Array.isArray(driverArray)&&
+                driverArray.map((driver)=>(
                 <Tr>
                   <Td>
                     <HStack>
                       <Image
-                        src="https://via.placeholder.com/150"
-                        alt="Product Image"
+                        src={driver.user.profilePic}
+                        alt="driver Image"
                         boxSize="50px"
                         objectFit="cover"
                         borderRadius="50%"
                         mr={4}
                       />
-                      <Text>Kaveesha Hettige</Text>
+                      <Text>{driver.user.name}</Text>
                     </HStack>
                   </Td>
-                  <Td>Island Cabs</Td>
-                  <Td>0766245650</Td>
-                  <Td>45</Td>
-                  <Td>Rs.2000</Td>
+                  <Td>{driver.courierCompany}</Td>
+                  <Td>{driver.user.number}</Td>
+                  <Td>{driver.vehicleType}</Td>
+                  <Td>{driver.vehicleName}</Td>
                   <Td>
-                    <Button bg="primary" size="sm" onClick={onOpen}>
+                    <Button bg="primary" size="sm" onClick={() => handleEditClick(driver)}>
                       View More
                     </Button>
                   </Td>
                 </Tr>
-                <Tr>
-                  <Td>
-                    <HStack>
-                      <Image
-                        src="https://via.placeholder.com/150"
-                        alt="Product Image"
-                        boxSize="50px"
-                        objectFit="cover"
-                        borderRadius="50%"
-                        mr={4}
-                      />
-                      <Text>Kaveesha Hettige</Text>
-                    </HStack>
-                  </Td>
-                  <Td>Island Cabs</Td>
-                  <Td>0766245650</Td>
-                  <Td>45</Td>
-                  <Td>Rs.2000</Td>
-                  <Td>
-                    <Button bg="primary" size="sm">
-                      View More
-                    </Button>
-                  </Td>
-                </Tr>
+                 )
+                )
+                }
               </Tbody>
-              <Tfoot>
-                <Tr>
-                  <Td>
-                    <HStack>
-                      <Image
-                        src="https://via.placeholder.com/150"
-                        alt="Product Image"
-                        boxSize="50px"
-                        objectFit="cover"
-                        borderRadius="50%"
-                        mr={4}
-                      />
-                      <Text>Kaveesha Hettige</Text>
-                    </HStack>
-                  </Td>
-                  <Td>Island Cabs</Td>
-                  <Td>0766245650</Td>
-                  <Td>45</Td>
-                  <Td>Rs.2000</Td>
-                  <Td>
-                    <Button bg="primary" size="sm">
-                      View More
-                    </Button>
-                  </Td>
-                </Tr>
-              </Tfoot>
             </Table>
           </TableContainer>
         </Box>
@@ -242,18 +209,18 @@ const AdminCourierServices = () => {
                   borderRadius="50%"
                   mr={4}
                 />
-                <Text fontSize={"xl"}>Kaveesha Hettige</Text>
+                <Text fontSize={"xl"}>{selectedDriver?.user.name}</Text>
                 <Flex>
                   <Icon as={IoBusiness} boxSize={5} color={"primary"} />
                   <Text fontSize={"sm"} ml={2}>
-                    Uber Deliveries
+                    {selectedDriver?.courierCompany}
                   </Text>
                 </Flex>
 
                 <RatingStars value={4} />
                 <HStack>
                   <Icon as={IoCall} boxSize={4} color={"primary"} />
-                  <Text fontSize="sm">071 2216841</Text>
+                  <Text fontSize="sm">{selectedDriver?.user.number}</Text>
                 </HStack>
               </VStack>
             </ModalHeader>

@@ -19,7 +19,7 @@ const CartComparison = loadable(
   () => import("@/pages/Consumer/CartComparison/CartComparison")
 );
 const ViewProduct = loadable(() => import("@/pages/Consumer/ViewProduct"));
-const AboutUs = loadable(() => import("@/pages/Consumer/AboutUs"));
+const AboutUs = loadable(() => import("@/pages/Public/AboutUs"));
 
 const ConsumerRoutes = [
   {

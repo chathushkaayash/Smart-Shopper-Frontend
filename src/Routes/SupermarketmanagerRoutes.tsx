@@ -16,6 +16,9 @@ const AdminRoutes = [
     children: [
       { path: "products", element: <SupermarketManagerProducts /> },
       { path: "dashboard", element: <SupermarketManagerDashboard /> },
+      // {path : "scan", element: <SupermarketManagerScan />},
+      // {path : "hi", element: <SupermarketManagerScan />},
+      // {path : "profile-settings", element: <SupermarketManagerProfile />}
     ],
   },
 ];

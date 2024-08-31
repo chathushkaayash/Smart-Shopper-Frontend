@@ -6,8 +6,11 @@ import { IoMdPeople } from "react-icons/io";
 import { IoSettings, IoHome } from "react-icons/io5";
 import { MdViewSidebar } from "react-icons/md";
 import { RiAdvertisementFill } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
+import { FaBagShopping } from "react-icons/fa6";
 import { TbTransactionDollar, TbTruckDelivery } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
+import { MdOutlineQrCodeScanner } from "react-icons/md";
 
 interface MenuItem {
   icon: React.ComponentType<any>;
@@ -43,9 +46,11 @@ const SideBar = () => {
 
   const supermarketManagerMenuItems: MenuItem[] = [
     { icon: IoHome, label: "Dashboard", path: "/dashboard" },
-    { icon: MdViewSidebar, label: "Orders", path: "/orders" },
+    { icon: FaBagShopping, label: "Orders", path: "/orders" },
     { icon: IoMdPeople, label: "Products", path: "/products" },
-    { icon: IoSettings, label: "Settings", path: "/settings" },
+    { icon: MdOutlineQrCodeScanner, label: "Scan", path: "/scan" },
+    { icon: CgProfile, label: "Profile", path: "/profile-Settings" },
+    
     { icon: FiLogOut, label: "Logout", path: "/logout" },
   ];
 
