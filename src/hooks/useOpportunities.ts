@@ -5,8 +5,9 @@ import { Opportunity } from "./useOpportunity";
 const apiClient = new APIClient<Opportunity>("/opportunities");
 
 export interface OpportunityQuery {
-  status: string;
-  month: string;
+  status?: string;
+  month?: string;
+  limit?: number;
 }
 
 const useOpportunities = (opportunityQuery: OpportunityQuery) => {
@@ -15,8 +16,9 @@ const useOpportunities = (opportunityQuery: OpportunityQuery) => {
     queryFn: () =>
       apiClient.getAll({
         params: {
-          status: opportunityQuery.status,
-          month: opportunityQuery.month,
+          status: opportunityQuery.status || "",
+          month: opportunityQuery.month || "",
+          _limit: opportunityQuery.limit || 10,
         },
       }),
     staleTime: 1000 * 5, // 5 seconds

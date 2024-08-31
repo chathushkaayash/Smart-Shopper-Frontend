@@ -7,11 +7,11 @@ import { Review } from "./useReview";
 const apiClient = new APIClient<Review>("/reviews");
 
 export interface ReviewQuery {
-  reviewType?: string;
+  reviewType?: string; // supermarketItem, driver
   targetId?: number;
 }
 
-const useOpportunities = (reviewQuery: ReviewQuery) => {
+const useReviews = (reviewQuery: ReviewQuery) => {
   return useQuery({
     queryKey: ["review", reviewQuery],
     queryFn: () =>
@@ -25,4 +25,4 @@ const useOpportunities = (reviewQuery: ReviewQuery) => {
   });
 };
 
-export default useOpportunities;
+export default useReviews;

@@ -6,8 +6,7 @@ import { Show } from "@chakra-ui/react";
 import BottomNav from "./components/BottomNav";
 import { useEffect } from "react";
 import useAuthStore from "./state-management/auth/store";
-
-
+import { Toaster } from "sonner";
 
 function App() {
   const { expireToken } = useAuthStore();
@@ -28,6 +27,7 @@ function App() {
       <Show below="md">
         <BottomNav />
       </Show>
+      <Toaster className="!bg-red-800 !border-2" richColors />
     </>
   );
 }

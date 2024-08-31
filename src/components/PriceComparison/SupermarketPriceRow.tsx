@@ -1,3 +1,5 @@
+import useReviews from "@/hooks/reviews/useReviews";
+import useSupermarket from "@/hooks/useSupermarket";
 import { SupermarketItem } from "@/hooks/useSupermarketItems";
 import {
   Box,
@@ -10,7 +12,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import RatingStars from "../Inputs/Rating";
-import useSupermarket from "@/hooks/useSupermarket";
 
 interface Props {
   supermarketItem: SupermarketItem;
@@ -27,10 +28,21 @@ const SupermarketPriceRow = ({
     ? useSupermarket(supermarketItem?.supermarketId)
     : { data: null, isLoading: false, error: null };
 
+  const reviews = useReviews({
+    reviewType: "supermarketItem",
+    targetId: supermarketItem.supermarketId,
+  });
+
+  const reviewCount = reviews.data?.count || 0;
+  const totalStars =
+    reviews.data?.results.reduce((acc, review) => acc + review.rating, 0) || 0;
+
   return (
     <HStack
       borderColor="primary"
-      borderWidth={selectedSupermarketItem?.id === supermarketItem.id ? "2px" : ""}
+      borderWidth={
+        selectedSupermarketItem?.id === supermarketItem.id ? "2px" : ""
+      }
       justifyContent={"space-between"}
       px={10}
       py={3}
@@ -62,10 +74,7 @@ const SupermarketPriceRow = ({
             Reviews
           </Text>
           <Box>
-            <RatingStars
-              value={(supermarketItem?.id * 3) % 5}
-              reviews={(supermarketItem?.id * 19) % 40}
-            />
+            <RatingStars value={totalStars / reviewCount} reviews={reviewCount} />
           </Box>
         </Stack>
       </VStack>

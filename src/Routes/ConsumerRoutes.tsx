@@ -8,7 +8,7 @@ const ConsumerProfile = loadable(
 );
 const ProductReview = loadable(() => import("@/pages/Consumer/Reviews"));
 const ConsumerViewOrders = loadable(
-  () => import("@/pages/Consumer/ViewOrders")
+  () => import("@/pages/Consumer/Order/CustomerViewOrder")
 );
 const ConsumerPaymentSuccessful = loadable(
   () => import("@/pages/Consumer/PaymentSuccessful")

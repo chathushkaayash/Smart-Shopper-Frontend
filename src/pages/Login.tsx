@@ -24,7 +24,7 @@ import LoginInput from "../components/Inputs/LoginInput";
 import APIClient from "@/services/api-client";
 import useAuthStore, {
   Credentials,
-  LoginResponse
+  LoginResponse,
 } from "@/state-management/auth/store";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import LinkButton from "../components/Buttons/LinkButton";
 import ErrorText from "../components/Errors/ErrorText";
+import { toast } from "sonner";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -65,10 +66,20 @@ const Login = () => {
     };
     const apiClient = new APIClient<LoginResponse>("/login");
 
-    apiClient.login(credentials).then((res) => {
-      login(res);
-      navigate("/");
-    });
+    apiClient
+      .login(credentials)
+      .then((res) => {
+        if (res.user) {
+          toast.success("Login successful");
+          login(res);
+          navigate("/");
+        } else {
+          toast.error("Something went wrong");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   return (
@@ -165,4 +176,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;

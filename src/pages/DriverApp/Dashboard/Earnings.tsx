@@ -99,7 +99,7 @@ const Earnings = () => {
         <Text fontSize="lg" fontWeight="bold">
           Recent Deliveries
         </Text>
-        <Button onClick={()=>navigate("../driver/deliveries")} variant="link" color="primary">
+        <Button onClick={()=>navigate("/driver/deliveries")} variant="link" color="primary">
           Show more
         </Button>
       </HStack>

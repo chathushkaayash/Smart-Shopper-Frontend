@@ -91,7 +91,7 @@ const ViewMap = () => {
 
   const orderDetails = [
     { label: "Order Placed on", value: opportunity.data?.orderPlacedOn },
-    { label: "Customer", value: `${opportunity.data?.customer}` },
+    { label: "Customer", value: `${opportunity.data?.consumer}` },
     { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },
     { label: "No of Supermarkets", value: supermarketsLength },
     { label: "Trip Cost", value: `${opportunity.data?.tripCost}` },

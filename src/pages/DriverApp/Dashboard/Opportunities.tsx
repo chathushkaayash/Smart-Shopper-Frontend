@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Opportunities = () => {
   const navigate = useNavigate();
-  const opportunities = useOpportunities("Pending");
+  const opportunities = useOpportunities({});
 
   return (
     <>
@@ -22,7 +22,7 @@ const Opportunities = () => {
             borderRadius="10"
           >
             <VStack align="start">
-              <Text fontWeight="bold">{opportunity.customer}</Text>
+              <Text fontWeight="bold">{opportunity.consumer.name}</Text>
               <HStack>
                 <Icon as={FaLocationDot} color="primary" />{" "}
                 <Text>{opportunity.deliveryLocation}</Text>

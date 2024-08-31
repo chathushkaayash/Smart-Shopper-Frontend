@@ -37,7 +37,7 @@ const ViewOpportunity = () => {
 
   const orderDetails = [
     { label: "Order Placed on", value: opportunity.data?.orderPlacedOn },
-    { label: "Customer", value: `${opportunity.data?.customer}` },
+    { label: "Customer", value: `${opportunity.data?.consumer.name}` },
     { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },
     { label: "Start Location", value: `${opportunity.data?.startLocation}` },
     {
@@ -82,7 +82,7 @@ const ViewOpportunity = () => {
         borderRadius="10"
       >
         <VStack align="start">
-          <Text fontWeight="bold">{opportunity.data?.customer}</Text>
+          <Text fontWeight="bold">{opportunity.data?.consumer.name}</Text>
           <HStack>
             <Icon as={FaLocationDot} color="primary" />{" "}
             <Text>{opportunity.data?.deliveryLocation}</Text>

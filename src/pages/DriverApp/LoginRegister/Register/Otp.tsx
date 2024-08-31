@@ -24,9 +24,14 @@ interface Props {
 const apiClient = new APIClient<{ OTP: string; id: number } | string>(
   "/match_driver_otp"
 );
+const apiClientOTPResend = new APIClient<{ id: number }>("/driver_otp_resend");
 
 const Otp = ({ driverDetails, setDriverDetails, setStage }: Props) => {
   const [pin, setPin] = useState("");
+
+  const resendOtp = () => {
+    apiClientOTPResend.create({ id: driverDetails.id });
+  };
 
   const handleChange = (value: string) => {
     if (value.length === 6) {
@@ -75,7 +80,7 @@ const Otp = ({ driverDetails, setDriverDetails, setStage }: Props) => {
               border="2px"
               borderColor="primary"
               _hover={{}}
-              mx={2}
+              mx={1}
               textAlign="center"
             />
           ))}
@@ -84,7 +89,7 @@ const Otp = ({ driverDetails, setDriverDetails, setStage }: Props) => {
       <Image src={Phone} width="180px" className=" " justifyContent="center" />
       <Text>
         I didn't receive any code.{" "}
-        <Button variant="link" color="primary">
+        <Button variant="link" color="primary" onClick={resendOtp}>
           RESEND
         </Button>
       </Text>

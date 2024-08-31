@@ -1,7 +1,6 @@
 import { Box, HStack } from "@chakra-ui/react";
 import SimpleSlider from "../SimpleSlider";
 
-import { ProductQuery } from "../../App";
 import useProducts from "../../hooks/useProducts";
 import ActionButton from "../Buttons/ActionButton";
 import Section from "./Section";
@@ -10,7 +9,7 @@ import ProductCard from "../ProductGrid/ProductCard";
 import ProductCardContainer from "../ProductGrid/ProductCardContainer";
 
 const BestSellingProducts = () => {
-  const { data: products } = useProducts({} as ProductQuery);
+  const { data: products } = useProducts();
 
   const config = {
     dots: false,

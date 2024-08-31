@@ -10,10 +10,10 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
-import AddProductReview from "./AddProductReview";
-import SupermarketItem from "./SupermarketItem";
+import AddProductReview from "../../../components/ViewOrders/AddProductReview";
+import SupermarketItem from "../../../components/ViewOrders/SupermarketItem";
 
 interface Props {
   order: Order;

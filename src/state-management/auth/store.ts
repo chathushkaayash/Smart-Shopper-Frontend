@@ -39,7 +39,6 @@ const authStore: StateCreator<AuthStore> = (set) => ({
   user: null,
 
   login: (res: LoginResponse) => {
-    if (!res.user) return null;
     localStorage.setItem("token", res.jwtToken);
     set(() => ({ user: res.user }));
   },

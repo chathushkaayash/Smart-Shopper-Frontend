@@ -32,7 +32,7 @@ interface Props {
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import LoginInput from "@/components/Inputs/LoginInput";
 import ErrorText from "@/components/Errors/ErrorText";
 import { DriverDetails } from "./DriverRegister";

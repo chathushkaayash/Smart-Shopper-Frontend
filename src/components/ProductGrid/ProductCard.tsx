@@ -21,6 +21,7 @@ interface Props {
 const ProductCard = ({ product }: Props) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
+
   return (
     <Card
       h="full"
@@ -58,16 +59,7 @@ const ProductCard = ({ product }: Props) => {
           </Flex>
           <RatingStars className="mb-10" value={5} reviews={75} />
         </Stack>
-        {/* <Text fontSize="sm" color="gray.500">(589 Reviews)</Text> */}
       </CardBody>
-      {/* <CardFooter>
-        <Flex justify="space-between" align="center" gap={5}>
-          
-          <FavouriteButton onClick={() => {}} isFavourite={true} />
-          <AddToCartIconBtn onClick={() =>{}} />
-          
-        </Flex>
-      </CardFooter> */}
     </Card>
   );
 };

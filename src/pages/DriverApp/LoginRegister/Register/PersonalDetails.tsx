@@ -144,7 +144,7 @@ const PersonalDetails = ({driverDetails, setStage, setDriverDetails }: Props) =>
           <ModalBody>
             <Text>
               <Text as="span" fontWeight="bold">
-                0736826763
+                {personalDetails?.contactNo}
                 <br />
               </Text>
               We will send an OTP to this phone number.
