@@ -7,7 +7,7 @@ import { useState } from "react";
 interface SupermarketRowInterface {
   supermarketId: number;
 }
-const SupermarketAddress = ({ supermarketId }: SupermarketRowInterface) => {
+export const SupermarketAddress = ({ supermarketId }: SupermarketRowInterface) => {
   const supermarket = useSupermarket(supermarketId);
   return (
     <Text as="span" fontWeight="bold">
@@ -22,10 +22,15 @@ const Deliveries = () => {
     status: "Delivered",
     month: "",
   });
-  console.log(opportunities.data);
+  // console.log(opportunities.data);
   const [isRotated, setIsRotated] = useState(false);
   const displayDetails = () => {
     setIsRotated(!isRotated);
+  };
+
+  const formatDateTime = (orderPlacedOn: any) => {
+    const { day, hour, minute, month, year } = orderPlacedOn;
+    return `${day}/${month}/${year} ${hour}:${minute}`;
   };
 
   return (
@@ -43,11 +48,11 @@ const Deliveries = () => {
             <VStack align="start" flex="1">
               <Text fontWeight="bold">{opportunity.deliveryLocation}</Text>
               <Text color="gray.500" fontSize="sm">
-                {opportunity.orderPlacedOn}
+                {formatDateTime(opportunity.orderPlacedOn)}
               </Text>
             </VStack>
             <Text fontWeight="bold" color="red.500">
-              {opportunity.tripCost}
+              Rs.{opportunity.tripCost}
             </Text>
             <IconButton
               onClick={displayDetails}
@@ -62,7 +67,7 @@ const Deliveries = () => {
             <Box>
               <HStack justify="space-between">
                 <Text>Delivery Cost</Text>
-                <Text>{opportunity.deliveryCost}</Text>
+                <Text>Rs.{opportunity.deliveryCost}</Text>
               </HStack>
               <HStack justify="space-between">
                 <Text>Number of Stops</Text>
@@ -70,12 +75,9 @@ const Deliveries = () => {
               </HStack>
 
               {opportunity.opportunitysupermarket.map((i, index) => (
-                <HStack justify="space-between">
+                <HStack justify="space-between" key={index}>
                   <Text>Supermarkets</Text>
-                  <SupermarketAddress
-                    key={index}
-                    supermarketId={i.supermarketId}
-                  />
+                  <SupermarketAddress supermarketId={i.supermarketId} />
                 </HStack>
               ))}
             </Box>

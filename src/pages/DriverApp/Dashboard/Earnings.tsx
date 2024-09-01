@@ -11,8 +11,21 @@ import ReactApexChart from "react-apexcharts";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useOpportunities from "@/hooks/useOpportunities";
+import { SupermarketAddress } from "./Deliveries";
 
 const Earnings = () => {
+  const opportunities = useOpportunities({
+    status: "Delivered",
+    month: "",
+    limit: 2,
+  });
+
+  const formatDateTime = (orderPlacedOn: any) => {
+    const { day, hour, minute, month, year } = orderPlacedOn;
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  };
+
   const [isRotated, setIsRotated] = useState(false);
   const navigate = useNavigate();
   const data = [
@@ -99,7 +112,11 @@ const Earnings = () => {
         <Text fontSize="lg" fontWeight="bold">
           Recent Deliveries
         </Text>
-        <Button onClick={()=>navigate("/driver/deliveries")} variant="link" color="primary">
+        <Button
+          onClick={() => navigate("/driver/deliveries")}
+          variant="link"
+          color="primary"
+        >
           Show more
         </Button>
       </HStack>
@@ -107,38 +124,55 @@ const Earnings = () => {
       {/********************* Delivered Item Card *********************/}
 
       <VStack spacing={4} mt={2} w="full">
-        <Box bg="white" borderRadius="lg" shadow="md" p={4} w="full">
-          <HStack>
-            <VStack align="start"  flex="1">
-              <Text fontWeight="bold">Warrington, PA 76102</Text>
-              <Text color="gray.500" fontSize="sm">
-                Yesterday at 16:34
+        {opportunities.data?.results.map((opportunity, index) => (
+          <Box
+            bg="white"
+            borderRadius="lg"
+            shadow="md"
+            p={4}
+            w="full"
+            key={index}
+          >
+            <HStack>
+              <VStack align="start" flex="1">
+                <Text fontWeight="bold">{opportunity.deliveryLocation}</Text>
+                <Text color="gray.500" fontSize="sm">
+                  {formatDateTime(opportunity.orderPlacedOn)}
+                </Text>
+              </VStack>
+              <Text fontWeight="bold" color="red.500">
+                Rs.{opportunity.tripCost}
               </Text>
-            </VStack>
-            <Text fontWeight="bold" color="red.500">
-              Rs 100
-            </Text>
-            <IconButton
-              onClick={displayDetails}
-              aria-label="Go to delivery"
-              icon={<ChevronRightIcon />}
-              variant="ghost"
-              transform={isRotated ? "rotate(90deg)" : "rotate(0deg)"}
-            />
-          </HStack>
+              <IconButton
+                onClick={displayDetails}
+                aria-label="Go to delivery"
+                icon={<ChevronRightIcon />}
+                variant="ghost"
+                transform={isRotated ? "rotate(90deg)" : "rotate(0deg)"}
+              />
+            </HStack>
 
-          {isRotated && (
-            <Box>
-              <HStack justify="space-between">
-                <Text>Delivery cost</Text>
-                <Text>100</Text>
-              </HStack>
-              {/* <Text>Trip Cost</Text>
-              <Text>No of Supermarkets</Text>
-              <Text>Supermarkets</Text> */}
-            </Box>
-          )}
-        </Box>
+            {isRotated && (
+              <Box>
+                <HStack justify="space-between">
+                  <Text>Delivery cost</Text>
+                  <Text>Rs.{opportunity.deliveryCost}</Text>
+                </HStack>
+                <HStack justify="space-between">
+                  <Text>Number of Stops</Text>
+                  <Text>{opportunity.opportunitysupermarket.length}</Text>
+                </HStack>
+
+                {opportunity.opportunitysupermarket.map((i, index) => (
+                  <HStack justify="space-between" key={index}>
+                    <Text>Supermarkets</Text>
+                    <SupermarketAddress supermarketId={i.supermarketId} />
+                  </HStack>
+                ))}
+              </Box>
+            )}
+          </Box> 
+        ))}
       </VStack>
     </VStack>
   );
