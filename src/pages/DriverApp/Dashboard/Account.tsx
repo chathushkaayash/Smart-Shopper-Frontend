@@ -35,7 +35,7 @@ const Account = () => {
     { Icon: MdStarRate, label: "Ratings", path: "/driver/account/ratings" },
     {
       Icon: MdContactSupport,
-      label: "Support",
+      label: "Hepl & Support",
       path: "/driver/account/support",
     },
   ];
