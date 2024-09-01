@@ -29,9 +29,10 @@ import useSupermarket from "@/hooks/useSupermarket";
 import { useState } from "react";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import APIClient from "@/services/api-client";
+import useConsumer from "@/hooks/useConsumer";
 
 {
-  /**********************************************Supermarket rows componenr****************************************/
+  /**********************************************Supermarket rows component****************************************/
 }
 
 interface SupermarketRowInterface {
@@ -77,6 +78,18 @@ const SupermarketRow = ({ supermarketId }: SupermarketRowInterface) => {
 };
 
 {
+  /**********************************************Consumer Name component****************************************/
+}
+
+interface ConsumerInterface {
+  consumerId: number;
+}
+const ConsumerName = ({ consumerId }: ConsumerInterface) => {
+  const { data: consumer } = useConsumer(consumerId);
+  return <Text>{consumer?.user.name}</Text>;
+};
+
+{
   /**********************************************Viewmap component***************************************************/
 }
 const ViewMap = () => {
@@ -86,12 +99,25 @@ const ViewMap = () => {
   const [showDetails, setShowDetails] = useState(false);
   const opportunity = useOpportunity(Number(id));
 
+  const formatDateTime = (orderPlacedOn: any) => {
+    if (!orderPlacedOn) return "N/A";
+    const { day, hour, minute, month, year } = orderPlacedOn;
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  };
+
   const supermarketsLength =
     opportunity.data?.opportunitysupermarket.length || 0;
-
   const orderDetails = [
-    { label: "Order Placed on", value: opportunity.data?.orderPlacedOn },
-    { label: "Customer", value: `${opportunity.data?.consumer}` },
+    {
+      label: "Order Placed on",
+      value: formatDateTime(opportunity.data?.orderPlacedOn),
+    },
+    {
+      label: "Customer",
+      value: (
+        <ConsumerName consumerId={opportunity.data?.consumer.userId ?? 0} />
+      ),
+    },
     { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },
     { label: "No of Supermarkets", value: supermarketsLength },
     { label: "Trip Cost", value: `${opportunity.data?.tripCost}` },
@@ -108,7 +134,7 @@ const ViewMap = () => {
 
   const handleComplete = () => {
     const apiClient = new APIClient("/complete_delivery/" + id);
-    apiClient.create({}).then
+    apiClient.create({}).then;
     navigate("/driver");
   };
 

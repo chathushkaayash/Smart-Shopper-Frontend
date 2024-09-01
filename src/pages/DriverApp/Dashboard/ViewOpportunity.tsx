@@ -23,8 +23,15 @@ const ViewOpportunity = () => {
 
   const navigate = useNavigate();
   const opportunity = useOpportunity(Number(id));
+  console.log(opportunity.data);
   const supermarketsLength =
     opportunity.data?.opportunitysupermarket.length || 0;
+
+  const formatDateTime = (orderPlacedOn: any) => {
+    if (!orderPlacedOn) return "N/A";
+    const { day, hour, minute, month, year } = orderPlacedOn;
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  };
 
   const details = [
     {
@@ -36,8 +43,10 @@ const ViewOpportunity = () => {
   ];
 
   const orderDetails = [
-    { label: "Order Placed on", value: opportunity.data?.orderPlacedOn },
-    { label: "Customer", value: `${opportunity.data?.consumer.name}` },
+    {
+      label: "Order Placed on",
+      value: formatDateTime(opportunity.data?.orderPlacedOn),
+    },
     { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },
     { label: "Start Location", value: `${opportunity.data?.startLocation}` },
     {
@@ -82,7 +91,6 @@ const ViewOpportunity = () => {
         borderRadius="10"
       >
         <VStack align="start">
-          <Text fontWeight="bold">{opportunity.data?.consumer.name}</Text>
           <HStack>
             <Icon as={FaLocationDot} color="primary" />{" "}
             <Text>{opportunity.data?.deliveryLocation}</Text>

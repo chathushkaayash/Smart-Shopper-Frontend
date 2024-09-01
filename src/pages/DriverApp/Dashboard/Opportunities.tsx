@@ -22,7 +22,7 @@ const Opportunities = () => {
             borderRadius="10"
           >
             <VStack align="start">
-              <Text fontWeight="bold">{opportunity.consumer.name}</Text>
+              {/* <Text fontWeight="bold">{opportunity.consumer.user}</Text> */}
               <HStack>
                 <Icon as={FaLocationDot} color="primary" />{" "}
                 <Text>{opportunity.deliveryLocation}</Text>
