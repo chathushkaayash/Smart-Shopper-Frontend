@@ -19,7 +19,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 const Support = () => {
   const navigate = useNavigate();
   return (
-    <VStack h="23vh" px="8vw" pt="3vh" pb="93vh" borderWidth={2}>
+    <VStack h="23vh" px="8vw" pt="3vh"  borderWidth={2}>
       <HStack w="full" pos="relative" left={-5}>
         <Box
           p={1}
