@@ -15,17 +15,22 @@ import { useNavigate } from "react-router-dom";
 import { PiCaretRightThin } from "react-icons/pi";
 import { useRef } from "react";
 import { BsCameraFill } from "react-icons/bs";
+import useDriver from "@/hooks/useDriver";
+import useAuthStore from "@/state-management/auth/store";
 
-const userDetails = [
-  { label: "NIC", value: "215439582242" },
-  { label: "Email", value: "sdyhsu@gmail.com" },
-  { label: "Contact", value: "07139582242" },
-  { label: "Courier Company Name", value: "FastCourier" },
-];
 
 const EditAccount = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const user= useAuthStore((state) => state.user);
+  const driver = useDriver(user?.driverId || 0);
+
+  const userDetails = [
+    { label: "NIC", value: driver.data?.nic },
+    { label: "Email", value: driver.data?.user.email },
+    { label: "Contact", value: driver.data?.user.number },
+    { label: "Courier Company Name", value: driver.data?.courierCompany },
+  ];
 
   return (
     <>
@@ -51,7 +56,7 @@ const EditAccount = () => {
           <Image
             boxSize="100px"
             borderRadius="full"
-            src="https://via.placeholder.com/100"
+            src={driver.data?.user.profilePic}
             alt="Profile Image"
           />
           <Center

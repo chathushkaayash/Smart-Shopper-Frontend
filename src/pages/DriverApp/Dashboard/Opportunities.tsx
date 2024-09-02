@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Opportunities = () => {
   const navigate = useNavigate();
-  const opportunities = useOpportunities({});
+  const opportunities = useOpportunities({status: "Pending"});
 
   return (
     <>

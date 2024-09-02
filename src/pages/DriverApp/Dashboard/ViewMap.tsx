@@ -115,7 +115,7 @@ const ViewMap = () => {
     {
       label: "Customer",
       value: (
-        <ConsumerName consumerId={opportunity.data?.consumer.userId ?? 0} />
+        <ConsumerName consumerId={opportunity.data?.consumer.userId || 0} />
       ),
     },
     { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },

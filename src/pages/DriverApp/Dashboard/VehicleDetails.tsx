@@ -15,7 +15,6 @@ const VehicleData = [
   { label: "Vehicle Type", value: "Car" },
   { label: "Vehicle Number", value: "VP 2233" },
   { label: "Vehicle Color", value: "#000000" },
-  { label: "Courier Company Name", value: "FastCourier" },
 ];
 
 const VehicleDetails = () => {

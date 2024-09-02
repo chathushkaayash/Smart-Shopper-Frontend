@@ -1,6 +1,7 @@
-import { Box, HStack, Icon, Stack, Text, VStack } from "@chakra-ui/react";
+import { Box, Card, HStack, Icon, Stack, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import RatingStars from "@/components/Inputs/Rating";
 
 const Ratings = () => {
   const navigate = useNavigate();
@@ -25,12 +26,15 @@ const Ratings = () => {
       </VStack>
       <Box mx="5%" my="2%" borderRadius={15} boxShadow="md" borderWidth={1}>
         <VStack alignItems="flex-start" spacing={4} px={5} py={4} w="full">
-          <Stack w="full">
+          <Stack w="full" gap={5}>
             <Text>No reviews yet</Text>
-            <Text fontSize="lg" fontWeight="bold">
-              Review title
-            </Text>
-            <Text fontSize="md">content</Text>
+            <Card borderWidth={1} p={2} borderColor="gray.300">
+              <Text fontSize="lg" fontWeight="bold">
+                Review title
+              </Text>
+              <RatingStars value={4} /> 
+              <Text fontSize="md">content</Text>
+            </Card>
           </Stack>
         </VStack>
       </Box>
