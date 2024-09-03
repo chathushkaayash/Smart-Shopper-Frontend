@@ -1,3 +1,5 @@
+import useDriver from "@/hooks/useDriver";
+import useAuthStore from "@/state-management/auth/store";
 import {
   Box,
   Divider,
@@ -10,15 +12,18 @@ import {
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-const VehicleData = [
-  { label: "Vehicle Name", value: "Alto" },
-  { label: "Vehicle Type", value: "Car" },
-  { label: "Vehicle Number", value: "VP 2233" },
-  { label: "Vehicle Color", value: "#000000" },
-];
-
 const VehicleDetails = () => {
   const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
+  const driver = useDriver(user?.driverId || 0);
+
+  const VehicleData = [
+    { label: "Vehicle Name", value: driver.data?.vehicleName },
+    { label: "Vehicle Type", value: driver.data?.vehicleType },
+    { label: "Vehicle Number", value: driver.data?.vehicleNumber },
+    { label: "Vehicle Color", value: driver.data?.vehicleColor },
+  ];
+
   return (
     <>
       <VStack h="10vh" px="8vw" pt="3vh" borderWidth={2}>
@@ -46,6 +51,15 @@ const VehicleDetails = () => {
           <Stack key={index} p={1} cursor="pointer">
             <Text>{vehicle.label}</Text>
             <Text>{vehicle.value}</Text>
+                          {vehicle.label === "Vehicle Color" && vehicle.value && (
+                <Box
+                  width="20px"
+                  height="20px"
+                  borderRadius="50%"
+                  bg={vehicle.value}
+                  border="1px solid gray"
+                />
+              )}
           </Stack>
         ))}
       </Stack>
