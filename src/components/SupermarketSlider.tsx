@@ -28,7 +28,7 @@ const LogoSlider = () => {
       <Slider {...settings}>
         {logos.map((logo, index) => (
           <Box key={index} className="container">
-            <Image src={logo} alt="logo" maxH={12} />
+            <Image src={logo} alt="logo" maxH={14} />
           </Box>
         ))}
       </Slider>

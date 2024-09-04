@@ -1,9 +1,8 @@
-import React from 'react';
 import { Box, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import ProfileDetail from "../../components/ConsumerProfile/ProfileDetail";
 import ShippingAddress from "../../components/ConsumerProfile/ShippingAddress";
 
-const ConsumerProfile: React.FC = () => {
+const ConsumerProfile = () => {
   return (
     <Box bg="background" minH="100vh" py={7} px={{ base: 5, md: 20 }}>
       <Box bg="white" p={5} borderRadius={10} boxShadow="md">

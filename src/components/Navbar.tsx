@@ -32,8 +32,12 @@ const Navbar = () => {
   const { user, logout } = useAuthStore();
   const { items, setItems } = useCartStore();
   const { pathname } = useLocation();
-
   const navigate = useNavigate();
+
+  // Call useColorModeValue at the top level
+  const bgColor = useColorModeValue("white", "gray.800");
+  const color = useColorModeValue("gray.600", "white");
+  const borderColor = useColorModeValue("gray.200", "gray.900");
 
   const hideNavbarPaths = ["/driver"];
   const showTopNav = !hideNavbarPaths.some((path) => pathname.startsWith(path));
@@ -55,7 +59,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (cart?.results) setItems(cart.results);
-  }, [cart]);
+  }, [cart, setItems]);
 
   let navItems: NavItem[];
 
@@ -79,14 +83,14 @@ const Navbar = () => {
       {showTopNav && (
         <Flex
           w={"100%"}
-          bg={useColorModeValue("white", "gray.800")}
-          color={useColorModeValue("gray.600", "white")}
+          bg={bgColor}
+          color={color}
           minH={"10vh"}
           py={{ base: 2 }}
           px={{ base: 4 }}
           borderBottom={1}
           borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.900")}
+          borderColor={borderColor}
           align={"center"}
           justifyContent="space-between"
           pos={
@@ -124,7 +128,7 @@ const Navbar = () => {
               <Menu>
                 <MenuButton>
                   <Avatar
-                    name="Dan Abrahmov"
+                    name="Bimsara Jayadewa"
                     src={UserPlaceholder}
                     boxSize={10}
                     cursor="pointer"
@@ -152,7 +156,25 @@ const Navbar = () => {
                       bg: "primary",
                       color: "white",
                     }}
-                    // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
+                    onClick={() => navigate("/overview")}
+                  >
+                    Overview
+                  </MenuItem>
+                  <MenuItem
+                    bg="white"
+                    color="primary"
+                    _hover={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                    }}
+                    _focus={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                      bg: "primary",
+                      color: "white",
+                    }}
                     onClick={() => navigate("/orders")}
                   >
                     Orders
@@ -172,7 +194,25 @@ const Navbar = () => {
                       bg: "primary",
                       color: "white",
                     }}
-                    // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
+                    onClick={() => navigate("/feedbacks")}
+                  >
+                    Feedbacks
+                  </MenuItem>
+                  <MenuItem
+                    bg="white"
+                    color="primary"
+                    _hover={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                    }}
+                    _focus={{
+                      borderRadius: 5,
+                      borderWidth: 2,
+                      borderColor: "orange.500",
+                      bg: "primary",
+                      color: "white",
+                    }}
                     onClick={() => navigate("/profile")}
                   >
                     Profile
@@ -192,7 +232,6 @@ const Navbar = () => {
                       bg: "primary",
                       color: "white",
                     }}
-                    // _active={{ borderRadius: 5, borderWidth: 2, borderColor: "orange.500", bg: "primary", color: "white" }}
                     onClick={logout}
                   >
                     Logout

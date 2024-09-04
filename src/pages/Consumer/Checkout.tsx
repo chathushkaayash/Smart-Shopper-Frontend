@@ -238,39 +238,6 @@ const Checkout = () => {
             <VStack align="stretch" spacing={4}>
               {/* Order Summary */}
               <Box border="1px" borderRadius="md" padding="4">
-                {/* <HStack justify="space-between">
-                  <Image
-                    borderRadius="50%"
-                    src="https://via.placeholder.com/60"
-                    alt="Order Item"
-                  />
-                  <VStack>
-                    <Heading size="md" color="primary">
-                      Arpico Supermarket
-                    </Heading>
-                    <Text>Mirisswaththa, Piliyandala</Text>
-                  </VStack>
-                  
-                  <IconButton
-                    aria-label="Restaurant Info"
-                    icon={<InfoIcon />}
-                    size="md"
-                    variant={"outline"}
-                    colorScheme="white"
-                    border="1px"
-                    borderRadius="12px"
-                    fontSize="15px"
-                    fontWeight="bold"
-                    bg="white"
-                    _hover={{ bg: "primary", color: "white" }}
-                    _active={{
-                      bg: "primary",
-                      color: "white",
-                      transform: "scale(0.98)",
-                      borderColor: "primary",
-                    }}
-                  />
-                </HStack> */}
                 <Heading size="md" color="primary" mb={5}>
                   Supermarket List
                 </Heading>

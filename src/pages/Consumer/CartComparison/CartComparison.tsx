@@ -147,7 +147,8 @@ const CartComparison = () => {
           <Button
             bg={selectedCart === 1 ? "primary" : "white"}
             onClick={() => setSelectedCart(1)}
-            ml={4}
+            ml="12"
+            mr="6"
             color={selectedCart === 1 ? "white" : "primary"}
             borderWidth={2}
             borderColor={selectedCart === 1 ? "primary" : "primary"}
@@ -158,7 +159,7 @@ const CartComparison = () => {
           <Button
             bg={selectedCart === 2 ? "primary" : "white"}
             onClick={() => setSelectedCart(2)}
-            ml={4}
+            ml={6}
             color={selectedCart === 2 ? "white" : "primary"}
             borderWidth={2}
             borderColor={selectedCart === 2 ? "primary" : "primary"}
