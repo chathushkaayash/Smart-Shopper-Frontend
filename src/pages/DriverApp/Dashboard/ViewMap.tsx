@@ -30,29 +30,38 @@ import { useState } from "react";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import APIClient from "@/services/api-client";
 import useConsumer from "@/hooks/useConsumer";
+import useOrder, { SupermarketOrder } from "@/hooks/useOrder";
 
 {
   /**********************************************Supermarket rows component****************************************/
 }
 
 interface SupermarketRowInterface {
-  supermarketId: number;
+  supermarketOrder: SupermarketOrder;
 }
 
-const SupermarketRow = ({ supermarketId }: SupermarketRowInterface) => {
+const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const supermarket = useSupermarket(supermarketId);
+  const supermarket = useSupermarket(supermarketOrder.supermarketId);
   return (
     <>
-      <HStack w="full" cursor="pointer" onClick={onOpen}>
+      <HStack
+        // zIndex={3000}
+        w="full"
+        cursor="pointer"
+        onClick={() => {
+          console.log(1);
+          onOpen();
+        }}
+      >
         <Image src={QR} w="5vw" />
         <Text>{supermarket.data?.address}</Text>
         <Spacer />
         <Icon as={FaPhoneAlt} color="primary" />
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered >
         <ModalOverlay />
-        <ModalContent width="80vw">
+        <ModalContent width="80vw" pos={"absolute"} >
           <ModalCloseButton />
           <ModalBody>
             <VStack p={4}>
@@ -60,7 +69,7 @@ const SupermarketRow = ({ supermarketId }: SupermarketRowInterface) => {
                 {supermarket.data?.address}
                 <br />
               </Text>
-              <Image src={QR} w="40vw" h="40vw" />
+              <Image src={supermarketOrder.qrCode} w="40vw" h="40vw" />
               <HStack>
                 <Text>Call</Text>
                 <Icon as={FaPhoneAlt} color="primary" />
@@ -90,7 +99,7 @@ const ConsumerName = ({ consumerId }: ConsumerInterface) => {
 };
 
 {
-  /**********************************************Viewmap component***************************************************/
+  /********************************************** Viewmap component***************************************************/
 }
 const ViewMap = () => {
   const { id } = useParams();
@@ -98,6 +107,7 @@ const ViewMap = () => {
   const navigate = useNavigate();
   const [showDetails, setShowDetails] = useState(false);
   const opportunity = useOpportunity(Number(id));
+  const order = useOrder(opportunity.data?._orderId || 0);
 
   const formatDateTime = (orderPlacedOn: any) => {
     if (!orderPlacedOn) return "N/A";
@@ -105,8 +115,7 @@ const ViewMap = () => {
     return `${day}/${month}/${year} ${hour}:${minute}`;
   };
 
-  const supermarketsLength =
-    opportunity.data?.opportunitysupermarket.length || 0;
+  const supermarketsLength = order.data?.supermarketOrders.length || 0;
   const orderDetails = [
     {
       label: "Order Placed on",
@@ -152,10 +161,11 @@ const ViewMap = () => {
           cursor="pointer"
           onClick={() => navigate("/driver")}
           zIndex={10}
+          
         >
           <Icon as={IoMdArrowRoundBack} w={8} h={8} />
         </Box>
-        <AspectRatio ratio={9 / 20} h="94vh">
+        <AspectRatio ratio={9 / 20} h="93vh"  style={{ pointerEvents: showDetails ? "none" : "auto" }}>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9029768701894!2d79.85857797499636!3d6.902205493097101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721984297174!5m2!1sen!2slk"
             loading="lazy"
@@ -191,7 +201,7 @@ const ViewMap = () => {
 
         {showDetails && (
           <Box
-            zIndex={20}
+            zIndex={10}
             pos="absolute"
             bg="white"
             bottom="8vh"
@@ -205,8 +215,8 @@ const ViewMap = () => {
                   <Spacer />
                   <Text fontWeight="bold">Call</Text>
                 </HStack>
-                {opportunity.data?.opportunitysupermarket.map((i, index) => (
-                  <SupermarketRow key={index} supermarketId={i.supermarketId} />
+                {order.data?.supermarketOrders.map((i, index) => (
+                  <SupermarketRow key={index} supermarketOrder={i} />
                 ))}
               </Stack>
             </Box>

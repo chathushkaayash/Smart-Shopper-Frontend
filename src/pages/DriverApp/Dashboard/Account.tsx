@@ -32,7 +32,7 @@ const Account = () => {
       label: "Deliveries",
       path: "/driver/deliveries",
     },
-    { Icon: MdStarRate, label: "Ratings", path: "/driver/account/ratings" },
+    { Icon: MdStarRate, label: "Reviews & Ratings", path: "/driver/account/reviews" },
     {
       Icon: MdContactSupport,
       label: "Hepl & Support",

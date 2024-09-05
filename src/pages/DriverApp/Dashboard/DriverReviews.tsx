@@ -5,7 +5,7 @@ import RatingStars from "@/components/Inputs/Rating";
 import useReviews from "@/hooks/reviews/useReviews";
 import useAuthStore from "@/state-management/auth/store";
 
-const Ratings = () => {
+const DriverReviews = () => {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const Reviews = useReviews({
@@ -67,4 +67,4 @@ const Ratings = () => {
   );
 };
 
-export default Ratings;
+export default DriverReviews;

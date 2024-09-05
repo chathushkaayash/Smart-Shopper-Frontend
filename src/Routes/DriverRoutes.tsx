@@ -1,9 +1,9 @@
+import DriverReviews from "@/pages/DriverApp/Dashboard/DriverReviews";
 import loadable from "@loadable/component";
 
 const Home = loadable(() => import("@/pages/DriverApp/Dashboard/Home"));
 const DriverLayout = loadable(() => import("./Layouts/DriverLayout"));
 const Account = loadable(() => import("@/pages/DriverApp/Dashboard/Account"));
-const Ratings = loadable(() => import("@/pages/DriverApp/Dashboard/Ratings"));
 const Support = loadable(() => import("@/pages/DriverApp/Dashboard/Support"));
 const ViewMap = loadable(() => import("@/pages/DriverApp/Dashboard/ViewMap"));
 const Earnings = loadable(() => import("@/pages/DriverApp/Dashboard/Earnings"));
@@ -39,7 +39,7 @@ const DriverRoutes = [
       { path: "driver/account/change-password", element: <ChangePassword /> },
       { path: "driver/account/vehicle", element: <VehicleDetails /> },
       { path: "driver/deliveries", element: <Deliveries /> },
-      { path: "driver/account/ratings", element: <Ratings /> },
+      { path: "driver/account/reviews", element: <DriverReviews /> },
       { path: "driver/account/support", element: <Support /> },
       { path: "driver/opportunities/viewmap/:id", element: <ViewMap /> },
     ],
