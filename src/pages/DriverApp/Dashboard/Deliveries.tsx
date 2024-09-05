@@ -22,6 +22,7 @@ const Deliveries = () => {
     status: "Delivered",
     month: "",
   });
+  
   // console.log(opportunities.data);
   const [isRotated, setIsRotated] = useState(false);
   const displayDetails = () => {

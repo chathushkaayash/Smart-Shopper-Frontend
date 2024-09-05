@@ -4,7 +4,7 @@ import { Consumer } from "./useConsumer";
 
 export interface Opportunity {
   id: string;
-  // opportunitysupermarket: { id: string; supermarketId: number }[];
+  opportunitysupermarket: { id: string; supermarketId: number }[];
   totalDistance: number;
   tripCost: number;
 

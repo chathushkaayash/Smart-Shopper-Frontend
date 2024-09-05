@@ -23,7 +23,7 @@ const ViewOpportunity = () => {
 
   const navigate = useNavigate();
   const opportunity = useOpportunity(Number(id));
-  console.log(opportunity.data);
+
   const supermarketsLength =
     opportunity.data?.opportunitysupermarket.length || 0;
 
@@ -159,3 +159,4 @@ const ViewOpportunity = () => {
 };
 
 export default ViewOpportunity;
+

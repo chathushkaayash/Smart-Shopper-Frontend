@@ -22,7 +22,7 @@ const Opportunities = () => {
             borderRadius="10"
           >
             <VStack align="start">
-              {/* <Text fontWeight="bold">{opportunity.consumer.user}</Text> */}
+              {/* <Text fontWeight="bold">{opportunity.consumer.user.name}</Text> */}
               <HStack>
                 <Icon as={FaLocationDot} color="primary" />{" "}
                 <Text>{opportunity.deliveryLocation}</Text>
@@ -59,3 +59,4 @@ const Opportunities = () => {
 };
 
 export default Opportunities;
+

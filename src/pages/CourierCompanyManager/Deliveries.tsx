@@ -172,6 +172,10 @@ interface DeliveryRowProps {
 const DeliveryRow = ({ opportunity, handleViewClick }: DeliveryRowProps) => {
   const driver = useDriver(opportunity.driverId);
   console.log(driver.data);
+  const formatDateTime = (orderPlacedOn: any) => {
+    const { day, hour, minute, month, year } = orderPlacedOn;
+    return `${day}/${month}/${year}, ${hour}:${minute}`;
+  };
 
   return (
     <Tr>
@@ -179,7 +183,7 @@ const DeliveryRow = ({ opportunity, handleViewClick }: DeliveryRowProps) => {
         <Checkbox />
       </Td>
       <Td>#{opportunity.id}</Td>
-      <Td>{opportunity.orderPlacedOn}</Td>
+      <Td>{formatDateTime(opportunity.orderPlacedOn)}</Td>
       <Td>
         <Text color={opportunity.status === "Active" ? "green.400" : "red.500"}>
           {opportunity.status}
@@ -226,10 +230,10 @@ const PopUp = ({ opportunity }: PopUpProps) => {
             <strong>Order Placed on:</strong> {opportunity.orderPlacedOn}
           </Text>
           <Text>
-            <strong>Customer:</strong> {opportunity.consumer.name}
+            <strong>Customer:</strong> {opportunity.consumer.user.name}
           </Text>
           <Text>
-            <strong>Contact Number:</strong> {opportunity.consumer.phoneNumber}
+            <strong>Contact Number:</strong> {opportunity.consumer.user.number}
           </Text>
           <Text>
             <strong>Delivery Cost:</strong> {opportunity.deliveryCost}
