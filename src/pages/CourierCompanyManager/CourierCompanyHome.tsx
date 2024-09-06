@@ -20,43 +20,13 @@ import {
 import { FaClipboardList, FaTruck, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LineChart from "../../components/Charts/LineChart";
-
-interface Person {
-  name: string;
-  phone: string;
-  completed: number;
-  earnings: string;
-  avatar: string;
-}
-
-const deliveryPersonnel = [
-  {
-    name: "Kaveesha Hettige",
-    phone: "0766345267",
-    completed: 8,
-    earnings: "$34,295",
-    avatar: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Milinda Sandruwan",
-    phone: "0981236782",
-    completed: 1,
-    earnings: "$34,295",
-    avatar: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Bimsara Jaydewa",
-    phone: "0762341567",
-    completed: 8,
-    earnings: "$34,295",
-    avatar: "https://via.placeholder.com/150",
-  },
-];
+import useDrivers from "@/hooks/useDrivers";
+import { Driver } from "@/hooks/useDriver";
 
 const CourierCompanyHome = () => {
   const navigate = useNavigate();
-
-  const handleViewMore = (person: Person) => {
+  const drivers = useDrivers();
+  const handleViewMore = (person: Driver) => {
     navigate("/PersonalDetails", { state: { person } });
   };
 
@@ -117,25 +87,27 @@ const CourierCompanyHome = () => {
               <Tr>
                 <Th>Name</Th>
                 <Th>Contact Number</Th>
-                <Th>Deliveries Completed</Th>
-                <Th>Earnings</Th>
+                <Th>Email</Th>
                 <Th>Actions</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {deliveryPersonnel.map((person, index) => (
+              {drivers.data?.results.map((driver, index) => (
                 <Tr key={index}>
                   <Td>
-                    <Avatar src={person.avatar} size="sm" mr={2} />
-                    {person.name}
+                    <Avatar
+                      src="https://via.placeholder.com/150"
+                      size="sm"
+                      mr={2}
+                    />
+                    {driver.user.name}
                   </Td>
-                  <Td>{person.phone}</Td>
-                  <Td>{person.completed}</Td>
-                  <Td>{person.earnings}</Td>
+                  <Td>{driver.user.number}</Td>
+                  <Td>{driver.user.email}</Td>
                   <Td>
                     <Button
                       colorScheme="orange"
-                      onClick={() => handleViewMore(person)}
+                      onClick={() => handleViewMore(driver)}
                     >
                       View More
                     </Button>

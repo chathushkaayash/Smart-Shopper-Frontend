@@ -39,7 +39,7 @@ const Navbar = () => {
   const color = useColorModeValue("gray.600", "white");
   const borderColor = useColorModeValue("gray.200", "gray.900");
 
-  const hideNavbarPaths = ["/driver"];
+  const hideNavbarPaths = ["/driver/"];
   const showTopNav = !hideNavbarPaths.some((path) => pathname.startsWith(path));
 
   const consumerNavItems: NavItem[] = [

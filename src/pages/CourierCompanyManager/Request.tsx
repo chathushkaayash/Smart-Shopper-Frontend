@@ -182,8 +182,9 @@ const Request = () => {
                 mr={10}
                 border="2px"
                 borderColor="primary"
+                onClick={onClose}
               >
-                Decline
+                Back
               </Button>
               <Button
                 type="submit"

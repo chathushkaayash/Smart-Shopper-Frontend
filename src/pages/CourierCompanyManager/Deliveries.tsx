@@ -36,6 +36,7 @@ import { Opportunity } from "@/hooks/useOpportunity";
 import Stars from "../../assets/CourierCompany/stars.svg";
 import MiddleContainer from "../../components/Containers/MiddleContainer";
 import useDriver from "@/hooks/useDriver";
+import useConsumer from "@/hooks/useConsumer";
 
 const Deliveries = () => {
   const [selectedOpportunity, setSelectedOpportunity] = useState<Opportunity>();
@@ -171,7 +172,7 @@ interface DeliveryRowProps {
 
 const DeliveryRow = ({ opportunity, handleViewClick }: DeliveryRowProps) => {
   const driver = useDriver(opportunity.driverId);
-  console.log(driver.data);
+
   const formatDateTime = (orderPlacedOn: any) => {
     const { day, hour, minute, month, year } = orderPlacedOn;
     return `${day}/${month}/${year}, ${hour}:${minute}`;
@@ -218,6 +219,12 @@ interface PopUpProps {
 }
 
 const PopUp = ({ opportunity }: PopUpProps) => {
+  const formatDateTime = (orderPlacedOn: any) => {
+    const { day, hour, minute, month, year } = orderPlacedOn;
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  };
+  const consumer = useConsumer(opportunity.consumer.userId);
+
   return (
     <Box>
       <Box borderWidth="2px" borderRadius="lg" p={4} mb={4}>
@@ -227,13 +234,15 @@ const PopUp = ({ opportunity }: PopUpProps) => {
 
         <Box mb={4}>
           <Text>
-            <strong>Order Placed on:</strong> {opportunity.orderPlacedOn}
+            <strong>Order Placed on:</strong>{" "}
+            {formatDateTime(opportunity.orderPlacedOn)}
+          </Text>
+
+          <Text>
+            <strong>Customer:</strong> {consumer.data?.user.name}
           </Text>
           <Text>
-            <strong>Customer:</strong> {opportunity.consumer.user.name}
-          </Text>
-          <Text>
-            <strong>Contact Number:</strong> {opportunity.consumer.user.number}
+            <strong>Contact Number:</strong> {consumer.data?.user.number}
           </Text>
           <Text>
             <strong>Delivery Cost:</strong> {opportunity.deliveryCost}
