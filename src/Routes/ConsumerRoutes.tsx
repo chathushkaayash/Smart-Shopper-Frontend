@@ -20,7 +20,7 @@ const CartComparison = loadable(
 );
 const ViewProduct = loadable(() => import("@/pages/Consumer/ViewProduct"));
 const AboutUs = loadable(() => import("@/pages/Public/AboutUs"));
-const Overview = loadable(() => import("@/pages/Consumer/Overview"));
+const ConsumerOverview = loadable(() => import("@/pages/Consumer/ConsumerOverview"));
 
 const ConsumerRoutes = [
   {
@@ -33,7 +33,7 @@ const ConsumerRoutes = [
       { path: "payment-success/:id", element: <ConsumerPaymentSuccessful /> },
       { path: "checkout", element: <ConsumerCheckout /> },
       { path: "cart-comparison", element: <CartComparison /> },
-      { path: "overview", element: <Overview />},
+      { path: "Consumer_overview", element: <ConsumerOverview />},
       { path: "about", element: <AboutUs /> },
       {
         path: "reviews/supermarket_item/:id",

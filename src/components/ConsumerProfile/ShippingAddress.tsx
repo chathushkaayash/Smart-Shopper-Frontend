@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useAuthStore from "@/state-management/auth/store";
 import {
   Box,
   Button,
@@ -22,19 +23,8 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
-const ShippingAddress: React.FC<{
-  addressLine1?: string;
-  addressLine2?: string;
-  district?: string;
-  city?: string;
-  phoneNumber?: string;
-}> = ({
-  addressLine1 = "73/c Koskanda, Halthota",
-  addressLine2 = "43/B Nawala, Rajagiriya",
-  district = "Colombo",
-  city = "Piliyandala",
-  phoneNumber = "0719944045",
-}) => {
+const ShippingAddress = () => {
+  const { user } = useAuthStore();
   const { isOpen: isAdd, onOpen: onAdd, onClose: onAddClose } = useDisclosure();
   const {
     isOpen: isConfirmOpen,
@@ -109,7 +99,7 @@ const ShippingAddress: React.FC<{
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{addressLine1}</Text>
+            <Text color="gray.800">{user?.consumerId}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -117,7 +107,7 @@ const ShippingAddress: React.FC<{
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{addressLine2}</Text>
+            <Text color="gray.800">{user?.consumerId}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -125,7 +115,7 @@ const ShippingAddress: React.FC<{
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{district}</Text>
+            <Text color="gray.800">{user?.consumerId}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -133,7 +123,7 @@ const ShippingAddress: React.FC<{
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{city}</Text>
+            <Text color="gray.800">{user?.consumerId}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -141,7 +131,7 @@ const ShippingAddress: React.FC<{
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{phoneNumber}</Text>
+            <Text color="gray.800">{user?.number}</Text>
           </GridItem>
         </Grid>
       </VStack>

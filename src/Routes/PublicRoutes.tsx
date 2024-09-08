@@ -1,5 +1,4 @@
 import QrScanner from "@/components/Qr/QrScanner";
-import AboutPage from "@/pages/Public/AboutUs";
 import Test from "@/pages/Test";
 import loadable from "@loadable/component";
 
@@ -14,6 +13,7 @@ const DriverRegister = loadable(
 );
 const Login = loadable(() => import("@/pages/Login"));
 const SignUp = loadable(() => import("@/pages/SignUp"));
+const AboutPage = loadable(() => import("@/pages/Public/AboutUs"));
 
 const PublicLayout = loadable(() => import("./Layouts/PublicLayout"));
 

@@ -11,11 +11,14 @@ import {
   Icon,
   Button,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import Footer from "@/components/Footer";
+import ActionButton from "@/components/Buttons/ActionButton";
+import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
+import useSuperMarkets from "@/hooks/useSupermarkets";
+
 import OrderFood from "../../assets/AboutUs/Order food-pana.svg";
 import GroceryShopping from "../../assets/AboutUs/Grocery shopping-amico (1).svg";
-import ActionButton from "@/components/Buttons/ActionButton";
-
 import Keels from "../../assets/supermarket-icons/Keels.svg";
 import Spar from "../../assets/supermarket-icons/Spar.svg";
 import Arpico from "../../assets/supermarket-icons/Arpico.svg";
@@ -25,7 +28,7 @@ import Laughs from "../../assets/supermarket-icons/laughs.svg";
 import { PhoneIcon, EmailIcon, InfoIcon } from "@chakra-ui/icons";
 
 interface StatProps {
-  number: string;
+  number: number;
   label: string;
 }
 
@@ -39,6 +42,16 @@ const Stat = ({ number, label }: StatProps) => (
 );
 
 const AboutPage = () => {
+
+  const [consumerQuery] = useState<ConsumerQuery>(
+    {} as ConsumerQuery
+  );
+  const consumers = useConsumers(consumerQuery);
+  const totalConsumers = consumers.data?.results.length || 0;
+
+  const supermarkets = useSuperMarkets();
+  const totalSupermarkets = supermarkets.data?.results.length || 0;
+
   return (
     <>
       <Container maxW="container.xl" py={9} px="5vw">
@@ -99,10 +112,10 @@ const AboutPage = () => {
         </Grid>
 
         <SimpleGrid columns={{ base: 2, md: 4 }} gap={5} mb="10vh">
-          <Stat number="15K" label="Happy Customers" />
-          <Stat number="150K" label="Monthly Visitors" />
-          <Stat number="15" label="Major Supermarkets" />
-          <Stat number="100+" label="Categories" />
+          <Stat number={totalConsumers} label="Happy Customers" />
+          <Stat number={totalConsumers} label="Monthly Visitors" />
+          <Stat number={totalSupermarkets} label="Major Supermarkets" />
+          <Stat number={totalConsumers} label="Categories" />
         </SimpleGrid>
 
         <VStack>

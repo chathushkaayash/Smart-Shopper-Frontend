@@ -1,8 +1,34 @@
+// src/pages/ConsumerProfile.tsx
 import { Box, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import ProfileDetail from "../../components/ConsumerProfile/ProfileDetail";
 import ShippingAddress from "../../components/ConsumerProfile/ShippingAddress";
+import { useQuery } from "@tanstack/react-query";
+import APIClient from "@/services/api-client";
 
+export interface Activity {
+  id: number;
+  description: string;
+  date: string;
+  time: string;
+}
 const ConsumerProfile = () => {
+  const activityClient = new APIClient<Activity>("/activities");
+
+  // Fetch activities using react-query
+  const fetchActivities = async () => {
+    const { results } = await activityClient.getAll({});
+    return results;
+  };
+
+  const {
+    data: activities,
+    isLoading,
+    error,
+  } = useQuery(["activities"], fetchActivities);
+
+  if (isLoading) return <Text>Loading activities...</Text>;
+  if (error) return <Text>Error loading activities</Text>;
+
   return (
     <Box bg="background" minH="100vh" py={7} px={{ base: 5, md: 20 }}>
       <Box bg="white" p={5} borderRadius={10} boxShadow="md">
@@ -15,7 +41,7 @@ const ConsumerProfile = () => {
             <ProfileDetail />
           </GridItem>
           <GridItem rowSpan={{ base: 1, md: 2 }} colSpan={1} p={3}>
-          <Box
+            <Box
               pb={5}
               borderWidth={1}
               borderRadius="10px"
@@ -34,22 +60,10 @@ const ConsumerProfile = () => {
                 Your Activities
               </Text>
               <VStack gap={0} pl={4} pr={4}>
-                {[
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",},
-                  { description: "Submitted report", date: "2024-06-30", time: "17:00",}
-                ].map((item, index) => (
+                {activities?.map((item) => (
                   <Box
                     w="full"
-                    key={index}
+                    key={item.id}
                     px={4}
                     py={2}
                     borderWidth={0.7}
@@ -91,4 +105,3 @@ const ConsumerProfile = () => {
 };
 
 export default ConsumerProfile;
-
