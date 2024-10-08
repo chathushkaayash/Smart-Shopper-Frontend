@@ -1,7 +1,7 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 
-const apiClient = new APIClient<{ name: string; earning: number }>(
+const apiClient = new APIClient<{ name: string; earnings: number }>(
   "stats/supermarket_earnings"
 );
 
