@@ -1,9 +1,4 @@
-import {
-  Box,
-  HStack,
-  Show,
-  VStack
-} from "@chakra-ui/react";
+import { Box, HStack, Show, VStack } from "@chakra-ui/react";
 import ProductGrid from "../../components/ProductGrid";
 
 import DropDown from "@/components/Buttons/DropDown";
@@ -42,8 +37,9 @@ const ConsumerHome = () => {
             />
             <FilterProducts />
           </VStack>
-
-          <ProductGrid />
+          <Box>
+            <ProductGrid />
+          </Box>
         </VStack>
         <Footer />
       </Box>

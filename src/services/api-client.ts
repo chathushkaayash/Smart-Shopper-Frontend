@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 
 export interface FetchResponse<T> {
   count: number;
-  next: string | null;
+  next: boolean | null;
   results: T[];
 }
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;

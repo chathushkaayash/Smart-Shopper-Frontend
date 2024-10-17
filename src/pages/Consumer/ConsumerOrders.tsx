@@ -161,7 +161,7 @@ const ConsumerOrders = () => {
                       aria-label="View Order"
                       variant="outline"
                       colorScheme="blue"
-                      onClick={() => navigate("/view-orders/" + order.id)}
+                      onClick={() => navigate("/orders/" + order.id)}
                       mr={2}
                     />
                     <IconButton

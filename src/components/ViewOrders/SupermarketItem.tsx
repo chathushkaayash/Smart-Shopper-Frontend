@@ -1,6 +1,6 @@
 import { OrderItem } from "@/hooks/useOrder";
 import useProduct from "@/hooks/useProduct";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 const SupermarketItem = ({ orderItem, onAddReviewOpen }: Props) => {
   const product = useProduct(orderItem.productId);
-  const supermarket = useSupermarket(orderItem.supermarketId);
+  const supermarket = useSupermarket([orderItem.supermarketId]);
 
   return (
     <Flex
@@ -36,8 +36,8 @@ const SupermarketItem = ({ orderItem, onAddReviewOpen }: Props) => {
       </Flex>
       <Flex alignItems="center" gap={4}>
         <Image
-          src={supermarket.data?.logo}
-          alt={supermarket.data?.name}
+          src={supermarket[0].data?.logo}
+          alt={supermarket[0].data?.name}
           objectFit={"contain"}
           boxSize="50px"
         />

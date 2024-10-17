@@ -15,11 +15,12 @@ const useProducts = () => {
       apiClient
         .getAll({
           params: {
-            category: productQuery.category,
-            price: productQuery.price,
-            ordering: productQuery.sortOrder,
-            searchText: productQuery.searchText,
+            category: productQuery.category || "",
+            price: productQuery.price || 0.0,
+            ordering: productQuery.sortOrder || "",
+            searchText: productQuery.searchText || "",
             page: pageParam,
+            _limit: 20,
           },
         })
         .catch((err) => {
@@ -30,7 +31,7 @@ const useProducts = () => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    staleTime: 1000 * 60 * 2, // 2 minutes
     retry: 0,
   });
 };

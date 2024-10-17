@@ -6,41 +6,31 @@ import {
   GridItem,
   Heading,
   Image,
-  Text
+  Text,
 } from "@chakra-ui/react";
 
 import { AiOutlineClose } from "react-icons/ai";
 
 import useProduct from "@/hooks/useProduct";
-import useSupermarket from "@/hooks/useSupermarket";
-import APIClient from "@/services/api-client";
-import { useQueryClient } from "@tanstack/react-query";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { useNavigate } from "react-router-dom";
 import QuantityChanger from "./QuantityChanger";
-import { CartItem } from "@/hooks/useCartItem";
+import useDeleteCartItems from "@/services/Cart/useDeleteCartItem";
+import { CartItem } from "@/services/Cart/useCartItems";
 
 interface Props {
   cartItem: CartItem;
 }
-const apiClient = new APIClient<CartItem>("/carts");
 
 const CartItemCard = ({ cartItem }: Props) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const deleteCartItem = useDeleteCartItems();
 
   if (!cartItem) return null;
   const product = useProduct(cartItem.supermarketItem?.productId || 0);
-  const supermarket = useSupermarket(
-    cartItem.supermarketItem?.supermarketId || 0
-  );
-
-  const removeCartItem = (item: CartItem) => {
-    console.log(item);
-    if (item.id)
-      apiClient
-        .delete(item.id)
-        .then(() => queryClient.invalidateQueries({ queryKey: ["carts"] }));
-  };
+  const supermarket = useSupermarket([
+    cartItem.supermarketItem?.supermarketId || 0,
+  ]);
 
   return (
     <Card
@@ -70,8 +60,8 @@ const CartItemCard = ({ cartItem }: Props) => {
               py={1}
               h={10}
               objectFit="cover"
-              src={supermarket.data?.logo}
-              alt="Dan Abramov"
+              src={supermarket[0].data?.logo}
+              alt="supermarket logo"
             />
             <Text
               fontSize="sm"
@@ -107,7 +97,7 @@ const CartItemCard = ({ cartItem }: Props) => {
           /> */}
           <AiOutlineClose
             fontSize={20}
-            onClick={() => removeCartItem(cartItem)}
+            onClick={() => deleteCartItem.mutate(cartItem.id)}
           />
         </GridItem>
       </Grid>

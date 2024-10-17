@@ -13,15 +13,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import useCartStore from "@/state-management/cart/store";
 import { CiBookmark } from "react-icons/ci";
 import ComparisonItem from "./ComparisonItem";
 import OptimizedInfo from "./OptimizedInfo";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useCartItems from "@/services/Cart/useCartItems";
 
 const CartComparison = () => {
-  const cartItems = useCartStore((state) => state.items);
+  const { data: cartItems } = useCartItems();
   const navigate = useNavigate();
   const [selectedCart, setSelectedCart] = useState(1);
 
@@ -63,12 +63,12 @@ const CartComparison = () => {
                 gap={5}
                 divider={<Divider borderColor="gray.400" />}
               >
-                {cartItems.map((item, index) => (
+                {cartItems?.results.map((item, index) => (
                   <ComparisonItem key={index} cartItem={item} />
                 ))}
               </VStack>
-              <Divider borderColor="gray.400" mb={3}/>
-              {cartItems.length >= 4 && (
+              <Divider borderColor="gray.400" mb={3} />
+              {cartItems && cartItems.results.length >= 4 && (
                 <Button width="lg" bg="primary" color="white" mt={4} mb={4}>
                   View More
                 </Button>
@@ -82,7 +82,7 @@ const CartComparison = () => {
                   ></iframe>
                 </AspectRatio>
               </Box>
-              <OptimizedInfo index={1} cartItems={cartItems} />
+              <OptimizedInfo index={1} cartItems={cartItems?.results || []} />
             </VStack>
           </Box>
         </GridItem>
@@ -117,12 +117,12 @@ const CartComparison = () => {
                 gap={5}
                 divider={<Divider borderColor="gray.400" />}
               >
-                {cartItems.map((item, index) => (
+                {cartItems?.results.map((item, index) => (
                   <ComparisonItem key={index} cartItem={item} />
                 ))}
               </VStack>
-              <Divider borderColor="gray.400" mb={3}/>
-              {cartItems.length > 4 && (
+              <Divider borderColor="gray.400" mb={3} />
+              {(cartItems?.results.length || 0) > 4 && (
                 <Button width="lg" bg="primary" color="white" mt={4} mb={4}>
                   View More
                 </Button>
@@ -136,7 +136,7 @@ const CartComparison = () => {
                   ></iframe>
                 </AspectRatio>
               </Box>
-              <OptimizedInfo index={2} cartItems={cartItems} />
+              <OptimizedInfo index={2} cartItems={cartItems?.results || []} />
             </VStack>
           </Box>
         </GridItem>

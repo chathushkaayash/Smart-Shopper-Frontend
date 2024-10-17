@@ -7,7 +7,6 @@ type TextButtonProps = {
 };
 
 const TextButton = ({ text, hoverColor, onClick }: TextButtonProps) => {
-  console.log(hoverColor);
   return (
     <Button
       type="submit"

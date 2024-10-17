@@ -1,5 +1,5 @@
 import useOpportunities from "@/hooks/useOpportunities";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
@@ -7,7 +7,9 @@ import { useState } from "react";
 interface SupermarketRowInterface {
   supermarketId: number;
 }
-export const SupermarketAddress = ({ supermarketId }: SupermarketRowInterface) => {
+export const SupermarketAddress = ({
+  supermarketId,
+}: SupermarketRowInterface) => {
   const supermarket = useSupermarket(supermarketId);
   return (
     <Text as="span" fontWeight="bold">
@@ -22,7 +24,7 @@ const Deliveries = () => {
     status: "Delivered",
     month: "",
   });
-  
+
   // console.log(opportunities.data);
   const [isRotated, setIsRotated] = useState(false);
   const displayDetails = () => {

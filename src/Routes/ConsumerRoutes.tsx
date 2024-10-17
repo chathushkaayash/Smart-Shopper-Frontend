@@ -1,8 +1,6 @@
 import loadable from "@loadable/component";
 
-const ConsumerCartDetails = loadable(
-  () => import("@/pages/Consumer/CartDetails")
-);
+const ConsumerCartDetails = loadable(() => import("@/pages/Consumer/ViewCart"));
 const ConsumerProfile = loadable(
   () => import("@/pages/Consumer/ConsumerProfile")
 );
@@ -14,7 +12,7 @@ const ConsumerPaymentSuccessful = loadable(
   () => import("@/pages/Consumer/PaymentSuccessful")
 );
 const ConsumerLayout = loadable(() => import("./Layouts/ConsumerLayout"));
-const ConsumerCheckout = loadable(() => import("@/pages/Consumer/Checkout"));
+const ConsumerCheckout = loadable(() => import("@/pages/Consumer/Checkout/Checkout"));
 const CartComparison = loadable(
   () => import("@/pages/Consumer/CartComparison/CartComparison")
 );

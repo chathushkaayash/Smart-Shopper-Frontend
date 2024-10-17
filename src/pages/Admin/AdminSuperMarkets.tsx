@@ -24,12 +24,12 @@ import {
   Thead,
   Tr,
   useDisclosure,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 
 import useOrders from "@/hooks/useOrders";
-import { SupermarketWithRelations } from "@/hooks/useSupermarket";
-import useSuperMarkets from "@/hooks/useSupermarkets";
+import { SupermarketWithRelations } from "@/services/Supermarket/useSupermarket";
+import useSuperMarkets from "@/services/Supermarket/useSupermarkets";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaCartFlatbed, FaLocationDot } from "react-icons/fa6";
@@ -91,7 +91,7 @@ const AdminSuperMarkets = () => {
             alignItems="center"
             justifyContent="center"
           >
-            <PieChart  chartData={earnings} labels={names} />
+            <PieChart chartData={earnings} labels={names} />
           </Box>
 
           {/*

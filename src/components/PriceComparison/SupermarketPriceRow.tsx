@@ -1,5 +1,5 @@
-import useReviews from "@/hooks/reviews/useReviews";
-import useSupermarket from "@/hooks/useSupermarket";
+import useReviews from "@/services/Reviews/useReviews";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { SupermarketItem } from "@/hooks/useSupermarketItems";
 import {
   Box,
@@ -25,8 +25,8 @@ const SupermarketPriceRow = ({
   onClick,
 }: Props) => {
   const supermarket = supermarketItem?.supermarketId
-    ? useSupermarket(supermarketItem?.supermarketId)
-    : { data: null, isLoading: false, error: null };
+    ? useSupermarket([supermarketItem?.supermarketId])
+    : [{ data: null, isLoading: false, error: null }];
 
   const reviews = useReviews({
     reviewType: "supermarketItem",
@@ -53,14 +53,14 @@ const SupermarketPriceRow = ({
       cursor="pointer"
       divider={<Divider borderColor="gray.400" h="8vh" w="fit-content" />}
     >
-      <Image src={supermarket.data?.logo || ""} w="6vw" />
+      <Image src={supermarket[0].data?.logo || ""} w="6vw" />
       <VStack gap={3} w="20vw">
         <HStack gap={10} lineHeight={0.1} w="full">
           <Stack>
             <Text fontSize="xs" color="gray">
               Name
             </Text>
-            <Heading fontSize="lg">{supermarket.data?.name}</Heading>
+            <Heading fontSize="lg">{supermarket[0].data?.name}</Heading>
           </Stack>
           <Stack>
             <Text fontSize="xs" color="gray">
@@ -74,7 +74,10 @@ const SupermarketPriceRow = ({
             Reviews
           </Text>
           <Box>
-            <RatingStars value={totalStars / reviewCount} reviews={reviewCount} />
+            <RatingStars
+              value={totalStars / reviewCount}
+              reviews={reviewCount}
+            />
           </Box>
         </Stack>
       </VStack>

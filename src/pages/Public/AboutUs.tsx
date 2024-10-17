@@ -15,7 +15,7 @@ import { useState } from "react";
 import Footer from "@/components/Footer";
 import ActionButton from "@/components/Buttons/ActionButton";
 import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
-import useSuperMarkets from "@/hooks/useSupermarkets";
+import useSuperMarkets from "@/services/Supermarket/useSupermarkets";
 
 import OrderFood from "../../assets/AboutUs/Order food-pana.svg";
 import GroceryShopping from "../../assets/AboutUs/Grocery shopping-amico (1).svg";
@@ -42,10 +42,7 @@ const Stat = ({ number, label }: StatProps) => (
 );
 
 const AboutPage = () => {
-
-  const [consumerQuery] = useState<ConsumerQuery>(
-    {} as ConsumerQuery
-  );
+  const [consumerQuery] = useState<ConsumerQuery>({} as ConsumerQuery);
   const consumers = useConsumers(consumerQuery);
   const totalConsumers = consumers.data?.results.length || 0;
 

@@ -2,7 +2,7 @@ import { Box, Card, HStack, Icon, Stack, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import RatingStars from "@/components/Inputs/Rating";
-import useReviews from "@/hooks/reviews/useReviews";
+import useReviews from "@/services/Reviews/useReviews";
 import useAuthStore from "@/state-management/auth/store";
 
 const DriverReviews = () => {

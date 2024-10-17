@@ -3,7 +3,6 @@ import IconButton from "@/components/Buttons/IconButton";
 import TextButton from "@/components/Buttons/TextButton";
 import CartItemCard from "@/components/CartItemCard";
 import MiddleContainer from "@/components/Containers/MiddleContainer";
-import useCartStore from "@/state-management/cart/store";
 import { AddIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -20,14 +19,15 @@ import {
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import cartImage from "../../assets/cart.png";
+import useCartItems from "@/services/Cart/useCartItems";
 
-const CartDetails = () => {
+const ViewCart = () => {
   const navigate = useNavigate();
-  const { items } = useCartStore();
+  const { data: cartItems } = useCartItems();
 
   // generate a list of unique supermarket ids
   const supermarketIdList: number[] = [];
-  items.forEach((item) => {
+  cartItems?.results.forEach((item) => {
     const supermarketId = item.supermarketItem?.supermarketId;
     if (supermarketId) {
       if (!supermarketIdList.includes(supermarketId)) {
@@ -36,15 +36,16 @@ const CartDetails = () => {
     }
   });
 
-  let totalAmount: number = items.reduce(
-    (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
-    0
-  );
+  let totalAmount: number =
+    cartItems?.results.reduce(
+      (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
+      0
+    ) || 0;
   totalAmount = Number((Math.round(totalAmount * 100) / 100).toFixed(2));
 
   return (
     <MiddleContainer width="90vw" bg="background" height="fit-content">
-      {items.length === 0 ? (
+      {cartItems?.results.length === 0 ? (
         <EmptyCart />
       ) : (
         <Grid
@@ -84,7 +85,7 @@ const CartDetails = () => {
               </Link>
             </Flex>
             <VStack spacing={5} mt={10}>
-              {items.map((item, index) => (
+              {cartItems?.results.map((item, index) => (
                 <CartItemCard key={index} cartItem={item} />
               ))}
             </VStack>
@@ -166,4 +167,4 @@ const EmptyCart = () => {
   );
 };
 
-export default CartDetails;
+export default ViewCart;

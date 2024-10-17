@@ -1,26 +1,25 @@
+import useCartItems from "@/services/Cart/useCartItems";
 import useAuthStore from "@/state-management/auth/store";
-import useCartStore from "@/state-management/cart/store";
 import {
   Avatar,
   Box,
   Flex,
+  Hide,
   HStack,
   Icon,
   Image,
-  Text,
-  useColorModeValue,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
+  MenuList,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import UserPlaceholder from "../assets/avatar-placeholder.png";
 import Banner from "../assets/smart-shopper-banner.svg";
 import ActionButton from "./Buttons/ActionButton";
-import useCart from "@/hooks/useCart";
-import { useEffect } from "react";
-import UserPlaceholder from "../assets/avatar-placeholder.png";
 
 interface NavItem {
   text: string;
@@ -28,9 +27,8 @@ interface NavItem {
 }
 
 const Navbar = () => {
-  const { data: cart } = useCart();
   const { user, logout } = useAuthStore();
-  const { items, setItems } = useCartStore();
+  const { data: cartItems } = useCartItems();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -56,10 +54,6 @@ const Navbar = () => {
   ];
 
   const adminNavItems: NavItem[] = [];
-
-  useEffect(() => {
-    if (cart?.results) setItems(cart.results);
-  }, [cart, setItems]);
 
   let navItems: NavItem[];
 
@@ -111,19 +105,23 @@ const Navbar = () => {
               cursor="pointer"
             />
 
-            {navItems.map((item) => (
-              <Link to={item.path} key={item.text}>
-                <Text
-                  fontSize="lg"
-                  fontWeight="bold"
-                  textDecoration={pathname === item.path ? "underline 2px" : ""}
-                  color={pathname === item.path ? "primary" : ""}
-                  textDecorationColor="primary"
-                >
-                  {item.text}
-                </Text>
-              </Link>
-            ))}
+            <Hide below="md">
+              {navItems.map((item) => (
+                <Link to={item.path} key={item.text}>
+                  <Text
+                    fontSize="lg"
+                    fontWeight="bold"
+                    textDecoration={
+                      pathname === item.path ? "underline 2px" : ""
+                    }
+                    color={pathname === item.path ? "primary" : ""}
+                    textDecorationColor="primary"
+                  >
+                    {item.text}
+                  </Text>
+                </Link>
+              ))}
+            </Hide>
           </HStack>
 
           {user ? (
@@ -344,7 +342,7 @@ const Navbar = () => {
                     bg="primary"
                     rounded={"full"}
                   >
-                    {items.length}
+                    {cartItems?.results.length}
                   </Text>
                 </Box>
               )}

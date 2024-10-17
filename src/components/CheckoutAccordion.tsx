@@ -1,9 +1,9 @@
-import useCart from "@/hooks/useCart";
-import { CartItem } from "@/hooks/useCartItem";
 import useProduct from "@/hooks/useProduct";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
+import useCartItems, { CartItem } from "@/services/Cart/useCartItems";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import {
+  Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
@@ -12,12 +12,70 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import { Supermarket } from "@/services/types";
 
-interface Props {
-  supermarketId: number;
-}
+const CheckoutAccordion = () => {
+  const { data: cartItems } = useCartItems();
 
-// ProductAccordionItem function component
+  // ----------------------------- Grouping Cart Items By Supermarkets -----------------------------
+  const cartItemMap: Map<number, CartItem[]> = new Map();
+
+  cartItems?.results.forEach((item) => {
+    const supermarketId = item.supermarketItem?.supermarketId;
+    if (supermarketId) {
+      if (!cartItemMap.has(supermarketId)) {
+        cartItemMap.set(supermarketId, []);
+      }
+      cartItemMap.get(supermarketId)?.push(item);
+    }
+  });
+
+  // ----------------------------- Fetching Supermarket Data -----------------------------
+  const supermarketIds = Array.from(cartItemMap.keys());
+
+  const supermarkets = useSupermarket(supermarketIds);
+  const supermarketMap: Map<number, Supermarket> = new Map();
+  supermarkets.forEach((supermarket) => {
+    if (supermarket.data) {
+      supermarketMap.set(supermarket.data.id, supermarket.data);
+    }
+  });
+
+  return (
+    <Accordion allowToggle>
+      {Array.from(cartItemMap.keys()).map((i, index) => (
+        <AccordionItem key={index}>
+          {({ isExpanded }) => (
+            <>
+              <h2>
+                <AccordionButton>
+                  <HStack as="span" flex="1" textAlign="left">
+                    <Text>{supermarketMap.get(i)?.address}</Text>
+                    <Image src={supermarketMap.get(i)?.logo} w={"4vw"} />
+                  </HStack>
+                  {isExpanded ? (
+                    <MinusIcon fontSize="12px" />
+                  ) : (
+                    <AddIcon fontSize="12px" />
+                  )}
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                {cartItemMap.get(i)?.map((item, index) => (
+                  <ProductAccordionItem key={index} cartItem={item} />
+                ))}
+              </AccordionPanel>
+            </>
+          )}
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default CheckoutAccordion;
+
+// ---------------------------------- Product Accordion Item ----------------------------------
 interface ProductAccordionItemProps {
   cartItem: CartItem;
 }
@@ -25,10 +83,9 @@ interface ProductAccordionItemProps {
 const ProductAccordionItem = ({ cartItem }: ProductAccordionItemProps) => {
   const product = useProduct(cartItem.supermarketItem?.productId || 0);
 
-
   return (
     <HStack justifyContent="space-between">
-      <HStack>
+      <HStack h="8vh">
         <Image src={product.data?.imageUrl} w={"3vw"} />
         <Text>{product.data?.name.slice(0, 15)}...</Text>
       </HStack>
@@ -40,43 +97,3 @@ const ProductAccordionItem = ({ cartItem }: ProductAccordionItemProps) => {
     </HStack>
   );
 };
-
-const CheckoutAccordion = ({ supermarketId }: Props) => {
-  const { data: cart } = useCart();
-  const supermarket = useSupermarket(supermarketId);
-
-  const filteredItems = cart?.results.filter(
-    (item) => item.supermarketItem?.supermarketId === supermarketId
-  );
-
-  console.log(filteredItems);
-
-  return (
-    <AccordionItem>
-      {({ isExpanded }) => (
-        <>
-          <h2>
-            <AccordionButton>
-              <HStack as="span" flex="1" textAlign="left">
-                <Text>{supermarket.data?.name}</Text>
-                <Image src={supermarket.data?.logo} w={"4vw"} />
-              </HStack>
-              {isExpanded ? (
-                <MinusIcon fontSize="12px" />
-              ) : (
-                <AddIcon fontSize="12px" />
-              )}
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            {filteredItems?.map((item, index) => (
-              <ProductAccordionItem key={index} cartItem={item} />
-            ))}
-          </AccordionPanel>
-        </>
-      )}
-    </AccordionItem>
-  );
-};
-
-export default CheckoutAccordion;

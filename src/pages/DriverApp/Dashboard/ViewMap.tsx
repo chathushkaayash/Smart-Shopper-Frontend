@@ -25,7 +25,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import QR from "@/assets/qr_code.png";
 
 import useOpportunity from "@/hooks/useOpportunity";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { useState } from "react";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import APIClient from "@/services/api-client";
@@ -42,7 +42,7 @@ interface SupermarketRowInterface {
 
 const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const supermarket = useSupermarket(supermarketOrder.supermarketId);
+  const supermarket = useSupermarket([supermarketId]);
   return (
     <>
       <HStack
@@ -55,18 +55,18 @@ const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
         }}
       >
         <Image src={QR} w="5vw" />
-        <Text>{supermarket.data?.address}</Text>
+        <Text>{supermarket[0].data?.address}</Text>
         <Spacer />
         <Icon as={FaPhoneAlt} color="primary" />
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered >
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent width="80vw" pos={"absolute"} >
+        <ModalContent width="80vw" pos={"absolute"}>
           <ModalCloseButton />
           <ModalBody>
             <VStack p={4}>
               <Text as="span" fontWeight="bold">
-                {supermarket.data?.address}
+                {supermarket[0].data?.address}
                 <br />
               </Text>
               <Image src={supermarketOrder.qrCode} w="40vw" h="40vw" />
@@ -75,7 +75,7 @@ const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
                 <Icon as={FaPhoneAlt} color="primary" />
               </HStack>
               <Text as="span" fontWeight="bold">
-                {supermarket.data?.contactNo}
+                {supermarket[0].data?.contactNo}
                 <br />
               </Text>
             </VStack>
@@ -161,11 +161,14 @@ const ViewMap = () => {
           cursor="pointer"
           onClick={() => navigate("/driver")}
           zIndex={10}
-          
         >
           <Icon as={IoMdArrowRoundBack} w={8} h={8} />
         </Box>
-        <AspectRatio ratio={9 / 20} h="93vh"  style={{ pointerEvents: showDetails ? "none" : "auto" }}>
+        <AspectRatio
+          ratio={9 / 20}
+          h="93vh"
+          style={{ pointerEvents: showDetails ? "none" : "auto" }}
+        >
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9029768701894!2d79.85857797499636!3d6.902205493097101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721984297174!5m2!1sen!2slk"
             loading="lazy"

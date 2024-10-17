@@ -2,12 +2,12 @@ import { Box, Text, VStack } from "@chakra-ui/react";
 
 import SupermarketPriceRow from "./SupermarketPriceRow";
 
-import { SupermarketItem } from "@/hooks/useSupermarketItems";
+import { SupermarketItemWithRelations } from "@/hooks/useSupermarketItems";
 
 interface Props {
-  supermarketItems: SupermarketItem[];
-  selectedSupermarketItem: SupermarketItem | null;
-  setSupermarketItem: (supermarketItem: SupermarketItem) => void;
+  supermarketItems: SupermarketItemWithRelations[];
+  selectedSupermarketItem: SupermarketItemWithRelations | null;
+  setSupermarketItem: (supermarketItem: SupermarketItemWithRelations) => void;
 }
 
 const PriceComparison = ({

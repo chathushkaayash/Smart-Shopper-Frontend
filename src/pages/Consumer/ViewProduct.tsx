@@ -14,25 +14,21 @@ import PriceComparison from "@/components/PriceComparison/PriceComparison";
 import ProductDescription from "@/components/PriceComparison/ProductDescription";
 import useProduct, { Product } from "@/hooks/useProduct";
 import useSupermarketItems, {
-  SupermarketItem,
+  SupermarketItemWithRelations,
 } from "@/hooks/useSupermarketItems";
-import useCartStore from "@/state-management/cart/store";
-import { useQueryClient } from "@tanstack/react-query";
+import useCartItems, { CartItem } from "@/services/Cart/useCartItems";
+import useCreateCartItems from "@/services/Cart/useCreateCartItems";
+import useDeleteCartItems from "@/services/Cart/useDeleteCartItem";
+import useUpdateCartItems from "@/services/Cart/useUpdateCartItem";
+import useCreateLikedProducts from "@/services/LikedProducts/useCreateLikedProducts";
+import useDeleteLikedProducts from "@/services/LikedProducts/useDeleteLikedProducts";
+import useLikedProducts from "@/services/LikedProducts/useLikedProducts";
 import { Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 
 const ViewProduct = () => {
-  const {
-    items: cartItems,
-    addItem,
-    updateItem,
-    removeItem,
-    getProductInCart,
-  } = useCartStore();
-  const queryClient = useQueryClient();
-
   const { id } = useParams();
   const productId = Number(id);
 
@@ -47,71 +43,96 @@ const ViewProduct = () => {
   } = useSupermarketItems(productId);
 
   const [isLiked, setIsLiked] = useState(false);
+  const [cartItem, setCartItem] = useState<CartItem | null>(null);
+
+  const { data: likedProducts } = useLikedProducts();
+  const createLikedProduct = useCreateLikedProducts();
+  const deleteLikedProduct = useDeleteLikedProducts();
+
+  const { data: cartItems } = useCartItems();
+  const createCartItems = useCreateCartItems();
+  const updateCartItems = useUpdateCartItems();
+  const deleteCartItems = useDeleteCartItems();
+
   const [selectedSupermarketItem, setSupermarketItem] =
-    useState<SupermarketItem | null>(null);
+    useState<SupermarketItemWithRelations | null>(null);
 
-  // Get the cart item that is already added to the cart
-  const cartItemInCart = getProductInCart(productId);
-
-  // Check if the product is in the cart but the selected store price is different
-  const shouldUpdateCart =
-    cartItemInCart &&
-    selectedSupermarketItem?.id !== cartItemInCart.supermarketItem?.id;
-
+  // ---------------------------------- Load the Liked State ----------------------------------------------
   useEffect(() => {
-    if (supermarketItems?.results) {
-      // Find the index of the supermarket item that matches the cart item
-      const index = supermarketItems.results.findIndex(
-        (i) => i.id === cartItemInCart?.supermarketItem?.id
+    if (likedProducts?.results) {
+      const isLiked = likedProducts.results.some(
+        (likedProduct) => likedProduct.productId === productId
       );
-
-      // Set the supermarket item based on whether a match was found
-      setSupermarketItem(
-        index !== -1
-          ? supermarketItems.results[index]
-          : supermarketItems.results[0]
-      );
+      setIsLiked(isLiked);
     }
-  }, [supermarketItems?.results, cartItems, cartItemInCart]);
+  }, [likedProducts]);
 
-  const handleOnClick = () => {
-    if (cartItemInCart?.supermarketItem.id === selectedSupermarketItem?.id) {
-      console.log("remove");
-      if (cartItemInCart?.id) {
-        removeItem(cartItemInCart.id, invalidateQueries);
+  // ---------------------------------- Load the Cart Item State ----------------------------------------------
+  useEffect(() => {
+    if (cartItems?.results && supermarketItems?.results) {
+      const matchedCartItem = cartItems?.results.find(
+        (item) => item.productId === productId
+      );
+
+      if (matchedCartItem) {
+        setCartItem(matchedCartItem);
+        const supermarketItemsId = supermarketItems.results.findIndex(
+          (i) => i.id === matchedCartItem.supermarketItem.id
+        );
+        setSupermarketItem(supermarketItems.results[supermarketItemsId]);
+      } else {
+        setCartItem(null);
+        setSupermarketItem(supermarketItems.results[0]);
       }
-    } else if (cartItemInCart) {
-      console.log("update");
-      if (selectedSupermarketItem)
-        updateItem(
-          {
-            id: cartItemInCart.id,
-            supermarketItem: selectedSupermarketItem,
-            quantity: 1,
-          },
-          invalidateQueries
-        );
-    } else {
-      console.log("add");
-      if (selectedSupermarketItem)
-        addItem(
-          {
-            id: -1,
-            supermarketItem: selectedSupermarketItem,
-            quantity: 1,
-          },
-          invalidateQueries
-        );
+    }
+  }, [cartItems, supermarketItems]);
+
+  // ------------------------------------ Handle Cart Item ----------------------------------------------------
+  const handleCartItem = () => {
+    if (!cartItem) {
+      console.log("create cart item");
+
+      createCartItems.mutate({
+        productId: productId,
+        quantity: 1,
+        supermarketitemId: selectedSupermarketItem?.id || -1,
+        consumerId: -1,
+      });
+    }
+    // Update the cart item
+    else if (cartItem.supermarketItem.id !== selectedSupermarketItem?.id) {
+      updateCartItems.mutate({
+        id: cartItem.id,
+        supermarketitemId: selectedSupermarketItem?.id || -1,
+        quantity: 1,
+        productId: productId,
+        consumerId: -1,
+      });
+    }
+
+    // Remove the cart item
+    else {
+      deleteCartItems.mutate(cartItem.id);
     }
   };
 
-  const invalidateQueries = () => {
-    queryClient.invalidateQueries({ queryKey: ["carts"] });
+  // ------------------------------------ Toggle Liked ----------------------------------------------------
+  const toggleLiked = () => {
+    setIsLiked(!isLiked);
+    const productId = product.data?.id || -1;
+
+    if (isLiked) {
+      const likedProduct = likedProducts?.results.find(
+        (i) => i.productId === productId
+      );
+      deleteLikedProduct.mutate(likedProduct?.id || -1);
+    } else {
+      createLikedProduct.mutate({ productId });
+    }
   };
 
   if (isLoading) return <Spinner />;
   if (error) return <Text>Error</Text>;
-  if (!selectedSupermarketItem) return null;
 
   return (
     <MiddleContainer width="90vw">
@@ -126,7 +147,7 @@ const ViewProduct = () => {
               py={2}
               as="button"
               color={isLiked ? "red" : "black"}
-              onClick={() => setIsLiked(!isLiked)}
+              onClick={toggleLiked}
               _hover={{ color: "red", transform: "scale(1.10)" }}
             >
               {isLiked ? (
@@ -139,23 +160,25 @@ const ViewProduct = () => {
           <Box mt={5}>
             <AddToCartButton
               text={
-                shouldUpdateCart
+                !cartItem
+                  ? "Add to Cart"
+                  : cartItem.supermarketItem.id !== selectedSupermarketItem?.id
                   ? "Update the Cart"
-                  : cartItemInCart
-                  ? "Remove from Cart"
-                  : "Add to Cart"
+                  : "Remove from Cart"
               }
-              checked={!!cartItemInCart && !shouldUpdateCart}
-              onClick={handleOnClick}
+              checked={cartItem?.supermarketItem.id === selectedSupermarketItem?.id}
+              onClick={handleCartItem}
             />
           </Box>
         </Flex>
         <Grid templateColumns="40% 60%" gap={6} mt={4}>
           <GridItem>
-            <ProductDescription
-              product={product.data || ({} as Product)}
-              selectedSupermarketItem={selectedSupermarketItem}
-            />
+            {selectedSupermarketItem && (
+              <ProductDescription
+                product={product.data || ({} as Product)}
+                selectedSupermarketItem={selectedSupermarketItem}
+              />
+            )}
           </GridItem>
           <GridItem ml={2}>
             <PriceComparison

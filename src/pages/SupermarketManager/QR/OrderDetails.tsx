@@ -4,7 +4,6 @@ import {
   Spinner,
   Text
 } from '@chakra-ui/react';
-import React from 'react';
 import useOrder from "@/hooks/useOrder";
 import { getDateTime } from "@/utils/Time";
 import TextButton from "@/components/Buttons/TextButton";

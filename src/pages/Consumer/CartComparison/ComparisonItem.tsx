@@ -1,9 +1,9 @@
 import { Grid, GridItem, HStack, Image, Stack, Text } from "@chakra-ui/react";
 
 import useProduct from "@/hooks/useProduct";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import DeleteImage from "../../../assets/delete.svg";
-import { CartItem } from "@/hooks/useCartItem";
+import { CartItem } from "@/services/Cart/useCartItems";
 
 interface Props {
   cartItem: CartItem;
@@ -14,9 +14,9 @@ const ComparisonItem = ({ cartItem }: Props) => {
     cartItem.supermarketItem?.productId || 0
   );
 
-  const { data: supermarket } = useSupermarket(
-    cartItem.supermarketItem?.supermarketId || 0
-  );
+  const supermarket = useSupermarket([
+    cartItem.supermarketItem?.supermarketId || 0,
+  ]);
 
   return (
     <Grid gridTemplateColumns="2fr 5fr 1fr" w="full">
@@ -30,7 +30,7 @@ const ComparisonItem = ({ cartItem }: Props) => {
         </Text>
 
         <Grid gridTemplateColumns="1fr 2fr" alignItems={"flex-end"}>
-          <Image src={supermarket?.logo} mt={2} w={"4vw"} />
+          <Image src={supermarket[0].data?.logo} mt={2} w={"4vw"} />
           <Text>Distance : 2.4 Km</Text>
           <Text>Quantity : {cartItem.quantity}</Text>
         </Grid>

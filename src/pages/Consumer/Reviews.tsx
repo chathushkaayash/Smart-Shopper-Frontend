@@ -1,5 +1,5 @@
 import RatingStars from "@/components/Inputs/Rating";
-import useReviews from "@/hooks/reviews/useReviews";
+import useReviews from "@/services/Reviews/useReviews";
 import useSupermarketItem from "@/hooks/useSupermarketItem";
 import {
   Box,
@@ -19,7 +19,10 @@ const ProductReview = () => {
   const { id } = useParams();
   if (!id) return <div>Product not found</div>;
 
-  const reviews = useReviews({ targetId: Number(id), reviewType: "supermarketItem" });
+  const reviews = useReviews({
+    targetId: Number(id),
+    reviewType: "supermarketItem",
+  });
   const supermarketItem = useSupermarketItem(Number(id));
 
   const totalStars =
@@ -51,7 +54,7 @@ const ProductReview = () => {
             <Box pr={5}>
               <Image
                 src={supermarketItem.data?.supermarket.logo}
-                h='10vh'
+                h="10vh"
                 objectFit="contain"
                 aspectRatio={16 / 9}
               />

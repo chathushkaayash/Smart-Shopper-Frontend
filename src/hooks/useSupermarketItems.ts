@@ -1,7 +1,7 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "./useProduct";
-import { Supermarket } from "./useSupermarket";
+import { Supermarket } from "../services/Supermarket/useSupermarket";
 import { CartItem } from "./useCartItem";
 
 export interface SupermarketItem {
@@ -25,7 +25,9 @@ export interface SupermarketItemWithRelations {
   availableQuantity: number;
 }
 
-const apiClient = new APIClient<SupermarketItemWithRelations>("/supermarketitems");
+const apiClient = new APIClient<SupermarketItemWithRelations>(
+  "/supermarketitems"
+);
 
 // get SupermarketItem[] for a product
 const useSupermarketItems = (productId: number = 0) => {

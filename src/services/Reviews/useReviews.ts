@@ -1,8 +1,6 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { Review } from "./useReview";
-
-
+import { Review } from "../types";
 
 const apiClient = new APIClient<Review>("/reviews");
 
@@ -13,7 +11,7 @@ export interface ReviewQuery {
 
 const useReviews = (reviewQuery: ReviewQuery) => {
   return useQuery({
-    queryKey: ["review", reviewQuery],
+    queryKey: ["reviews", reviewQuery],
     queryFn: () =>
       apiClient.getAll({
         params: {

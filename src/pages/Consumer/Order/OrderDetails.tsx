@@ -23,7 +23,7 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import Banner from "@/assets/smart-shopper-banner.svg";
 import QR from "@/assets/qr_code.png";
 import { Order } from "@/hooks/useOrder";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { getDateTime } from "@/utils/Time";
 import useAuthStore from "@/state-management/auth/store";
 import AddDriverReview from "@/components/ViewOrders/AddDriverReview";
@@ -38,18 +38,13 @@ interface SupermarketInfoRowProps {
 }
 
 const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
-  const supermarket = useSupermarket(supermarketId);
-  console.log(supermarket.data);
+  const supermarket = useSupermarket([supermarketId]);
 
   return (
-    <HStack gap={8} ml={5}>
-      <Image src={supermarket.data?.logo} width={30} />
-      <Text>{supermarket.data?.name}</Text>
-      <HStack>
-        <FaPhoneAlt />
-        <Text>{supermarket.data?.contactNo}</Text>
-      </HStack>
-    </HStack>
+    <Text textAlign="left" paddingLeft={10}>
+      {supermarket[0].data?.name}
+      <br />
+    </Text>
   );
 };
 
@@ -222,7 +217,7 @@ const OrderDetails = ({ order }: Props) => {
           <Divider my={4} />
 
           {/* ------------------------------------ Driver Details ------------------------------------ */}
-          {["Completed","Processing"].includes(order.status) && (
+          {["Completed", "Processing"].includes(order.status) && (
             <Box
               p={4}
               borderWidth="1px"

@@ -1,12 +1,12 @@
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import {
-    Box,
-    Step,
-    StepDescription,
-    StepIndicator,
-    StepSeparator,
-    StepStatus,
-    StepTitle,
+  Box,
+  Step,
+  StepDescription,
+  StepIndicator,
+  StepSeparator,
+  StepStatus,
+  StepTitle,
 } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { LuCircleDot } from "react-icons/lu";
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const PickupLocation = ({ supermarketId }: Props) => {
-  const supermarket = useSupermarket(supermarketId);
+  const supermarket = useSupermarket([supermarketId]);
 
   return (
     <Step>
@@ -29,8 +29,8 @@ const PickupLocation = ({ supermarketId }: Props) => {
       </StepIndicator>
 
       <Box flexShrink="0">
-        <StepTitle>{supermarket.data?.name}</StepTitle>
-        <StepDescription>{supermarket.data?.address}</StepDescription>
+        <StepTitle>{supermarket[0].data?.name}</StepTitle>
+        <StepDescription>{supermarket[0].data?.address}</StepDescription>
       </Box>
 
       <StepSeparator />

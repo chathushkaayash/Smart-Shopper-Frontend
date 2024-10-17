@@ -1,6 +1,6 @@
 import { SupermarketItem } from "@/hooks/useSupermarketItems";
 import { Product } from "@/hooks/useProduct";
-import useSupermarket from "@/hooks/useSupermarket";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { Box, Divider, HStack, Image, Text } from "@chakra-ui/react";
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 
 const ProductDescription = ({ product, selectedSupermarketItem }: Props) => {
   const supermarket = selectedSupermarketItem.supermarketId
-    ? useSupermarket(selectedSupermarketItem.supermarketId)
-    : { data: null, isLoading: false, error: null };
+    ? useSupermarket([selectedSupermarketItem.supermarketId])
+    : [{ data: null, isLoading: false, error: null }];
 
   return (
     <Box>
@@ -35,7 +35,7 @@ const ProductDescription = ({ product, selectedSupermarketItem }: Props) => {
       <HStack>
         <Text fontSize={"lg"}>Selected Store :</Text>
         <Text fontSize={"lg"} fontWeight={600}>
-          {supermarket.data?.name}
+          {supermarket[0].data?.name}
         </Text>
       </HStack>
     </Box>

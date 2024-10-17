@@ -1,10 +1,13 @@
+import delHome from "@/assets/delHome.png";
+import pickupImg from "@/assets/Grocery shopping-rafiki.svg";
 import CheckoutAccordion from "@/components/CheckoutAccordion";
-import useCart from "@/hooks/useCart";
-import APIClient from "@/services/api-client";
+import useCartCheckout, {
+  CheckoutRequest,
+} from "@/services/Cart/useCartCheckout";
+import useCartItems from "@/services/Cart/useCartItems";
 import useAuthStore from "@/state-management/auth/store";
 import { EditIcon } from "@chakra-ui/icons";
 import {
-  Accordion,
   Box,
   Button,
   Divider,
@@ -28,52 +31,17 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import delHome from "../../../src/assets/delHome.png";
-import pickupImg from "../../../src/assets/Grocery shopping-rafiki.svg";
-
-interface CheckoutRequest {
-  id?: number;
-  consumerId: number;
-  shippingAddress: string;
-  shippingMethod: string;
-}
-
-const apiClient = new APIClient<CheckoutRequest>("/cartToOrder");
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const cartCheckout = useCartCheckout();
   const user = useAuthStore((state) => state.user);
 
-  const { data: cart } = useCart();
-
-  let subTotal =
-    cart?.results.reduce(
-      (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
-      0
-    ) || 0;
-
-  subTotal = Number((Math.round(subTotal * 100) / 100).toFixed(2));
-
-  const deliveryFee = 250;
-
-  const supermarketIdList: number[] = [];
-
-  cart?.results.forEach((item) => {
-    const supermarketId = item.supermarketItem?.supermarketId;
-    if (supermarketId) {
-      if (!supermarketIdList.includes(supermarketId)) {
-        supermarketIdList.push(supermarketId);
-      }
-    }
-  });
+  const { data: cart } = useCartItems();
 
   const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>({
     consumerId: user?.consumerId || -1,
@@ -81,16 +49,30 @@ const Checkout = () => {
     shippingMethod: "Home Delivery",
   });
 
-  const { mutate } = useMutation({
-    mutationFn: () =>
-      apiClient.create(checkoutRequest).then((res) => {
-        queryClient.invalidateQueries({ queryKey: ["carts"] });
-        return res;
-      }),
-    onSuccess: (res) => {
-      navigate("/payment-success/" + res.id);
-    },
-  });
+  // const { mutate } = useMutation({
+
+  
+  
+  //   onSuccess: (res) => {
+  //     navigate("/payment-success/" + res.id);
+  //   },
+  // });
+
+  const handleCheckout = () => {
+    const res = cartCheckout.mutate(checkoutRequest);
+    console.log(res);
+  };
+
+  const deliveryFee = 250;
+
+  // --------------------------------------- Calculate Subtotal ---------------------------------------
+  let subTotal =
+    cart?.results.reduce(
+      (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
+      0
+    ) || 0;
+
+  subTotal = Number((Math.round(subTotal * 100) / 100).toFixed(2));
 
   const {
     isOpen: isOpen1,
@@ -113,9 +95,11 @@ const Checkout = () => {
         </Flex>
 
         <Flex flexDirection={["column", "column", "row"]} gap={4}>
+
           {/* Left Column */}
           <Box flex="2">
             <VStack align="stretch" spacing={4}>
+
               {/* Shipping  Method */}
               <Box border="1px" borderRadius="md" padding="4">
                 <HStack justify="space-between">
@@ -209,23 +193,23 @@ const Checkout = () => {
                 </Box>
               )}
 
-              {/* Continue to payment */}
+              {/* ---------------------------------- Continue to payment ---------------------------------- */}
               <Button
                 bg="secondary"
                 color="white"
                 size="lg"
                 width="full"
                 _hover={{ bg: "primary", color: "white" }}
-                onClick={() => mutate()}
+                onClick={handleCheckout}
               >
                 Continue to payment
               </Button>
 
               {/* Note */}
               <Text fontSize="sm">
-                If you’re not around when the delivery person arrives, they’ll
+                If you're not around when the delivery person arrives, they'll
                 leave your order at the door. By placing your order, you agree
-                to take full responsibility for it once it’s delivered. Orders
+                to take full responsibility for it once it's delivered. Orders
                 containing alcohol or other restricted items may not be eligible
                 for leave at door and will be returned to the store if you are
                 not available.
@@ -241,11 +225,7 @@ const Checkout = () => {
                 <Heading size="md" color="primary" mb={5}>
                   Supermarket List
                 </Heading>
-                <Accordion allowToggle>
-                  {supermarketIdList.map((i, index) => (
-                    <CheckoutAccordion key={index} supermarketId={i} />
-                  ))}
-                </Accordion>
+                <CheckoutAccordion />
               </Box>
 
               {/* Order Total */}

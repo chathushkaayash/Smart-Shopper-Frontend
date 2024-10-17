@@ -1,5 +1,5 @@
 
-import {  Box, Flex, Grid, Heading, Text } from "@chakra-ui/react";
+import {  Box,  Grid, Heading, Text } from "@chakra-ui/react";
 import { Component } from "react";
 import QrReader from "react-qr-scanner";
 import OrderDetails from "./OrderDetails";
@@ -26,7 +26,7 @@ class Test extends Component<{}, TestState> {
     console.log("Component did mount");
   }
 
-  componentDidUpdate(prevProps: {}, prevState: TestState) {
+  componentDidUpdate( prevState: TestState) {
     console.log("Component did update");
     console.log("Previous state:", prevState);
     console.log("Current state:", this.state);

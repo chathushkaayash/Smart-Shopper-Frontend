@@ -1,5 +1,5 @@
 import App from "@/App";
-import CardDetails from "@/pages/Consumer/CartDetails";
+import CardDetails from "@/pages/Consumer/ViewCart";
 
 import { createBrowserRouter } from "react-router-dom";
 import AdminRoutes from "./AdminRoutes";
@@ -11,7 +11,6 @@ import HomeLayout from "./Layouts/HomeLayout";
 import PublicRoutes from "./PublicRoutes";
 import SharedRoutes from "./SharedRoutes";
 import SupermarketManagerRoutes from "./SupermarketmanagerRoutes";
-
 
 const router = createBrowserRouter([
   {

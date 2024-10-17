@@ -1,4 +1,4 @@
-import { Review } from "@/hooks/reviews/useReview";
+import { Review } from "@/services/Reviews/useReview";
 import { getMoment } from "@/utils/Time";
 import {
   Box,
@@ -20,7 +20,12 @@ interface Props {
 const ReviewComponent = ({ review }: Props) => {
   return (
     <>
-      <Card boxShadow="lg" borderWidth={1} borderColor="gray.200" borderRadius={15}>
+      <Card
+        boxShadow="lg"
+        borderWidth={1}
+        borderColor="gray.200"
+        borderRadius={15}
+      >
         <CardBody>
           <Flex>
             <Box fontWeight="650">
