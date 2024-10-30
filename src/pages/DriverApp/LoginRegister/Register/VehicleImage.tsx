@@ -13,16 +13,13 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 
 import Logo from "../../../../assets/logo.svg";
 import DotIndicator from "@/components/DotIndicator";
-import { DriverDetails } from "./DriverRegister";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 
-interface Props {
-  setStage: (n: number) => void;
-  driverDetails: DriverDetails;
-  setDriverDetails: (s: DriverDetails) => void;
-}
 
-const VehicleImage = ({ setStage }: Props) => {
+const VehicleImage = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const {  setStage } =
+  useDriverRegisterStore();
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">

@@ -1,21 +1,12 @@
 import {
   Box,
-  Card,
-  CardBody,
-  CardFooter,
   Flex,
   Heading,
   HStack,
-  Icon,
-  Stack,
-  Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
-import { AiOutlineRise } from "react-icons/ai";
-import { IoBag } from "react-icons/io5";
-import { FaShoppingCart } from "react-icons/fa";
-import { MdOutlinePendingActions } from "react-icons/md";
 import { BiSolidShoppingBag } from "react-icons/bi";
+import { FaShoppingCart } from "react-icons/fa";
 import { IoBagCheckSharp } from "react-icons/io5";
 
 import OrderTable from "@/components/OrderTable";

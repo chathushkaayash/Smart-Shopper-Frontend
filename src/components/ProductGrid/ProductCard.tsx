@@ -12,17 +12,18 @@ import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import RatingStars from "../Inputs/Rating";
 import { useNavigate } from "react-router-dom";
-import { Product } from "@/hooks/useProduct";
 import useLikedProducts from "@/services/LikedProducts/useLikedProducts";
 import useCreateLikedProducts from "@/services/LikedProducts/useCreateLikedProducts";
 import useDeleteLikedProducts from "@/services/LikedProducts/useDeleteLikedProducts";
 import useAuthStore from "@/state-management/auth/store";
+import { Product } from "@/services/types";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const [isLiked, setIsLiked] = useState(false);
   const { data: likedProducts } = useLikedProducts();
@@ -30,7 +31,9 @@ const ProductCard = ({ product }: Props) => {
   const createLikedProduct = useCreateLikedProducts();
   const deleteLikedProduct = useDeleteLikedProducts();
 
-  const navigate = useNavigate();
+  const prices = product.supermarketItems.length ? product.supermarketItems.map((item) => item.price) : [product.price];
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
 
   // ---------------------------------- Load the Liked State ----------------------------------------------
   useEffect(() => {
@@ -92,8 +95,8 @@ const ProductCard = ({ product }: Props) => {
             {product.name}
           </Text>
           <Flex gap={3}>
-            <Text color="primary">Rs{product.price}</Text>
-            <Text as="del">Rs{product.price}</Text>
+            <Text color="primary">Rs{minPrice}</Text>
+            <Text as="del">Rs{maxPrice}</Text>
           </Flex>
           <RatingStars className="mb-10" value={5} reviews={75} />
         </Stack>

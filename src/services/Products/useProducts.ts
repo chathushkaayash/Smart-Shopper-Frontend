@@ -1,8 +1,8 @@
 import APIClient, { FetchResponse } from "@/services/api-client";
 import useProductQueryStore from "@/state-management/productQuery/store";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Product } from "./useProduct";
 import { toast } from "sonner";
+import { Product } from "../types";
 
 const apiClient = new APIClient<Product>("/products");
 
@@ -10,7 +10,7 @@ const useProducts = () => {
   const productQuery = useProductQueryStore((s) => s.productQuery);
 
   return useInfiniteQuery<FetchResponse<Product>, Error>({
-    queryKey: ["Products", productQuery],
+    queryKey: ["products", productQuery],
     queryFn: ({ pageParam = 1 }) =>
       apiClient
         .getAll({

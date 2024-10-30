@@ -35,16 +35,15 @@ import { SiCashapp } from "react-icons/si";
 import { TbTruckDelivery } from "react-icons/tb";
 import LineChart from "../../components/Charts/LineChart";
 import { IoStarSharp } from "react-icons/io5";
-import useDrivers from "@/hooks/useDrivers";
-import { Driver } from "@/hooks/useDriver";
 import { useState } from "react";
+import useDrivers from "@/services/Driver/useDrivers";
+import { Driver } from "@/services/types";
 const AdminCourierServices = () => {
-
-  const drivers=useDrivers();
-  const driverArray=drivers.data?.results;
+  const drivers = useDrivers();
+  const driverArray = drivers.data?.results;
   //console.log("drivers",drivers.data?.results);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedDriver,setSelecteddriver]=useState<Driver | null>();
+  const [selectedDriver, setSelecteddriver] = useState<Driver | null>();
 
   const deliveryPersonPopup = [
     [
@@ -84,12 +83,10 @@ const AdminCourierServices = () => {
         <Flex w="full" gap={5}>
           {/* ------- Courier Company Earnings ------- */}
           <Box p={5} shadow="md" borderWidth="1px" w="60%" borderRadius={15}>
-            <Heading  size="md">
-              Courier Company Earnings
-            </Heading>
+            <Heading size="md">Courier Company Earnings</Heading>
 
             <Center>
-              <LineChart  width="80%"/>
+              <LineChart width="80%" />
             </Center>
           </Box>
 
@@ -113,7 +110,7 @@ const AdminCourierServices = () => {
                     boxSize="40px"
                     objectFit="cover"
                   />
-                  <Text ml='0.3rem'>{company.name}</Text>
+                  <Text ml="0.3rem">{company.name}</Text>
                   <Text ml="auto">{company.count}</Text>
                 </HStack>
               </VStack>
@@ -158,35 +155,38 @@ const AdminCourierServices = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {driverArray && Array.isArray(driverArray)&&
-                driverArray.map((driver)=>(
-                <Tr>
-                  <Td>
-                    <HStack>
-                      <Image
-                        src={driver.user.profilePic}
-                        alt="driver Image"
-                        boxSize="50px"
-                        objectFit="cover"
-                        borderRadius="50%"
-                        mr={4}
-                      />
-                      <Text>{driver.user.name}</Text>
-                    </HStack>
-                  </Td>
-                  <Td>{driver.courierCompany}</Td>
-                  <Td>{driver.user.number}</Td>
-                  <Td>{driver.vehicleType}</Td>
-                  <Td>{driver.vehicleName}</Td>
-                  <Td>
-                    <Button bg="primary" size="sm" onClick={() => handleEditClick(driver)}>
-                      View More
-                    </Button>
-                  </Td>
-                </Tr>
-                 )
-                )
-                }
+                {driverArray &&
+                  Array.isArray(driverArray) &&
+                  driverArray.map((driver) => (
+                    <Tr>
+                      <Td>
+                        <HStack>
+                          <Image
+                            src={driver.user.profilePic}
+                            alt="driver Image"
+                            boxSize="50px"
+                            objectFit="cover"
+                            borderRadius="50%"
+                            mr={4}
+                          />
+                          <Text>{driver.user.name}</Text>
+                        </HStack>
+                      </Td>
+                      <Td>{driver.courierCompany}</Td>
+                      <Td>{driver.user.number}</Td>
+                      <Td>{driver.vehicleType}</Td>
+                      <Td>{driver.vehicleName}</Td>
+                      <Td>
+                        <Button
+                          bg="primary"
+                          size="sm"
+                          onClick={() => handleEditClick(driver)}
+                        >
+                          View More
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
               </Tbody>
             </Table>
           </TableContainer>

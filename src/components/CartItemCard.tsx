@@ -11,12 +11,12 @@ import {
 
 import { AiOutlineClose } from "react-icons/ai";
 
-import useProduct from "@/hooks/useProduct";
+import useProduct from "@/services/Products/useProduct";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { useNavigate } from "react-router-dom";
 import QuantityChanger from "./QuantityChanger";
 import useDeleteCartItems from "@/services/Cart/useDeleteCartItem";
-import { CartItem } from "@/services/Cart/useCartItems";
+import { CartItem } from "@/services/types";
 
 interface Props {
   cartItem: CartItem;
@@ -27,7 +27,7 @@ const CartItemCard = ({ cartItem }: Props) => {
   const deleteCartItem = useDeleteCartItems();
 
   if (!cartItem) return null;
-  const product = useProduct(cartItem.supermarketItem?.productId || 0);
+  const product = useProduct([cartItem.supermarketItem?.productId || 0]);
   const supermarket = useSupermarket([
     cartItem.supermarketItem?.supermarketId || 0,
   ]);
@@ -49,13 +49,13 @@ const CartItemCard = ({ cartItem }: Props) => {
           <Image
             boxSize="100px"
             objectFit="cover"
-            src={product.data?.imageUrl}
-            alt={product.data?.name}
+            src={product[0]?.data?.imageUrl}
+            alt={product[0].data?.name}
           />
         </GridItem>
         <GridItem>
           <Box p={2}>
-            <Heading size="md">{product.data?.name}</Heading>
+            <Heading size="md">{product[0].data?.name}</Heading>
             <Image
               py={1}
               h={10}
@@ -67,7 +67,7 @@ const CartItemCard = ({ cartItem }: Props) => {
               fontSize="sm"
               fontWeight={600}
               color="primary"
-              onClick={() => navigate("/products/" + product.data?.id)}
+              onClick={() => navigate("/products/" + product[0].data?.id)}
               cursor="pointer"
             >
               Change Supermarket

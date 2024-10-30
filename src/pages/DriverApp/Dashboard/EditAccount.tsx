@@ -15,15 +15,15 @@ import { useNavigate } from "react-router-dom";
 import { PiCaretRightThin } from "react-icons/pi";
 import { useRef } from "react";
 import { BsCameraFill } from "react-icons/bs";
-import useDriver from "@/hooks/useDriver";
 import useAuthStore from "@/state-management/auth/store";
+import useDriver from "@/services/Driver/useDriver";
 
 
 const EditAccount = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const user= useAuthStore((state) => state.user);
-  const driver = useDriver(user?.driverId || 0);
+  const driver = useDriver([user?.driverId || 0])[0];
 
   const userDetails = [
     { label: "NIC", value: driver.data?.nic },

@@ -342,7 +342,7 @@ const Navbar = () => {
                     bg="primary"
                     rounded={"full"}
                   >
-                    {cartItems?.results.length}
+                    {cartItems?.results.length || 0}
                   </Text>
                 </Box>
               )}

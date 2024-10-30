@@ -1,3 +1,4 @@
+import useAuthStore from "@/state-management/auth/store";
 import {
   Avatar,
   Box,
@@ -7,12 +8,15 @@ import {
   Grid,
   Heading,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Text,
-  Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay,useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
 import SupermarketDetails from "./SupermarketDetails";
-import useAuthStore from "@/state-management/auth/store";
 import UpdatePassword from "./UpdatePassword";
 
 const Profile = () => {
@@ -27,11 +31,7 @@ const Profile = () => {
   return (
     <Box p={{ base: 2, md: 5 }}>
       <Box p={5} borderWidth={1} borderRadius="10px" boxShadow="lg">
-        <Flex
-          align={"center"}
-          justify={"center"}
-          flexDirection={"column"}
-        >
+        <Flex align={"center"} justify={"center"} flexDirection={"column"}>
           <Heading fontSize="2xl" color="primary" mb={2}>
             Profile Settings
           </Heading>
@@ -77,28 +77,16 @@ const Profile = () => {
                 justifyContent={"center"}
                 mb={5}
               >
-                <Avatar
-                  size={"2xl"}
-                  name={user?.name}
-                  src={user?.profilePic}
-                />
+                <Avatar size={"2xl"} name={user?.name} src={user?.profilePic} />
               </Box>
               <Box>
                 <Box mb={4}>
                   <Text>Name</Text>
-                  <Input
-                    placeholder="Name"
-                    size="md"
-                    value={user?.name}
-                  />
+                  <Input placeholder="Name" size="md" value={user?.name} />
                 </Box>
                 <Box mb={4}>
                   <Text>E-Mail</Text>
-                  <Input
-                    placeholder="Email"
-                    size="md"
-                    value={user?.email}
-                  />
+                  <Input placeholder="Email" size="md" value={user?.email} />
                 </Box>
                 <Box mb={4}>
                   <Text>Phone Number</Text>
@@ -111,7 +99,6 @@ const Profile = () => {
               </Box>
             </Box>
             <SupermarketDetails id={user?.supermarketId} />
-            
           </Grid>
         </Flex>
       </Box>
@@ -128,9 +115,8 @@ const Profile = () => {
             Change Password
           </ModalHeader>
           <ModalBody>
-            <UpdatePassword id={user?.id}/>
+            <UpdatePassword />
           </ModalBody>
-          
         </ModalContent>
       </Modal>
     </Box>

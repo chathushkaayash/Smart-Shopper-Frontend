@@ -12,11 +12,10 @@ import AddToCartButton from "@/components/Buttons/AddToCartButton";
 import MiddleContainer from "@/components/Containers/MiddleContainer";
 import PriceComparison from "@/components/PriceComparison/PriceComparison";
 import ProductDescription from "@/components/PriceComparison/ProductDescription";
-import useProduct, { Product } from "@/hooks/useProduct";
+import useProduct from "@/services/Products/useProduct";
 import useSupermarketItems, {
-  SupermarketItemWithRelations,
 } from "@/hooks/useSupermarketItems";
-import useCartItems, { CartItem } from "@/services/Cart/useCartItems";
+import useCartItems from "@/services/Cart/useCartItems";
 import useCreateCartItems from "@/services/Cart/useCreateCartItems";
 import useDeleteCartItems from "@/services/Cart/useDeleteCartItem";
 import useUpdateCartItems from "@/services/Cart/useUpdateCartItem";
@@ -27,14 +26,15 @@ import { Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
+import { CartItem, Product, SupermarketItem } from "@/services/types";
 
 const ViewProduct = () => {
   const { id } = useParams();
-  const productId = Number(id);
+  const productId = Number(id)
 
   if (!productId) return null;
 
-  const product = useProduct(Number(productId));
+  const product = useProduct([Number(productId)])[0];
 
   const {
     data: supermarketItems,
@@ -55,7 +55,7 @@ const ViewProduct = () => {
   const deleteCartItems = useDeleteCartItems();
 
   const [selectedSupermarketItem, setSupermarketItem] =
-    useState<SupermarketItemWithRelations | null>(null);
+    useState<SupermarketItem | null>(null);
 
   // ---------------------------------- Load the Liked State ----------------------------------------------
   useEffect(() => {
@@ -166,7 +166,9 @@ const ViewProduct = () => {
                   ? "Update the Cart"
                   : "Remove from Cart"
               }
-              checked={cartItem?.supermarketItem.id === selectedSupermarketItem?.id}
+              checked={
+                cartItem?.supermarketItem.id === selectedSupermarketItem?.id
+              }
               onClick={handleCartItem}
             />
           </Box>

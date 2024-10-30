@@ -1,4 +1,4 @@
-import useOrder from "@/hooks/useOrder";
+import useOrder from "@/services/Orders/useOrder";
 import OrderDetails from "./OrderDetails";
 import OrderItems from "./OrderItems";
 import { Box } from "@chakra-ui/react";
@@ -8,7 +8,7 @@ const CustomerViewOrder = () => {
   const { id } = useParams();
   if (!id) return null;
 
-  const order = useOrder(Number(id));
+  const order = useOrder([Number(id)])[0];
 
   if (!order.data) return null;
 

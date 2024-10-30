@@ -1,13 +1,4 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Box,
-  Grid,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
-import React from "react";
+import { Alert, AlertIcon, Box, Grid, Heading, Text } from "@chakra-ui/react";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 
 interface SupermarketDetailsProps {
@@ -15,7 +6,7 @@ interface SupermarketDetailsProps {
 }
 
 const SupermarketDetails = ({ id }: SupermarketDetailsProps) => {
-  const { data: supermarket } = useSupermarket(id);
+  const { data: supermarket } = useSupermarket([id])[0];
 
   return (
     <Box

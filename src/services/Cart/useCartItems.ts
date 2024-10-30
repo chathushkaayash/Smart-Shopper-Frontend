@@ -1,14 +1,6 @@
-import { SupermarketItem } from "@/hooks/useSupermarketItems";
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-
-export interface CartItem {
-  id: number;
-  quantity: number;
-  consumerId?: number;
-  productId: number;
-  supermarketItem: SupermarketItem;
-}
+import { CartItem } from "../types";
 
 const apiClient = new APIClient<CartItem>("/cart_items");
 

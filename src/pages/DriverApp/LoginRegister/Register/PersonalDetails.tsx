@@ -1,21 +1,20 @@
 import {
   Box,
   Button,
+  Flex,
   Image,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalHeader,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
   useDisclosure,
-  Flex,
 } from "@chakra-ui/react";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaEnvelope } from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 
 import Logo from "../../../../assets/logo.svg";
@@ -23,12 +22,10 @@ import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import ErrorText from "../../../../components/Errors/ErrorText";
 import LoginInput from "../../../../components/Inputs/LoginInput";
 
-import { z } from "zod";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import APIClient from "@/services/api-client";
-import { DriverDetails } from "./DriverRegister";
+import { z } from "zod";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -39,33 +36,18 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-interface Props {
-  setStage: (n: number) => void;
-  setDriverDetails: (s: DriverDetails) => void;
-  driverDetails: DriverDetails;
-}
 
-const apiClient = new APIClient<FormData | number>("/driver_otp");
-
-const PersonalDetails = ({driverDetails, setStage, setDriverDetails }: Props) => {
+const PersonalDetails = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [personalDetails, setPersonalDetails] = useState<FormData>();
+  const { driverDetails, setDriverDetails, sendPersonalData } =
+    useDriverRegisterStore();
 
-  const sendData = () => {
-    if (personalDetails)
-      apiClient.create(personalDetails).then((res) => {
-        if (typeof res==="number") 
-        setDriverDetails({...driverDetails ,id:res});
-        setStage(1);
-        onClose();
-      });
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
@@ -91,7 +73,7 @@ const PersonalDetails = ({driverDetails, setStage, setDriverDetails }: Props) =>
         as="form"
         justifyContent="space-between"
         onSubmit={handleSubmit((data) => {
-          setPersonalDetails(data);
+          setDriverDetails({ ...driverDetails, ...data });
           onOpen();
         })}
       >
@@ -144,7 +126,7 @@ const PersonalDetails = ({driverDetails, setStage, setDriverDetails }: Props) =>
           <ModalBody>
             <Text>
               <Text as="span" fontWeight="bold">
-                {personalDetails?.contactNo}
+                {driverDetails?.contactNo}
                 <br />
               </Text>
               We will send an OTP to this phone number.
@@ -155,7 +137,7 @@ const PersonalDetails = ({driverDetails, setStage, setDriverDetails }: Props) =>
               Cancel
             </Button>
             <Flex justifyContent="center" w="full">
-              <Button px={50} color="white" bg="primary" onClick={sendData}>
+              <Button px={50} color="white" bg="primary" onClick={sendPersonalData}>
                 Next
               </Button>
             </Flex>

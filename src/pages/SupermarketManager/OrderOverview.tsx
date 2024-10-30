@@ -1,7 +1,6 @@
-import { Order } from "@/hooks/useOrder";
 import APIClient from "@/services/api-client";
+import { Order } from "@/services/types";
 import useAuthStore from "@/state-management/auth/store";
-import { getDateTime } from "@/utils/Time";
 import {
   Box,
   Button,
@@ -133,7 +132,7 @@ const OrderOverview = ({ order }: Props) => {
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Order Placed on</Text>
-                <Text>: {getDateTime(order.orderPlacedOn)}</Text>
+                <Text>: {order.orderPlacedOn.getDateTime()}</Text>
                 <Text>Order Total</Text>
                 <Text>: {totalAmount} LKR</Text>
               </Grid>

@@ -16,9 +16,8 @@ import {
 import { DeleteIcon, ViewIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useOrders from "@/hooks/useOrders";
-import { Order } from "@/hooks/useOrder";
-import { getDateTime } from "@/utils/Time";
+import useOrders from "@/services/Orders/useOrders";
+import { Order } from "@/services/types";
 
 // const orders: Order[] = [
 //   {
@@ -41,9 +40,12 @@ import { getDateTime } from "@/utils/Time";
 
 const statusColor: Record<Order["status"], string> = {
   ToPay: "red",
-  Completed: "green",
+  Prepared: "green",
   Cancelled: "yellow",
   Ready: "orange",
+  Delivered: "blue",
+  Processing: "purple",
+  Placed: "gray",
 };
 
 const ConsumerOrders = () => {
@@ -138,7 +140,7 @@ const ConsumerOrders = () => {
                     </Link>
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {getDateTime(order.orderPlacedOn)}
+                    {order.orderPlacedOn.getMoment().format()}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                     <Badge

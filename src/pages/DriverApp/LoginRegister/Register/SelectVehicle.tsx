@@ -24,18 +24,13 @@ import colorwheel from ".././../../../assets/signup-login/colorwheel.svg";
 import Wheel from "@uiw/react-color-wheel";
 import { hsvaToHex } from "@uiw/color-convert";
 
-interface Props {
-  setStage: (n: number) => void;
-  driverDetails: DriverDetails;
-  setDriverDetails: (s: DriverDetails) => void;
-}
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
 import LoginInput from "@/components/Inputs/LoginInput";
 import ErrorText from "@/components/Errors/ErrorText";
-import { DriverDetails } from "./DriverRegister";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 
 const schema = z.object({
   name: z.string().min(1, "vehicle name is required"),
@@ -44,17 +39,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const SelectVehicle = ({
-  setStage,
-  driverDetails,
-  setDriverDetails,
-}: Props) => {
+const SelectVehicle = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
-
+  const { driverDetails, setDriverDetails, setStage } =
+  useDriverRegisterStore();
   const vehicles = [
     { icon: RiMotorbikeFill, name: "Motorbike" },
     { icon: FaCaravan, name: "Threewheel" },
@@ -106,6 +98,7 @@ const SelectVehicle = ({
         p={2}
         borderRadius="lg"
         boxShadow="lg"
+        bg={selectedColor === "#FFFFFF" ? "gray" : 'white'}
       >
         <Icon
           as={selectedVehicle.icon}

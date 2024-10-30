@@ -20,8 +20,8 @@ import {
 import { FaClipboardList, FaTruck, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LineChart from "../../components/Charts/LineChart";
-import useDrivers from "@/hooks/useDrivers";
-import { Driver } from "@/hooks/useDriver";
+import useDrivers from "@/services/Driver/useDrivers";
+import { Driver } from "@/services/types";
 
 const CourierCompanyHome = () => {
   const navigate = useNavigate();

@@ -35,8 +35,8 @@ import useOpportunities, { OpportunityQuery } from "@/hooks/useOpportunities";
 import { Opportunity } from "@/hooks/useOpportunity";
 import Stars from "../../assets/CourierCompany/stars.svg";
 import MiddleContainer from "../../components/Containers/MiddleContainer";
-import useDriver from "@/hooks/useDriver";
 import useConsumer from "@/hooks/useConsumer";
+import useDriver from "@/services/Driver/useDriver";
 
 const Deliveries = () => {
   const [selectedOpportunity, setSelectedOpportunity] = useState<Opportunity>();
@@ -171,7 +171,7 @@ interface DeliveryRowProps {
 }
 
 const DeliveryRow = ({ opportunity, handleViewClick }: DeliveryRowProps) => {
-  const driver = useDriver(opportunity.driverId);
+  const driver = useDriver([opportunity.driverId])[0]
 
   const formatDateTime = (orderPlacedOn: any) => {
     const { day, hour, minute, month, year } = orderPlacedOn;

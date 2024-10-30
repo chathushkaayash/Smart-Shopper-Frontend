@@ -1,3 +1,6 @@
+import SubmitButton from "@/components/Buttons/SubmitButton";
+import DotIndicator from "@/components/DotIndicator";
+import LoginInput from "@/components/Inputs/LoginInput";
 import {
   Box,
   Button,
@@ -14,20 +17,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Logo from "../../../../assets/logo.svg";
-import DotIndicator from "@/components/DotIndicator";
-import SubmitButton from "@/components/Buttons/SubmitButton";
-import LoginInput from "@/components/Inputs/LoginInput";
 
 import { IoIosEyeOff } from "react-icons/io";
 
-import { z } from "zod";
+import ErrorText from "@/components/Errors/ErrorText";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
-import ErrorText from "@/components/Errors/ErrorText";
+import { z } from "zod";
 import termsAndConditions from "./TermsAndConditions";
-import { DriverDetails } from "./DriverRegister";
-import APIClient from "@/services/api-client";
-import { useMutation } from "@tanstack/react-query";
 
 const schema = z
   .object({
@@ -39,35 +37,18 @@ const schema = z
     path: ["confirmPassword"],
   });
 type FormData = z.infer<typeof schema>;
-interface Props {
-  setStage: (n: number) => void;
-  driverDetails: DriverDetails;
-  setDriverDetails: (s: DriverDetails) => void;
-}
 
-const EnterPassword = ({ setStage, driverDetails }: Props) => {
+const EnterPassword = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  const { updateVehicleDetails } =
+    useDriverRegisterStore();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const apiClient = new APIClient<DriverDetails>(
-    "/update_driver_signup/" + driverDetails.id
-  );
-
-  const { mutate } = useMutation({
-    mutationFn: (data: FormData) =>
-      apiClient.create({
-        ...driverDetails,
-        password: data.password,
-      }),
-    onSuccess: () => {
-      setStage(6);
-    },
-  });
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
@@ -83,7 +64,9 @@ const EnterPassword = ({ setStage, driverDetails }: Props) => {
         h="full"
         px="10vw"
         justifyContent="space-between"
-        onSubmit={handleSubmit((data) => mutate(data))}
+        onSubmit={handleSubmit((data) =>
+          updateVehicleDetails(data.password, data.confirmPassword)
+        )}
       >
         <Box w="full">
           <LoginInput

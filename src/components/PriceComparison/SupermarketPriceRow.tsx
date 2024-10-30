@@ -1,6 +1,5 @@
 import useReviews from "@/services/Reviews/useReviews";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
-import { SupermarketItem } from "@/hooks/useSupermarketItems";
 import {
   Box,
   Divider,
@@ -12,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import RatingStars from "../Inputs/Rating";
+import { SupermarketItem } from "@/services/types";
 
 interface Props {
   supermarketItem: SupermarketItem;

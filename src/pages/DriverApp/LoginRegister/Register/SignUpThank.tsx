@@ -6,7 +6,7 @@ import Done from "../../../../assets/signup-login/done.svg";
 import { Link } from "react-router-dom";
 
 const SignUpThank = () => {
-  const isButtonEnabled = true;
+  const isButtonEnabled = false;
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">

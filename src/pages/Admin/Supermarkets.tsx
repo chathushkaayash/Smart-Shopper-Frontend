@@ -1,23 +1,17 @@
 import {
   Box,
   Button,
-  Card,
-  CardBody,
   Center,
   Flex,
   Heading,
-  HStack,
-  Icon,
-  Image,
   Table,
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 
 import useSuperMarkets from "@/services/Supermarket/useSupermarkets";

@@ -1,7 +1,6 @@
 import SearchBar from "@/components/SearchBar";
 import { lastMonths } from "@/data/months";
 import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
-import { getMoment } from "@/utils/Time";
 import {
   Box,
   Button,
@@ -42,7 +41,7 @@ const AdminCustomers = () => {
 
   const activeConsumers = consumers.data?.results.filter((consumer) =>
     consumer.user.lastLogin !== null
-      ? getMoment(consumer.user.lastLogin).isAfter(30, "days")
+      ? consumer.user.lastLogin.getMoment().isAfter(30, "days")
       : false
   ).length || 0;
 

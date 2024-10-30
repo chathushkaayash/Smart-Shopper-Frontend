@@ -1,4 +1,3 @@
-import { Order } from "@/hooks/useOrder";
 import {
   Box,
   Button,
@@ -14,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import AddProductReview from "../../../components/ViewOrders/AddProductReview";
 import SupermarketItem from "../../../components/ViewOrders/SupermarketItem";
+import { Order } from "@/services/types";
 
 interface Props {
   order: Order;

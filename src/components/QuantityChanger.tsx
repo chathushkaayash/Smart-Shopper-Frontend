@@ -1,6 +1,6 @@
-import { CartItem } from "@/services/Cart/useCartItems";
 import { BaseCartItem } from "@/services/Cart/useCreateCartItems";
 import useUpdateCartItems from "@/services/Cart/useUpdateCartItem";
+import { CartItem } from "@/services/types";
 import useDebounce from "@/utils/useDebounce";
 import { Box, Flex, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";

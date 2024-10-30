@@ -1,6 +1,6 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { Driver } from "./useDriver";
+import { Driver } from "../types";
 
 const apiClient = new APIClient<Driver>("/drivers");
 

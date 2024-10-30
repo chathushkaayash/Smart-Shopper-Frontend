@@ -1,4 +1,4 @@
-import useDriver from "@/hooks/useDriver";
+import useDriver from "@/services/Driver/useDriver";
 import useAuthStore from "@/state-management/auth/store";
 import {
   Box,
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const VehicleDetails = () => {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const driver = useDriver(user?.driverId || 0);
+  const driver = useDriver([user?.driverId || 0])[0];
 
   const VehicleData = [
     { label: "Vehicle Name", value: driver.data?.vehicleName },

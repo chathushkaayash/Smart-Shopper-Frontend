@@ -1,6 +1,6 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { Order } from "./useOrder";
+import { Order } from "../types";
 
 const apiClient = new APIClient<Order>("/orders");
 

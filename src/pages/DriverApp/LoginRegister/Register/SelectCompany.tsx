@@ -19,20 +19,12 @@ import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 import { useState } from "react";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
 import DotIndicator from "@/components/DotIndicator";
-import { DriverDetails } from "./DriverRegister";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 
-interface Props {
-  setStage: (n: number) => void;
-  driverDetails: DriverDetails;
-  setDriverDetails: (s: DriverDetails) => void;
-}
-
-const SelectCompany = ({
-  setStage,
-  driverDetails,
-  setDriverDetails,
-}: Props) => {
-
+const SelectCompany = () => {
+  const { driverDetails, setDriverDetails, setStage } =
+  useDriverRegisterStore();
+  
   const [searchQuery, setSearchQuery] = useState<string>("");
   const companies = ["DHL", "FedEx", "UPS", "USPS", "TNT", "Aramex", "DPD"];
 

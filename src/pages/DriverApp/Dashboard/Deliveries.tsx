@@ -10,10 +10,10 @@ interface SupermarketRowInterface {
 export const SupermarketAddress = ({
   supermarketId,
 }: SupermarketRowInterface) => {
-  const supermarket = useSupermarket(supermarketId);
+  const supermarket = useSupermarket([supermarketId]);
   return (
     <Text as="span" fontWeight="bold">
-      {supermarket.data?.address}
+      {supermarket[0].data?.address}
       <br />
     </Text>
   );

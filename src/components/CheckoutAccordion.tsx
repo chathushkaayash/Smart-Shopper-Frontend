@@ -1,6 +1,6 @@
-import useProduct from "@/hooks/useProduct";
+import useProduct from "@/services/Products/useProduct";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
-import useCartItems, { CartItem } from "@/services/Cart/useCartItems";
+import useCartItems from "@/services/Cart/useCartItems";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -12,7 +12,7 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import { Supermarket } from "@/services/types";
+import { CartItem, Supermarket } from "@/services/types";
 
 const CheckoutAccordion = () => {
   const { data: cartItems } = useCartItems();
@@ -81,13 +81,13 @@ interface ProductAccordionItemProps {
 }
 
 const ProductAccordionItem = ({ cartItem }: ProductAccordionItemProps) => {
-  const product = useProduct(cartItem.supermarketItem?.productId || 0);
+  const product = useProduct([cartItem.supermarketItem?.productId || 0]);
 
   return (
     <HStack justifyContent="space-between">
       <HStack h="8vh">
-        <Image src={product.data?.imageUrl} w={"3vw"} />
-        <Text>{product.data?.name.slice(0, 15)}...</Text>
+        <Image src={product[0].data?.imageUrl} w={"3vw"} />
+        <Text>{product[0].data?.name.slice(0, 15)}...</Text>
       </HStack>
       <Box>
         <Text fontWeight={600}>

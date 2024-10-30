@@ -1,6 +1,6 @@
-import useOrders from "@/hooks/useOrders";
+import useOrders from "@/services/Orders/useOrders";
+import { BaseSupermarketOrder } from "@/services/types";
 import useAuthStore from "@/state-management/auth/store";
-import { getDateTime } from "@/utils/Time";
 import {
   Badge,
   Box,
@@ -21,8 +21,8 @@ const OrderTable = () => {
   const supermarketOrderStatus: string[] =
     orders.data?.results.map(
       (order) =>
-        order.supermarketOrders?.find(
-          (i) => i.supermarketId === user?.supermarketId
+        order.supermarketOrders.find(
+          (i: BaseSupermarketOrder) => i.supermarketId === user?.supermarketId
         )?.status || ""
     ) || [];
 
@@ -71,7 +71,7 @@ const OrderTable = () => {
                   #{order.id}
                 </Td>
                 <Td px={6} py={4}>
-                  {getDateTime(order.orderPlacedOn)}
+                  {order.orderPlacedOn.getDateTime()}
                 </Td>
                 <Td px={6} py={4}>
                   {user?.role === "Supermarket Manager"

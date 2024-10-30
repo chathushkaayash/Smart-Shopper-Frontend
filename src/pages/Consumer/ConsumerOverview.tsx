@@ -1,27 +1,26 @@
 // import { useState } from "react";
+import useLikedProducts from "@/services/LikedProducts/useLikedProducts";
+import useProduct from "@/services/Products/useProduct";
 import {
+  Avatar,
   Box,
   Grid,
   GridItem,
   Heading,
-  Text,
-  Icon,
-  Avatar,
-  VStack,
   HStack,
+  Icon,
   SimpleGrid,
-  Center,
+  Text,
+  VStack
 } from "@chakra-ui/react";
 import {
-  BsFillChatLeftHeartFill,
   BsFillCartFill,
+  BsFillChatLeftHeartFill,
   BsFillCreditCardFill,
 } from "react-icons/bs";
 import { RxHeartFilled } from "react-icons/rx";
-import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/ProductGrid/ProductCard";
 import ProductCardContainer from "../../components/ProductGrid/ProductCardContainer";
-import ActionButton from "../../components/Buttons/ActionButton";
 
 // Array of stats and their corresponding icons
 const statsWithIcons = [
@@ -32,17 +31,9 @@ const statsWithIcons = [
 ];
 
 const ConsumerOverview = () => {
-  // const [isLoadMore, setLoadMore] = useState(false);
-
-  // Fetch all products (assuming `useProducts` can fetch favorite products)
-  const { data: products, error, fetchNextPage, hasNextPage } = useProducts();
-
-  // Filter favorite products (assuming each product has a `isFavorite` property)
-  const favoriteProducts = products?.pages?.flatMap((page) =>
-    page.results.filter((product) => product.isFavorite)
-  );
-
-  if (error) return <Text>{error.message}</Text>;
+  const likedProducts = useLikedProducts();
+  const likedProductsIds = likedProducts.data?.results.map((product) => product.id) || [];
+  const favoriteProducts = useProduct(likedProductsIds);
 
   return (
     <Box py={5} px={20} bg="gray.100" borderRadius="lg">
@@ -81,13 +72,14 @@ const ConsumerOverview = () => {
 
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={6}>
         {favoriteProducts?.map((product) => (
-          <ProductCardContainer key={product.id}>
-            <ProductCard product={product} />
+          product.data && 
+            <ProductCardContainer key={product.data.id}>
+            <ProductCard product={product.data} />
           </ProductCardContainer>
         ))}
       </SimpleGrid>
 
-      {hasNextPage && (
+      {/* {hasNextPage && (
         <Center>
           <ActionButton
             onClick={() => {
@@ -99,7 +91,7 @@ const ConsumerOverview = () => {
             View All Products
           </ActionButton>
         </Center>
-      )}
+      )} */}
     </Box>
   );
 };

@@ -1,7 +1,7 @@
 import { Center, SimpleGrid } from "@chakra-ui/react";
 
 import React from "react";
-import useProducts from "../hooks/useProducts";
+import useProducts from "../services/Products/useProducts";
 import ActionButton from "./Buttons/ActionButton";
 import ProductCard from "./ProductGrid/ProductCard";
 import ProductCardContainer from "./ProductGrid/ProductCardContainer";

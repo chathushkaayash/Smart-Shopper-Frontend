@@ -1,14 +1,8 @@
-import { 
-  Box,
-  Grid,
-  Spinner,
-  Text
-} from '@chakra-ui/react';
-import useOrder from "@/hooks/useOrder";
-import { getDateTime } from "@/utils/Time";
+import { Box, Grid, Spinner, Text } from "@chakra-ui/react";
+import useOrder from "@/services/Orders/useOrder";
 import TextButton from "@/components/Buttons/TextButton";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface props {
   id: number;
@@ -44,74 +38,84 @@ export interface Order {
 }
 
 const OrderDetails = ({ id }: props) => {
-  const { data: order, isLoading, isError } = useOrder(id);
-  
+  const { data: order, isLoading, isError } = useOrder([id])[0];
 
-//  onclick navigate to the order page
+  //  onclick navigate to the order page
   const navigate = useNavigate();
   const btn = () => {
     navigate(`/orders/${id}`);
   };
 
-  
-  if (isLoading) return <><Spinner size='xl' /></>;
-  if (isError ) return <p>Error loading order details.</p>;
+  if (isLoading)
+    return (
+      <>
+        <Spinner size="xl" />
+      </>
+    );
+  if (isError) return <p>Error loading order details.</p>;
   if (!order) return <p>No order data found.</p>;
 
   // Calculate the order total from order items
-  const orderTotal = order.orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const orderTotal = order.orderItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   return (
-      <Box>
-          <Box
-              flex="1"
-              p={4}
-              mt={3}
-              borderWidth="1px"
-              borderRadius="10"
-              borderColor="gray.200"
-          >
-              <Grid templateColumns="1fr 2fr" gap={1}>
-                  <Text>Order Placed On</Text>
-                  <Text>: {getDateTime(order.orderPlacedOn)}</Text>
-                  <Text>Payment Method</Text>
-                  <Text>: {order.shippingMethod}</Text>
-                  <Text>Order Total</Text>
-                  <Text>: {orderTotal.toFixed(2)}</Text>
-                  <Text>Delivery Cost</Text>
-                  <Text>: XXXXXX</Text> 
-                  <Text>Shipping Address</Text>
-                  <Text>: {order.shippingAddress}</Text>
-              </Grid>
-          </Box>
-          <Box
-              flex="1"
-              p={4}
-              mt={3}
-              borderWidth="1px"
-              borderRadius="10"
-              borderColor="gray.200"
-          >
-              <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
-                  Driver Details
-              </Text>
-              <Grid templateColumns="1fr 2fr" gap={1}>
-                  <Text>Driver Name</Text>
-                  <Text>: Nethmi Kaveesha</Text> {/* This should ideally come from the order data */}
-                  <Text>Contact Number</Text>
-                  <Text>: 071122244</Text> {/* This should ideally come from the order data */}
-                  <Text>Vehicle Type</Text>
-                  <Text>: Bike</Text> {/* This should ideally come from the order data */}
-                  <Text>Vehicle Number</Text>
-                  <Text>: BAY 5050</Text> {/* This should ideally come from the order data */}
-              </Grid>
-          </Box>
-          <TextButton
-              text="View Order"
-              hoverColor="primary"
-              onClick={() => btn()}
-            />
+    <Box>
+      <Box
+        flex="1"
+        p={4}
+        mt={3}
+        borderWidth="1px"
+        borderRadius="10"
+        borderColor="gray.200"
+      >
+        <Grid templateColumns="1fr 2fr" gap={1}>
+          <Text>Order Placed On</Text>
+          <Text>: {order.orderPlacedOn.getDateTime()}</Text>
+          <Text>Payment Method</Text>
+          <Text>: {order.shippingMethod}</Text>
+          <Text>Order Total</Text>
+          <Text>: {orderTotal.toFixed(2)}</Text>
+          <Text>Delivery Cost</Text>
+          <Text>: XXXXXX</Text>
+          <Text>Shipping Address</Text>
+          <Text>: {order.shippingAddress}</Text>
+        </Grid>
       </Box>
+      <Box
+        flex="1"
+        p={4}
+        mt={3}
+        borderWidth="1px"
+        borderRadius="10"
+        borderColor="gray.200"
+      >
+        <Text fontSize="lg" fontWeight="bold" color="primary" mb={2}>
+          Driver Details
+        </Text>
+        <Grid templateColumns="1fr 2fr" gap={1}>
+          <Text>Driver Name</Text>
+          <Text>: Nethmi Kaveesha</Text>{" "}
+          {/* This should ideally come from the order data */}
+          <Text>Contact Number</Text>
+          <Text>: 071122244</Text>{" "}
+          {/* This should ideally come from the order data */}
+          <Text>Vehicle Type</Text>
+          <Text>: Bike</Text>{" "}
+          {/* This should ideally come from the order data */}
+          <Text>Vehicle Number</Text>
+          <Text>: BAY 5050</Text>{" "}
+          {/* This should ideally come from the order data */}
+        </Grid>
+      </Box>
+      <TextButton
+        text="View Order"
+        hoverColor="primary"
+        onClick={() => btn()}
+      />
+    </Box>
   );
 };
 

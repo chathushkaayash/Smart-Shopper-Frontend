@@ -1,77 +1,23 @@
-import { useState } from "react";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
+import EnterPassword from "./EnterPassword";
+import DriverOtp from "./DriverOtp";
 import PersonalDetails from "./PersonalDetails";
-import Otp from "./Otp";
 import SelectCompany from "./SelectCompany";
 import SelectVehicle from "./SelectVehicle";
-import VehicleImage from "./VehicleImage";
-import EnterPassword from "./EnterPassword";
 import SignUpThank from "./SignUpThank";
-
-export interface DriverDetails {
-  id: number;
-  courierCompany: string;
-  vehicleType: string;
-  vehicleColor: string;
-  vehicleName: string;
-  vehicleNumber: string;
-  password: string;
-  confirmPassword: string;
-  OTP: string;
-}
+import VehicleImage from "./VehicleImage";
 
 const DriverRegister = () => {
-  const [stage, setStage] = useState(0);
-  const [driverDetails, setDriverDetails] = useState<DriverDetails>(
-    {} as DriverDetails
-  );
-
-  console.log(driverDetails);
+  const stage = useDriverRegisterStore((state) => state.stage);
 
   return (
     <>
-      {stage === 0 && (
-        <PersonalDetails
-          setStage={(s: number) => setStage(s)}
-          driverDetails={driverDetails}
-          setDriverDetails={setDriverDetails}
-        />
-      )}
-      {stage === 1 && (
-        <Otp
-          setStage={(s: number) => setStage(s)}
-          driverDetails={driverDetails}
-          setDriverDetails={setDriverDetails}
-        />
-      )}
-
-      {stage === 2 && (
-        <SelectCompany
-          setStage={(s: number) => setStage(s)}
-          driverDetails={driverDetails}
-          setDriverDetails={setDriverDetails}
-        />
-      )}
-      {stage === 3 && (
-        <SelectVehicle
-          setStage={(s: number) => setStage(s)}
-          driverDetails={driverDetails}
-          setDriverDetails={setDriverDetails}
-        />
-      )}
-      {stage === 4 && (
-        <VehicleImage
-          setStage={(s: number) => setStage(s)}
-          driverDetails={driverDetails}
-          setDriverDetails={setDriverDetails}
-        />
-      )}
-      {stage === 5 && (
-        <EnterPassword
-          setStage={(s: number) => setStage(s)}
-          driverDetails={driverDetails}
-          setDriverDetails={setDriverDetails}
-        />
-      )}
+      {stage === 0 && <PersonalDetails />}
+      {stage === 1 && <DriverOtp />}
+      {stage === 2 && <SelectCompany />}
+      {stage === 3 && <SelectVehicle />}
+      {stage === 4 && <VehicleImage />}
+      {stage === 5 && <EnterPassword />}
       {stage === 6 && <SignUpThank />}
     </>
   );

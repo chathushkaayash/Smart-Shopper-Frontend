@@ -27,8 +27,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import useOrders from "@/hooks/useOrders";
-import { SupermarketWithRelations } from "@/services/Supermarket/useSupermarket";
+import useOrders from "@/services/Orders/useOrders";
 import useSuperMarkets from "@/services/Supermarket/useSupermarkets";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
@@ -43,6 +42,7 @@ import useSupermarketEarning from "@/hooks/useSupermarketEarning";
 //import Earnings from "../DriverApp/Dashboard/Earnings";
 import PieChart from "@/components/Charts/PieChart";
 import useSupermarketEarnings from "@/hooks/useSupermarketEarnings";
+import { Supermarket } from "@/services/types";
 // import APIClient from "@/services/api-client";
 // import { Review } from "@/hooks/reviews/useReview";
 
@@ -50,9 +50,9 @@ const AdminSuperMarkets = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const supermarkets = useSuperMarkets();
   const [selectedSm, setSelectedSm] =
-    useState<SupermarketWithRelations | null>();
+    useState<Supermarket | null>();
 
-  const handleEditClick = (supermarket: SupermarketWithRelations) => {
+  const handleEditClick = (supermarket: Supermarket) => {
     setSelectedSm(supermarket);
     onOpen();
   };
@@ -190,7 +190,7 @@ const AdminSuperMarkets = () => {
 interface PopupProps {
   onClose: () => void;
   isOpen: boolean;
-  selectedSm: SupermarketWithRelations;
+  selectedSm: Supermarket;
   //earning:number;
 }
 

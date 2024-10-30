@@ -1,7 +1,7 @@
 import { Box, HStack } from "@chakra-ui/react";
 import SimpleSlider from "../SimpleSlider";
 
-import useProducts from "../../hooks/useProducts";
+import useProducts from "../../services/Products/useProducts";
 import ActionButton from "../Buttons/ActionButton";
 import Section from "./Section";
 

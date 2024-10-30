@@ -1,6 +1,7 @@
 import MiddleContainer from "@/components/Containers/MiddleContainer";
-import { Driver } from "@/hooks/useDriver";
-import useDrivers from "@/hooks/useDrivers";
+import useDrivers from "@/services/Driver/useDrivers";
+import { Driver } from "@/services/types";
+
 import {
   Avatar,
   Box,

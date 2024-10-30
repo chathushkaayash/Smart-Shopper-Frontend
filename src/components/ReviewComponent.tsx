@@ -1,5 +1,4 @@
-import { Review } from "@/services/Reviews/useReview";
-import { getMoment } from "@/utils/Time";
+
 import {
   Box,
   Card,
@@ -12,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { FaUser } from "react-icons/fa6";
 import RatingStars from "./Inputs/Rating";
+import { Review } from "@/services/types";
 
 interface Props {
   review: Review;
@@ -33,7 +33,7 @@ const ReviewComponent = ({ review }: Props) => {
             </Box>
             <Spacer />
             <Box pr="5" mt={4} fontWeight={470}>
-              <Text>{getMoment(review.createdAt).calendar()}</Text>
+              <Text>{review.createdAt.getDateTime()}</Text>
             </Box>
           </Flex>
 

@@ -1,8 +1,5 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import useProduct, { Product } from "@/hooks/useProduct";
-import useSupermarketItems, {
-  SupermarketItem,
-} from "@/hooks/useSupermarketItems";
+
 import {
   Box,
   Flex,
@@ -31,6 +28,9 @@ import "reactjs-popup/dist/index.css";
 import ProductPreviewCard from "./ProductPreviewCard";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "@/services/api-client";
+import { Product, SupermarketItem } from "@/services/types";
+import useSupermarketItems from "@/hooks/useSupermarketItems";
+import useProduct from "@/services/Products/useProduct";
 
 const apiClient = new APIClient<SupermarketItem>("/supermarketitems");
 
@@ -187,7 +187,7 @@ interface ProductRowProps {
 }
 
 const ProductRow = ({ supermarketItem, handleEdit }: ProductRowProps) => {
-  const product = useProduct(supermarketItem.productId);
+  const product = useProduct([supermarketItem.productId])[0];
 
   return (
     <>

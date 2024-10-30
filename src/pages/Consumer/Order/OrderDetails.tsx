@@ -1,35 +1,32 @@
-import {
-  Box,
-  Text,
-  Image,
-  Flex,
-  Button,
-  Divider,
-  Grid,
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-  Center,
-  HStack,
-} from "@chakra-ui/react";
-import { FaPhoneAlt } from "react-icons/fa";
-import { PiNotepad } from "react-icons/pi";
-import { MdOutlineLocationOn } from "react-icons/md";
-import { RiArrowRightSLine } from "react-icons/ri";
-import Banner from "@/assets/smart-shopper-banner.svg";
 import QR from "@/assets/qr_code.png";
-import { Order } from "@/hooks/useOrder";
-import useSupermarket from "@/services/Supermarket/useSupermarket";
-import { getDateTime } from "@/utils/Time";
-import useAuthStore from "@/state-management/auth/store";
+import Banner from "@/assets/smart-shopper-banner.svg";
 import AddDriverReview from "@/components/ViewOrders/AddDriverReview";
 import DriverDetailsPopup from "@/components/ViewOrders/DriveDetails";
 import OrderReceipt from "@/components/ViewOrders/OrderReceipt";
 import TrackOrder from "@/components/ViewOrders/TrackOrder";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
+import { Order } from "@/services/types";
+import useAuthStore from "@/state-management/auth/store";
+import {
+  Box,
+  Button,
+  Center,
+  Divider,
+  Flex,
+  Grid,
+  Image,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure
+} from "@chakra-ui/react";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { PiNotepad } from "react-icons/pi";
+import { RiArrowRightSLine } from "react-icons/ri";
 interface Props {
   order: Order;
 }
@@ -151,7 +148,7 @@ const OrderDetails = ({ order }: Props) => {
           </Flex>
           <Box
             bg={
-              order.status === "Completed"
+              order.status === "Delivered"
                 ? "#5BFF89"
                 : order.status === "ToPay"
                 ? "primary"
@@ -184,7 +181,7 @@ const OrderDetails = ({ order }: Props) => {
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Order Placed on</Text>
-                <Text>: {getDateTime(order.orderPlacedOn)}</Text>
+                <Text>: {order.orderPlacedOn.getDateTime()}</Text>
                 <Text>Shipping Method</Text>
                 <Text>: {order.shippingMethod}</Text>
                 <Text>Order Total</Text>

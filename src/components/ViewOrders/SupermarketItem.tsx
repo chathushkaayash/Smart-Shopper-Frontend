@@ -1,15 +1,15 @@
-import { OrderItem } from "@/hooks/useOrder";
-import useProduct from "@/hooks/useProduct";
+import useProduct from "@/services/Products/useProduct";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
+import { BaseOrderItem } from "@/services/types";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 
 interface Props {
-  orderItem: OrderItem;
+  orderItem: BaseOrderItem;
   onAddReviewOpen: () => void;
 }
 
 const SupermarketItem = ({ orderItem, onAddReviewOpen }: Props) => {
-  const product = useProduct(orderItem.productId);
+  const product = useProduct([orderItem.productId])[0]
   const supermarket = useSupermarket([orderItem.supermarketId]);
 
   return (

@@ -1,8 +1,8 @@
 import APIClient from "@/services/api-client";
+import { SupermarketItem } from "@/services/types";
 import { useQuery } from "@tanstack/react-query";
-import { SupermarketItemWithRelations } from "./useSupermarketItems";
 
-const apiClient = new APIClient<SupermarketItemWithRelations>("/supermarketitems");
+const apiClient = new APIClient<SupermarketItem>("/supermarketitems");
 
 // get SupermarketItem by id
 const useSupermarketItem = (id: number) => {

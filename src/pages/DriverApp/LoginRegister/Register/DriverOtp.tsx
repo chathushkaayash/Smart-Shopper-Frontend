@@ -10,46 +10,19 @@ import {
 
 import Logo from "../../../../assets/logo.svg";
 import Phone from "../../../../assets/signup-login/enter-otp-animate.svg";
-
+import { DriverRegistrationDetails } from "@/services/types";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 import { useState } from "react";
-import { DriverDetails } from "./DriverRegister";
-import APIClient from "@/services/api-client";
 
-interface Props {
-  setStage: (n: number) => void;
-  driverDetails: DriverDetails;
-  setDriverDetails: (s: DriverDetails) => void;
-}
+const DriverOtp = () => {
+  const { setDriverDetails, setStage, otpResend, matchOtp } =
+    useDriverRegisterStore();
 
-const apiClient = new APIClient<{ OTP: string; id: number } | string>(
-  "/match_driver_otp"
-);
-const apiClientOTPResend = new APIClient<{ id: number }>("/driver_otp_resend");
-
-const Otp = ({ driverDetails, setDriverDetails, setStage }: Props) => {
   const [pin, setPin] = useState("");
 
-  const resendOtp = () => {
-    apiClientOTPResend.create({ id: driverDetails.id });
-  };
-
   const handleChange = (value: string) => {
-    if (value.length === 6) {
-      matchOtp(value);
-    }
+    if (value.length === 6) matchOtp(value);
     setPin(value);
-  };
-
-  const matchOtp = (otp: string) => {
-    apiClient
-      .create({
-        OTP: otp,
-        id: driverDetails.id,
-      })
-      .then(() => {
-        setDriverDetails({ ...driverDetails, OTP: otp });
-        setStage(2);
-      });
   };
 
   return (
@@ -87,14 +60,29 @@ const Otp = ({ driverDetails, setDriverDetails, setStage }: Props) => {
         </PinInput>
       </Box>
       <Image src={Phone} width="180px" className=" " justifyContent="center" />
-      <Text>
-        I didn't receive any code.{" "}
-        <Button variant="link" color="primary" onClick={resendOtp}>
-          RESEND
-        </Button>
-      </Text>
+      <Box>
+        <Text>
+          I didn't receive any code.{" "}
+          <Button variant="link" color="primary" onClick={otpResend}>
+            RESEND
+          </Button>
+        </Text>
+        <Text className="py-2" fontSize={14}>
+          Reset my Application{" "}
+          <Button
+            variant="link"
+            color="red"
+            onClick={() => {
+              setDriverDetails({} as DriverRegistrationDetails);
+              setStage(0);
+            }}
+          >
+            Reset Details
+          </Button>
+        </Text>
+      </Box>
     </VStack>
   );
 };
 
-export default Otp;
+export default DriverOtp;

@@ -1,6 +1,6 @@
-import { SupermarketItem } from "@/hooks/useSupermarketItems";
-import { Product } from "@/hooks/useProduct";
+
 import useSupermarket from "@/services/Supermarket/useSupermarket";
+import { Product, SupermarketItem } from "@/services/types";
 import { Box, Divider, HStack, Image, Text } from "@chakra-ui/react";
 
 interface Props {

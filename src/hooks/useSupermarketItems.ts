@@ -1,38 +1,16 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "./useProduct";
-import { Supermarket } from "../services/Supermarket/useSupermarket";
-import { CartItem } from "./useCartItem";
+import { SupermarketItem } from "@/services/types";
 
-export interface SupermarketItem {
-  id: number;
-  productId: number;
-  supermarketId: number;
-  price: number;
-  discount: number;
-  availableQuantity: number;
-}
+const apiClient = new APIClient<SupermarketItem>("/supermarket_items");
 
-export interface SupermarketItemWithRelations {
-  product: Product;
-  supermarket: Supermarket;
-  cartItem: CartItem[];
-  id: number;
-  productId: number;
-  supermarketId: number;
-  price: number;
-  discount: number;
-  availableQuantity: number;
-}
+// You can use this hook to 
+//    1) get all supermarket items 
+//    2) supermarket items filter by productId
 
-const apiClient = new APIClient<SupermarketItemWithRelations>(
-  "/supermarketitems"
-);
-
-// get SupermarketItem[] for a product
 const useSupermarketItems = (productId: number = 0) => {
   return useQuery({
-    queryKey: ["store_prices_for_product", productId],
+    queryKey: ["supermarket_items", productId],
     queryFn: () => apiClient.getAll({ params: { productId } }),
     staleTime: 1000 * 60 * 2, // 2 minute
   });

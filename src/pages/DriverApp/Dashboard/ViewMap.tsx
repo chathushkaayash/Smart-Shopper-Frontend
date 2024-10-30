@@ -18,31 +18,32 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { IoMdArrowRoundBack } from "react-icons/io";
 import { CgMenuRound } from "react-icons/cg";
 import { FaPhoneAlt } from "react-icons/fa";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 import QR from "@/assets/qr_code.png";
 
-import useOpportunity from "@/hooks/useOpportunity";
-import useSupermarket from "@/services/Supermarket/useSupermarket";
-import { useState } from "react";
 import SubmitButton from "@/components/Buttons/SubmitButton";
-import APIClient from "@/services/api-client";
 import useConsumer from "@/hooks/useConsumer";
-import useOrder, { SupermarketOrder } from "@/hooks/useOrder";
+import useOpportunity from "@/hooks/useOpportunity";
+import APIClient from "@/services/api-client";
+import useOrder from "@/services/Orders/useOrder";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
+import { BaseSupermarketOrder } from "@/services/types";
+import { useState } from "react";
 
 {
   /**********************************************Supermarket rows component****************************************/
 }
 
 interface SupermarketRowInterface {
-  supermarketOrder: SupermarketOrder;
+  supermarketOrder: BaseSupermarketOrder;
 }
 
 const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const supermarket = useSupermarket([supermarketId]);
+  const supermarket = useSupermarket([supermarketOrder.supermarketId]);
   return (
     <>
       <HStack
@@ -107,7 +108,7 @@ const ViewMap = () => {
   const navigate = useNavigate();
   const [showDetails, setShowDetails] = useState(false);
   const opportunity = useOpportunity(Number(id));
-  const order = useOrder(opportunity.data?._orderId || 0);
+  const order = useOrder([opportunity.data?._orderId || 0])[0];
 
   const formatDateTime = (orderPlacedOn: any) => {
     if (!orderPlacedOn) return "N/A";
