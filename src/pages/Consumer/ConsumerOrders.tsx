@@ -140,7 +140,7 @@ const ConsumerOrders = () => {
                     </Link>
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {order.orderPlacedOn.getMoment().format()}
+                    {order.orderPlacedOn.getDateTime()}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                     <Badge
