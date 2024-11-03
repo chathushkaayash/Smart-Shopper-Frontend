@@ -70,6 +70,7 @@ export interface Review {
   content: string;
   rating: number;
   createdAt: DateTime;
+  _createdAt: DateTime;
 }
 
 // ---------------------------------------------- Order ----------------------------------------------

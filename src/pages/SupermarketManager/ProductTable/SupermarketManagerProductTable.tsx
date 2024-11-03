@@ -32,7 +32,7 @@ import { Product, SupermarketItem } from "@/services/types";
 import useSupermarketItems from "@/hooks/useSupermarketItems";
 import useProduct from "@/services/Products/useProduct";
 
-const apiClient = new APIClient<SupermarketItem>("/supermarketitems");
+const apiClient = new APIClient<SupermarketItem>("/supermarket_items");
 
 const SupermarketManagerProductTable = () => {
   const supermarketItems = useSupermarketItems();

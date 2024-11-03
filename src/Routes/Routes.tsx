@@ -1,7 +1,7 @@
 import App from "@/App";
 import CardDetails from "@/pages/Consumer/ViewCart";
 
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import AdminRoutes from "./AdminRoutes";
 import ConsumerRoutes from "./ConsumerRoutes";
 import CourierCompanyRoutes from "./CourierCompanyRoutes";
@@ -18,10 +18,9 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <HomeLayout />,
-      },
+      { index: true, element: <Navigate to="/home" /> },
+      { path: "/home", element: <HomeLayout /> },
+
       ...AdminRoutes,
       ...DriverRoutes,
       ...PublicRoutes,
@@ -29,10 +28,6 @@ const router = createBrowserRouter([
       ...SupermarketManagerRoutes,
       ...SharedRoutes,
       ...CourierCompanyRoutes,
-
-      // { path: "", element: <Landing /> },
-      // { path: "login", element: <Login /> },
-      // { path: "signup", element: <SignUp /> },
 
       { path: "cart", element: <CardDetails /> },
     ],

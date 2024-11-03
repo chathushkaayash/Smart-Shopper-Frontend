@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 const ConsumerLayout = () => {
   const { user } = useAuthStore();
 
-  if (user?.role !== "Consumer") return <Navigate to={"/login"} />;
+  if (user?.role !== "Consumer") return <Navigate to="/login" />;
 
   return (
     // <Flex w="full">

@@ -3,6 +3,7 @@ import useOrder from "@/services/Orders/useOrder";
 import TextButton from "@/components/Buttons/TextButton";
 
 import { useNavigate } from "react-router-dom";
+import { DateTime } from "@/utils/Time";
 
 interface props {
   id: number;
@@ -73,7 +74,7 @@ const OrderDetails = ({ id }: props) => {
       >
         <Grid templateColumns="1fr 2fr" gap={1}>
           <Text>Order Placed On</Text>
-          <Text>: {order.orderPlacedOn.getDateTime()}</Text>
+          <Text>: {DateTime.toString(order.orderPlacedOn)}</Text>
           <Text>Payment Method</Text>
           <Text>: {order.shippingMethod}</Text>
           <Text>Order Total</Text>

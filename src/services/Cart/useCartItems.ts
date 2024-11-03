@@ -8,6 +8,7 @@ const useCartItems = () => {
   return useQuery({
     queryKey: ["cart_items"],
     queryFn: () => apiClient.getAll({}),
+    onError: () => {},
   });
 };
 

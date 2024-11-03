@@ -1,6 +1,7 @@
 import useOrders from "@/services/Orders/useOrders";
 import { BaseSupermarketOrder } from "@/services/types";
 import useAuthStore from "@/state-management/auth/store";
+import { DateTime } from "@/utils/Time";
 import {
   Badge,
   Box,
@@ -71,7 +72,7 @@ const OrderTable = () => {
                   #{order.id}
                 </Td>
                 <Td px={6} py={4}>
-                  {order.orderPlacedOn.getDateTime()}
+                  {DateTime.toString(order.orderPlacedOn)}
                 </Td>
                 <Td px={6} py={4}>
                   {user?.role === "Supermarket Manager"

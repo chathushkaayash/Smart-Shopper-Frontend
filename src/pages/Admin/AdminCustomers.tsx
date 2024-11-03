@@ -28,6 +28,7 @@ import { AiOutlineRise } from "react-icons/ai";
 import { IoMdPeople } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import LineChart from "../../components/Charts/LineChart";
+import { DateTime } from "@/utils/Time";
 
 const AdminCustomers = () => {
   const navigate = useNavigate();
@@ -39,11 +40,12 @@ const AdminCustomers = () => {
 
   const totalConsumers = consumers.data?.results.length || 0;
 
-  const activeConsumers = consumers.data?.results.filter((consumer) =>
-    consumer.user.lastLogin !== null
-      ? consumer.user.lastLogin.getMoment().isAfter(30, "days")
-      : false
-  ).length || 0;
+  const activeConsumers =
+    consumers.data?.results.filter((consumer) =>
+      consumer.user.lastLogin !== null
+        ? DateTime.getMoment(consumer.user.lastLogin).isAfter(30, "days")
+        : false
+    ).length || 0;
 
   const consumerCards = [
     {

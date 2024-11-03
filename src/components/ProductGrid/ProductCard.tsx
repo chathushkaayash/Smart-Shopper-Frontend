@@ -31,7 +31,7 @@ const ProductCard = ({ product }: Props) => {
   const createLikedProduct = useCreateLikedProducts();
   const deleteLikedProduct = useDeleteLikedProducts();
 
-  const prices = product.supermarketItems.length ? product.supermarketItems.map((item) => item.price) : [product.price];
+  const prices = product.supermarketItems?.length ? product.supermarketItems.map((item) => item.price) : [product.price];
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 

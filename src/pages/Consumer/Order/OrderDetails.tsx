@@ -7,6 +7,7 @@ import TrackOrder from "@/components/ViewOrders/TrackOrder";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { Order } from "@/services/types";
 import useAuthStore from "@/state-management/auth/store";
+import { DateTime } from "@/utils/Time";
 import {
   Box,
   Button,
@@ -22,7 +23,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { PiNotepad } from "react-icons/pi";
@@ -181,7 +182,7 @@ const OrderDetails = ({ order }: Props) => {
               </Text>
               <Grid templateColumns="1fr 2fr" gap={2}>
                 <Text>Order Placed on</Text>
-                <Text>: {order.orderPlacedOn.getDateTime()}</Text>
+                <Text>: {DateTime.toString(order.orderPlacedOn)}</Text>
                 <Text>Shipping Method</Text>
                 <Text>: {order.shippingMethod}</Text>
                 <Text>Order Total</Text>

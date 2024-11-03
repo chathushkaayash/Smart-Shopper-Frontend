@@ -12,13 +12,17 @@ const ConsumerPaymentSuccessful = loadable(
   () => import("@/pages/Consumer/PaymentSuccessful")
 );
 const ConsumerLayout = loadable(() => import("./Layouts/ConsumerLayout"));
-const ConsumerCheckout = loadable(() => import("@/pages/Consumer/Checkout/Checkout"));
+const ConsumerCheckout = loadable(
+  () => import("@/pages/Consumer/Checkout/Checkout")
+);
 const CartComparison = loadable(
   () => import("@/pages/Consumer/CartComparison/CartComparison")
 );
 const ViewProduct = loadable(() => import("@/pages/Consumer/ViewProduct"));
 const AboutUs = loadable(() => import("@/pages/Public/AboutUs"));
-const ConsumerOverview = loadable(() => import("@/pages/Consumer/ConsumerOverview"));
+const ConsumerOverview = loadable(
+  () => import("@/pages/Consumer/ConsumerOverview")
+);
 
 const ConsumerRoutes = [
   {
@@ -31,12 +35,9 @@ const ConsumerRoutes = [
       { path: "payment-success/:id", element: <ConsumerPaymentSuccessful /> },
       { path: "checkout", element: <ConsumerCheckout /> },
       { path: "cart-comparison", element: <CartComparison /> },
-      { path: "Consumer_overview", element: <ConsumerOverview />},
+      { path: "Consumer_overview", element: <ConsumerOverview /> },
       { path: "about", element: <AboutUs /> },
-      {
-        path: "reviews/supermarket_item/:id",
-        element: <ProductReview />,
-      },
+      { path: "reviews/supermarket_items/:id", element: <ProductReview /> },
     ],
   },
 ];

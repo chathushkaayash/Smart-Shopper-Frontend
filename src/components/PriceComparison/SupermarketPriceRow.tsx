@@ -77,6 +77,7 @@ const SupermarketPriceRow = ({
             <RatingStars
               value={totalStars / reviewCount}
               reviews={reviewCount}
+              url={`/reviews/supermarket_items/${supermarketItem.supermarketId}`}
             />
           </Box>
         </Stack>

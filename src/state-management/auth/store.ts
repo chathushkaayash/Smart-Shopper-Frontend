@@ -1,6 +1,7 @@
 import { create, StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 import { jwtDecode } from "jwt-decode";
+import useProductQueryStore from "../productQuery/store";
 
 export interface Credentials {
   email_or_number: string;
@@ -45,6 +46,7 @@ const authStore: StateCreator<AuthStore> = (set) => ({
   logout: () => {
     localStorage.removeItem("token");
     set(() => ({ user: null }));
+    useProductQueryStore.getState().productQuery = {};
   },
 
   expireToken: () => {

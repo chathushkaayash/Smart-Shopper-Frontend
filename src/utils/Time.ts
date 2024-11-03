@@ -21,7 +21,6 @@ import moment from "moment";
 //   return `${getDate(dateTime)} ${getTime(dateTime)}`;
 // };
 
-
 // export const getMoment = (dateTime: DateTime): moment.Moment => {
 //   return moment({
 //     year: dateTime.year,
@@ -33,6 +32,14 @@ import moment from "moment";
 //   });
 // }
 
+export interface BaseDateTime {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+}
 
 export class DateTime {
   year: number;
@@ -41,30 +48,17 @@ export class DateTime {
   hour: number;
   minute: number;
   second: number;
+  moment: moment.Moment;
 
-  constructor(year: number, month: number, day: number, hour: number, minute: number, second: number) {
-    this.year = year;
-    this.month = month;
-    this.day = day;
-    this.hour = hour;
-    this.minute = minute;
-    this.second = second;
-  }
+  constructor(dateTime: BaseDateTime) {
+    this.year = dateTime.year;
+    this.month = dateTime.month;
+    this.day = dateTime.day;
+    this.hour = dateTime.hour;
+    this.minute = dateTime.minute;
+    this.second = dateTime.second;
 
-  getDate(): string {
-    return `${this.year}-${this.month}-${this.day}`;
-  }
-
-  getTime(): string {
-    return `${this.hour}:${this.minute}:${Math.floor(this.second)}`;
-  }
-
-  getDateTime(): string {
-    return `${this.getDate()} ${this.getTime()}`;
-  }
-
-  getMoment(): moment.Moment {
-    return moment({
+    this.moment = moment({
       year: this.year,
       month: this.month - 1,
       day: this.day,
@@ -72,5 +66,32 @@ export class DateTime {
       minute: this.minute,
       second: Math.floor(this.second),
     });
+  }
+
+  static getDate(dateTime: DateTime): string {
+    return `${dateTime.year}-${dateTime.month}-${dateTime.day}`;
+  }
+
+  static getTime(dateTime: DateTime): string {
+    return `${dateTime.hour}:${dateTime.minute}:${Math.floor(dateTime.second)}`;
+  }
+
+  static getDateTime(dateTime: DateTime): string {
+    return `${DateTime.getDate(dateTime)} ${DateTime.getTime(dateTime)}`;
+  }
+
+  static getMoment(dateTime: DateTime): moment.Moment {
+    return moment({
+      year: dateTime.year,
+      month: dateTime.month - 1,
+      day: dateTime.day,
+      hour: dateTime.hour,
+      minute: dateTime.minute,
+      second: Math.floor(dateTime.second),
+    });
+  }
+
+  static toString(dateTime: DateTime): string {
+    return DateTime.getMoment(dateTime).fromNow();
   }
 }

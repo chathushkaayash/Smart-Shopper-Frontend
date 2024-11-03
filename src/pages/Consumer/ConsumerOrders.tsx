@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useOrders from "@/services/Orders/useOrders";
 import { Order } from "@/services/types";
+import { DateTime } from "@/utils/Time";
 
 // const orders: Order[] = [
 //   {
@@ -140,7 +141,7 @@ const ConsumerOrders = () => {
                     </Link>
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {order.orderPlacedOn.getDateTime()}
+                    {DateTime.toString(order.orderPlacedOn)}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                     <Badge

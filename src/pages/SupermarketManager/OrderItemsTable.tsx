@@ -3,6 +3,7 @@ import SubmitButton from "@/components/Buttons/SubmitButton";
 import useProduct from "@/services/Products/useProduct";
 import { BaseOrderItem, Order } from "@/services/types";
 import useAuthStore from "@/state-management/auth/store";
+import { DateTime } from "@/utils/Time";
 import {
   Box,
   Button,
@@ -107,7 +108,7 @@ const OrderItemsTable = ({ order }: Props) => {
             </Flex>
             <DetailsBox
               orderId={order.id}
-              orderPlacedOn={order.orderPlacedOn.getDateTime()}
+              orderPlacedOn={DateTime.toString(order.orderPlacedOn)}
               shippingMethod={order.shippingMethod}
               orderCost={123}
             />

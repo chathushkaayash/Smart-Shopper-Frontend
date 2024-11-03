@@ -3,10 +3,10 @@ import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
 
 import { Show } from "@chakra-ui/react";
-import BottomNav from "./components/BottomNav";
 import { useEffect } from "react";
-import useAuthStore from "./state-management/auth/store";
 import { Toaster } from "sonner";
+import BottomNav from "./components/BottomNav";
+import useAuthStore from "./state-management/auth/store";
 
 function App() {
   const { expireToken } = useAuthStore();
@@ -20,14 +20,15 @@ function App() {
     <>
       <Show above="md">
         <Navbar />
+        <Toaster className="!bg-red-800 !border-2" richColors />
       </Show>
 
       <Outlet />
 
       <Show below="md">
         <BottomNav />
+        <Toaster position="top-center" className="!bg-red-800 !border-2" richColors />
       </Show>
-      <Toaster className="!bg-red-800 !border-2" richColors />
     </>
   );
 }

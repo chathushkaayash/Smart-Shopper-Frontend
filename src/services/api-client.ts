@@ -20,6 +20,19 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+
+// If backend sends error message in the response, we can catch it here and show it to the user
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.data?.message)
+      return Promise.reject(error.response.data.message);
+    return Promise.reject(error);
+  }
+);
+
 class APIClient<T, R = T> {
   endpoint: string;
 
@@ -36,7 +49,7 @@ class APIClient<T, R = T> {
   get = (id: string | number) =>
     axiosInstance.get<T>(this.endpoint + "/" + id).then((res) => res.data);
 
-  create = (data: Omit<T,"id">) => {
+  create = (data: Omit<T, "id">) => {
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
 

@@ -12,7 +12,7 @@ import router from "./Routes/Routes.tsx";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     {/* For Chakra UI */}
-    <ChakraProvider theme={theme}>
+  <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
 
       <QueryClientProvider client={new QueryClient()}>

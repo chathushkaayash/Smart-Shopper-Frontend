@@ -24,10 +24,10 @@ const ConsumerHome = () => {
           pt="5vh"
         >
           <VStack
+            w={"75%"}
             boxShadow={"md"}
             borderWidth={1}
             borderRadius={15}
-            w="70vw"
             py={5}
             gap={5}
           >
@@ -71,6 +71,7 @@ const FilterProducts = () => {
       label: "Price",
       value: productQuery.price,
       values: [
+        "All",
         "Lower than Rs 250",
         "Rs 250 - Rs 500",
         "Rs 500 - Rs 1000",

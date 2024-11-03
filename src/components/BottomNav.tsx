@@ -3,19 +3,20 @@ import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsTruck } from "react-icons/bs";
 import { CiDollar, CiSearch, CiUser } from "react-icons/ci";
-import { IoHomeOutline} from "react-icons/io5";
+import { IoHomeOutline } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
   const hideNavbarPaths = [
     "/login",
     "/signup",
     "/driver/login_register",
     "/driver/login",
     "/driver/register",
-    "/driver/opportunities/viewmap"
+    "/driver/opportunities/viewmap",
   ];
   const showBottomNav = !hideNavbarPaths.some((path) =>
     location.pathname.startsWith(path)
@@ -29,7 +30,7 @@ const BottomNav = () => {
       text: "Cart",
       path: "/cart",
     },
-    { icon: <CiUser fontSize={20} />, text: "Account", path: "/driver" },
+    { icon: <CiUser fontSize={20} />, text: "Account", path: "/profile" },
   ];
 
   const driverIconsList = [
@@ -83,31 +84,34 @@ const BottomNav = () => {
               gap={0}
               key={index}
               h="full"
-              className=" cursor-pointer relative"
+              pos={"relative"}
+              cursor={"pointer"}
               onClick={() => navigate(iconsList[index].path)}
             >
               <Box
                 bg="primary"
-                className={`${
-                  currentIndex === index
-                    ? "-translate-y-6 opacity-100"
-                    : " opacity-0"
-                } duration-700  border-4 border-transparent border-gray-900 w-12 h-12 absolute   rounded-full -z-10 `}
+                pos={"absolute"}
+                transform={currentIndex === index ? "translateY(-1.5rem)" : ""}
+                opacity={currentIndex === index ? 1 : 0}
+                transitionDuration={"0.7s"}
+                className={` border-4 border-transparent border-gray-900 w-12 h-12  rounded-full -z-10 `}
               ></Box>
               <Box
-                className={`duration-500 ${
-                  currentIndex === index ? " -translate-y-6" : ""
-                }`}
+                transform={currentIndex === index ? "translateY(-1.5rem)" : ""}
+                transitionDuration={"0.7s"}
               >
                 {icon.icon}
               </Box>
               <Text
                 fontSize={12}
-                className={` absolute ${
+                pos={"absolute"}
+                opacity={currentIndex === index ? 1 : 0}
+                transform={
                   currentIndex === index
-                    ? "translate-y-2 duration-700 opacity-100"
-                    : " opacity-0 translate-y-10"
-                }`}
+                    ? "translateY(0.8rem)"
+                    : "translateY(5rem)"
+                }
+                transitionDuration={"0.7s"}
               >
                 {icon.text}
               </Text>

@@ -1,4 +1,5 @@
-
+import { Review } from "@/services/types";
+import { DateTime } from "@/utils/Time";
 import {
   Box,
   Card,
@@ -7,11 +8,11 @@ import {
   HStack,
   Icon,
   Spacer,
-  Text,
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { FaUser } from "react-icons/fa6";
 import RatingStars from "./Inputs/Rating";
-import { Review } from "@/services/types";
 
 interface Props {
   review: Review;
@@ -28,26 +29,20 @@ const ReviewComponent = ({ review }: Props) => {
       >
         <CardBody>
           <Flex>
-            <Box fontWeight="650">
-              <RatingStars value={review.rating} />
-            </Box>
-            <Spacer />
-            <Box pr="5" mt={4} fontWeight={470}>
-              <Text>{review.createdAt.getDateTime()}</Text>
-            </Box>
-          </Flex>
-
-          <Flex>
-            <Box fontSize="xl" mt={2} fontWeight={650}>
+            <Stack fontSize="lg" gap={15} fontWeight={650}>
               <Text>{review.title}</Text>
-            </Box>
+              <RatingStars value={review.rating} />
+            </Stack>
             <Spacer />
-            <Box pr="5" mt="auto" fontWeight={500}>
+            <Stack fontWeight={500} alignItems={"end"}>
               <HStack>
                 <Icon as={FaUser} />
                 <Text>{review.user.name}</Text>
               </HStack>
-            </Box>
+              <Text fontSize={12} color={"gray"}>
+                {DateTime.toString(review.createdAt)}
+              </Text>
+            </Stack>
           </Flex>
 
           <Box pr="5" mt={2} fontWeight={500} w="90%">
