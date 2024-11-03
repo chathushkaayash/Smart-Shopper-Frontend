@@ -2,7 +2,7 @@ import { BaseCartItem } from "@/services/Cart/useCreateCartItems";
 import useUpdateCartItems from "@/services/Cart/useUpdateCartItem";
 import { CartItem } from "@/services/types";
 import useDebounce from "@/utils/useDebounce";
-import { Box, Flex, Input } from "@chakra-ui/react";
+import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
@@ -47,6 +47,8 @@ const QuantityChanger = ({ cartItem }: Props) => {
       });
   };
 
+  const availableQuantity = cartItem.supermarketItem.availableQuantity || 0;
+
   return (
     <Flex
       flexDirection="column"
@@ -83,6 +85,13 @@ const QuantityChanger = ({ cartItem }: Props) => {
           <FaPlus />
         </Box>
       </Flex>
+      <Text
+        fontSize={14}
+        fontWeight={600}
+        color={availableQuantity < 10 ? "red" : "black"}
+      >
+        Available : {availableQuantity < 99 ? availableQuantity : "99+"}
+      </Text>
     </Flex>
   );
 };

@@ -87,7 +87,7 @@ const FilterProducts = () => {
       values: [
         "Newest",
         "Oldest",
-        "Best Selling",
+        // "Best Selling",
         "Price: Low to High",
         "Price: High to Low",
       ],

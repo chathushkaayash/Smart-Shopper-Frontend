@@ -173,7 +173,7 @@ const ViewProduct = () => {
             />
           </Box>
         </Flex>
-        <Grid templateColumns="40% 60%" gap={6} mt={4}>
+        <Grid templateColumns="40% 53%" gap={"6%"} mt={4}  >
           <GridItem>
             {selectedSupermarketItem && (
               <ProductDescription
@@ -182,7 +182,7 @@ const ViewProduct = () => {
               />
             )}
           </GridItem>
-          <GridItem ml={2}>
+          <GridItem ml={2}  w={'full'}>
             <PriceComparison
               supermarketItems={supermarketItems?.results || []}
               selectedSupermarketItem={selectedSupermarketItem}

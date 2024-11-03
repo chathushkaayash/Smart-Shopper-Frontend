@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { Form, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { PiCaretRightThin } from "react-icons/pi";
 import { useRef } from "react";
 import { BsCameraFill } from "react-icons/bs";

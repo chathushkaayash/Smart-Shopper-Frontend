@@ -50,7 +50,17 @@ const CartComparison = () => {
                   <Text fontSize="3xl" fontWeight={700}>
                     Your Shopping Cart
                   </Text>
-                  <Text>Not ready to checkout? Continue shopping</Text>
+                  <HStack>
+                    <Text>Not ready to checkout?</Text>
+                    <Text
+                      onClick={() => navigate("/")}
+                      color="primary"
+                      cursor="pointer"
+                      _hover={{ textDecoration: "underline" }}
+                    >
+                      Continue Shopping
+                    </Text>
+                  </HStack>
                 </Stack>
                 <Box>
                   <CiBookmark size={30} />
@@ -104,7 +114,17 @@ const CartComparison = () => {
                   <Text fontSize="3xl" fontWeight={700}>
                     Optimized Shopping Cart
                   </Text>
-                  <Text>Not ready to checkout? Continue shopping</Text>
+                  <HStack>
+                  <Text>Not ready to checkout?</Text>
+                  <Text
+                    onClick={() => navigate("/")}
+                    color="primary"
+                    cursor="pointer"
+                    _hover={{ textDecoration: "underline" }}
+                  >
+                    Continue Shopping
+                  </Text>
+                </HStack>
                 </Stack>
                 <Box>
                   <CiBookmark size={30} />

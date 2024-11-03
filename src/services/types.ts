@@ -39,6 +39,7 @@ export interface BaseSupermarket {
   contactNo: string;
   logo: string;
   location: string;
+  city: string;
   address: string;
   supermarketmanagerId: number;
 }

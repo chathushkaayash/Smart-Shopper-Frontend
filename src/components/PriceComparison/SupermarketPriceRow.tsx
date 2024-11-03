@@ -53,8 +53,10 @@ const SupermarketPriceRow = ({
       cursor="pointer"
       divider={<Divider borderColor="gray.400" h="8vh" w="fit-content" />}
     >
-      <Image src={supermarket[0].data?.logo || ""} w="6vw" />
-      <VStack gap={3} w="20vw">
+      <Box minW="10%" maxW="10%">
+        <Image src={supermarket[0].data?.logo || ""} w="6vw" />
+      </Box>
+      <VStack gap={3} minW="50%" maxW="50%">
         <HStack gap={10} lineHeight={0.1} w="full">
           <Stack>
             <Text fontSize="xs" color="gray">
@@ -69,23 +71,39 @@ const SupermarketPriceRow = ({
             <Heading fontSize="lg">2.4 KM</Heading>
           </Stack>
         </HStack>
-        <Stack w="full" lineHeight={0.1}>
-          <Text fontSize="xs" color="gray">
-            Reviews
-          </Text>
-          <Box>
-            <RatingStars
-              value={totalStars / reviewCount}
-              reviews={reviewCount}
-              url={`/reviews/supermarket_items/${supermarketItem.supermarketId}`}
-            />
-          </Box>
-        </Stack>
+        <HStack gap={0} lineHeight={0.1} w="full">
+          <Stack w="full" lineHeight={0.1}>
+            <Text fontSize="xs" color="gray">
+              Reviews
+            </Text>
+            <Box>
+              <RatingStars
+                value={totalStars / reviewCount}
+                reviews={reviewCount}
+                url={`/reviews/supermarket_items/${supermarketItem.supermarketId}`}
+              />
+            </Box>
+          </Stack>
+          <Stack w={"40%"} justifyContent={"flex-end"}>
+            <Text
+              fontSize="sm"
+              whiteSpace={"nowrap"}
+              color={supermarketItem.availableQuantity < 10 ? "red" : ""}
+            >
+              {supermarketItem.availableQuantity < 99
+                ? supermarketItem.availableQuantity
+                : "99+"}{" "}
+              Available
+            </Text>
+          </Stack>
+        </HStack>
       </VStack>
 
-      <Text fontSize="xl" fontWeight={700} w="15  %" whiteSpace={"nowrap"}>
-        {supermarketItem.price} LKR
-      </Text>
+      <Box minW="20%" maxW="20%">
+        <Text fontSize="xl" fontWeight={700} whiteSpace={"nowrap"}>
+          {supermarketItem.price} LKR
+        </Text>
+      </Box>
     </HStack>
   );
 };

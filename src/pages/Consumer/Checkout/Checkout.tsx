@@ -90,7 +90,7 @@ const Checkout = () => {
       <Box maxWidth="1200px" margin="0 auto" padding="4">
         <Flex justifyContent="space-between" alignItems="center" mb={4}>
           <Button variant="link" size="xxl" color={"black"}>
-            <IoIosArrowBack />
+            <IoIosArrowBack onClick={() => window.history.back()} />
           </Button>
         </Flex>
 
