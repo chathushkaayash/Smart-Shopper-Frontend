@@ -1,3 +1,4 @@
+import useOpportunities from "@/hooks/useOpportunities";
 import {
   Box,
   Button,
@@ -12,10 +13,24 @@ import ReactApexChart from "react-apexcharts";
 import { FaTruck } from "react-icons/fa";
 
 const Home = () => {
-  const data = [
+
+  const opportunities = useOpportunities({
+    status: "Delivered",
+    month: "",
+  });
+  const monthlyDeliveries = Array(12).fill(0);
+  
+  if (opportunities.data?.results) {
+    opportunities.data?.results.map((opportunity) => {
+      const monthIndex = new Date(opportunity.orderPlacedOn).getMonth(); // 0 is Jan, 11 is Dec
+      monthlyDeliveries[monthIndex] += 1;
+    });
+  }
+
+  const chartData = [
     {
-      name: "series1",
-      data: [31, 40, 28, 51, 42, 109, 100, 50, 60],
+      name: "Deliveries",
+      data: monthlyDeliveries,
     },
   ];
 
@@ -79,7 +94,7 @@ const Home = () => {
               justifyContent={"space-between"}
             >
               <Icon
-              rounded={"lg"}
+                rounded={"lg"}
                 as={card.icon}
                 w={16}
                 h={16}
@@ -106,7 +121,7 @@ const Home = () => {
         >
           <ReactApexChart
             options={options}
-            series={data}
+            series={chartData}
             type="area"
             width="100%"
           />

@@ -18,7 +18,8 @@ import useAuthStore from "@/state-management/auth/store";
 
 const Account = () => {
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
+  const { logout, user } = useAuthStore((state) => ({ logout: state.logout, user: state.user }));
+
 
   const rows = [
     {
@@ -54,12 +55,10 @@ const Account = () => {
           />
           <VStack align="start">
             <Text fontSize="xl" fontWeight="bold">
-              {/* {user?.name || "John Doe"} */}
-              John Doe
+              {user?.name}
             </Text>
             <Text color="gray.500">
-              {/* {user?.email || "john.doe@example.com"} */}
-              john.doe@example.com
+              {user?.email }
             </Text>
           </VStack>
         </HStack>
