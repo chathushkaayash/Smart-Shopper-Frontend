@@ -30,6 +30,7 @@ const EditAccount = () => {
     { label: "Contact", value: driver.data?.user.number },
     { label: "Courier Company Name", value: driver.data?.courierCompany },
   ];
+  
   return (
     <>
       <VStack h="23vh" px="8vw" pt="3vh" pb="10vh" borderWidth={2}>

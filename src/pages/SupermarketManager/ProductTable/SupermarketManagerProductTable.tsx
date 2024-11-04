@@ -1,5 +1,9 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
 
+import APIClient from "@/services/api-client";
+import useProduct from "@/services/Products/useProduct";
+import useAllSupermarketItems from "@/services/SupermarketItems/useAllSupermarketItems";
+import { Product, SupermarketItem } from "@/services/types";
 import {
   Box,
   Flex,
@@ -22,20 +26,16 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import "reactjs-popup/dist/index.css";
 import ProductPreviewCard from "./ProductPreviewCard";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import APIClient from "@/services/api-client";
-import { Product, SupermarketItem } from "@/services/types";
-import useSupermarketItems from "@/hooks/useSupermarketItems";
-import useProduct from "@/services/Products/useProduct";
 
 const apiClient = new APIClient<SupermarketItem>("/supermarket_items");
 
 const SupermarketManagerProductTable = () => {
-  const supermarketItems = useSupermarketItems();
+  const supermarketItems = useAllSupermarketItems();
   const queryClient = useQueryClient();
 
   const [selectedProduct, setSelectedProduct] = useState<Product>();

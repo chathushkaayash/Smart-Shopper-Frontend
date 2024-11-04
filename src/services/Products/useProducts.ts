@@ -31,8 +31,7 @@ const useProducts = () => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },
-    staleTime: 1000 * 60 * 2, // 2 minutes
-    retry: 0,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
 

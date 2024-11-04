@@ -13,8 +13,7 @@ import MiddleContainer from "@/components/Containers/MiddleContainer";
 import PriceComparison from "@/components/PriceComparison/PriceComparison";
 import ProductDescription from "@/components/PriceComparison/ProductDescription";
 import useProduct from "@/services/Products/useProduct";
-import useSupermarketItems, {
-} from "@/hooks/useSupermarketItems";
+import useSupermarketItems from "@/services/SupermarketItems/useSupermarketItems";
 import useCartItems from "@/services/Cart/useCartItems";
 import useCreateCartItems from "@/services/Cart/useCreateCartItems";
 import useDeleteCartItems from "@/services/Cart/useDeleteCartItem";
@@ -30,7 +29,7 @@ import { CartItem, Product, SupermarketItem } from "@/services/types";
 
 const ViewProduct = () => {
   const { id } = useParams();
-  const productId = Number(id)
+  const productId = Number(id);
 
   if (!productId) return null;
 
@@ -40,7 +39,7 @@ const ViewProduct = () => {
     data: supermarketItems,
     isLoading,
     error,
-  } = useSupermarketItems(productId);
+  } = useSupermarketItems({ productId });
 
   const [isLiked, setIsLiked] = useState(false);
   const [cartItem, setCartItem] = useState<CartItem | null>(null);
@@ -173,7 +172,7 @@ const ViewProduct = () => {
             />
           </Box>
         </Flex>
-        <Grid templateColumns="40% 53%" gap={"6%"} mt={4}  >
+        <Grid templateColumns="40% 53%" gap={"6%"} mt={4}>
           <GridItem>
             {selectedSupermarketItem && (
               <ProductDescription
@@ -182,7 +181,7 @@ const ViewProduct = () => {
               />
             )}
           </GridItem>
-          <GridItem ml={2}  w={'full'}>
+          <GridItem ml={2} w={"full"}>
             <PriceComparison
               supermarketItems={supermarketItems?.results || []}
               selectedSupermarketItem={selectedSupermarketItem}

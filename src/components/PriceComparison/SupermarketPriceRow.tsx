@@ -30,7 +30,7 @@ const SupermarketPriceRow = ({
 
   const reviews = useReviews({
     reviewType: "supermarketItem",
-    targetId: supermarketItem.supermarketId,
+    targetId: supermarketItem.id,
   });
 
   const reviewCount = reviews.data?.count || 0;

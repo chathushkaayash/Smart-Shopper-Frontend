@@ -1,5 +1,5 @@
 import AdvancedRating from "@/components/Inputs/AdvancedRating";
-import useSupermarketItem from "@/hooks/useSupermarketItem";
+import useSupermarketItem from "@/services/SupermarketItems/useSupermarketItem";
 import useReviews from "@/services/Reviews/useReviews";
 import {
   Box,
@@ -8,7 +8,7 @@ import {
   Image,
   Stack,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import ReviewComponent from "../../components/ReviewComponent";
@@ -36,6 +36,7 @@ const ProductReview = () => {
     reviewSummary[review.rating]++;
   });
 
+  console.log(supermarketItem.data)
   return (
     <Box mx="10%" borderRadius={15} my="2%" boxShadow="xl" borderWidth={2}>
       <Grid gridTemplateColumns={{ base: "1fr", xl: "2fr 3fr" }}>
