@@ -16,6 +16,7 @@ import Footer from "@/components/Footer";
 import ActionButton from "@/components/Buttons/ActionButton";
 import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
 import useSuperMarkets from "@/services/Supermarket/useSupermarkets";
+import useProducts from "@/services/Products/useProducts";
 
 import OrderFood from "../../assets/AboutUs/Order food-pana.svg";
 import GroceryShopping from "../../assets/AboutUs/Grocery shopping-amico (1).svg";
@@ -45,9 +46,8 @@ const AboutPage = () => {
   const [consumerQuery] = useState<ConsumerQuery>({} as ConsumerQuery);
   const consumers = useConsumers(consumerQuery);
   const totalConsumers = consumers.data?.results.length || 0;
-
-  const supermarkets = useSuperMarkets();
-  const totalSupermarkets = supermarkets.data?.results.length || 0;
+  const totalSupermarkets = useSuperMarkets().data?.results.length || 0;
+  const totalCategories = useProducts().data?.pages[0].results.length || 0;
 
   return (
     <>
@@ -112,7 +112,7 @@ const AboutPage = () => {
           <Stat number={totalConsumers} label="Happy Customers" />
           <Stat number={totalConsumers} label="Monthly Visitors" />
           <Stat number={totalSupermarkets} label="Major Supermarkets" />
-          <Stat number={totalConsumers} label="Categories" />
+          <Stat number={totalCategories} label="Categories" />
         </SimpleGrid>
 
         <VStack>

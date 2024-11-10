@@ -10,7 +10,7 @@ const CourierCompanyLayout = loadable(
 const Deliveries = loadable(
   () => import("@/pages/CourierCompanyManager/Deliveries")
 );
-const Request = loadable(() => import("@/pages/CourierCompanyManager/Request"));
+const Request = loadable(() => import("@/pages/CourierCompanyManager/DriverRequests"));
 
 const CourierCompanyRoutes = [
   {

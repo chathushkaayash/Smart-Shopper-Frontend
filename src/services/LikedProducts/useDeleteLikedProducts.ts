@@ -12,12 +12,12 @@ const useDeleteLikedProducts = () => {
     mutationFn: (id: number) => apiClient.delete(id),
 
     onSuccess: () => {
-      toast.success("Product removed from liked products");
+      toast.success("Product removed from Favorite");
     },
 
     onError: () => {
       toast.error(
-        "An error occurred while removing product from liked products"
+        "An error occurred while removing product from Favorite"
       );
     },
 

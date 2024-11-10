@@ -59,6 +59,14 @@ const BrowseByCategory = () => {
         bg="primary"
         color="white"
         width="fit-content"
+        border="2px"
+        _hover={{ bg: "white", color: "primary" }}
+        _active={{
+          bg: "primary",
+          color: "white",
+          transform: "scale(0.98)",
+          borderColor: "primary",
+        }}
         onClick={previousSlide}
       />
       <IconButton
@@ -67,6 +75,14 @@ const BrowseByCategory = () => {
         bg="primary"
         color="white"
         width="fit-content"
+        border="2px"
+        _hover={{ bg: "white", color: "primary" }}
+        _active={{
+          bg: "primary",
+          color: "white",
+          transform: "scale(0.98)",
+          borderColor: "primary",
+        }}
         onClick={nextSlide}
       />
     </HStack>
@@ -89,8 +105,6 @@ const BrowseByCategory = () => {
               <Center
                 height={120}
                 margin={2}
-                // border="1px solid"
-                // borderColor='primary'
                 bg="white"
                 borderRadius="lg"
                 padding={5}
@@ -98,7 +112,7 @@ const BrowseByCategory = () => {
                 gap={2}
                 shadow="md"
                 borderWidth="1.5px"
-                _hover={{ borderWidth: 2, borderColor: "primary" }}
+                _hover={{ borderWidth: 2, borderColor: "primary", transform: "scale(0.98)" }}
                 onClick={() => handleClickedCategory(category.name)}
               >
                 <Box width={55} height={50}>

@@ -8,10 +8,15 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Logo from "../assets/logo.svg";
-import { useNavigate } from "react-router-dom";
+import { To, useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
+
+  const handleNavigation = (path: To) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
   return (
     <Box as="footer" bg="white" p={8} boxShadow="md" borderTop="1px solid" borderColor={"gray.200"}>
       <Grid templateColumns={{ base: "1fr", md: "3fr 1fr 1fr 1fr" }} gap={8}>
@@ -39,25 +44,26 @@ const Footer = () => {
             <Text cursor="pointer" onClick={() => navigate("/about")} _hover={{ color: "primary" }}>
               Contact Us
             </Text>
-            <Text cursor="pointer" onClick={() => navigate("/")} _hover={{ color: "primary" }}>Home</Text>
-            <Text cursor="pointer" onClick={() => navigate("/supermarkets")} _hover={{ color: "primary" }}>Super Markets</Text>
-            <Text cursor="pointer" onClick={() => navigate("/about")} _hover={{ color: "primary" }}>About Us</Text>
+            <Text cursor="pointer" onClick={() => handleNavigation("/")} _hover={{ color: "primary" }}>Home</Text>
+            <Text cursor="pointer" onClick={() => handleNavigation("/supermarkets")} _hover={{ color: "primary" }}>Supermarkets</Text>
+            <Text cursor="pointer" onClick={() => handleNavigation("/about")} _hover={{ color: "primary" }}>About Us</Text>
           </VStack>
         </GridItem>
         <GridItem>
           <VStack alignItems="flex-start" spacing={2}>
             <Text fontWeight="bold">Categories</Text>
-            <Text>Biscuit</Text>
-            <Text>Fruits</Text>
-            <Text>Vegetables</Text>
-            <Text>Beverages</Text>
+            <Text>Electronics</Text>
+            <Text>Clothing</Text>
+            <Text>Food</Text>
+            <Text>Shoes</Text>
+            <Text>Furniture</Text>
           </VStack>
         </GridItem>
         <GridItem>
           <VStack alignItems="flex-start" spacing={2}>
             <Text fontWeight="bold">About</Text>
             <Text cursor="pointer" onClick={() => navigate("/about")} _hover={{ color: "primary" }}>Contact Us</Text>
-            <Text cursor="pointer" onClick={() => navigate("/about")} _hover={{ color: "primary" }}>About Us</Text>
+            <Text cursor="pointer" onClick={() => handleNavigation("/about")} _hover={{ color: "primary" }}>About Us</Text>
           </VStack>
         </GridItem>
       </Grid>

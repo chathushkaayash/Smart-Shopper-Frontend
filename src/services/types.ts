@@ -115,7 +115,7 @@ export interface BaseOrderItem {
 }
 
 export interface OrderItem extends BaseOrderItem {
-  _order : BaseOrder;
+  _order: BaseOrder;
 }
 
 // ---------------------------------------------- Supermarket Order ----------------------------------------------
@@ -225,6 +225,39 @@ export interface DriverRegistrationDetails {
 
   // Credentials
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
   OTP: string;
+}
+
+// ---------------------------------------------- Non Verified Driver ---------------------------------------------------
+export enum NonVerifiedDriverStatus {
+  OTPPending,
+  OTPVerified,
+  Accepted,
+  Declined,
+}
+
+export interface NonVerifiedDriver {
+  id: number;
+
+  // Personal Details
+  name: string;
+  nic: string;
+  email: string;
+  contactNo: string;
+  profilePic: string;
+
+  // Vehicle Details
+  courierCompany: string;
+  vehicleType: string;
+  vehicleColor: string;
+  vehicleName: string;
+  vehicleNumber: string;
+
+  // Credentials
+  OTP: string;
+  password: string;
+  status?: NonVerifiedDriverStatus;
+
+  createdAt: DateTime;
 }

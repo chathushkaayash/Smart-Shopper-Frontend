@@ -14,6 +14,7 @@ import {
   MenuList,
   Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -317,9 +318,14 @@ const Navbar = () => {
                   </MenuList>
                 </Menu>
               )}
-              <Text fontSize="lg" fontWeight="bold">
-                {user.name}
-              </Text>
+              <VStack gap={0} align={"flex-start"}>
+                <Text fontSize="lg" fontWeight="bold">
+                  {user.name}
+                </Text>
+                <Text fontSize="11px" fontWeight="bold" color={"black"}>
+                  {user.role}
+                </Text>
+              </VStack>
               {user.role === "Consumer" && (
                 <Box pos={"relative"} cursor="pointer">
                   <Icon

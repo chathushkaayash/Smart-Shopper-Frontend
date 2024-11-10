@@ -11,10 +11,10 @@ const useCreateLikedProducts = () => {
     mutationFn: (data: Omit<LikedProducts, "id">) => apiClient.create(data),
 
     onSuccess: () => {
-      toast.success("Product added to liked products");
+      toast.success("Product added to Favorite");
     },
     onError: () => {
-      toast.error("An error occurred while adding product to liked products");
+      toast.error("An error occurred while adding product to Favorite");
     },
 
     onSettled: () => {

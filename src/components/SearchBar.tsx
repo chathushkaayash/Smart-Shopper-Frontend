@@ -22,7 +22,7 @@ const SearchBar = ({ value, setValue, width }: Props) => {
 
   useEffect(() => {
     setValue(debouncedSearch);
-  }, [debouncedSearch]);
+  }, [debouncedSearch, setValue]);
 
   return (
     <Center w={width || "full"}>
