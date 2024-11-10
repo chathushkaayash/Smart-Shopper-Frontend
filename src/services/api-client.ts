@@ -7,9 +7,10 @@ export interface FetchResponse<T> {
   results: T[];
 }
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+export const baseURL = VITE_BASE_URL || "http://localhost:9090";
 
 const axiosInstance = axios.create({
-  baseURL: VITE_BASE_URL || "http://localhost:9090",
+  baseURL: baseURL,
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -19,7 +20,6 @@ axiosInstance.interceptors.request.use((config) => {
   }
   return config;
 });
-
 
 // If backend sends error message in the response, we can catch it here and show it to the user
 axiosInstance.interceptors.response.use(

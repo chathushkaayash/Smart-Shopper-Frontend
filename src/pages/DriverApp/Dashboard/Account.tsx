@@ -1,3 +1,6 @@
+import { getImageUrl } from "@/lib/utils";
+import useDriver from "@/services/Driver/useDriver";
+import useAuthStore from "@/state-management/auth/store";
 import {
   Button,
   Divider,
@@ -9,17 +12,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { BiSolidUserRectangle } from "react-icons/bi";
-import { PiCaretRightThin } from "react-icons/pi";
 import { FaCar } from "react-icons/fa";
-import { MdStarRate, MdContactSupport } from "react-icons/md";
+import { MdContactSupport, MdStarRate } from "react-icons/md";
+import { PiCaretRightThin } from "react-icons/pi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "@/state-management/auth/store";
 
 const Account = () => {
   const navigate = useNavigate();
-  const { logout, user } = useAuthStore((state) => ({ logout: state.logout, user: state.user }));
-
+  const { logout, user } = useAuthStore((state) => ({
+    logout: state.logout,
+    user: state.user,
+  }));
+  const driver = useDriver([user?.driverId || 0])[0];
 
   const rows = [
     {
@@ -33,7 +38,11 @@ const Account = () => {
       label: "Deliveries",
       path: "/driver/deliveries",
     },
-    { Icon: MdStarRate, label: "Reviews & Ratings", path: "/driver/account/reviews" },
+    {
+      Icon: MdStarRate,
+      label: "Reviews & Ratings",
+      path: "/driver/account/reviews",
+    },
     {
       Icon: MdContactSupport,
       label: "Hepl & Support",
@@ -50,16 +59,15 @@ const Account = () => {
           <Image
             boxSize="70px"
             borderRadius="full"
-            src="https://via.placeholder.com/100"
+            src={getImageUrl(driver.data?.user.profilePic)}
             alt="Profile Image"
+            objectFit={"cover"}
           />
           <VStack align="start">
             <Text fontSize="xl" fontWeight="bold">
               {user?.name}
             </Text>
-            <Text color="gray.500">
-              {user?.email }
-            </Text>
+            <Text color="gray.500">{user?.email}</Text>
           </VStack>
         </HStack>
       </Stack>
