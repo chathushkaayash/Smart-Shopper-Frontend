@@ -21,6 +21,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserPlaceholder from "../assets/avatar-placeholder.png";
 import Banner from "../assets/smart-shopper-banner.svg";
 import ActionButton from "./Buttons/ActionButton";
+import useUser from "@/services/User/useUser";
+import { getImageUrl } from "@/lib/utils";
 
 interface NavItem {
   text: string;
@@ -28,7 +30,9 @@ interface NavItem {
 }
 
 const Navbar = () => {
-  const { user, logout } = useAuthStore();
+  const { user:authUser, logout } = useAuthStore();
+  const user = useUser([authUser?.id || 0])[0].data;
+
   const { data: cartItems } = useCartItems();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -132,7 +136,7 @@ const Navbar = () => {
                   <MenuButton>
                     <Avatar
                       name="Bimsara Jayadewa"
-                      src={UserPlaceholder}
+                      src={getImageUrl(user.profilePic)}
                       boxSize={10}
                       cursor="pointer"
                     />

@@ -32,6 +32,14 @@ export interface LikedProducts {
   userId?: number;
 }
 
+// ---------------------------------------------- Activity ----------------------------------------------
+
+export interface Activity {
+  id: number;
+  description: string;
+  dateTime: string;
+}
+
 // ---------------------------------------------- Supermarket ----------------------------------------------
 export interface BaseSupermarket {
   id: number;
@@ -188,6 +196,23 @@ export interface BaseOpportunity {
   _orderId: number;
   driverId: number;
   orderPlacedOn: DateTime;
+}
+
+// ---------------------------------------------- Base User ---------------------------------------------------
+
+export interface BaseUser {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  number: string;
+  profilePic: string;
+  role: string;
+  status: string;
+  lastLogin: DateTime;
+  createdAt: DateTime;
+  updatedAt: DateTime;
+  deletedAt: DateTime;
 }
 
 // ---------------------------------------------- Driver ---------------------------------------------------

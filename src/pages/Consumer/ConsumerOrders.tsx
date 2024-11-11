@@ -20,25 +20,6 @@ import useOrders from "@/services/Orders/useOrders";
 import { Order } from "@/services/types";
 import { DateTime } from "@/utils/Time";
 
-// const orders: Order[] = [
-//   {
-//       id: "10001",
-//       details: "Kring New Fit office chair, mesh + PU, black",
-//       status: "ToPay",
-//       date: "16/10/2021",
-//       collector: "customer",
-//       total: "$200.00",
-//     },
-//     {
-//       id: "10002",
-//       details: "Kring New Fit office chair, mesh + PU, black",
-//       status: "Ready",
-//       date: "16/10/2021",
-//       collector: "delivery person",
-//       total: "$200.00",
-//     },
-// ];
-
 const statusColor: Record<Order["status"], string> = {
   ToPay: "red",
   Prepared: "green",
@@ -50,26 +31,33 @@ const statusColor: Record<Order["status"], string> = {
 };
 
 const ConsumerOrders = () => {
+  // const orders = useOrders();
+  // console.log(orders.data);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("View All");
 
-  const orders = useOrders();
-  console.log(orders.data);
+  const { data, isLoading, isError, error } = useOrders();
+  if (isLoading) {
+    return <Box className="p-5 h-screen bg-gray-100">Loading orders...</Box>;
+  }
+
+  if (isError) {
+    return (
+      <Box className="p-5 h-screen bg-gray-100">
+        Error fetching orders:{" "}
+        {error instanceof Error ? error.message : "Unknown error"}
+      </Box>
+    );
+  }
 
   const filteredOrders = (): Order[] => {
     switch (activeTab) {
       case "To Pay":
-        // return orders.data.filter(order => order.status === "ToPay");
-        return (
-          orders.data?.results.filter((order) => order.status === "ToPay") || []
-        );
+        return data?.results.filter((order) => order.status === "ToPay") || [];
       case "Processed":
-        // return orders.filter(order => order.status !== "ToPay");
-        return (
-          orders.data?.results.filter((order) => order.status !== "ToPay") || []
-        );
+        return data?.results.filter((order) => order.status !== "ToPay") || [];
       default:
-        return orders.data?.results || [];
+        return data?.results || [];
     }
   };
 

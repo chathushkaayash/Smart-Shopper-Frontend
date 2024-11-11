@@ -1,6 +1,6 @@
-import { getImageUrl, objectToFormData } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
 import useDriver from "@/services/Driver/useDriver";
-import APIClient from "@/services/api-client";
+import useUpdateProfilePicture from "@/services/User/useUpdateProfilePicture";
 import useAuthStore from "@/state-management/auth/store";
 import {
   Box,
@@ -14,21 +14,20 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { PiCaretRightThin } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-
-const apiClient = new APIClient<FormData>("/update_profile_picture");
 
 const EditAccount = () => {
-  const queryClient = useQueryClient();
   const inputFileRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const driver = useDriver([user?.driverId || 0])[0];
+
+  const updateProfilePicture = useUpdateProfilePicture({
+    userId: user?.id || 0,
+  });
 
   const userDetails = [
     { label: "NIC", value: driver.data?.nic },
@@ -47,29 +46,9 @@ const EditAccount = () => {
         return;
       }
 
-      mutate(file);
+      updateProfilePicture.mutate(file);
     }
   };
-
-  const { mutate } = useMutation({
-    mutationFn: (image: File) =>
-      apiClient.update(
-        user?.id || 0,
-        objectToFormData({ profilePicture: image })
-      ),
-    onSettled: (res) => {
-      toast.dismiss();
-      if (res instanceof Error) {
-        toast.error("Failed to update profile picture");
-      } else {
-        // clear all toasts
-        toast.success("Profile picture updated successfully");
-      }
-      queryClient.invalidateQueries({ queryKey: ["drivers", user?.id] });
-    },
-    // show a loading indicator while the mutation is in progress
-    onMutate: () => toast.loading("Updating profile picture"),
-  });
 
   return (
     <>
