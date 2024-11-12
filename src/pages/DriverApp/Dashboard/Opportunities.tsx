@@ -9,7 +9,7 @@ const Opportunities = () => {
   const opportunities = useOpportunities({status: "Pending"});
 
   return (
-    <>
+    <> 
       <VStack minH="100vh" px="8vw" pt="5vh" pb="10vh" gap="4vh">
         {opportunities.data?.results?.map((opportunity, index) => (
           <Box

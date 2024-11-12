@@ -6,6 +6,7 @@ interface Props {
   height?: string;
   bg?: string;
   className?: string;
+  mt?: number;
 }
 
 const MiddleContainer = ({
@@ -14,6 +15,7 @@ const MiddleContainer = ({
   height,
   bg,
   className,
+  mt,
 }: Props) => {
   return (
     <Flex
@@ -35,6 +37,7 @@ const MiddleContainer = ({
         borderWidth={2}
         className={className}
         py={height ? "5vh" : 0}
+        mt={mt}
       >
         {children}
       </Box>

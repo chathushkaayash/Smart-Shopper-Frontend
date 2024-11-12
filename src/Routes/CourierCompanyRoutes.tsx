@@ -10,16 +10,14 @@ const CourierCompanyLayout = loadable(
 const Deliveries = loadable(
   () => import("@/pages/CourierCompanyManager/Deliveries")
 );
-const Request = loadable(() => import("@/pages/CourierCompanyManager/DriverRequests"));
 
 const CourierCompanyRoutes = [
   {
     element: <CourierCompanyLayout />,
     children: [
-      { path: "/personalDetails", element: <PersonalDetails /> },
+      { path: "/personalDetails/:id", element: <PersonalDetails /> },
       { path: "/deliveries", element: <Deliveries /> },
-      { path: "/requests", element: <Request /> },
-      { path: "/drivers", element: <Drivers /> },
+      { path: "/drivers", element: <Drivers /> }, 
     ],
   },
 ];

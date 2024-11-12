@@ -1,6 +1,7 @@
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 import { Consumer } from "./useConsumer";
+import { DateTime } from "@/utils/Time";
 
 export interface Opportunity {
   id: string;
@@ -8,7 +9,7 @@ export interface Opportunity {
   totalDistance: number;
   tripCost: number;
 
-  orderPlacedOn: string;
+  orderPlacedOn: DateTime;
   consumer: Consumer;
   deliveryCost: number;
   startLocation: string;

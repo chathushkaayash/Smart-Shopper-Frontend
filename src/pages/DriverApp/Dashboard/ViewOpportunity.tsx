@@ -16,10 +16,14 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import PickupLocation from "./PickupLocation";
 import APIClient from "@/services/api-client";
+import useOpportunities from "@/hooks/useOpportunities";
 
 const ViewOpportunity = () => {
   const { id } = useParams(); // recieve the id from the url
   if (!id) return null;
+
+  const acceptedOpportunities = useOpportunities({ status: "Accepted" });
+  const acceptedCount = acceptedOpportunities.data?.results?.length || 0;
 
   const navigate = useNavigate();
   const opportunity = useOpportunity(Number(id));
@@ -64,7 +68,7 @@ const ViewOpportunity = () => {
     const apiClient = new APIClient("/accept_opportunity/" + id);
     apiClient.create({});
     navigate("/driver/opportunities/viewmap/" + id);
-  };
+  }; 
 
   return (
     <VStack minH="100vh" px="8vw" pt="3vh" pb="10vh" gap="4vh">
@@ -102,7 +106,7 @@ const ViewOpportunity = () => {
               <Text>{detail.value}</Text>
             </HStack>
           ))}
-          <SubmitButton onClick={handleAccept}>Accept</SubmitButton>
+          <SubmitButton onClick={handleAccept} disabled={acceptedCount>=1} >Accept</SubmitButton>
         </VStack>
       </Box>
       <Box
