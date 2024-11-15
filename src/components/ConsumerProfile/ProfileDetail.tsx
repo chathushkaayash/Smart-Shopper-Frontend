@@ -12,8 +12,8 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import ForgetPasswordModel from "./forgetPasswordModel";
-import UpdateProfile from "./updateProfile";
+import ForgetPasswordModel from "./ForgetPasswordModel";
+import UpdateProfile from "./UpdateProfile";
 
 const ProfileDetail = () => {
   const { user: authUser } = useAuthStore();
