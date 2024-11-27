@@ -32,10 +32,17 @@ const QuantityChanger = ({ cartItem }: Props) => {
 
   // // -------------------------------------------- Increase Quantity ------------------------------------------------
   const handleIncrement = () => {
-    setNewBaseCartItem({
-      ...newBaseCartItem,
-      quantity: newBaseCartItem.quantity + 1,
-    });
+    if (newBaseCartItem.quantity >= availableQuantity) {
+      setNewBaseCartItem({
+        ...newBaseCartItem,
+        quantity: availableQuantity,
+      });
+    } else {
+      setNewBaseCartItem({
+        ...newBaseCartItem,
+        quantity: newBaseCartItem.quantity + 1,
+      });
+    }
   };
 
   // // -------------------------------------------- Decrease Quantity ------------------------------------------------
@@ -90,7 +97,10 @@ const QuantityChanger = ({ cartItem }: Props) => {
         fontWeight={600}
         color={availableQuantity < 10 ? "red" : "black"}
       >
-        Available : {availableQuantity < 99 ? availableQuantity : "99+"}
+        Available :{" "}
+        {availableQuantity < 99
+          ? availableQuantity - newBaseCartItem.quantity
+          : "99+"}
       </Text>
     </Flex>
   );

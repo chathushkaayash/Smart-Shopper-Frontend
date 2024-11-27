@@ -75,7 +75,6 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Delivery Fee:{" "}
           <Text as="span" fontWeight="bold">
-            200 LKR
             {order.deliveryFee} LKR
           </Text>
         </Text>

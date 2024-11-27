@@ -85,11 +85,9 @@ export interface Review {
 // ---------------------------------------------- Order ----------------------------------------------
 export enum OrderStatus {
   ToPay = "ToPay",
-  Placed = "Placed",
   Processing = "Processing",
   Prepared = "Prepared",
-  Ready = "Ready",
-  Delivered = "Delivered",
+  Delivered = "Completed", // Delivered or Picked up
   Cancelled = "Cancelled",
 }
 

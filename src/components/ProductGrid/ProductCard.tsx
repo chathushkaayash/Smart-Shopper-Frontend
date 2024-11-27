@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import RatingStars from "../Inputs/Rating";
 import { useNavigate } from "react-router-dom";
 import useLikedProducts from "@/services/LikedProducts/useLikedProducts";
 import useCreateLikedProducts from "@/services/LikedProducts/useCreateLikedProducts";

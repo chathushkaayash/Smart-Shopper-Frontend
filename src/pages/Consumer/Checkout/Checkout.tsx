@@ -1,12 +1,16 @@
 import delHome from "@/assets/delHome.png";
 import pickupImg from "@/assets/Grocery shopping-rafiki.svg";
 import CheckoutAccordion from "@/components/CheckoutAccordion";
+import useConsumer from "@/hooks/useConsumer";
+import { getPrice, getSuperMarketIdList } from "@/lib/utils";
 import useCartCheckout, {
   CheckoutRequest,
 } from "@/services/Cart/useCartCheckout";
 import useCartItems from "@/services/Cart/useCartItems";
+import useDeliveryCost from "@/services/Location/useDeliveryCost";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 import useAuthStore from "@/state-management/auth/store";
-import { EditIcon } from "@chakra-ui/icons";
+import { EditIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -18,6 +22,7 @@ import {
   Image,
   Input,
   InputGroup,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -31,48 +36,66 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const cartCheckout = useCartCheckout();
   const user = useAuthStore((state) => state.user);
+  const consumer = useConsumer(user?.consumerId || 0);
+  const address = consumer.data?.addresses[0];
+  const { data: cartItems } = useCartItems();
+  const navigate = useNavigate();
 
-  const { data: cart } = useCartItems();
+  const cartCheckout = useCartCheckout();
+
+  const supermarketIdList = getSuperMarketIdList(cartItems?.results);
+  const supermarketLocationList = useSupermarket(supermarketIdList).map(
+    (supermarket) => supermarket.data?.location || ""
+  );
 
   const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>({
     consumerId: user?.consumerId || -1,
-    shippingAddress: "66 Pandura Rd, Bandaragama",
+    shippingLocation: address?.location || "Bandaragama",
+    shippingAddress: address?.address || "66 Pandura Rd, Bandaragama",
     shippingMethod: "Home Delivery",
   });
 
-  // const { mutate } = useMutation({
+  useEffect(() => {
+    setCheckoutRequest({
+      shippingMethod: "Home Delivery",
+      shippingLocation: address?.location || "Bandaragama",
+      shippingAddress: address?.address || "66 Pandura Rd, Bandaragama",
+      consumerId: user?.consumerId || 0,
+    });
+  }, [address, cartItems, user]);
 
-  
-  
-  //   onSuccess: (res) => {
-  //     navigate("/payment-success/" + res.id);
-  //   },
-  // });
+  const deliveryCost = useDeliveryCost(
+    supermarketLocationList,
+    address?.location || ""
+  );
+
+  const deliveryFee =
+    checkoutRequest?.shippingMethod === "Home Delivery"
+      ? deliveryCost.data || 250
+      : 0;
 
   const handleCheckout = () => {
-    const res = cartCheckout.mutate(checkoutRequest);
-    console.log(res);
+    cartCheckout.mutate(checkoutRequest);
   };
-
-  const deliveryFee = 250;
+  if (cartCheckout.isSuccess) {
+    navigate("/orders/" + cartCheckout.data);
+  }
 
   // --------------------------------------- Calculate Subtotal ---------------------------------------
   let subTotal =
-    cart?.results.reduce(
+    cartItems?.results.reduce(
       (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
       0
     ) || 0;
-
-  subTotal = Number((Math.round(subTotal * 100) / 100).toFixed(2));
 
   const {
     isOpen: isOpen1,
@@ -95,11 +118,9 @@ const Checkout = () => {
         </Flex>
 
         <Flex flexDirection={["column", "column", "row"]} gap={4}>
-
           {/* Left Column */}
           <Box flex="2">
             <VStack align="stretch" spacing={4}>
-
               {/* Shipping  Method */}
               <Box border="1px" borderRadius="md" padding="4">
                 <HStack justify="space-between">
@@ -237,16 +258,20 @@ const Checkout = () => {
                 <Stack spacing={1}>
                   <HStack justify="space-between">
                     <Text>Subtotal</Text>
-                    <Text>LKR {subTotal}</Text>
+                    <Text>LKR {getPrice(subTotal)}</Text>
                   </HStack>
-                  <HStack justify="space-between">
-                    <Text>Delivery Fee</Text>
-                    <Text>LKR {deliveryFee}</Text>
-                  </HStack>
+                  {checkoutRequest.shippingMethod === "Home Delivery" && (
+                    <HStack justify="space-between">
+                      <Text>Delivery Fee</Text>
+                      <Text>LKR {getPrice(deliveryFee)}</Text>
+                    </HStack>
+                  )}
                   <Divider my={2} />
                   <HStack justify="space-between">
                     <Text fontWeight="bold">Total</Text>
-                    <Text fontWeight="bold">LKR {subTotal + deliveryFee}</Text>
+                    <Text fontWeight="bold">
+                      LKR {getPrice(subTotal + deliveryFee)}
+                    </Text>
                   </HStack>
                 </Stack>
               </Box>
@@ -268,9 +293,9 @@ const Checkout = () => {
 
               <Box mb={3}>
                 <InputGroup>
-                  {/* <InputLeftAddon>
+                  <InputLeftAddon>
                     <Icon as={SearchIcon} boxSize={5} />
-                  </InputLeftAddon> */}
+                  </InputLeftAddon>
                   <Input
                     variant="filled"
                     placeholder="Search for an address"
@@ -288,22 +313,28 @@ const Checkout = () => {
               <Heading fontSize={"lg"} my={2}>
                 Saved Addresses
               </Heading>
-              <Flex bg="gray.100" shadow={"sm"} px={2} py={2} borderRadius={5}>
-                <HStack
-                  onClick={() =>
-                    setCheckoutRequest({
-                      ...checkoutRequest,
-                      shippingAddress: "66 Pandura Rd, Bandaragama",
-                    })
-                  }
-                >
+              <Flex
+                bg="gray.100"
+                shadow={"sm"}
+                px={2}
+                py={2}
+                borderRadius={5}
+                cursor={"pointer"}
+                onClick={() =>
+                  setCheckoutRequest({
+                    ...checkoutRequest,
+                    shippingAddress: "66 Pandura Rd, Bandaragama",
+                  })
+                }
+              >
+                <HStack>
                   <Icon as={FaLocationDot} boxSize={5} />
                   <Text>Bandaragama</Text>
                 </HStack>
                 <Spacer />
-                <Box>
+                {/* <Box>
                   <Icon as={EditIcon} boxSize={5} />
-                </Box>
+                </Box> */}
               </Flex>
             </Flex>
           </ModalBody>

@@ -5,11 +5,12 @@ import { toast } from "sonner";
 export interface CheckoutRequest {
   id?: number;
   consumerId: number;
+  shippingLocation: string;
   shippingAddress: string;
   shippingMethod: string;
 }
 
-const apiClient = new APIClient<CheckoutRequest, number>("/cartaToOrder");
+const apiClient = new APIClient<CheckoutRequest, number>("/cart_to_order");
 
 const useCartCheckout = () => {
   const queryClient = useQueryClient();
@@ -19,18 +20,19 @@ const useCartCheckout = () => {
       return apiClient.create(data);
     },
 
-    onSuccess: (res) => {
+    onSuccess: () => {
       toast.success("Checkout successful");
-      return res;
     },
     onError: () => {
       toast.error("An error occurred while checking out");
-      return 25;
     },
 
     onSettled: () => {
+      toast.dismiss();
       queryClient.resetQueries({ queryKey: ["cart_items"] });
     },
+
+    onMutate: () => toast.loading("Checking out..."),
   });
 };
 

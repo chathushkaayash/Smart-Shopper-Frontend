@@ -20,21 +20,14 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import cartImage from "../../assets/cart.png";
 import useCartItems from "@/services/Cart/useCartItems";
+import { getSuperMarketIdList } from "@/lib/utils";
 
 const ViewCart = () => {
   const navigate = useNavigate();
   const { data: cartItems } = useCartItems();
 
   // generate a list of unique supermarket ids
-  const supermarketIdList: number[] = [];
-  cartItems?.results.forEach((item) => {
-    const supermarketId = item.supermarketItem?.supermarketId;
-    if (supermarketId) {
-      if (!supermarketIdList.includes(supermarketId)) {
-        supermarketIdList.push(supermarketId);
-      }
-    }
-  });
+  const supermarketIdList = getSuperMarketIdList(cartItems?.results);
 
   let totalAmount: number =
     cartItems?.results.reduce(

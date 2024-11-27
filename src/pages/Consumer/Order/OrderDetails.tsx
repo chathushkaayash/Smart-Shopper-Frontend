@@ -149,7 +149,7 @@ const OrderDetails = ({ order }: Props) => {
           </Flex>
           <Box
             bg={
-              order.status === "Delivered"
+              order.status === "Completed"
                 ? "#5BFF89"
                 : order.status === "ToPay"
                 ? "primary"

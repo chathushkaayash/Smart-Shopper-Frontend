@@ -50,7 +50,7 @@ const CheckoutAccordion = () => {
               <h2>
                 <AccordionButton>
                   <HStack as="span" flex="1" textAlign="left">
-                    <Text>{supermarketMap.get(i)?.address}</Text>
+                    <Text fontSize={14}>{supermarketMap.get(i)?.address}</Text>
                     <Image src={supermarketMap.get(i)?.logo} w={"4vw"} />
                   </HStack>
                   {isExpanded ? (

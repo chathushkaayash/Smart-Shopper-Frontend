@@ -1,15 +1,24 @@
 import APIClient from "@/services/api-client";
-import { useQueries } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-const apiClient = new APIClient<number>("/locations/consumer_supermarket_distance");
+interface DistanceRequest {
+  location1: string;
+  location2: string;
+}
 
-const useDistance = (locations: string[]) => {
-  return useQueries({
-    queries: locations.map((id) => ({
-      queryKey: ["consumer_supermarket_distance", id],
-      queryFn: () => apiClient.get(id),
-      staleTime: 1000 * 60 * 30, // 30 minute
-    })),
+const apiClient = new APIClient<DistanceRequest, number>(
+  "/locations/consumer_supermarket_distance"
+);
+
+const useDistance = (location1: string, location2: string) => {
+  return useQuery({
+    queryKey: ["consumer_supermarket_distance", location1, location2],
+    queryFn: () =>
+      apiClient.create({
+        location1,
+        location2,
+      }),
+    staleTime: 1000 * 60 * 30, // 30 minute
   });
 };
 
