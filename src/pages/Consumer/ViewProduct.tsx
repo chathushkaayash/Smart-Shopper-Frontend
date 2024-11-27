@@ -26,6 +26,9 @@ import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { CartItem, Product, SupermarketItem } from "@/services/types";
+import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
+import useAuthStore from "@/state-management/auth/store";
+import useUser from "@/services/User/useUser";
 
 const ViewProduct = () => {
   const { id } = useParams();
@@ -53,6 +56,10 @@ const ViewProduct = () => {
   const createCartItems = useCreateCartItems();
   const updateCartItems = useUpdateCartItems();
   const deleteCartItems = useDeleteCartItems();
+
+  const createPreference=useCreateUserPreference();
+  const { user:authUser, logout } = useAuthStore();
+  const user = useUser([authUser?.id || 0])[0].data;
 
   const [selectedSupermarketItem, setSupermarketItem] =
     useState<SupermarketItem | null>(null);
@@ -97,6 +104,12 @@ const ViewProduct = () => {
         quantity: 1,
         supermarketitemId: selectedSupermarketItem?.id || -1,
         consumerId: -1,
+      });
+
+      createPreference.mutate({
+        userId: user?.id||0,
+        preferenceType: "Cart",
+        referenceId: productId
       });
     }
     // Update the cart item

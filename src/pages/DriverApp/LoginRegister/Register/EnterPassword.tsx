@@ -65,7 +65,7 @@ const EnterPassword = () => {
         px="10vw"
         justifyContent="space-between"
         onSubmit={handleSubmit((data) =>
-          updateVehicleDetails(data.password, data.confirmPassword)
+          updateVehicleDetails(data.password)
         )}
       >
         <Box w="full">

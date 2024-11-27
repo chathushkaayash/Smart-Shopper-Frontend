@@ -11,6 +11,7 @@ import { FaBagShopping } from "react-icons/fa6";
 import { TbTransactionDollar, TbTruckDelivery } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
+import { BiSolidReport } from "react-icons/bi";
 
 interface MenuItem {
   icon: React.ComponentType<any>;
@@ -40,7 +41,9 @@ const SideBar = () => {
       label: "Advertisements",
       path: "/advertisements",
     },
+    { icon: BiSolidReport, label: "Reports", path: "/reports" },
     { icon: IoSettings, label: "Settings", path: "/settings" },
+
     { icon: FiLogOut, label: "Logout", path: "/logout" },
   ];
 

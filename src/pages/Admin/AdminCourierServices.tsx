@@ -1,6 +1,5 @@
 import ActionButton from "@/components/Buttons/ActionButton";
 import RatingStars from "@/components/Inputs/Rating";
-import { numOfDrivers } from "@/data/numberOfDeivers";
 import {
   Box,
   Button,
@@ -33,6 +32,8 @@ import { IoBusiness, IoCall } from "react-icons/io5";
 import { MdFeedback } from "react-icons/md";
 import { SiCashapp } from "react-icons/si";
 import { TbTruckDelivery } from "react-icons/tb";
+import { IoIosColorPalette } from "react-icons/io";
+import { AiOutlineFieldNumber } from "react-icons/ai";
 import LineChart from "../../components/Charts/LineChart";
 import { IoStarSharp } from "react-icons/io5";
 import { useState } from "react";
@@ -50,7 +51,7 @@ const AdminCourierServices = () => {
       {
         icon: <Icon as={SiCashapp} boxSize={5} color={"primary"} />,
         title: "Earning",
-        value: "Rs 134 000",
+        value: driverEarningData.data,
       },
       {
         icon: <Icon as={MdFeedback} boxSize={5} color={"primary"} />,
@@ -68,6 +69,18 @@ const AdminCourierServices = () => {
         icon: <Icon as={IoStarSharp} boxSize={6} color={"primary"} />,
         title: "Ratings",
         value: "4/5",
+      },
+    ],
+    [
+      {
+        icon: <Icon as={IoIosColorPalette} boxSize={6} color={"primary"} />,
+        title: "Vehicle Color",
+        value: selectedDriver?.vehicleColor,
+      },
+      {
+        icon: <Icon as={AiOutlineFieldNumber} boxSize={6} color={"primary"} />,
+        title: "Vehicle Number",
+        value: selectedDriver?.vehicleNumber,
       },
     ],
   ];
@@ -93,19 +106,19 @@ const AdminCourierServices = () => {
           {/* ------- Number of Drivers Card ------- */}
           <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15}>
             <Heading size="md">Number of Drivers</Heading>
-            {numOfDrivers.map((company, index) => (
-              <VStack mt={5} key={index}>
-                <HStack
-                  w="full"
-                  px="1vw"
-                  h="10vh"
-                  rounded={10}
-                  borderWidth="1px"
-                  borderColor="background"
-                  shadow="md"
-                >
-                  <Image
-                    src={company.image}
+            {companyDriverCounts.slice(0, 3).map((item, index) => (
+        <VStack mt={5} key={index}>
+          <HStack
+            w="full"
+            px="1vw"
+            h="10vh"
+            rounded={10}
+            borderWidth="1px"
+            borderColor="background"
+            shadow="md"
+          >
+            <Image
+                    src="https://via.placeholder.com/150"
                     alt="Product Image"
                     boxSize="40px"
                     objectFit="cover"
@@ -147,8 +160,8 @@ const AdminCourierServices = () => {
               <Thead>
                 <Tr>
                   <Th>Name</Th>
-                  <Th>Company</Th>
                   <Th>Contact Number</Th>
+                  <Th>Company</Th>
                   <Th>Vehicle Type</Th>
                   <Th>Vehicle Model</Th>
                   <Th></Th>

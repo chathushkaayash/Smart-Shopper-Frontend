@@ -19,11 +19,31 @@ import OptimizedInfo from "./OptimizedInfo";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useCartItems from "@/services/Cart/useCartItems";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 
 const CartComparison = () => {
   const { data: cartItems } = useCartItems();
   const navigate = useNavigate();
   const [selectedCart, setSelectedCart] = useState(1);
+
+  const map_key = import.meta.env.Google_Map_Api_key;
+
+  const center = {
+    lat: 6.902006000053197, // Replace with desired latitude
+    lng: 79.86131779568856, // Replace with desired longitude
+  };
+
+  //fetching data from optimzed algorithm
+  //const optimizedCart=useOptimizer();
+
+  console.log('hi',cartItems?.results);
+
+  const uniqueSupermarketIds = Array.from(
+    new Set(cartItems?.results?.map((item) => item.supermarketItem.supermarketId))
+  );
+
+  const supermarkets = useSupermarket(uniqueSupermarketIds);
 
   return (
     <Box px="5vw" py="5vh">
@@ -86,10 +106,15 @@ const CartComparison = () => {
 
               <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
                 <AspectRatio ratio={16 / 9}>
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9029768701894!2d79.85857797499636!3d6.902205493097101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721984297174!5m2!1sen!2slk"
-                    loading="lazy"
-                  ></iframe>
+                  <LoadScript googleMapsApiKey={map_key}>
+                    <GoogleMap
+                      center={center}
+                      zoom={15}
+                      mapContainerStyle={{ width: "100%", height: "100%" }}
+                    >
+                      <Marker position={center} />
+                    </GoogleMap>
+                  </LoadScript>
                 </AspectRatio>
               </Box>
               <OptimizedInfo index={1} cartItems={cartItems?.results || []} />
@@ -115,16 +140,16 @@ const CartComparison = () => {
                     Optimized Shopping Cart
                   </Text>
                   <HStack>
-                  <Text>Not ready to checkout?</Text>
-                  <Text
-                    onClick={() => navigate("/")}
-                    color="primary"
-                    cursor="pointer"
-                    _hover={{ textDecoration: "underline" }}
-                  >
-                    Continue Shopping
-                  </Text>
-                </HStack>
+                    <Text>Not ready to checkout?</Text>
+                    <Text
+                      onClick={() => navigate("/")}
+                      color="primary"
+                      cursor="pointer"
+                      _hover={{ textDecoration: "underline" }}
+                    >
+                      Continue Shopping
+                    </Text>
+                  </HStack>
                 </Stack>
                 <Box>
                   <CiBookmark size={30} />

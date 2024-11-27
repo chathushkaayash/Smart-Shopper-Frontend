@@ -1,14 +1,30 @@
-import APIClient from "@/services/api-client";
+import APIClient, { FetchResponse } from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 import { Supermarket } from "../types";
 
 const apiClient = new APIClient<Supermarket>("/supermarkets");
 
-const useSuperMarkets = () => {
-  return useQuery({
-    queryKey: ["supermarkets"],
-    queryFn: () => apiClient.getAll({}),
-    staleTime: 1000 * 60 * 30, // 30 minute
+export interface SupermarketQuery {
+  searchText?: string;
+  page?: number;
+  limit?: number;
+  month?: number;
+}
+
+const useSuperMarkets = (supermarketQuery?: SupermarketQuery) => {
+  return useQuery<FetchResponse<SupermarketWithRelations>, Error>({
+    queryKey: ["supermarkets", supermarketQuery],
+    queryFn: () =>
+      apiClient.getAll({
+        params: {
+          searchText: supermarketQuery?.searchText || "",
+          // Remove 'month' or define it in SupermarketQuery interface
+          month: supermarketQuery?.month || 0,
+          page: supermarketQuery?.page || 1,
+          _limit: supermarketQuery?.limit || 10,
+        },
+      }),
+    
   });
 };
 

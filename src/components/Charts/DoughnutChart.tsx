@@ -2,9 +2,14 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import { Box } from '@chakra-ui/react';
 
-const DoughnutChart: React.FC = () => {
+interface DoughnutChartProps {
+    chartData:number[];
+    labels:string[];
+}
+
+const DoughnutChart: React.FC<DoughnutChartProps> = ({chartData,labels}) => {
     const data = {
-        series: [20, 20, 60],
+        series: chartData,
         options: {
             chart: {
                 id: "basic-donut",
@@ -18,7 +23,7 @@ const DoughnutChart: React.FC = () => {
                 },
             },
             colors: ['#ff7708', '#ff3308', '#ff9908'], 
-            labels: ['Current Customers', 'New Customers','Visitors'], // Add labels to the chart
+            labels: labels, // Add labels to the chart
             width: 'full', // Set the width of the chart
             height:'full', // Set the height of the chart   
             legend: {

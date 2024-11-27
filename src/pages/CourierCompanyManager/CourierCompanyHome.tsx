@@ -24,6 +24,7 @@ import SearchBar from "@/components/SearchBar";
 import { NonVerifiedDriver } from "@/services/types";
 import useNonVerifiedDrivers from "@/services/Driver/useNonVerifiedDrivers";
 import DriverRequestPopup from "./DriverRequestPopup";
+import { getImageUrl } from "@/lib/utils";
 
 const CourierCompanyHome = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,10 +35,11 @@ const CourierCompanyHome = () => {
   const driverRequests = useNonVerifiedDrivers().data?.results;
 
   const filteredRequests = driverRequests?.filter((request) =>
-    [request.name, request.vehicleType, request.vehicleName]
-      .some(field => field.toLowerCase().includes(searchQuery.toLowerCase()))
+    [request.name, request.vehicleType, request.vehicleName].some((field) =>
+      field.toLowerCase().includes(searchQuery.toLowerCase())
+    )
   );
-  
+
   const handleViewClick = (person: NonVerifiedDriver) => {
     setSelectedPerson(person);
     onOpen();
@@ -159,7 +161,7 @@ const CourierCompanyHome = () => {
                       w="100%"
                       borderWidth={1}
                     >
-                      <Avatar src={person.profilePic} size="lg" />
+                      <Avatar src={getImageUrl(person.profilePic)} size="lg" />
                       <Box ml={4} flex="1">
                         <Text fontSize="lg" fontWeight="bold">
                           {person.name}
@@ -178,13 +180,13 @@ const CourierCompanyHome = () => {
                   ))}
                 </VStack>
               </Container>
-                {selectedPerson && (
-        <DriverRequestPopup
-          selectedPerson={selectedPerson}
-          isOpen={isOpen}
-          onClose={onClose}
-        />
-      )}
+              {selectedPerson && (
+                <DriverRequestPopup
+                  selectedPerson={selectedPerson}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                />
+              )}
             </Stack>
           </GridItem>
         </HStack>

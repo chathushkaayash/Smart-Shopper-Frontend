@@ -59,6 +59,12 @@ const FilterProducts = () => {
       value: productQuery.category,
       values: [
         "All Categories",
+        "Condiment",
+        "Drinks",
+        "Baking",
+        "Food",
+        "Decorative Accessories",
+        "Household & Cleaning Supplies",
         "Electronics",
         "Clothing",
         "Shoes",

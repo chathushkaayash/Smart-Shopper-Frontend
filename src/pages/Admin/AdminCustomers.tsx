@@ -102,7 +102,7 @@ const AdminCustomers = () => {
         <Box w="30%">
           <VStack w="full" gap={5}>
             {consumerCards.map((card, index) => (
-              <Card px={3} w={"20vw"} key={index} bg={"green.200"}>
+              <Card px={3} w={"20vw"} key={index} >
                 <CardBody>
                   <Flex gap={20}>
                     <Heading size="md">{card.title}</Heading>
@@ -139,7 +139,7 @@ const AdminCustomers = () => {
         borderWidth="1px"
         w="full"
         borderRadius={15}
-        bg="green.200"
+        
       >
         <Flex justifyContent="space-between" px={10} py={10}>
           <Heading as="h3" size="md">

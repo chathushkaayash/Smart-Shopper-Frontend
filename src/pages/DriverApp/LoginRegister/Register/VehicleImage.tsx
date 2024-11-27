@@ -14,12 +14,31 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import Logo from "../../../../assets/logo.svg";
 import DotIndicator from "@/components/DotIndicator";
 import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
-
+import useAddDriverProfilePicture from "@/services/Driver/useAddDriverProfilePicture";
 
 const VehicleImage = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const {  setStage } =
-  useDriverRegisterStore();
+  const { setStage, driverDetails } = useDriverRegisterStore();
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        alert("Please upload a valid image file.");
+        return;
+      }
+
+      uploadImage.mutate(file);
+    }
+  };
+
+  const uploadImage = useAddDriverProfilePicture({ userId: driverDetails.id });
+
+  if (uploadImage.isSuccess) {
+    setStage(5);
+  }
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
@@ -30,7 +49,7 @@ const VehicleImage = () => {
 
         <Box fontSize="2xl" fontWeight="bold">
           <Text fontSize="lg" fontWeight="bold">
-            Upload vehicle image
+            Upload Profile Picture
           </Text>
         </Box>
       </VStack>
@@ -41,17 +60,9 @@ const VehicleImage = () => {
         color="gray"
         fontWeight="bold"
       >
-        Please upload a clear and legible image of your vehicle. Ensure the
-        image is less than 10MB.
+        Please upload a clear image of you making sure your face is visible.
       </Text>
-      <VStack
-        gap="2vh"
-        h="full"
-        as="form"
-        onSubmit={() => {
-          setStage(5);
-        }}
-      >
+      <VStack gap="2vh" h="full" as="form">
         {/* --------------- image upload --------------- */}
 
         <VStack justify="center" flex="1">
@@ -63,7 +74,12 @@ const VehicleImage = () => {
             border="1px dashed"
             borderColor={"primary"}
           >
-            <Input type="file" display="none" ref={inputFileRef} />
+            <Input
+              type="file"
+              display="none"
+              ref={inputFileRef}
+              onChange={handleImageUpload}
+            />
             <VStack spacing={3} align="center">
               <Icon as={FaCloudUploadAlt} boxSize={12} color="primary" />
               <Text>Drag and Drop</Text>

@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import useAcceptDriverRequest from "@/services/Driver/useAcceptDriverRequest";
 import { NonVerifiedDriver } from "@/services/types";
+import { getImageUrl } from "@/lib/utils";
 
 interface Props {
   selectedPerson: NonVerifiedDriver;
@@ -42,7 +43,11 @@ const DriverRequestPopup = ({ selectedPerson, isOpen, onClose }: Props) => {
             boxShadow={"md"}
             p={4}
           >
-            <Avatar src={selectedPerson.profilePic} size="xl" mr={4} />
+            <Avatar
+              src={getImageUrl(selectedPerson.profilePic)}
+              size="xl"
+              mr={4}
+            />
             <Box>
               <Text fontSize="lg" fontWeight="bold" mb={5}>
                 Driver Personal Details

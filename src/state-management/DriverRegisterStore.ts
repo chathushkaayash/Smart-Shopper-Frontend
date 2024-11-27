@@ -13,7 +13,7 @@ interface DriverRegisterStore {
   sendPersonalData: () => void;
   otpResend: () => void;
   matchOtp: (otp: string) => void;
-  updateVehicleDetails: (password: string, confirmPassword: string) => void;
+  updateVehicleDetails: (password: string) => void;
 }
 
 const driverRegisterStore: StateCreator<DriverRegisterStore> = (set, get) => ({
@@ -86,16 +86,24 @@ const driverRegisterStore: StateCreator<DriverRegisterStore> = (set, get) => ({
 
   // ------------------------- Update Vehicle Details -------------------------
   // This function is used to update the vehicle details of the driver and set the password
-  updateVehicleDetails: (password, confirmPassword) => {
+  updateVehicleDetails: (password) => {
     const { driverDetails } = get();
 
-    const apiClient = new APIClient<DriverRegistrationDetails>(
+    const apiClient = new APIClient(
       "/update_driver_vehicle_details/" + driverDetails.id
     );
 
     if (driverDetails)
       apiClient
-        .create({ ...driverDetails, password, confirmPassword })
+        .create({
+          OTP: driverDetails.OTP,
+          courierCompany: driverDetails.courierCompany,
+          vehicleType: driverDetails.vehicleType,
+          vehicleColor: driverDetails.vehicleColor,
+          vehicleName: driverDetails.vehicleName,
+          vehicleNumber: driverDetails.vehicleNumber,
+          password: password,
+        })
         .then(() => {
           toast.success("Password set successfully");
           set({ stage: 6 });

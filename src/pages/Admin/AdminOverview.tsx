@@ -25,8 +25,130 @@ import { FcSalesPerformance } from "react-icons/fc";
 import { IoMdPeople } from "react-icons/io";
 import BarGraph from "../../components/Charts/BarGraph";
 import DoughnutChart from "../../components/Charts/DoughnutChart";
+import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
+import { useState } from "react";
+import { getMoment } from "@/utils/Time";
+import APIClient from "@/services/api-client";
+import { useQuery } from "@tanstack/react-query";
+import useProduct from "@/hooks/useProduct";
+
+interface OrderItem {
+  id: number;
+  supermarketId: number;
+  productId: number;
+  quantity: number;
+  price: number;
+  _orderId: number;
+}
+
+interface OrderWithRelations {
+  orderItems: OrderItem[];
+  id: number;
+  consumerId: number;
+  status: string;
+  shippingAddress: string;
+  shippingMethod: string;
+  location: string;
+  deliveryFee: number;
+  orderPlacedOn: {
+      year: number;
+      month: number;
+      day: number;
+      hour: number;
+      minute: number;
+      second: number;
+  };
+}
 
 const AdminOverview = () => {
+
+
+  
+  const [consumerQuery, setConsumerQuery] = useState<ConsumerQuery>(
+    {} as ConsumerQuery
+  );
+  const consumers = useConsumers(consumerQuery);
+
+  const totalConsumers = consumers.data?.results.length || 0;
+
+  const activeConsumers =
+    consumers.data?.results.filter((consumer) =>
+      consumer.user.lastLogin !== null
+        ? getMoment(consumer.user.lastLogin).isAfter(30, "days")
+        : false
+    ).length || 0;
+
+  const churnedCustomers = totalConsumers - activeConsumers;
+
+//   const earnings=useSupermarketEarnings();
+//   //console.log("earnings",earnings.data?.results);
+// const totalSales=earnings.data?.results.map((results)=>results.earnings).reduce((a,b)=>a+b,0);
+  //console.log("sales",totalSales);
+
+
+  const salesData = () => {
+    const apiClient = new APIClient<OrderWithRelations>("stats/supermarket_sales");
+    return useQuery({
+      queryKey: ["sales"],
+      queryFn: () => apiClient.getAll({}),
+      staleTime: 1000 * 5, // 5 seconds
+    });
+  };
+
+  console.log("sales",salesData().data?.results);
+
+  let totalSales = 0;
+  const monthlySales: { [key: number]: number } = {};
+  const productSales: { [key: string]: number } = {};
+
+  salesData().data?.results.forEach((order) => {
+    const { month, year } = order.orderPlacedOn;
+    if (year === 2024) {  // Replace with the year you want to filter by
+        const orderTotal = order.orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        totalSales += orderTotal;
+        if (monthlySales[month]) {
+            monthlySales[month] += orderTotal;
+        } else {
+            monthlySales[month] = orderTotal;
+        }
+
+        // Update product sales
+        order.orderItems.forEach((item) => {
+          if (productSales[item.productId]) {
+            productSales[item.productId] += item.quantity;
+          } else {
+            productSales[item.productId] = item.quantity;
+          }
+        });
+    }
+
+});
+const monthNames = [
+  "January", "February", "March", "April", "May", "June", 
+  "July", "August", "September", "October", "November", "December"
+];
+  const months = Object.keys(monthlySales).map((monthNum) => monthNames[Number(monthNum) - 1]);
+  const sales = Object.values(monthlySales);
+
+
+  //products with id and quantity
+  const topProducts = Object.entries(productSales)
+    .sort(([, qtyA], [, qtyB]) => qtyB - qtyA)
+    .slice(0, 5); // Get top 5 products
+
+
+    console.log("topProducts",topProducts);
+
+    //for each for get data of top products
+    // topProducts.forEach(([productId, quantity]) => {
+    //   console.log("productId",productId);
+    //   const productDetail=useProduct(Number(productId));
+
+    // });
+    
+
+
+
   const customerCards = [
     {
       title: "Total Visits",
@@ -43,7 +165,7 @@ const AdminOverview = () => {
       icon: IoMdPeople,
       color: "primary",
       background: "orange.100",
-      value: "10.8 k",
+      value: totalConsumers,
       percentage: "8.5% Down from yesterday",
       rdicon: AiOutlineFall,
       rdiconColor: "red.400",
@@ -53,12 +175,14 @@ const AdminOverview = () => {
       icon: FcSalesPerformance,
       color: "yellow",
       background: "yellow.100",
-      value: "102,000 Rupees",
+      value: totalSales + " LKR",
       percentage: "8.5% Up from yesterday",
       rdicon: AiOutlineRise,
       rdiconColor: "green.400",
     },
   ];
+
+
   return (
     <VStack gap={"8vh"} fontWeight="bold" my="5vh" px={10}>
       <Flex w="full" gap={5}>
@@ -70,22 +194,28 @@ const AdminOverview = () => {
             Monthly Sales
           </Heading>
           <Heading as="h3" size="sm" mb={4}>
-            Total Revenue - 350000 LKR
+            Total Sales -  {totalSales.toLocaleString()} LKR
           </Heading>
-          <BarGraph />
+          <BarGraph chartData={sales} labels={months} />
         </Box>
 
         {/*
           Customers Card 
         */}
         <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15}>
-          <Box >
+          <Box>
             <Heading as="h3" size="md">
               Customer Enrollment
             </Heading>
 
-              <DoughnutChart />
-            
+            <DoughnutChart
+              chartData={[totalConsumers, activeConsumers, churnedCustomers]}
+              labels={[
+                "Total Customers",
+                "Active Customers",
+                "Churned Customers",
+              ]}
+            />
           </Box>
         </Box>
       </Flex>

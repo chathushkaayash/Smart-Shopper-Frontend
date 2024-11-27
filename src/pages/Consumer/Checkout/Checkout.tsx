@@ -41,6 +41,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
+import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
@@ -83,9 +84,20 @@ const Checkout = () => {
       ? deliveryCost.data || 250
       : 0;
 
+  const createPreference = useCreateUserPreference();
+
   const handleCheckout = () => {
     cartCheckout.mutate(checkoutRequest);
+    cartItems?.results.map((item) => {
+      createPreference.mutate({
+        userId: user?.id || 0,
+        preferenceType: "Purchases",
+        referenceId: item.productId,
+      });
+      console.log(item.productId);
+    });
   };
+
   if (cartCheckout.isSuccess) {
     navigate("/orders/" + cartCheckout.data);
   }

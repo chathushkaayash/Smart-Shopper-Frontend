@@ -2,14 +2,17 @@ import { Box } from "@chakra-ui/react";
 import React from "react";
 import Chart from "react-apexcharts";
 
+interface BarGraphProps {
+  chartData: number[];
+  labels: string[];
+}
 
-
-const BarGraph: React.FC = () => {
+const BarGraph: React.FC<BarGraphProps>= ({chartData,labels}) => {
 
   const data = [
     {
       name: "Revenue",
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 100, 120, 130],
+      data: chartData,
       
     },
     // {
@@ -24,20 +27,21 @@ const BarGraph: React.FC = () => {
       id: "basic-bar",
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+       categories: labels
+      //[
+      //   "Jan",
+      //   "Feb",
+      //   "Mar",
+      //   "Apr",
+      //   "May",
+      //   "Jun",
+      //   "Jul",
+      //   "Aug",
+      //   "Sep",
+      //   "Oct",
+      //   "Nov",
+      //   "Dec",
+      // ],
     },
     dataLabels: {
       enabled: false,

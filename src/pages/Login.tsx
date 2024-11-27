@@ -34,6 +34,7 @@ import { z } from "zod";
 import LinkButton from "../components/Buttons/LinkButton";
 import ErrorText from "../components/Errors/ErrorText";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
@@ -49,6 +50,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Login = () => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -72,6 +74,7 @@ const Login = () => {
         if (res.user) {
           toast.success("Login successful");
           login(res);
+          queryClient.invalidateQueries();
           navigate("/");
         } else {
           toast.error("Something went wrong");
