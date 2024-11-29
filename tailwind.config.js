@@ -15,8 +15,5 @@ export default {
       'primary': '#ff7708',
     }
   },
-  plugins: [flowbite.plugin(),],
-  corePlugins: {
-    preflight: false,
- }
+  plugins: [require("tailwindcss-animate"), flowbite.plugin(),],
 }
