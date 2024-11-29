@@ -17,33 +17,40 @@ import { CiBookmark } from "react-icons/ci";
 import ComparisonItem from "./ComparisonItem";
 import OptimizedInfo from "./OptimizedInfo";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Key, useState } from "react";
 import useCartItems from "@/services/Cart/useCartItems";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
+import useOptimizer from "@/hooks/useOptimizer";
+import Map from "@/pages/Public/Map";
+import { CartItem } from "@/services/types";
 
 const CartComparison = () => {
   const { data: cartItems } = useCartItems();
+  const { data: optimizedCart } = useOptimizer();
+  console.log('optimizedCart :',optimizedCart);
+  console.log('cartItems :',cartItems);
   const navigate = useNavigate();
   const [selectedCart, setSelectedCart] = useState(1);
 
-  const map_key = import.meta.env.Google_Map_Api_key;
-
-  const center = {
-    lat: 6.902006000053197, // Replace with desired latitude
-    lng: 79.86131779568856, // Replace with desired longitude
-  };
-
   //fetching data from optimzed algorithm
   //const optimizedCart=useOptimizer();
-
-  console.log('hi',cartItems?.results);
 
   const uniqueSupermarketIds = Array.from(
     new Set(cartItems?.results?.map((item) => item.supermarketItem.supermarketId))
   );
 
   const supermarkets = useSupermarket(uniqueSupermarketIds);
+
+  //centers of our cart supermarkets
+  const centers = supermarkets
+  .map((supermarket) => supermarket.data?.location)
+  .filter(Boolean) 
+  .map((location) => {
+    const [lat, lng] = location?.split(",").map(Number) || []; 
+    return { lat, lng }; 
+  });
+  console.log('centers :',centers);
+
 
   return (
     <Box px="5vw" py="5vh">
@@ -106,15 +113,7 @@ const CartComparison = () => {
 
               <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
                 <AspectRatio ratio={16 / 9}>
-                  <LoadScript googleMapsApiKey={map_key}>
-                    <GoogleMap
-                      center={center}
-                      zoom={15}
-                      mapContainerStyle={{ width: "100%", height: "100%" }}
-                    >
-                      <Marker position={center} />
-                    </GoogleMap>
-                  </LoadScript>
+                <Map centers={centers}/>
                 </AspectRatio>
               </Box>
               <OptimizedInfo index={1} cartItems={cartItems?.results || []} />
@@ -162,12 +161,12 @@ const CartComparison = () => {
                 gap={5}
                 divider={<Divider borderColor="gray.400" />}
               >
-                {cartItems?.results.map((item, index) => (
+                {optimizedCart?.map((item: CartItem, index: Key | null | undefined) => (
                   <ComparisonItem key={index} cartItem={item} />
                 ))}
               </VStack>
               <Divider borderColor="gray.400" mb={3} />
-              {(cartItems?.results.length || 0) > 4 && (
+              {(optimizedCart?.length || 0) > 4 && (
                 <Button width="lg" bg="primary" color="white" mt={4} mb={4}>
                   View More
                 </Button>
@@ -175,13 +174,10 @@ const CartComparison = () => {
 
               <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
                 <AspectRatio ratio={16 / 9}>
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9029768701894!2d79.85857797499636!3d6.902205493097101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721984297174!5m2!1sen!2slk"
-                    loading="lazy"
-                  ></iframe>
+                <Map centers={centers}/>
                 </AspectRatio>
               </Box>
-              <OptimizedInfo index={2} cartItems={cartItems?.results || []} />
+              <OptimizedInfo index={2} cartItems={optimizedCart || []} />
             </VStack>
           </Box>
         </GridItem>
