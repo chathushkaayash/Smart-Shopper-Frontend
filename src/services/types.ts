@@ -12,6 +12,7 @@ import { DateTime } from "@/utils/Time";
 // This table is used to store all the products in the system.
 
 export interface BaseProduct {
+  category: string;
   id: number;
   name: string;
   description: string;
@@ -36,8 +37,9 @@ export interface LikedProducts {
 
 export interface Activity {
   id: number;
+  userId: number;
   description: string;
-  dateTime: string;
+  dateTime: DateTime;
 }
 
 // ---------------------------------------------- Supermarket ----------------------------------------------

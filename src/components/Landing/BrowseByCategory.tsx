@@ -11,8 +11,15 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import SimpleSlider, { SliderMethods } from "../SimpleSlider";
 
 import BeveragesIcon from "../../assets/landing/categoryIcons/beverages.svg?react";
-import GroceryIcon from "../../assets/landing/categoryIcons/grocery.svg?react";
-import FrozenIcon from "../../assets/landing/categoryIcons/snow-svgrepo-com.svg?react";
+import CondimentIcon from "../../assets/landing/categoryIcons/condiments.svg?react";
+import BakingIcon from "../../assets/landing/categoryIcons/baking.svg?react";
+import FoodIcon from "../../assets/landing/categoryIcons/food.svg?react";
+import DecorationIcon from "../../assets/landing/categoryIcons/decoration.svg?react";
+import CleaningIcon from "../../assets/landing/categoryIcons/cleaning.svg?react";
+import ElectronicIcon from "../../assets/landing/categoryIcons/electric.svg?react"; 
+import ClothingIcon from "../../assets/landing/categoryIcons/clothing.svg?react";
+import ShoesIcon from "../../assets/landing/categoryIcons/shoe.svg?react";
+import FurnitureIcon from "../../assets/landing/categoryIcons/furniture.svg?react";
 
 import useProductQueryStore from "@/state-management/productQuery/store";
 import Section from "./Section";
@@ -41,14 +48,16 @@ const BrowseByCategory = () => {
 
   const iconProps = { fill: "#ff7708", width: "full", height: "full" };
   const categories = [
-    { name: "Beverages", icon: <BeveragesIcon {...iconProps} /> },
-    { name: "Frozen", icon: <FrozenIcon {...iconProps} /> },
-    { name: "Grocery", icon: <GroceryIcon {...iconProps} /> },
-    { name: "Household", icon: <BeveragesIcon {...iconProps} /> },
-    { name: "Personal Care", icon: <BeveragesIcon {...iconProps} /> },
-    { name: "Pharmacy", icon: <BeveragesIcon {...iconProps} /> },
-    { name: "Snacks", icon: <BeveragesIcon {...iconProps} /> },
-    { name: "Others", icon: <BeveragesIcon {...iconProps} /> },
+    { name: "Drinks", icon: <BeveragesIcon {...iconProps} /> },
+    { name: "Condiment", icon: <CondimentIcon {...iconProps} /> },
+    { name: "Baking", icon: <BakingIcon {...iconProps} /> },
+    { name: "Food", icon: <FoodIcon {...iconProps} /> },
+    { name: "Decoration", icon: <DecorationIcon {...iconProps} /> },
+    { name: "Cleaning", icon: <CleaningIcon {...iconProps} /> },
+    { name: "Electronics", icon: <ElectronicIcon {...iconProps} /> },
+    { name: "Clothing", icon: <ClothingIcon {...iconProps} /> },
+    { name: "Shoes", icon: <ShoesIcon {...iconProps} /> },
+    { name: "Furniture", icon: <FurnitureIcon {...iconProps} /> },
   ];
 
   const rightSide = (

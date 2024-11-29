@@ -123,10 +123,12 @@ const ProfileDetail = () => {
       )}
 
       {/* Forget Password Modal */}
-      <ForgetPasswordModel
-        isForgetPassword={isForgetPassword}
-        onForgetPasswordClose={onForgetPasswordClose}
-      />
+      {user && (
+        <ForgetPasswordModel
+          isForgetPassword={isForgetPassword}
+          onForgetPasswordClose={onForgetPasswordClose}
+        />
+      )}
     </Box>
   );
 };

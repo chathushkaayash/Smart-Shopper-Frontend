@@ -24,7 +24,8 @@ import {
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 const ShippingAddress = () => {
-  const { user } = useAuthStore();
+  const user  = useAuthStore((state) => state.user);
+  const consumerId = useAuthStore((state) => state.user?.consumerId);
   const { isOpen: isAdd, onOpen: onAdd, onClose: onAddClose } = useDisclosure();
   const {
     isOpen: isConfirmOpen,
@@ -99,7 +100,7 @@ const ShippingAddress = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{user?.consumerId}</Text>
+            <Text color="gray.800">{consumerId}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -107,7 +108,7 @@ const ShippingAddress = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{user?.consumerId}</Text>
+            <Text color="gray.800">{consumerId}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">

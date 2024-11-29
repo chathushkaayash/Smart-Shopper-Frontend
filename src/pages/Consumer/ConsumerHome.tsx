@@ -68,7 +68,6 @@ const FilterProducts = () => {
         "Electronics",
         "Clothing",
         "Shoes",
-        "Food",
         "Furniture",
       ],
       fn: setCategory,

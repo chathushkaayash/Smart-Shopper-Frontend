@@ -108,7 +108,7 @@ const UpdateProfile = ({
                 borderColor: "primary",
               }}
             >
-              Forget Password
+              Change Password
             </Button>
           </Flex>
         </ModalHeader>
@@ -208,7 +208,13 @@ const UpdateProfile = ({
               _hover={{ bg: "white", color: "primary" }}
               _active={{ bg: "white", color: "primary" }}
               borderRadius="12px"
-              onClick={handleSubmit((data) => updateProfile.mutate(data))}
+              onClick={handleSubmit((data) => {
+              updateProfile.mutate(data, {
+                onSuccess: () => {
+                onEditClose();
+                },
+              });
+              })}
             >
               Update
             </Button>

@@ -11,10 +11,8 @@ import {
   Icon,
   Button,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import Footer from "@/components/Footer";
 import ActionButton from "@/components/Buttons/ActionButton";
-import useConsumers, { ConsumerQuery } from "@/hooks/useConsumers";
 import useSuperMarkets from "@/services/Supermarket/useSupermarkets";
 import useProducts from "@/services/Products/useProducts";
 
@@ -29,7 +27,7 @@ import Laughs from "../../assets/supermarket-icons/laughs.svg";
 import { PhoneIcon, EmailIcon, InfoIcon } from "@chakra-ui/icons";
 
 interface StatProps {
-  number: number;
+  number: number | string;
   label: string;
 }
 
@@ -43,12 +41,9 @@ const Stat = ({ number, label }: StatProps) => (
 );
 
 const AboutPage = () => {
-  const [consumerQuery] = useState<ConsumerQuery>({} as ConsumerQuery);
-  const consumers = useConsumers(consumerQuery);
-  const totalConsumers = consumers.data?.results.length || 0;
-  const totalSupermarkets = useSuperMarkets().data?.results.length || 0;
-  const totalCategories = useProducts().data?.pages[0].results.length || 0;
-
+  const totalSupermarkets = new Set(useSuperMarkets().data?.results.map((result: { name: string }) => result.name)).size;
+  const totalCategories = new Set(useProducts().data?.pages[0]?.results.map((result: { category: string}) => result.category)).size;
+ console.log(useProducts().data?.pages);
   return (
     <>
       <Container maxW="container.xl" py={9} px="5vw">
@@ -109,8 +104,8 @@ const AboutPage = () => {
         </Grid>
 
         <SimpleGrid columns={{ base: 2, md: 4 }} gap={5} mb="10vh">
-          <Stat number={totalConsumers} label="Happy Customers" />
-          <Stat number={totalConsumers} label="Monthly Visitors" />
+          <Stat number={"200+"} label="Happy Customers" />
+          <Stat number={"10k+"} label="Monthly Visitors" />
           <Stat number={totalSupermarkets} label="Major Supermarkets" />
           <Stat number={totalCategories} label="Categories" />
         </SimpleGrid>

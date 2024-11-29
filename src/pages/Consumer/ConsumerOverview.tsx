@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import useLikedProducts from "@/services/LikedProducts/useLikedProducts";
 import useProduct from "@/services/Products/useProduct";
+import useOrders from "@/services/Orders/useOrders";
 import Footer from "../../components/Footer";
 import {
   Avatar,
@@ -27,9 +28,9 @@ import ProductCardContainer from "../../components/ProductGrid/ProductCardContai
 const ConsumerOverview = () => {
   const likedProductsIds = useLikedProducts().data?.results.map((product) => product.productId) || [];
   const favoriteProducts = useProduct(likedProductsIds);
-  const totalOrders = 20;
-  const totalFeedbacks = 40;
-  const totalAmountSpent = 40;
+  const totalOrders = useOrders().data?.results.length || 0;
+  const totalFeedbacks = 13;
+  const totalAmountSpent = "Rs. 4000";
 
   const statsWithIcons = [
     { stat: "Favorites", icon: RxHeartFilled, val: favoriteProducts.length },
