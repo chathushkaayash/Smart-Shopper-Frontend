@@ -37,10 +37,10 @@ const CartComparison = () => {
   //fetching data from optimzed algorithm
   //const optimizedCart=useOptimizer();
 
-  console.log('hi',cartItems?.results);
-
   const uniqueSupermarketIds = Array.from(
-    new Set(cartItems?.results?.map((item) => item.supermarketItem.supermarketId))
+    new Set(
+      cartItems?.results?.map((item) => item.supermarketItem.supermarketId)
+    )
   );
 
   const supermarkets = useSupermarket(uniqueSupermarketIds);

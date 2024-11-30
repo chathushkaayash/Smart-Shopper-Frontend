@@ -303,9 +303,20 @@ export interface PayhereRequest {
   address: string;
   city: string;
   country: string;
-  order_id: number;
+  order_id: string;
   items: string;
   currency: string;
-  amount: number;
+  amount: string;
   hash: string;
+}
+
+// ---------------------------------------------- Address ---------------------------------------------------
+export interface BaseAddress {
+  id: number;
+  addressName: string; // home, work, etc
+  address: string; // actual address
+  city: string;
+  location: string; // coordinates [latitude, longitude]
+  priority: number;
+  consumerId: number;
 }

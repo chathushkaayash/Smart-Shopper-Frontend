@@ -1,0 +1,4 @@
+export const CACHE_KEY_CONSUMERS = "CONSUMERS";
+export const CACHE_KEY_DRIVERS = "DRIVERS";
+
+export const CACHE_KEY_ADDRESSES = "ADDRESSES";

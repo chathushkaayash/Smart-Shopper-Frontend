@@ -1,6 +1,7 @@
 import APIClient, { FetchResponse } from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import { Consumer } from "./useConsumer";
+import { Consumer } from "../../hooks/useConsumer";
+import { CACHE_KEY_CONSUMERS } from "../cache-keys";
 
 const apiClient = new APIClient<Consumer>("/consumers");
 
@@ -13,7 +14,7 @@ export interface ConsumerQuery {
 
 const useConsumers = (consumerQuery: ConsumerQuery) => {
   return useQuery<FetchResponse<Consumer>, Error>({
-    queryKey: ["consumers", consumerQuery],
+    queryKey: [CACHE_KEY_CONSUMERS, consumerQuery],
     queryFn: () =>
       apiClient.getAll({
         params: {

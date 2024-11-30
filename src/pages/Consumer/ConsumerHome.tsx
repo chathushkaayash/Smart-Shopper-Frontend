@@ -101,7 +101,12 @@ const FilterProducts = () => {
   ];
 
   return (
-    <HStack w="full" gap={10} px={10}>
+    <HStack
+      w="full"
+      gap={10}
+      px={10}
+      flexDirection={{ base: "column", md: "row" }}
+    >
       {filters.map((filter) => (
         <DropDown
           key={filter.label}

@@ -2,6 +2,7 @@ import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "@/utils/Time";
 import { Opportunity } from "./useOpportunity";
+import { BaseAddress } from "@/services/types";
 
 export interface User {
   id: number;
@@ -18,19 +19,9 @@ export interface User {
   deletedAt: DateTime | null;
 }
 
-export interface Address {
-  id: number;
-  addressName: string;
-  address: string;
-  city: string;
-  location: string;
-  isDefault: boolean;
-  consumerId: number;
-}
-
 export interface Consumer {
   user: User;
-  addresses: Address[];
+  addresses: BaseAddress[];
   opportunity: Opportunity[];
   id: number;
   userId: number;

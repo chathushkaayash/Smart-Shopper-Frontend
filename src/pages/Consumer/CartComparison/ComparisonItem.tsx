@@ -25,7 +25,9 @@ const ComparisonItem = ({ cartItem }: Props) => {
   ])[0];
 
   const location1 = supermarket.data?.location || "";
-  const location2 = consumer.data?.addresses[0].location || "";
+  const location2 = consumer.data?.addresses.length
+    ? consumer.data?.addresses[0].location
+    : "";
 
   const distance = useDistance(location1, location2);
 

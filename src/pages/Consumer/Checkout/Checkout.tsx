@@ -2,13 +2,19 @@ import delHome from "@/assets/delHome.png";
 import pickupImg from "@/assets/Grocery shopping-rafiki.svg";
 import CheckoutAccordion from "@/components/CheckoutAccordion";
 import useConsumer from "@/hooks/useConsumer";
-import { getPrice, getSuperMarketIdList } from "@/lib/utils";
+import {
+  getDefaultAddressId,
+  getPrice,
+  getSuperMarketIdList,
+} from "@/lib/utils";
+import useAddresses from "@/services/Addresses/useAddresses";
 import useCartCheckout, {
   CheckoutRequest,
 } from "@/services/Cart/useCartCheckout";
 import useCartItems from "@/services/Cart/useCartItems";
 import useDeliveryCost from "@/services/Location/useDeliveryCost";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
+import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
 import useAuthStore from "@/state-management/auth/store";
 import { EditIcon, SearchIcon } from "@chakra-ui/icons";
 import {
@@ -41,15 +47,25 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
-import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Checkout = () => {
   const user = useAuthStore((state) => state.user);
   const consumer = useConsumer(user?.consumerId || 0);
-  const address = consumer.data?.addresses[0];
   const { data: cartItems } = useCartItems();
   const navigate = useNavigate();
+  const addresses = useAddresses();
+
+  useEffect(() => {
+    if (addresses.data?.results) {
+      // If there are no addresses, redirect to add address page
+      if (addresses.data?.results.length <= 0) {
+        toast.error("Please add an address to proceed to checkout");
+        navigate("/profile/addresses/create");
+      }
+    }
+  }, [addresses.data]);
 
   const cartCheckout = useCartCheckout();
 
@@ -58,25 +74,28 @@ const Checkout = () => {
     (supermarket) => supermarket.data?.location || ""
   );
 
-  const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>({
-    consumerId: user?.consumerId || -1,
-    shippingLocation: address?.location || "Bandaragama",
-    shippingAddress: address?.address || "66 Pandura Rd, Bandaragama",
-    shippingMethod: "Home Delivery",
+  const allAddresses = addresses.data?.results || [];
+  const defaultAddressId = getDefaultAddressId(allAddresses);
+  const defaultAddress = addresses.data?.results.find((address) => {
+    return address.id === defaultAddressId;
   });
+console.log(allAddresses)
+  const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>(
+    {} as CheckoutRequest
+  );
 
   useEffect(() => {
     setCheckoutRequest({
       shippingMethod: "Home Delivery",
-      shippingLocation: address?.location || "Bandaragama",
-      shippingAddress: address?.address || "66 Pandura Rd, Bandaragama",
-      consumerId: user?.consumerId || 0,
+      shippingLocation: defaultAddress?.location || "Bandaragama",
+      shippingAddress: defaultAddress?.address || "66 Pandura Rd, Bandaragama",
+      consumerId: user?.consumerId || -1,
     });
-  }, [address, cartItems, user]);
+  }, [allAddresses, cartItems, user]);
 
   const deliveryCost = useDeliveryCost(
     supermarketLocationList,
-    address?.location || ""
+    checkoutRequest?.shippingLocation || "6.961174, 79.965387"
   );
 
   const deliveryFee =
@@ -325,29 +344,34 @@ const Checkout = () => {
               <Heading fontSize={"lg"} my={2}>
                 Saved Addresses
               </Heading>
-              <Flex
-                bg="gray.100"
-                shadow={"sm"}
-                px={2}
-                py={2}
-                borderRadius={5}
-                cursor={"pointer"}
-                onClick={() =>
-                  setCheckoutRequest({
-                    ...checkoutRequest,
-                    shippingAddress: "66 Pandura Rd, Bandaragama",
-                  })
-                }
-              >
-                <HStack>
-                  <Icon as={FaLocationDot} boxSize={5} />
-                  <Text>Bandaragama</Text>
-                </HStack>
-                <Spacer />
-                {/* <Box>
+              {addresses.data?.results.map((address, index) => (
+                <Flex
+                  key={index}
+                  bg="gray.100"
+                  shadow={"sm"}
+                  px={2}
+                  py={2}
+                  my={1}
+                  borderRadius={5}
+                  cursor={"pointer"}
+                  onClick={() =>
+                    setCheckoutRequest({
+                      ...checkoutRequest,
+                      shippingAddress: address.address,
+                      shippingLocation: address.location,
+                    })
+                  }
+                >
+                  <HStack>
+                    <Icon as={FaLocationDot} boxSize={5} />
+                    <Text>{address.addressName}</Text>
+                  </HStack>
+                  <Spacer />
+                  {/* <Box>
                   <Icon as={EditIcon} boxSize={5} />
-                </Box> */}
-              </Flex>
+                  </Box> */}
+                </Flex>
+              ))}
             </Flex>
           </ModalBody>
         </ModalContent>

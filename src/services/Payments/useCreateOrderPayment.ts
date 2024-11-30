@@ -8,7 +8,6 @@ const useCreateOrderPayment = (id: number) => {
   return useQuery({
     queryKey: ["payments", "orders", id],
     queryFn: () => apiClient.get(id),
-    staleTime: 0,
   });
 };
 

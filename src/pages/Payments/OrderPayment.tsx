@@ -1,6 +1,7 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import useCreateOrderPayment from "@/services/Payments/useCreateOrderPayment";
 import { Box } from "@chakra-ui/react";
+import React from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -8,15 +9,27 @@ const OrderPayment = () => {
   const { id } = useParams();
   if (!id) return null;
 
+  const formRef = React.useRef<HTMLFormElement>(null);
+
   const payhereRequest = useCreateOrderPayment(39);
 
-  //submit a form
+  useEffect(() => {
+    if (payhereRequest.isSuccess) {
+      console.log(payhereRequest.data);
+      formRef.current?.submit();
+    }
+  }, [payhereRequest.isSuccess]);
 
   if (!payhereRequest.data) return null;
 
   return (
     <Box bg="background" h="100%" pt={7} pb={10} pl={20} pr={20}>
-      <form action="https://sandbox.payhere.lk/pay/checkout" method="post">
+      <h1>Order Payment</h1>
+      <form
+        action="https://sandbox.payhere.lk/pay/checkout"
+        method="post"
+        ref={formRef}
+      >
         <input
           type="hidden"
           name="merchant_id"
@@ -42,28 +55,36 @@ const OrderPayment = () => {
         />
 
         <input
-          type="text"
+          type="hidden"
           name="order_id"
-          value={"Order 39"}
+          value={payhereRequest.data.order_id}
         />
-        <input type="text" name="items" value={payhereRequest.data.items} />
-        <input type="text" name="currency" value={payhereRequest.data.currency} />
-        <input type="text" name="amount" value={payhereRequest.data.amount} />
+        <input type="hidden" name="items" value={payhereRequest.data.items} />
+        <input
+          type="hidden"
+          name="currency"
+          value={payhereRequest.data.currency}
+        />
+        <input type="hidden" name="amount" value={payhereRequest.data.amount} />
 
         <input
-          type="text"
+          type="hidden"
           name="first_name"
           value={payhereRequest.data.first_name}
         />
         <input
-          type="text"
+          type="hidden"
           name="last_name"
           value={payhereRequest.data.last_name}
         />
-        <input type="text" name="email" value={payhereRequest.data.email} />
-        <input type="text" name="phone" value={payhereRequest.data.phone} />
-        <input type="text" name="address" value={payhereRequest.data.address} />
-        <input type="text" name="city" value={payhereRequest.data.city} />
+        <input type="hidden" name="email" value={payhereRequest.data.email} />
+        <input type="hidden" name="phone" value={payhereRequest.data.phone} />
+        <input
+          type="hidden"
+          name="address"
+          value={payhereRequest.data.address}
+        />
+        <input type="hidden" name="city" value={payhereRequest.data.city} />
         <input
           type="hidden"
           name="country"
