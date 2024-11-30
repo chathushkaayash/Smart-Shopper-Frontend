@@ -4,40 +4,29 @@ import useUser from "@/services/User/useUser";
 import useCurrentLocation from "@/hooks/useCurrentLocation";
 
 const useOptimizer = () => {
-  const [data, setData] = useState<any>(null); 
-  const [error, setError] = useState<string | null>(null); 
+  const [data, setData] = useState<any>(null); // Optimized cart data
+  const [error, setError] = useState<string | null>(null); // Error state
 
-  
-  const { location, errorr: locationError } = useCurrentLocation();
-  console.log(locationError);
-  
-  const { user: authUser, logout } = useAuthStore();
-  console.log(logout);
-  
-  const user = useUser([authUser?.id || 0])[0].data;
+  const { location, errorr: locationError } = useCurrentLocation(); // Get user's current location
+  const { user: authUser } = useAuthStore(); // Authenticated user data
+  const user = useUser([authUser?.id || 0])[0]?.data; // Fetch user data
 
   useEffect(() => {
-    
+    // Ensure both user and location data are available
     if (!user?.id || !location) {
       setError("User or location is not available.");
       return;
     }
 
-    const userId = user.id;
-    const currentLocation = location;
+    const userId = 1; // Extract user ID
+    const userLocation = location; // Extract current location
 
-    const requestBody = {
-      userId,
-      currentLocation,
-    };
-
-    // Fetch data from backend
-    fetch("http://localhost:8080/optimizer", {
-      method: "POST",
+    // Fetch data from the backend using query parameters
+    fetch(`http://localhost:9090/optimizer?userId=${userId}&location=${encodeURIComponent(userLocation)}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", // Optional for GET requests
       },
-      body: JSON.stringify(requestBody),
     })
       .then((response) => {
         if (!response.ok) {
@@ -46,16 +35,15 @@ const useOptimizer = () => {
         return response.json();
       })
       .then((responseData) => {
-        setData(responseData); 
-        setError(null);
+        setData(responseData); // Update state with the response data
+        setError(null); // Clear any previous error
       })
       .catch((err) => {
-        setError(err.message); 
+        setError(err.message); // Handle fetch errors
       });
-  }, [user, location]); 
+  }, [user, location]); // Re-run effect when user or location changes
 
-  
-  return { data, error };
+  return { data, error }; // Return optimized data and any error
 };
 
 export default useOptimizer;
