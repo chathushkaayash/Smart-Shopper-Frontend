@@ -1,3 +1,4 @@
+import OrderPayment from "@/pages/Payments/OrderPayment";
 import loadable from "@loadable/component";
 
 const ConsumerCartDetails = loadable(() => import("@/pages/Consumer/ViewCart"));
@@ -38,6 +39,8 @@ const ConsumerRoutes = [
       { path: "Consumer_overview", element: <ConsumerOverview /> },
       { path: "about", element: <AboutUs /> },
       { path: "reviews/supermarket_items/:id", element: <ProductReview /> },
+      { path: "payments/orders/:id", element: <OrderPayment /> },
+
     ],
   },
 ];
