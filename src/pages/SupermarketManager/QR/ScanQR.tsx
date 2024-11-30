@@ -87,7 +87,7 @@ class Test extends Component<{}, TestState> {
             <Heading fontSize="2xl" color="primary" mb={2}>
               Order Details
             </Heading>
-            <OrderDetails id={16}/>
+            <OrderDetails id={40}/>
             
           </Box>
         </Grid>

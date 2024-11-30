@@ -1,6 +1,8 @@
-import useDriver from "@/hooks/useDriver"
+
 import APIClient from "@/services/api-client";
 import { Order } from "@/services/types";
+import useOpportunity from "@/hooks/useOpportunity";
+import useDriver from "@/services/Driver/useDriver";
 import useAuthStore from "@/state-management/auth/store";
 import { DateTime } from "@/utils/Time";
 import {
@@ -34,18 +36,24 @@ interface Opportunity{
 }
 
 const OrderOverview = ({ order }: Props) => {
-  console.log(order);
-  const [driverId , setDriverId] = React.useState<number>(0);
+  console.log(order , "order");
+  // const [driverId , setDriverId] = React.useState<number>(0);
   const opportunityClient = new APIClient<Opportunity>("opportunity_by_order_id");
-  
-  console.log("hhhh" , driverId);
-  const driver = useDriver(1);
-  console.log("Driver" , driver.data);
+
+  const opportunityId = order?.opportunity?.[0]?.id || 0;
+  const { data: opportunity } = useOpportunity(opportunityId);
+  const driverId = opportunity?.driverId || 0;
+  const { data: driver } = useDriver(driverId ? [driverId] : [])[0] || {};
+
+  console.log("Driver:", driver);
+
+
+
 
   opportunityClient.get(order.id)
   .then((data) => {
     console.log("Opportunity fetched", data);
-    setDriverId(data.driverId);
+
   })
   .catch((error) => {
     console.error("Error fetching opportunity:", error);
@@ -75,7 +83,7 @@ const OrderOverview = ({ order }: Props) => {
     (i) => i.supermarketId === user?.supermarketId
   );
 
-  const driver = order.opportunity.length > 0;
+
 
   const handleSubmit = () => {
     const apiClient = new APIClient<{ supermarketOrderId: number }>(
@@ -162,7 +170,13 @@ const OrderOverview = ({ order }: Props) => {
                 <Text>Order Placed on</Text>
                 <Text>: {DateTime.toString(order.orderPlacedOn)}</Text>
                 <Text>Order Total</Text>
-                <Text>: {totalAmount} LKR</Text>
+                <Text>: {totalAmount?.toFixed(2)} LKR</Text>
+          <Text>Payment Method</Text>
+          <Text>: {order.shippingMethod}</Text>
+          <Text>Delivery Cost</Text>
+          <Text>: {order.deliveryFee?.toFixed(2) || "0.00"} LKR</Text>
+          <Text>Shipping Address</Text>
+          <Text>: {order.shippingAddress}</Text>
                 
                 
               </Grid>
@@ -180,14 +194,16 @@ const OrderOverview = ({ order }: Props) => {
               </Text>
               {driver ? (
                 <Grid templateColumns="1fr 2fr" gap={2}>
-                  <Text>Driver name</Text>
-                  <Text>: Nethmi Kaveesha</Text>
-                  <Text>Contact Number</Text>
-                  <Text>: 071122244</Text>
-                  <Text>Vehicle Type</Text>
-                  <Text>: Bike</Text>
-                  <Text>Vehicle Number</Text>
-                  <Text>: BAY 5050</Text>
+                  <Text>Driver Name</Text>
+          <Text>: {driver?.user?.name || "Not Available"}</Text>
+          <Text>Contact Number</Text>
+          <Text>: {driver?.user?.number || "Not Available"}</Text>
+          <Text>Vehicle Type</Text>
+          <Text>: {driver?.vehicleType || "Not Available"}</Text>
+          <Text>Vehicle Number</Text>
+          <Text>
+            : {driver?.vehicleName || "Unknown"} {driver?.vehicleNumber || ""}
+          </Text>
                 </Grid>
               ) : (
                 <Text>No Driver Assigned</Text>
