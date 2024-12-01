@@ -321,3 +321,10 @@ export interface BaseAddress {
   priority: number;
   consumerId: number;
 }
+
+// ------------------------------------ Optimized Route ------------------------------------
+export interface OptimizedRoute {
+  supermarketIds: number[];
+  totalDistance: number;
+  deliveryCost: number;
+}
