@@ -52,15 +52,6 @@ const OrderDetails = ({ order }: Props) => {
     (i) => i.supermarketId
   );
 
-  // const driver = order.
-
-  let totalCost = order.orderItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-
-  totalCost = Math.round(totalCost * 100) / 100;
-
   const {
     isOpen: isReceiptOpen,
     onOpen: onReceiptOpen,
@@ -185,10 +176,10 @@ const OrderDetails = ({ order }: Props) => {
                 <Text>: {DateTime.toString(order.orderPlacedOn)}</Text>
                 <Text>Shipping Method</Text>
                 <Text>: {order.shippingMethod}</Text>
-                <Text>Order Total</Text>
-                <Text>: {totalCost} LKR</Text>
                 <Text>Delivery Cost</Text>
                 <Text>: {order.deliveryFee} LKR</Text>
+                <Text>Order Total</Text>
+                <Text>: {order.totalCost} LKR</Text>
               </Grid>
             </Box>
             <Box
@@ -215,7 +206,8 @@ const OrderDetails = ({ order }: Props) => {
           <Divider my={4} />
 
           {/* ------------------------------------ Driver Details ------------------------------------ */}
-          {["Completed", "Processing"].includes(order.status) && (
+          {/* Hide in ToPay and Processing */}
+          {!["ToPay", "Processing"].includes(order.status) && (
             <Box
               p={4}
               borderWidth="1px"

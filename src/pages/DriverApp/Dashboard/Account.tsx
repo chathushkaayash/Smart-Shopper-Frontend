@@ -26,6 +26,11 @@ const Account = () => {
   }));
   const driver = useDriver([user?.driverId || 0])[0];
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   const rows = [
     {
       Icon: BiSolidUserRectangle,
@@ -90,7 +95,7 @@ const Account = () => {
             <Icon as={PiCaretRightThin} boxSize={5} />
           </HStack>
         ))}
-        <Button mt="5%" bg="primary" color="white" onClick={logout}>
+        <Button mt="5%" bg="primary" color="white" onClick={handleLogout}>
           Logout
         </Button>
       </Stack>

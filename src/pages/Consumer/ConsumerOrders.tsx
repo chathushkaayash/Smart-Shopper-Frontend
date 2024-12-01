@@ -57,9 +57,6 @@ const ConsumerOrders = () => {
     }
   };
 
-  const getTotalCost = (order: Order) =>
-    order.orderItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
-
   return (
     <Box
       className="p-5 h-screen bg-gray-100"

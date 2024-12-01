@@ -31,7 +31,7 @@ const SupermarketItem = ({ orderItem, onAddReviewOpen }: Props) => {
         />
         <Box>
           <Text fontWeight="bold">{product.data?.name}</Text>
-          <Text color="gray.500">${orderItem.price}</Text>
+          <Text color="gray.500">Rs. {orderItem.price}</Text>
         </Box>
       </Flex>
       <Flex alignItems="center" gap={4}>

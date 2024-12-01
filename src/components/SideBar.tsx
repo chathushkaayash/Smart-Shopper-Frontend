@@ -89,6 +89,7 @@ const SideBar = () => {
           onClick={() => {
             if (item.label === "Logout") {
               logout();
+              navigate("/login");
             } else {
               navigate(`${item.path}`);
             }
