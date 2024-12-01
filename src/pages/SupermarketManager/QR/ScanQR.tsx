@@ -87,7 +87,12 @@ class Test extends Component<{}, TestState> {
             <Heading fontSize="2xl" color="primary" mb={2}>
               Order Details
             </Heading>
-            <OrderDetails id={40}/>
+            {this.state.result === "Scanning..." ? (
+              <Text>Scan a QR code to view order details.</Text>
+            ) : (
+              <OrderDetails id={parseInt(this.state.result)} />
+            )}
+            
             
           </Box>
         </Grid>
