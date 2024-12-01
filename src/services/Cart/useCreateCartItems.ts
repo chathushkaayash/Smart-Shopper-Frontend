@@ -8,6 +8,7 @@ export interface BaseCartItem {
   productId: number;
   quantity: number;
   supermarketitemId: number;
+  orderId: number; // if the item is in an order, default -1
 }
 
 const apiClient = new APIClient<BaseCartItem>("/cart_items");

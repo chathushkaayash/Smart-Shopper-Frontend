@@ -79,7 +79,7 @@ const Checkout = () => {
   const defaultAddress = addresses.data?.results.find((address) => {
     return address.id === defaultAddressId;
   });
-console.log(allAddresses)
+
   const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>(
     {} as CheckoutRequest
   );
@@ -118,7 +118,7 @@ console.log(allAddresses)
   };
 
   if (cartCheckout.isSuccess) {
-    navigate("/orders/" + cartCheckout.data);
+    navigate("/payments/orders/" + cartCheckout.data);
   }
 
   // --------------------------------------- Calculate Subtotal ---------------------------------------

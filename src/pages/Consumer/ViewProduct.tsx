@@ -57,8 +57,8 @@ const ViewProduct = () => {
   const updateCartItems = useUpdateCartItems();
   const deleteCartItems = useDeleteCartItems();
 
-  const createPreference=useCreateUserPreference();
-  const { user:authUser, logout } = useAuthStore();
+  const createPreference = useCreateUserPreference();
+  const { user: authUser, logout } = useAuthStore();
   const user = useUser([authUser?.id || 0])[0].data;
 
   const [selectedSupermarketItem, setSupermarketItem] =
@@ -104,12 +104,13 @@ const ViewProduct = () => {
         quantity: 1,
         supermarketitemId: selectedSupermarketItem?.id || -1,
         consumerId: -1,
+        orderId: -1,
       });
 
       createPreference.mutate({
-        userId: user?.id||0,
+        userId: user?.id || 0,
         preferenceType: "Cart",
-        referenceId: productId
+        referenceId: productId,
       });
     }
     // Update the cart item
@@ -120,6 +121,7 @@ const ViewProduct = () => {
         quantity: 1,
         productId: productId,
         consumerId: -1,
+        orderId: -1,
       });
     }
 
@@ -152,7 +154,7 @@ const ViewProduct = () => {
       <Box pt="4vh" px="6vw" pos={"relative"}>
         <Flex justifyContent={"space-between"}>
           <VStack spacing={0} paddingBottom={2}>
-            <HStack >
+            <HStack>
               <Text fontSize="3xl" fontWeight="bold" mb={4}>
                 {product.data?.name}
               </Text>

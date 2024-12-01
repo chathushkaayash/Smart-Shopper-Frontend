@@ -11,7 +11,7 @@ const OrderPayment = () => {
 
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  const payhereRequest = useCreateOrderPayment(39);
+  const payhereRequest = useCreateOrderPayment(Number(id));
 
   useEffect(() => {
     if (payhereRequest.isSuccess) {
