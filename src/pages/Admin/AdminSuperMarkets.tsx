@@ -28,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 
 import useOrders from "@/services/Orders/useOrders";
-import useSuperMarkets from "@/services/Supermarket/useSupermarkets";
+import useSuperMarkets, { SupermarketQuery } from "@/services/Supermarket/useSupermarkets";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaCartFlatbed, FaLocationDot } from "react-icons/fa6";
@@ -43,20 +43,18 @@ import useSupermarketEarning from "@/hooks/useSupermarketEarning";
 import PieChart from "@/components/Charts/PieChart";
 import useSupermarketEarnings from "@/hooks/useSupermarketEarnings";
 import { Supermarket } from "@/services/types";
+import SearchBar from "@/components/SearchBar";
 // import APIClient from "@/services/api-client";
 // import { Review } from "@/hooks/reviews/useReview";
-import { SupermarketQuery } from "@/hooks/useSupermarkets";
 const AdminSuperMarkets = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
-  
+
   const [supermarketQuery, setSupermarketQuery] = useState<SupermarketQuery>(
     {} as SupermarketQuery
   );
   const supermarkets = useSuperMarkets(supermarketQuery);
 
-  const [selectedSm, setSelectedSm] =
-    useState<Supermarket | null>();
+  const [selectedSm, setSelectedSm] = useState<Supermarket | null>();
 
   const handleEditClick = (supermarket: Supermarket) => {
     setSelectedSm(supermarket);
@@ -122,12 +120,12 @@ const AdminSuperMarkets = () => {
               Super Market Details
             </Heading>
             <SearchBar
-            width="65%"
-            value={supermarketQuery.searchText || ""}
-            setValue={(value) => {
-              setSupermarketQuery({ searchText: value });
-            }}
-          />
+              width="65%"
+              value={supermarketQuery.searchText || ""}
+              setValue={(value) => {
+                setSupermarketQuery({ searchText: value });
+              }}
+            />
             <Flex>
               <Box px={2}>
                 <Select placeholder="Select option" defaultValue={"August"}>
@@ -215,7 +213,6 @@ const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
   console.log(orders);
   const earingBySupermarket = useSupermarketEarning(selectedSm.id);
   console.log("earningBYSU", earingBySupermarket);
-
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>

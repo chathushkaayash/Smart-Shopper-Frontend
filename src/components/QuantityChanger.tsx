@@ -1,6 +1,5 @@
-import { BaseCartItem } from "@/services/Cart/useCreateCartItems";
 import useUpdateCartItems from "@/services/Cart/useUpdateCartItem";
-import { CartItem } from "@/services/types";
+import { BaseCartItem, CartItem } from "@/services/types";
 import useDebounce from "@/utils/useDebounce";
 import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -25,6 +24,7 @@ const QuantityChanger = ({ cartItem }: Props) => {
         productId: debouncedCartItem.productId,
         supermarketitemId: debouncedCartItem.supermarketItem.id || -1,
         quantity: debouncedCartItem.quantity,
+        orderId: debouncedCartItem.orderId,
       };
       if (newBaseCartItem.quantity > 0) updateCartItem.mutate(newBaseCartItem);
     }

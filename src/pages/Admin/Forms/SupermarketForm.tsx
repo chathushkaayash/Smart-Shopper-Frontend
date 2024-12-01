@@ -1,11 +1,8 @@
-import React from "react";
-import { Box, Grid, Input, Text, Button } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import ErrorText from "@/components/Errors/ErrorText";
 import APIClient from "@/services/api-client";
-import router from "@/Routes/Routes";
+import { Box, Button, Grid, Input, Text } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 interface Supermarket {
   supermarketManagerName: string;

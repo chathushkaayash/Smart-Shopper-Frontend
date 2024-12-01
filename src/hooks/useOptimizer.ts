@@ -7,7 +7,7 @@ const useOptimizer = () => {
   const [data, setData] = useState<any>(null); // Optimized cart data
   const [error, setError] = useState<string | null>(null); // Error state
 
-  const { location, errorr: locationError } = useCurrentLocation(); // Get user's current location
+  const { location } = useCurrentLocation(); // Get user's current location
   const { user: authUser } = useAuthStore(); // Authenticated user data
   const user = useUser([authUser?.id || 0])[0]?.data; // Fetch user data
 
@@ -22,12 +22,17 @@ const useOptimizer = () => {
     const userLocation = location; // Extract current location
 
     // Fetch data from the backend using query parameters
-    fetch(`http://localhost:9090/optimizer?userId=${userId}&location=${encodeURIComponent(userLocation)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Optional for GET requests
-      },
-    })
+    fetch(
+      `http://localhost:9090/optimizer?userId=${userId}&location=${encodeURIComponent(
+        userLocation
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", // Optional for GET requests
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

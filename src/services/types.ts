@@ -172,6 +172,7 @@ export interface BaseCartItem {
   quantity: number;
   consumerId: number;
   productId: number;
+  orderId: number; // if the item is in an order, default -1
 }
 
 export interface CartItem extends BaseCartItem {

@@ -51,7 +51,7 @@ const AdminCourierServices = () => {
       {
         icon: <Icon as={SiCashapp} boxSize={5} color={"primary"} />,
         title: "Earning",
-        value: driverEarningData.data,
+        value: "",
       },
       {
         icon: <Icon as={MdFeedback} boxSize={5} color={"primary"} />,
@@ -85,6 +85,8 @@ const AdminCourierServices = () => {
     ],
   ];
 
+  const companyDriverCounts:any[] = [];
+
   const handleEditClick = (driver: Driver) => {
     setSelecteddriver(driver);
     onOpen();
@@ -106,25 +108,25 @@ const AdminCourierServices = () => {
           {/* ------- Number of Drivers Card ------- */}
           <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15}>
             <Heading size="md">Number of Drivers</Heading>
-            {companyDriverCounts.slice(0, 3).map((item, index) => (
-        <VStack mt={5} key={index}>
-          <HStack
-            w="full"
-            px="1vw"
-            h="10vh"
-            rounded={10}
-            borderWidth="1px"
-            borderColor="background"
-            shadow="md"
-          >
-            <Image
+            {companyDriverCounts.slice(0, 3).map(( index) => (
+              <VStack mt={5} key={index}>
+                <HStack
+                  w="full"
+                  px="1vw"
+                  h="10vh"
+                  rounded={10}
+                  borderWidth="1px"
+                  borderColor="background"
+                  shadow="md"
+                >
+                  <Image
                     src="https://via.placeholder.com/150"
                     alt="Product Image"
                     boxSize="40px"
                     objectFit="cover"
                   />
-                  <Text ml="0.3rem">{company.name}</Text>
-                  <Text ml="auto">{company.count}</Text>
+                  <Text ml="0.3rem">{"company.name"}</Text>
+                  <Text ml="auto">{"company.count"}</Text>
                 </HStack>
               </VStack>
             ))}

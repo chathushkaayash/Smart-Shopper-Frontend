@@ -12,7 +12,7 @@ export interface SupermarketQuery {
 }
 
 const useSuperMarkets = (supermarketQuery?: SupermarketQuery) => {
-  return useQuery<FetchResponse<SupermarketWithRelations>, Error>({
+  return useQuery<FetchResponse<Supermarket>, Error>({
     queryKey: ["supermarkets", supermarketQuery],
     queryFn: () =>
       apiClient.getAll({
@@ -24,7 +24,6 @@ const useSuperMarkets = (supermarketQuery?: SupermarketQuery) => {
           _limit: supermarketQuery?.limit || 10,
         },
       }),
-    
   });
 };
 

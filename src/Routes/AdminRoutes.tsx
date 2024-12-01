@@ -14,9 +14,8 @@ const AdminTransactions = loadable(
 );
 const AdminReports = loadable(() => import("@/pages/Admin/AdminReports"));
 
-import AdminLayout from "./Layouts/AdminLayout";
 import Supermarkets from "@/pages/Admin/Supermarkets";
-import path from "path";
+import AdminLayout from "./Layouts/AdminLayout";
 
 const AdminRoutes = [
   {

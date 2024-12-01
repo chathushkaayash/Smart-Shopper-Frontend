@@ -1,7 +1,6 @@
 import delHome from "@/assets/delHome.png";
 import pickupImg from "@/assets/Grocery shopping-rafiki.svg";
 import CheckoutAccordion from "@/components/CheckoutAccordion";
-import useConsumer from "@/hooks/useConsumer";
 import {
   getDefaultAddressId,
   getPrice,
@@ -52,7 +51,6 @@ import { toast } from "sonner";
 
 const Checkout = () => {
   const user = useAuthStore((state) => state.user);
-  const consumer = useConsumer(user?.consumerId || 0);
   const { data: cartItems } = useCartItems();
   const navigate = useNavigate();
   const addresses = useAddresses();

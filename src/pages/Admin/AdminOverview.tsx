@@ -27,10 +27,9 @@ import BarGraph from "../../components/Charts/BarGraph";
 import DoughnutChart from "../../components/Charts/DoughnutChart";
 import useConsumers, { ConsumerQuery } from "@/services/Consumer/useConsumers";
 import { useState } from "react";
-import { getMoment } from "@/utils/Time";
 import APIClient from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import useProduct from "@/hooks/useProduct";
+import { DateTime } from "@/utils/Time";
 
 interface OrderItem {
   id: number;
@@ -61,9 +60,7 @@ interface OrderWithRelations {
 }
 
 const AdminOverview = () => {
-  const [consumerQuery, setConsumerQuery] = useState<ConsumerQuery>(
-    {} as ConsumerQuery
-  );
+  const [consumerQuery] = useState<ConsumerQuery>({} as ConsumerQuery);
   const consumers = useConsumers(consumerQuery);
 
   const totalConsumers = consumers.data?.results.length || 0;
@@ -71,7 +68,7 @@ const AdminOverview = () => {
   const activeConsumers =
     consumers.data?.results.filter((consumer) =>
       consumer.user.lastLogin !== null
-        ? getMoment(consumer.user.lastLogin).isAfter(30, "days")
+        ? DateTime.getMoment(consumer.user.lastLogin).isAfter(30, "days")
         : false
     ).length || 0;
 

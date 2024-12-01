@@ -1,15 +1,7 @@
 import APIClient from "@/services/api-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-
-export interface BaseCartItem {
-  id: number;
-  consumerId: number;
-  productId: number;
-  quantity: number;
-  supermarketitemId: number;
-  orderId: number; // if the item is in an order, default -1
-}
+import { BaseCartItem } from "../types";
 
 const apiClient = new APIClient<BaseCartItem>("/cart_items");
 

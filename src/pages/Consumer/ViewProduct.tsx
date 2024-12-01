@@ -58,7 +58,7 @@ const ViewProduct = () => {
   const deleteCartItems = useDeleteCartItems();
 
   const createPreference = useCreateUserPreference();
-  const { user: authUser, logout } = useAuthStore();
+  const { user: authUser } = useAuthStore();
   const user = useUser([authUser?.id || 0])[0].data;
 
   const [selectedSupermarketItem, setSupermarketItem] =
