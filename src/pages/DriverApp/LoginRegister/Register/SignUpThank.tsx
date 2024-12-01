@@ -4,9 +4,14 @@ import SubmitButton from "@/components/Buttons/SubmitButton";
 import Logo from "../../../../assets/logo.svg";
 import Done from "../../../../assets/signup-login/done.svg";
 import { Link } from "react-router-dom";
+import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
+import useNonVerifiedDriver from "@/services/Driver/useNonVerifiedDriver";
 
 const SignUpThank = () => {
-  const isButtonEnabled = false;
+  const driverDetails = useDriverRegisterStore((state) => state.driverDetails);
+  const driver=useNonVerifiedDriver([driverDetails?.id]);  
+  console.log(driver[0].data?.status);
+  const driverAccepted = driver[0]?.data?.status === "Accepted" ? true : false;
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
@@ -33,13 +38,13 @@ const SignUpThank = () => {
         </Text>
         <Box w="full">
           <Link to="/driver/login">
-            <SubmitButton disabled={!isButtonEnabled} borderRadius={10}>
+            <SubmitButton disabled={!driverAccepted} borderRadius={10}>
               Continue
             </SubmitButton>
           </Link>
         </Box>
       </VStack>
-    </VStack>
+    </VStack> 
   );
 };
 

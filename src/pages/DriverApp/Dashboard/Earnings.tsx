@@ -163,15 +163,20 @@ const Earnings = () => {
                   <Text>{opportunity.opportunitysupermarket.length}</Text>
                 </HStack>
 
-                {opportunity.opportunitysupermarket.map((i, index) => (
-                  <HStack justify="space-between" key={index}>
-                    <Text>Supermarkets</Text>
-                    <SupermarketAddress supermarketId={i.supermarketId} />
-                  </HStack>
-                ))}
+                <HStack justify="space-between" alignItems="start">
+                  <Text>Supermarkets</Text>
+                  <VStack>
+                    {opportunity.opportunitysupermarket.map((i, index) => (
+                      <SupermarketAddress
+                        key={index}
+                        supermarketId={i.supermarketId}
+                      />
+                    ))}
+                  </VStack>
+                </HStack>
               </Box>
             )}
-          </Box> 
+          </Box>
         ))}
       </VStack>
     </VStack>
@@ -179,4 +184,3 @@ const Earnings = () => {
 };
 
 export default Earnings;
-

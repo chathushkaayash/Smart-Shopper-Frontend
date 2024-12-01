@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 
 import Logo from "../../../../assets/logo.svg";
-
+import { IoIosArrowBack } from "react-icons/io";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 import { useState } from "react";
@@ -23,17 +23,20 @@ import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 
 const SelectCompany = () => {
   const { driverDetails, setDriverDetails, setStage } =
-  useDriverRegisterStore();
-  
+    useDriverRegisterStore();
+
   const [searchQuery, setSearchQuery] = useState<string>("");
   const companies = ["DHL", "FedEx", "UPS", "USPS", "TNT", "Aramex", "DPD"];
 
   const filteredCompanies = companies.filter((company) =>
     company.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
+
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
+      <Box position="absolute" top="2" left="2" cursor="pointer" onClick={()=>setStage(1)}>
+        <Icon as={IoIosArrowBack} w={10} h={10} p={1} />
+      </Box>
       <VStack>
         <Image src={Logo} width="150px" />
         <Box display="inline" fontSize="2xl" fontWeight="bold">

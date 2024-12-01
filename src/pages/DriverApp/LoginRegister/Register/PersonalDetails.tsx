@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Flex,
+  Icon,
   Image,
   Modal,
   ModalBody,
@@ -16,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
+import { IoIosArrowBack } from "react-icons/io";
 
 import Logo from "../../../../assets/logo.svg";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
@@ -26,6 +28,7 @@ import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -36,13 +39,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-
 const PersonalDetails = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const navigate = useNavigate();
 
   const { driverDetails, setDriverDetails, sendPersonalData } =
     useDriverRegisterStore();
@@ -51,6 +55,15 @@ const PersonalDetails = () => {
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
+      <Box
+        position="absolute"
+        top="2"
+        left="2"
+        cursor="pointer"
+        onClick={() => navigate("/driver/login_register")}
+      >
+        <Icon as={IoIosArrowBack} w={10} h={10} p={1} />
+      </Box>
       <VStack>
         <Image src={Logo} width="150px" />
         <Text fontSize="lg" fontWeight="bold">
@@ -137,7 +150,12 @@ const PersonalDetails = () => {
               Cancel
             </Button>
             <Flex justifyContent="center" w="full">
-              <Button px={50} color="white" bg="primary" onClick={sendPersonalData}>
+              <Button
+                px={50}
+                color="white"
+                bg="primary"
+                onClick={sendPersonalData}
+              >
                 Next
               </Button>
             </Flex>

@@ -5,7 +5,7 @@ import PersonalDetails from "./PersonalDetails";
 import SelectCompany from "./SelectCompany";
 import SelectVehicle from "./SelectVehicle";
 import SignUpThank from "./SignUpThank";
-import VehicleImage from "./VehicleImage";
+import DriverImage from "./DriverImage";
 
 const DriverRegister = () => {
   const stage = useDriverRegisterStore((state) => state.stage);
@@ -16,7 +16,7 @@ const DriverRegister = () => {
       {stage === 1 && <DriverOtp />}
       {stage === 2 && <SelectCompany />}
       {stage === 3 && <SelectVehicle />}
-      {stage === 4 && <VehicleImage />}
+      {stage === 4 && <DriverImage />}
       {stage === 5 && <EnterPassword />}
       {stage === 6 && <SignUpThank />}
     </>

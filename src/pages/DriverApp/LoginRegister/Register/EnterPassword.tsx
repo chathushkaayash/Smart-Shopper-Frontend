@@ -4,6 +4,7 @@ import LoginInput from "@/components/Inputs/LoginInput";
 import {
   Box,
   Button,
+  Icon,
   Image,
   Modal,
   ModalBody,
@@ -18,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import Logo from "../../../../assets/logo.svg";
 
-import { IoIosEyeOff } from "react-icons/io";
+import { IoIosEyeOff ,IoIosArrowBack} from "react-icons/io";
 
 import ErrorText from "@/components/Errors/ErrorText";
 import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
@@ -45,13 +46,16 @@ const EnterPassword = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const { updateVehicleDetails } =
-    useDriverRegisterStore();
+  const { updateVehicleDetails } = useDriverRegisterStore();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { setStage } =
+  useDriverRegisterStore();
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
+      <Box position="absolute" top="2" left="2" cursor="pointer" onClick={()=>setStage(4)} >
+        <Icon as={IoIosArrowBack} w={10} h={10} p={1} />
+      </Box>
       <Image src={Logo} width="150px" />
 
       <Text fontSize="md" color="gray" fontWeight="bold">
@@ -64,9 +68,7 @@ const EnterPassword = () => {
         h="full"
         px="10vw"
         justifyContent="space-between"
-        onSubmit={handleSubmit((data) =>
-          updateVehicleDetails(data.password)
-        )}
+        onSubmit={handleSubmit((data) => updateVehicleDetails(data.password))}
       >
         <Box w="full">
           <LoginInput

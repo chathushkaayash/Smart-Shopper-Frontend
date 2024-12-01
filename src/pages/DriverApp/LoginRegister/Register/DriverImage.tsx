@@ -10,13 +10,13 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
-
+import { IoIosArrowBack } from "react-icons/io";
 import Logo from "../../../../assets/logo.svg";
 import DotIndicator from "@/components/DotIndicator";
 import useDriverRegisterStore from "@/state-management/DriverRegisterStore";
 import useAddDriverProfilePicture from "@/services/Driver/useAddDriverProfilePicture";
 
-const VehicleImage = () => {
+const DriverImage = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const { setStage, driverDetails } = useDriverRegisterStore();
 
@@ -42,6 +42,9 @@ const VehicleImage = () => {
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
+      <Box position="absolute" top="2" left="2" cursor="pointer" onClick={()=>setStage(3)}>
+        <Icon as={IoIosArrowBack} w={10} h={10} p={1} />
+      </Box>
       {/* --------------- Smart Shopper Logo --------------- */}
 
       <VStack>
@@ -114,4 +117,4 @@ const VehicleImage = () => {
   );
 };
 
-export default VehicleImage;
+export default DriverImage;

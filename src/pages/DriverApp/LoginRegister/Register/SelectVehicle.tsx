@@ -23,7 +23,7 @@ import { FaCaravan, FaCar, FaShuttleVan } from "react-icons/fa";
 import colorwheel from ".././../../../assets/signup-login/colorwheel.svg";
 import Wheel from "@uiw/react-color-wheel";
 import { hsvaToHex } from "@uiw/color-convert";
-
+import { IoIosArrowBack } from "react-icons/io";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
@@ -46,7 +46,7 @@ const SelectVehicle = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   const { driverDetails, setDriverDetails, setStage } =
-  useDriverRegisterStore();
+    useDriverRegisterStore();
   const vehicles = [
     { icon: RiMotorbikeFill, name: "Motorbike" },
     { icon: FaCaravan, name: "Threewheel" },
@@ -90,6 +90,9 @@ const SelectVehicle = () => {
 
   return (
     <VStack py="6vh" h="100vh" gap="4vh">
+      <Box position="absolute" top="2" left="2" cursor="pointer" onClick={()=>setStage(2)}>
+        <Icon as={IoIosArrowBack} w={10} h={10} p={1} />
+      </Box>
       {/* --------------- Vehicle Icon --------------- */}
       <Box
         position="absolute"
@@ -98,7 +101,7 @@ const SelectVehicle = () => {
         p={2}
         borderRadius="lg"
         boxShadow="lg"
-        bg={selectedColor === "#FFFFFF" ? "gray" : 'white'}
+        bg={selectedColor === "#FFFFFF" ? "gray" : "white"}
       >
         <Icon
           as={selectedVehicle.icon}
