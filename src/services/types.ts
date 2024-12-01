@@ -102,6 +102,9 @@ export interface BaseOrder {
   location: string;
   deliveryFee: number;
   orderPlacedOn: DateTime;
+
+  subTotal: number;
+  totalCost: number;
 }
 
 export interface Order extends BaseOrder {

@@ -140,7 +140,7 @@ const ConsumerOrders = () => {
                     {order.shippingMethod}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    RS {getTotalCost(order)}
+                    RS {order.totalCost}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap flex">
                     <IconButton
