@@ -42,10 +42,9 @@ export const getPrice = (price: number | string) => {
   return (Math.round(price * 100) / 100).toFixed(2);
 };
 
-export const getDefaultAddressId = (addresses: BaseAddress[] = []) => {
-  let defaultAddressId: number = -1;
+export const getDefaultAddress = (addresses: BaseAddress[] = []) : BaseAddress | null => {
   if (addresses.length > 0) {
-    defaultAddressId = addresses.sort((a, b) => b.priority - a.priority)[0].id;
+    return addresses.sort((a, b) => b.priority - a.priority)[0];
   }
-  return defaultAddressId;
+  return null;
 };

@@ -5,7 +5,7 @@ import { CACHE_KEY_OPTIMIZED_ROUTE } from "../cache-keys";
 
 interface OptimizeRouteRequest {
   supermarketIds: number[];
-  deliveryLocation: string;
+  homeLocation: string;
 }
 
 const apiClient = new APIClient<OptimizeRouteRequest, OptimizedRoute>(
@@ -17,8 +17,8 @@ const useOptimizedRoute = (supermarketIds: number[], deliveryLocation: string) =
     queryKey: [CACHE_KEY_OPTIMIZED_ROUTE, supermarketIds, deliveryLocation],
     queryFn: () =>
       apiClient.create({
-        supermarketIds,
-        deliveryLocation,
+        supermarketIds: supermarketIds,
+        homeLocation: deliveryLocation,
       }),
     staleTime: 1000 * 60 * 1, // 1 minute
   });

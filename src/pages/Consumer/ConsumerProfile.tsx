@@ -2,6 +2,7 @@ import { Box, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import ProfileDetail from "../../components/ConsumerProfile/ProfileDetail";
 import ShippingAddress from "../../components/ConsumerProfile/ShippingAddress";
 import useActivity from "@/services/Activity/useActivity";
+import { DateTime } from "@/utils/Time";
 
 const ConsumerProfile = () => {
   const { data: activities } = useActivity();
@@ -63,9 +64,11 @@ const ConsumerProfile = () => {
                       <Box textAlign="right" whiteSpace="nowrap" flexShrink={0}>
                         <Text fontSize={10} color="gray.400">
                           {`${item.dateTime.day}:${item.dateTime.month}:${item.dateTime.year}`}
+                          {/* {DateTime.toString(item.dateTime)} */}
                         </Text>
                         <Text fontSize={10} color="gray.400">
-                          {`${item.dateTime.hour}:${item.dateTime.minute}:${item.dateTime.second}`}
+                          {/* {`${item.dateTime.hour}:${item.dateTime.minute}:${item.dateTime.second}`} */}
+                          {DateTime.toString(item.dateTime)}
                         </Text>
                       </Box>
                     </Flex>

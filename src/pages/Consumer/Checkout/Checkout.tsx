@@ -2,7 +2,7 @@ import delHome from "@/assets/delHome.png";
 import pickupImg from "@/assets/Grocery shopping-rafiki.svg";
 import CheckoutAccordion from "@/components/CheckoutAccordion";
 import {
-  getDefaultAddressId,
+  getDefaultAddress,
   getPrice,
   getSuperMarketIdList,
 } from "@/lib/utils";
@@ -73,10 +73,7 @@ const Checkout = () => {
   );
 
   const allAddresses = addresses.data?.results || [];
-  const defaultAddressId = getDefaultAddressId(allAddresses);
-  const defaultAddress = addresses.data?.results.find((address) => {
-    return address.id === defaultAddressId;
-  });
+  const defaultAddress = getDefaultAddress(allAddresses);
 
   const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>(
     {} as CheckoutRequest
@@ -120,7 +117,7 @@ const Checkout = () => {
   }
 
   // --------------------------------------- Calculate Subtotal ---------------------------------------
-  let subTotal =
+  const subTotal =
     cartItems?.results.reduce(
       (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
       0

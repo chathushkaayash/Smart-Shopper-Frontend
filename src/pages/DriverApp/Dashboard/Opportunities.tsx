@@ -1,5 +1,6 @@
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import useOpportunities from "@/hooks/useOpportunities";
+import { DateTime } from "@/utils/Time";
 import { Box, HStack, Icon, Spacer, Text, VStack } from "@chakra-ui/react";
 import { FaLocationDot } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,11 @@ const Opportunities = () => {
                 <Text>Trip Cost </Text>
                 <Spacer />
                 <Text>{opportunity.tripCost}</Text>
+              </HStack>
+              <HStack w="full">
+                <Text>Order Placed On </Text>
+                <Spacer />
+                <Text>{DateTime.toString(opportunity.orderPlacedOn)}</Text>
               </HStack>
 
               <SubmitButton
