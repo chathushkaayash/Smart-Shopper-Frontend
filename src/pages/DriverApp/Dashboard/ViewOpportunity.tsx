@@ -17,24 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PickupLocation from "./PickupLocation";
 import APIClient from "@/services/api-client";
 import useOpportunities from "@/hooks/useOpportunities";
-import Map from "@/pages/Public/Map";
-import useSupermarket from "@/services/Supermarket/useSupermarket";
-
-interface SupermarketRowInterface {
-  supermarketIds: number[];
-}
-const ViewPendingMap = ({ supermarketIds }: SupermarketRowInterface) => {
-  const supermarkets = useSupermarket(supermarketIds);
- 
-  const centers=supermarkets
-  .map((supermarket) => supermarket.data?.location)
-  .filter(Boolean)
-  .map((location) => {
-    const [lat, lng] = location?.split(",").map(Number) || [];
-    return { lat, lng };
-  });
-    return <Map centers={centers} />;
-};
+import SupermarketLocation from "./SupermarketLocation";
 
 const ViewOpportunity = () => {
   const { id } = useParams(); // recieve the id from the url
@@ -172,7 +155,7 @@ const ViewOpportunity = () => {
 
       <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
         <AspectRatio ratio={16 / 9}>
-          <ViewPendingMap
+          <SupermarketLocation
             supermarketIds={opportunity.data?.opportunitysupermarket?.map(s => s.supermarketId) || []}
           />
         </AspectRatio>

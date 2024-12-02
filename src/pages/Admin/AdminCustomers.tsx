@@ -23,20 +23,58 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineRise } from "react-icons/ai";
 import { IoMdPeople } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import LineChart from "../../components/Charts/LineChart";
+// import LineChart from "../../components/Charts/LineChart";
 import { DateTime } from "@/utils/Time";
+// import LineChart from "@/components/Charts/LineChart";
+import BarGraph from "@/components/Charts/BarGraph";
 
 const AdminCustomers = () => {
   const navigate = useNavigate();
-  const [consumerQuery, setConsumerQuery] = useState<ConsumerQuery>(
-    {} as ConsumerQuery
-  );
+  const [consumerQuery, setConsumerQuery] = useState<ConsumerQuery>({
+    searchText: "",
+  });
 
   const consumers = useConsumers(consumerQuery);
+  console.log("consumers", consumers.data?.results);
+
+  const [chartData, setChartData] = useState<{ labels: string[]; ldata: number[] }>({
+    labels: [],
+    ldata: [],
+  });
+
+  const [visibleRows, setVisibleRows] = useState(5);
+
+  const handleClickMore=()=>{
+    setVisibleRows(visibleRows + 3);
+  }
+
+  // Set chart data only once after consumers are loaded
+  useEffect(() => {
+  if (consumers.data?.results) {
+    const groupedData: { [key: string]: number } = {};
+
+    consumers.data.results.forEach((consumer) => {
+      const createdAt = consumer.user.createdAt;
+      const dateKey = `${createdAt.year}-${String(createdAt.month).padStart(
+        2,
+        "0"
+      )}`; // Group by year-month
+      groupedData[dateKey] = (groupedData[dateKey] || 0) + 1;
+    });
+
+    const labels = Object.keys(groupedData).sort();
+    const ldata = labels.map((label) => groupedData[label]);
+
+    setChartData({ labels, ldata }); // Set the data once
+  }
+  }, [consumers.data?.results]); // Run only when consumers data changes
+
+  console.log("labels", chartData.labels);
+  console.log("ldata", chartData.ldata);
 
   const totalConsumers = consumers.data?.results.length || 0;
 
@@ -83,24 +121,26 @@ const AdminCustomers = () => {
       w="full"
       fontWeight={"bold"}
     >
-      <Flex width="full">
+      <Flex width="full" gap='5%'>
         <Box
           px={5}
           pt={5}
           shadow="md"
           borderWidth="1px"
-          w="70%"
+          // w="70%"
+          w="65%"
           borderRadius={15}
         >
           <Heading size="md">Customer Engagement</Heading>
 
-          <Center>
-            <LineChart width="70%" />
-          </Center>
+          
+            {/* <LineChart width="80%" ldata={chartData.ldata} labels={chartData.labels} /> */}
+            {/* <PieChart/> */}
+          <BarGraph chartData={chartData.ldata} labels={chartData.labels} />
         </Box>
 
         <Box w="30%">
-          <VStack w="full" gap={5}>
+          <VStack w="full" gap={12}>
             {consumerCards.map((card, index) => (
               <Card px={3} w={"20vw"} key={index}>
                 <CardBody>
@@ -140,21 +180,24 @@ const AdminCustomers = () => {
           </Heading>
           <SearchBar
             width="65%"
-            value={consumerQuery.searchText || ""}
+            value={consumerQuery.searchText}
             setValue={(value) => {
-              setConsumerQuery({ searchText: value });
+              if (value != consumerQuery.searchText)
+                setConsumerQuery({ ...consumerQuery, searchText: value });
             }}
           />
           <Flex>
             <Box px={2}>
               <Select
                 placeholder="Select option"
-                value={consumerQuery.month || ""}
+                value={consumerQuery.month}
                 onChange={(e) => {
-                  setConsumerQuery({
-                    ...consumerQuery,
-                    month: Number(e.target.value),
-                  });
+                  const value :Number= Number(e.target.value)
+                  if (value != consumerQuery.month)
+                    setConsumerQuery({
+                      ...consumerQuery,
+                      month: Number(value),
+                    });
                 }}
               >
                 {lastMonths(7).map((month, index) => (
@@ -186,12 +229,15 @@ const AdminCustomers = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {consumers.data?.results.map((consumer, index) => (
+              {consumers.data?.results
+                    .slice(0, visibleRows)
+                    .map((consumer, index) => (
                   <Tr key={index}>
                     <Td>
                       <HStack>
                         <Image
-                          src={consumer.user.profilePic}
+                          // consumer.user.profilePic
+                          src={"https://via.placeholder.com/150"} //{consumer.user.profilePic}
                           alt="Consumer Image"
                           boxSize="50px"
                           objectFit="cover"
@@ -204,7 +250,7 @@ const AdminCustomers = () => {
                     <Td>
                       {consumer.addresses.length
                         ? consumer.addresses[0].address
-                        : "Not Found"}
+                        : "-"}
                     </Td>
                     <Td>{consumer.user.number}</Td>
                     <Td>{consumer.user.email}</Td>
@@ -220,8 +266,25 @@ const AdminCustomers = () => {
                     </Td>
                   </Tr>
                 ))}
+                {consumers.data?.results.length === 0 &&
+                  <Tr>
+                    <Td colSpan={5}>No customers found</Td>
+                  </Tr>
+                }
               </Tbody>
             </Table>
+            {consumers.data && consumers.data.count > visibleRows && (
+            
+                <Button
+                 size="md" mt={8} fontWeight="bold" bg="background"
+                  onClick={handleClickMore}
+                  
+                  >
+                More Customers
+                </Button>
+              
+      )}
+       
           </TableContainer>
         </Center>
       </Box>

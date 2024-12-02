@@ -21,16 +21,16 @@ import moment from "moment";
 //   return `${getDate(dateTime)} ${getTime(dateTime)}`;
 // };
 
-// export const getMoment = (dateTime: DateTime): moment.Moment => {
-//   return moment({
-//     year: dateTime.year,
-//     month: dateTime.month - 1,
-//     day: dateTime.day,
-//     hour: dateTime.hour,
-//     minute: dateTime.minute,
-//     second: Math.floor(dateTime.second),
-//   });
-// }
+export const getMoment = (dateTime: DateTime): moment.Moment => {
+  return moment({
+    year: dateTime.year,
+    month: dateTime.month - 1,
+    day: dateTime.day,
+    hour: dateTime.hour,
+    minute: dateTime.minute,
+    second: Math.floor(dateTime.second),
+  });
+}
 
 export interface BaseDateTime {
   year: number;

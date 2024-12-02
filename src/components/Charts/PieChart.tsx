@@ -5,16 +5,17 @@ import Chart from "react-apexcharts";
 interface PieChartProps {
   chartData: number[];
   labels: string[];
+  textPosition: string;
 }
 
-const PieChart = ({ chartData, labels }: PieChartProps) => {
+const PieChart = ({ chartData, labels,textPosition }: PieChartProps) => {
   const data = {
     series: chartData,
     options: {
       labels: labels,
       colors: ["#FF4768", "#1E90FF", "#FFD700", "#00CED1", "#8A2BE2"],
       legend: {
-        position: "bottom" as "top" | "right" | "bottom" | "left",
+        position: textPosition as "top" | "right" | "bottom" | "left",
         top: 0,
         fontSize: "14px", // Setting the font size of the legend
       },

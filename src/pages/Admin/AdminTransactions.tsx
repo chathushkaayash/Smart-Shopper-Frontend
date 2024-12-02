@@ -33,7 +33,7 @@ import { FaUser } from "react-icons/fa6";
 import { GiStorkDelivery } from "react-icons/gi";
 import { MdPayment } from "react-icons/md";
 import ActionButton from "../../components/Buttons/ActionButton";
-import LineChart from "../../components/Charts/LineChart";
+// import LineChart from "../../components/Charts/LineChart";
 
 
 const AdminTransactions = () => {
@@ -48,7 +48,7 @@ const AdminTransactions = () => {
           </Heading>
 
             <Center>
-              <LineChart  width="80%"/>
+              {/* <LineChart  width="80%"/> */}
               {/* <PieChart/> */}
             </Center>
           </Box>

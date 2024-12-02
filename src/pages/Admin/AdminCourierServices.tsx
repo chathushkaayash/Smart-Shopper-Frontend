@@ -28,30 +28,96 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
+import { AiOutlineFieldNumber } from "react-icons/ai";
+import { IoIosColorPalette } from "react-icons/io";
 import { IoBusiness, IoCall } from "react-icons/io5";
 import { MdFeedback } from "react-icons/md";
 import { SiCashapp } from "react-icons/si";
 import { TbTruckDelivery } from "react-icons/tb";
-import { IoIosColorPalette } from "react-icons/io";
-import { AiOutlineFieldNumber } from "react-icons/ai";
-import LineChart from "../../components/Charts/LineChart";
-import { IoStarSharp } from "react-icons/io5";
-import { useState } from "react";
+// import LineChart from "../../components/Charts/LineChart";
+import BarGraph from "@/components/Charts/BarGraph";
+import useOpportunities, { OpportunityQuery } from "@/hooks/useOpportunities";
 import useDrivers from "@/services/Driver/useDrivers";
 import { Driver } from "@/services/types";
+import { useState } from "react";
+import { IoStarSharp } from "react-icons/io5";
 const AdminCourierServices = () => {
   const drivers = useDrivers();
-  const driverArray = drivers.data?.results;
-  //console.log("drivers",drivers.data?.results);
+  console.log("drivers",drivers.data?.results);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedDriver, setSelecteddriver] = useState<Driver | null>();
+  const [visibleRows, setVisibleRows] = useState(5);
+
+  const handleClickMore = () => {
+    setVisibleRows(visibleRows + 3);
+  };
+
+ 
+  console.log("drivers",drivers.data?.results);
+  const driverArray=drivers.data?.results;
+  console.log("driverArray",driverArray);
+
+  const companyMap = new Map<string, { profilePic: string; count: number }>();
+  drivers.data?.results.forEach((item) => {
+    const company = item.courierCompany || "Unknown Company";
+    const profilePic = item.user?.profilePic || "";
+
+    if (companyMap.has(company)) {
+      const data = companyMap.get(company)!;
+      companyMap.set(company, { profilePic: data.profilePic, count: data.count + 1 });
+    } else {
+      companyMap.set(company, { profilePic, count: 1 });
+    }
+  });
+
+  const companyDriverCounts = Array.from(companyMap).map(([name, data]) => ({
+    name,
+    ...data,
+  }));
+
+  console.log("companyDriverCounts",companyDriverCounts);
+
+  const opportunityQuery: OpportunityQuery = {
+    status: "",
+    month: "",
+    limit: 10,
+  };
+
+  const opportunityData = useOpportunities(opportunityQuery);
+  console.log("opportunityData",opportunityData.data?.results);
+
+  //nned to take cost , driver id from opportunityData and match with driverArray to get the company name
+  const courierEarningData = opportunityData.data?.results.reduce(
+    (acc, opportunity) => {
+      const driver = driverArray?.find((driver) => driver.id === opportunity.driverId);
+      const company = driver?.courierCompany || "Unknown Company";
+      const deliveryCost = opportunity.deliveryCost || 0; // Default to 0 if undefined
+      acc[company] = (acc[company] || 0) + deliveryCost;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+  
+
+  const labels = Object.keys(courierEarningData || {});
+  console.log("Labels:", labels);
+  if (labels.length === 0) {
+    console.warn("No labels found.");
+  }
+  const data = courierEarningData
+  ? labels.map((label) => courierEarningData[label])
+  : [];
+  
+  console.log("Data:", data);
+  console.log('labels',labels);
+
 
   const deliveryPersonPopup = [
     [
       {
         icon: <Icon as={SiCashapp} boxSize={5} color={"primary"} />,
         title: "Earning",
-        value: "",
+        //value: driverEarningData.data,
       },
       {
         icon: <Icon as={MdFeedback} boxSize={5} color={"primary"} />,
@@ -85,8 +151,6 @@ const AdminCourierServices = () => {
     ],
   ];
 
-  const companyDriverCounts:any[] = [];
-
   const handleEditClick = (driver: Driver) => {
     setSelecteddriver(driver);
     onOpen();
@@ -97,43 +161,46 @@ const AdminCourierServices = () => {
       <VStack gap={"8vh"} fontWeight="bold" my="5vh" px={10}>
         <Flex w="full" gap={5}>
           {/* ------- Courier Company Earnings ------- */}
-          <Box p={5} shadow="md" borderWidth="1px" w="60%" borderRadius={15}>
+          <Box p={5} shadow="md" borderWidth="1px" w="52%" borderRadius={15}>
             <Heading size="md">Courier Company Earnings</Heading>
 
-            <Center>
-              <LineChart width="80%" />
-            </Center>
+           
+              <BarGraph chartData={data} labels={labels} />
+            
           </Box>
 
           {/* ------- Number of Drivers Card ------- */}
-          <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15}>
-            <Heading size="md">Number of Drivers</Heading>
-            {companyDriverCounts.slice(0, 3).map(( index) => (
-              <VStack mt={5} key={index}>
-                <HStack
-                  w="full"
-                  px="1vw"
-                  h="10vh"
-                  rounded={10}
-                  borderWidth="1px"
-                  borderColor="background"
-                  shadow="md"
-                >
-                  <Image
-                    src="https://via.placeholder.com/150"
-                    alt="Product Image"
-                    boxSize="40px"
-                    objectFit="cover"
-                  />
-                  <Text ml="0.3rem">{"company.name"}</Text>
-                  <Text ml="auto">{"company.count"}</Text>
-                </HStack>
-              </VStack>
-            ))}
-            <ActionButton inverted={true} className="!w-full mt-5">
-              View All
-            </ActionButton>
-          </Box>
+          <Box p={5} shadow="md" borderWidth="1px" w="48%" borderRadius={15} display="flex" flexDirection="column">
+  <Heading size="md">Number of Drivers</Heading>
+  <VStack mt={5} flex="1" spacing={4}>
+    {companyDriverCounts &&
+      companyDriverCounts.slice(0, 3).map((company, index) => (
+        <HStack
+          key={index}
+          w="full"
+          px="1vw"
+          h="10vh"
+          rounded={10}
+          borderWidth="1px"
+          borderColor="background"
+          shadow="md"
+        >
+          <Image
+            src={company.profilePic}
+            alt="Product Image"
+            boxSize="40px"
+            objectFit="cover"
+          />
+          <Text ml="0.3rem">{company.name}</Text>
+          <Text ml="auto">{company.count}</Text>
+        </HStack>
+      ))}
+  </VStack>
+  <ActionButton inverted={true} className="!w-full mt-5">
+    View All
+  </ActionButton>
+</Box>
+
         </Flex>
         <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
           <Flex justifyContent="space-between" px={20} py={10}>
@@ -169,15 +236,15 @@ const AdminCourierServices = () => {
                   <Th></Th>
                 </Tr>
               </Thead>
-              <Tbody>
-                {driverArray &&
+              <Tbody> 
+                 {driverArray &&
                   Array.isArray(driverArray) &&
-                  driverArray.map((driver) => (
+                  driverArray.slice(0,visibleRows).map((driver) => (
                     <Tr>
                       <Td>
                         <HStack>
                           <Image
-                            src={driver.user.profilePic}
+                            src={"https://via.placeholder.com/150"} //{driver.user.profilePic}
                             alt="driver Image"
                             boxSize="50px"
                             objectFit="cover"
@@ -187,8 +254,8 @@ const AdminCourierServices = () => {
                           <Text>{driver.user.name}</Text>
                         </HStack>
                       </Td>
-                      <Td>{driver.courierCompany}</Td>
                       <Td>{driver.user.number}</Td>
+                      <Td>{driver.courierCompany}</Td>
                       <Td>{driver.vehicleType}</Td>
                       <Td>{driver.vehicleName}</Td>
                       <Td>
@@ -202,9 +269,20 @@ const AdminCourierServices = () => {
                       </Td>
                     </Tr>
                   ))}
-              </Tbody>
+              </Tbody> 
             </Table>
           </TableContainer>
+          {driverArray && visibleRows < driverArray.length && ( // Show button only if more items exist
+          <Button
+            size="md"
+            mt={8}
+            fontWeight="bold"
+            bg="background"
+            onClick={handleClickMore}
+          >
+            View More
+          </Button>
+        )}
         </Box>
 
         {/* 

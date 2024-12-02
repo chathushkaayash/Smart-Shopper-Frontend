@@ -1,6 +1,7 @@
 import ActionButton from "@/components/Buttons/ActionButton";
-import LineChart from "@/components/Charts/LineChart";
-import { itemsSold } from "@/data/itemsSold";
+// import LineChart from "@/components/Charts/LineChart";
+// import { itemsSold } from "@/data/itemsSold";
+import { useQuery } from "@tanstack/react-query";
 import {
   Box,
   Button,
@@ -34,55 +35,112 @@ import {
 import { FaShoppingBag } from "react-icons/fa";
 import { GiStorkDelivery } from "react-icons/gi";
 import { MdPayment } from "react-icons/md";
+import APIClient from "@/services/api-client";
+import { OrderWithRelations } from "@/pages/Admin/AdminOverview";
+import useProduct from "@/services/Products/useProduct";
+import useSupermarketEarnings from "@/hooks/useSupermarketEarnings";
+import PieChart from "@/components/Charts/PieChart";
 
 const AdminOrders = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { data: salesData } = useQuery({
+    queryKey: ["sales"],
+    queryFn: () =>
+      new APIClient<OrderWithRelations>("stats/supermarket_sales").getAll({}),
+    staleTime: 1000 * 5,
+  });
+
+  let totalSales = 0;
+  const monthlySales: { [key: number]: number } = {};
+  const productSales: { [key: string]: number } = {};
+
+  salesData?.results.forEach((order) => {
+    const { month, year } = order.orderPlacedOn;
+    if (year === 2024) {
+      const orderTotal = order.orderItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+      totalSales += orderTotal;
+
+      monthlySales[month] = (monthlySales[month] || 0) + orderTotal;
+
+      order.orderItems.forEach((item) => {
+        productSales[item.productId] =
+          (productSales[item.productId] || 0) + item.quantity;
+      });
+    }
+  });
+
+  const topProducts = Object.entries(productSales)
+  .sort(([, qtyA], [, qtyB]) => qtyB - qtyA)
+  .slice(0, 5);
+
+  const productIds = topProducts.map(([productId]) => Number(productId));
+
+  // Call useProduct to get data for the product IDs
+  const productQueries = useProduct(productIds);
+  console.log('productQueries',productQueries);
+
+  const productDetails = productQueries.map((query) => query.data);
+
+  console.log('top',topProducts);
+
+  const earningBySupermarket = useSupermarketEarnings();
+  console.log(earningBySupermarket.data)
+  const names =
+    earningBySupermarket.data?.results.map((item) => item.name) || [];
+  const earnings =
+    earningBySupermarket.data?.results.map((item) => item.earnings) || [];
+
   return (
     <>
 
           <VStack gap={"8vh"} fontWeight="bold" my="5vh" px={10}>
-            <Flex w='full' gap={5}>
+            <Flex w='full' gap={10}>
 
             <Box p={5} shadow="md" borderWidth="1px" w="60%" borderRadius={15}>
             <Heading size={"md"}>
             Orders by Supermarkets
           </Heading>
+          <Box mt={5} w="80%">
+            <PieChart chartData={earnings} labels={names} textPosition="right"/>
+          </Box>
 
-            <Center>
-              <LineChart  width="80%"/>
-              {/* <PieChart/> */}
-            </Center>
+          {/* <PieChart chartData={earnings} labels={names} /> */}
           </Box>
 
             {/* ------- Number of items Card ------- */}
-          <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15}>
-            <Heading size="md">Top Items Sold</Heading>
-            {itemsSold.map((company, index) => (
-              <VStack mt={5} key={index}>
-                <HStack
-                  w="full"
-                  px="1vw"
-                  h="10vh"
-                  rounded={10}
-                  borderWidth="1px"
-                  borderColor="background"
-                  shadow="md"
-                >
-                  <Image
-                    src={company.image}
-                    alt="Product Image"
-                    boxSize="40px"
-                    objectFit="cover"
-                  />
-                  <Text ml='0.3rem'>{company.name}</Text>
-                  <Text ml="auto">{company.count}</Text>
-                </HStack>
-              </VStack>
-            ))}
-            <ActionButton inverted={true} className="!w-full mt-5">
-              View All
-            </ActionButton>
-          </Box>
+          <Box p={5} shadow="md" borderWidth="1px" w="40%" borderRadius={15} display="flex" flexDirection="column">
+  <Heading size="md">Top Items Sold</Heading>
+  <VStack mt={5} flex="1" spacing={4}>
+    {productDetails.map((company, index) => (
+      <HStack
+        key={index}
+        w="full"
+        px="1vw"
+        h="10vh"
+        rounded={10}
+        borderWidth="1px"
+        borderColor="background"
+        shadow="md"
+      >
+        <Image
+          src={company?.imageUrl}
+          alt="Product Image"
+          boxSize="40px"
+          objectFit="cover"
+        />
+        <Text ml="0.3rem">{company?.name}</Text>
+      </HStack>
+    ))}
+  </VStack>
+  <ActionButton inverted={true} className="!w-full mt-5">
+    View All
+  </ActionButton>
+</Box>
+
           </Flex>
 
           <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>

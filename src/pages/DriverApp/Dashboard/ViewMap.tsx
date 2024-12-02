@@ -32,6 +32,7 @@ import useOrder from "@/services/Orders/useOrder";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { BaseSupermarketOrder } from "@/services/types";
 import { useState } from "react";
+import SupermarketLocation from "./SupermarketLocation";
 
 {
   /**********************************************Supermarket rows component****************************************/
@@ -47,7 +48,6 @@ const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
   return (
     <>
       <HStack
-        // zIndex={3000}
         w="full"
         cursor="pointer"
         onClick={() => {
@@ -56,7 +56,7 @@ const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
         }}
       >
         <Image src={QR} w="5vw" />
-        <Text>{supermarket[0].data?.address}</Text>
+        <Text>{supermarket[0].data?.name+", "+supermarket[0].data?.city}</Text>
         <Spacer />
         <Icon as={FaPhoneAlt} color="primary" />
       </HStack>
@@ -170,10 +170,14 @@ const ViewMap = () => {
           h="93vh"
           style={{ pointerEvents: showDetails ? "none" : "auto" }}
         >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9029768701894!2d79.85857797499636!3d6.902205493097101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25963120b1509%3A0x2db2c18a68712863!2sUniversity%20of%20Colombo%20School%20of%20Computing%20(UCSC)!5e0!3m2!1sen!2slk!4v1721984297174!5m2!1sen!2slk"
-            loading="lazy"
-          ></iframe>
+         <SupermarketLocation
+            supermarketIds={
+              opportunity.data?.opportunitysupermarket?.map(
+                (s) => s.supermarketId
+              ) || []
+            }
+          />
+
         </AspectRatio>
 
         <Box

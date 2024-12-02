@@ -3,13 +3,15 @@ import { Box } from '@chakra-ui/react';
 
 interface LineChartProps {
     width: string;
+    ldata: number[];
+    labels: string[];
 }
 
-const LineChart: React.FC<LineChartProps> = ({ width }) => {
+const LineChart: React.FC<LineChartProps> = ({ width,ldata,labels }) => {
     const data = {
         series: [{
             name: 'No of Customers',
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125, 130,  110, 120, 90, 80, 70, 60, 50, 55, 30, 80, 10, 5, 0, 100, 20, 30, 40, 50]
+            data: ldata // Default data
         }],
         options: {
             chart: {
@@ -22,7 +24,7 @@ const LineChart: React.FC<LineChartProps> = ({ width }) => {
             },
             colors: ['#ff7708'],
             xaxis: {
-                categories: ['5', '10', '15', '20', '25', '30', '35', '40', '45','50','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']
+                categories: labels, // Default labels
             },
             
             

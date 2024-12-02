@@ -1,17 +1,15 @@
 import useAuthStore from "@/state-management/auth/store";
 import { Flex, Heading, Text, VStack } from "@chakra-ui/react";
-import { FaCartFlatbed, FaShop } from "react-icons/fa6";
+import { BiSolidReport } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { FaBagShopping, FaCartFlatbed, FaShop } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
 import { IoMdPeople } from "react-icons/io";
-import { IoSettings, IoHome } from "react-icons/io5";
-import { MdViewSidebar } from "react-icons/md";
+import { IoHome, IoSettings } from "react-icons/io5";
+import { MdOutlineQrCodeScanner, MdViewSidebar } from "react-icons/md";
 import { RiAdvertisementFill } from "react-icons/ri";
-import { CgProfile } from "react-icons/cg";
-import { FaBagShopping } from "react-icons/fa6";
-import { TbTransactionDollar, TbTruckDelivery } from "react-icons/tb";
+import { TbTruckDelivery } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MdOutlineQrCodeScanner } from "react-icons/md";
-import { BiSolidReport } from "react-icons/bi";
 
 interface MenuItem {
   icon: React.ComponentType<any>;
@@ -35,7 +33,7 @@ const SideBar = () => {
       path: "/courier-services",
     },
     { icon: FaCartFlatbed, label: "Orders", path: "/orders" },
-    { icon: TbTransactionDollar, label: "Transactions", path: "/transactions" },
+    // { icon: TbTransactionDollar, label: "Transactions", path: "/transactions" },
     {
       icon: RiAdvertisementFill,
       label: "Advertisements",
