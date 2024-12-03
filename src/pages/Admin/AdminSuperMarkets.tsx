@@ -232,9 +232,7 @@ interface PopupProps {
 
 const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
   const orders = useOrders(selectedSm.id);
-  const customerCount = new Set(
-    orders.data?.results.map((order) => order.consumerId)
-  ).size;
+ 
   console.log(orders);
   const earingBySupermarket = useSupermarketEarning(selectedSm.id);
   console.log("earningBYSU", earingBySupermarket);

@@ -34,9 +34,6 @@ axiosInstance.interceptors.response.use(
 );
 
 class APIClient<T, R = T> {
-  getOne(arg0: { id: number; }): any {
-    throw new Error("Method not implemented.");
-  }
   endpoint: string;
 
   constructor(endpoint: string) {

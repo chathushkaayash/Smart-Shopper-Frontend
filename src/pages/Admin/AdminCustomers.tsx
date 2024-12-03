@@ -26,14 +26,12 @@ import {
 import { useEffect, useState } from "react";
 import { AiOutlineFall, AiOutlineRise } from "react-icons/ai";
 import { IoMdPeople } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 // import LineChart from "../../components/Charts/LineChart";
 import { DateTime } from "@/utils/Time";
 // import LineChart from "@/components/Charts/LineChart";
 import BarGraph from "@/components/Charts/BarGraph";
 
 const AdminCustomers = () => {
-  const navigate = useNavigate();
   const [consumerQuery, setConsumerQuery] = useState<ConsumerQuery>({
     searchText: "",
   });

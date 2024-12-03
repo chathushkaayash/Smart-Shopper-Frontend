@@ -31,7 +31,6 @@ const AdminReports: React.FC = () => {
   const padding = useBreakpointValue({ base: "4", md: "6" });
 
   const ordersData = useAllOrders();
-  const supermarketsEarning=useSupermarketEarnings();
 
   const processOrdersData = (results: any[]) => {
     if (!results) return { labels: [], counts: [] };
@@ -85,7 +84,6 @@ const AdminReports: React.FC = () => {
 }, [reportType, supermarketsEarningData]);
 
 //smartShopperRevenue
-const smartShopperRevenue = useSupermarketEarnings();
 
 // Assume startMonth and endMonth are inputs from the user, for example:
 const startMonth = startDate ? startDate.getMonth() + 1 : 1;
