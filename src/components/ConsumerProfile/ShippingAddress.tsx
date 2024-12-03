@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useAuthStore from "@/state-management/auth/store";
 import {
   Box,
@@ -7,51 +6,18 @@ import {
   Text,
   Grid,
   GridItem,
-  VStack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  HStack,
-  Input,
-  ModalFooter,
-  Stack,
-  useDisclosure,
-  Select,
-  IconButton,
+  VStack
 } from "@chakra-ui/react";
-import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import useAddresses from "@/services/Addresses/useAddresses";
+import { getDefaultAddress } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const ShippingAddress = () => {
+  const navigate = useNavigate();
   const user  = useAuthStore((state) => state.user);
-  const consumerId = useAuthStore((state) => state.user?.consumerId);
-  const { isOpen: isAdd, onOpen: onAdd, onClose: onAddClose } = useDisclosure();
-  const {
-    isOpen: isConfirmOpen,
-    onOpen: onConfirmOpen,
-    onClose: onConfirmClose,
-  } = useDisclosure();
-
-  const [addresses, setAddresses] = useState([{ id: Date.now() }]);
-  const [addressToDelete, setAddressToDelete] = useState<number | null>(null);
-
-  const addAddress = () => {
-    if (addresses.length < 5) {
-      setAddresses([...addresses, { id: Date.now() }]);
-    }
-  };
-
-  const confirmDeleteAddress = (id: number) => {
-    setAddressToDelete(id);
-    onConfirmOpen();
-  };
-
-  const deleteAddress = () => {
-    setAddresses(addresses.filter((address) => address.id !== addressToDelete));
-    setAddressToDelete(null);
-    onConfirmClose();
-  };
+  const Address = useAddresses().data?.results || [];
+  const defaultAddress = getDefaultAddress(Address);
+  // console.log(defaultAddress);
 
   return (
     <Box
@@ -71,7 +37,7 @@ const ShippingAddress = () => {
             w="auto"
             mr={4}
             mt={4}
-            onClick={onAdd}
+            onClick={() => navigate('/profile/addresses')}
             variant="outline"
             color="white"
             borderColor="primary"
@@ -88,7 +54,7 @@ const ShippingAddress = () => {
               borderColor: "primary",
             }}
           >
-            Edit Shipping Address
+            Manage Address
           </Button>
         </Flex>
       </Flex>
@@ -100,7 +66,7 @@ const ShippingAddress = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{consumerId}</Text>
+            {defaultAddress?.address.split(',')[0]}
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -108,15 +74,7 @@ const ShippingAddress = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{consumerId}</Text>
-          </GridItem>
-          <GridItem>
-            <Text fontWeight="medium" color="gray.600">
-              District:
-            </Text>
-          </GridItem>
-          <GridItem>
-            <Text color="gray.800">{user?.consumerId}</Text>
+            <Text color="gray.800">{defaultAddress?.address.split(',')[1]}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -124,7 +82,7 @@ const ShippingAddress = () => {
             </Text>
           </GridItem>
           <GridItem>
-            <Text color="gray.800">{user?.consumerId}</Text>
+            <Text color="gray.800">{defaultAddress?.city}</Text>
           </GridItem>
           <GridItem>
             <Text fontWeight="medium" color="gray.600">
@@ -137,7 +95,7 @@ const ShippingAddress = () => {
         </Grid>
       </VStack>
       {/* Edit Shipping Address Modal */}
-      <Modal
+      {/* <Modal
         isOpen={isAdd}
         onClose={onAddClose}
         isCentered
@@ -275,9 +233,9 @@ const ShippingAddress = () => {
             </Flex>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
       {/* Confirm Delete Modal */}
-      <Modal
+      {/* <Modal
         isOpen={isConfirmOpen}
         onClose={onConfirmClose}
         isCentered
@@ -330,7 +288,7 @@ const ShippingAddress = () => {
             </Flex>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </Box>
   );
 };

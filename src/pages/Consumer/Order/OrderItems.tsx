@@ -14,6 +14,7 @@ import {
 import AddProductReview from "../../../components/ViewOrders/AddProductReview";
 import SupermarketItem from "../../../components/ViewOrders/SupermarketItem";
 import { Order } from "@/services/types";
+import { getDecimal } from "@/lib/utils";
 
 interface Props {
   order: Order;
@@ -53,7 +54,7 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Delivery Fee:{" "}
           <Text as="span" fontWeight="bold">
-            {order.deliveryFee} LKR
+            {getDecimal(order.deliveryFee)} LKR
           </Text>
         </Text>
       </Flex>
@@ -61,7 +62,7 @@ const OrderItems = ({ order }: Props) => {
         <Text>
           Total:{" "}
           <Text as="span" fontWeight="bold">
-            {order.totalCost} LKR
+            {getDecimal(order.totalCost)} LKR
           </Text>
         </Text>
       </Flex>
@@ -83,12 +84,9 @@ const OrderItems = ({ order }: Props) => {
             Add Product Review
           </ModalHeader>
           <ModalBody>
-            <AddProductReview
-              productImage="https://via.placeholder.com/50"
-              supermarketImage="https://via.placeholder.com/25"
-              productName="Gradient Graphic T-shirt"
-              price={45.6}
-            />
+          <AddProductReview
+            orderItem={order.orderItems[0]}
+          />
           </ModalBody>
           <ModalFooter>
             <Flex width="100%" justifyContent="center" columnGap={5}>

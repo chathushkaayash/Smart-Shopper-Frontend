@@ -1,12 +1,15 @@
 import MiddleContainer from "@/components/Containers/MiddleContainer";
+import { FaArrowLeft } from "react-icons/fa6";
 import useCreateConsumerAddress, {
   AddressInsert,
 } from "@/services/Addresses/useCreateConsumerAddress";
 import { Box, Button, Heading, Input, InputGroup } from "@chakra-ui/react";
 import { Label } from "flowbite-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateAddressPopup = () => {
+  const navigate = useNavigate();
   const [addressInsert, setAddressInsert] = useState<AddressInsert>({
     addressName: "",
     address: "",
@@ -20,7 +23,8 @@ const CreateAddressPopup = () => {
 
   return (
     <MiddleContainer>
-      <Box m={10} >
+      <FaArrowLeft onClick={() => navigate(-1)} fontSize={25} style={{ margin: "10px 0px 0px 10px", cursor: "pointer" }}/>
+      <Box m="10px 30px 20px 30px" >
         <Heading mb={4}>Create Address</Heading>
         <Label>Address Name</Label>
         <Input

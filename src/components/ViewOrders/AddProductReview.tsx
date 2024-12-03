@@ -11,16 +11,18 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
+import { BaseOrderItem } from "@/services/types";
+import useProduct from "@/services/Products/useProduct";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
 
 interface AddProductReviewProps {
-    productImage: string;
-    supermarketImage: string;
-    productName: string;
-    price: number;
+  orderItem: BaseOrderItem;
 }
 
-const AddProductReview = ( {productImage, supermarketImage, productName, price}: AddProductReviewProps) => {
+const AddProductReview = ( { orderItem }: AddProductReviewProps) => {
   const [rating, setRating] = useState<number>(0);
+  const product = useProduct([orderItem.productId])[0]
+  const supermarket = useSupermarket([orderItem.supermarketId]);
 
   const handleRating = (index: number) => {
     setRating(index);
@@ -30,16 +32,21 @@ const AddProductReview = ( {productImage, supermarketImage, productName, price}:
     <Box maxW="sm" px={2} bg="white" borderRadius="24" mx="auto">
       <Flex alignItems="center" mb={4}>
         <Image
-          src={productImage}
+          src={product.data?.imageUrl}
           alt="Product Image"
           borderRadius="md"
-          boxSize="90px"
+          boxSize="110px"
           mr={4}
         />
         <VStack align="start">
-          <Text fontWeight="bold">{productName}</Text>
-          <Text fontSize="sm" color="gray.500">{price}</Text>
-          <Image src={supermarketImage} />
+          <Text fontWeight="bold">{product.data?.name}</Text>
+          <Text fontSize="sm" color="gray.500">{orderItem.price}</Text>
+          <Image 
+            src={supermarket[0].data?.logo}
+            alt="Supermarket Image"
+            height={30}
+            width={50}
+          />
         </VStack>
       </Flex>
       <Box mb={4}>

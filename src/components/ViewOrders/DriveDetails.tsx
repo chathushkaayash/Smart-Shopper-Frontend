@@ -1,13 +1,19 @@
+import useDriver from "@/services/Driver/useDriver";
 import { Box, Flex, Image, Text, Grid, Center } from "@chakra-ui/react";
 
-const DriverDetailsPopup = () => {
+interface DriverDetailsPopupProps {
+  driverId: number;
+}
+
+const DriverDetailsPopup = ({driverId}: DriverDetailsPopupProps) => {
+  const driver = useDriver([driverId])[0]?.data;
   return (
     <Flex direction="column" fontWeight="md">
       <Center>
         <Image
           mb={4}
           borderRadius="12px"
-          src="https://via.placeholder.com/159x160"
+          src={driver?.user?.profilePic}
           alt="Driver's Photo"
         />
       </Center>
@@ -24,37 +30,37 @@ const DriverDetailsPopup = () => {
             <Text textAlign="left">Name</Text>
           </Flex>
           <Flex alignItems="center">
-            <Text>: Kaveesha Hettige</Text>
+            <Text>: {driver?.user?.name}</Text>
           </Flex>
           <Flex alignItems="center">
             <Text textAlign="left">Contact Number</Text>
           </Flex>
           <Flex alignItems="center">
-            <Text>: 0719944045</Text>
+            <Text>: {driver?.user?.number}</Text>
           </Flex>
           <Flex alignItems="center">
             <Text textAlign="left">Courier Company</Text>
           </Flex>
           <Flex alignItems="center">
-            <Text>: Air Lanka</Text>
+            <Text>: {driver?.courierCompany}</Text>
           </Flex>
           <Flex alignItems="center">
             <Text textAlign="left">Vehicle Type</Text>
           </Flex>
           <Flex alignItems="center">
-            <Text>: Motor Cycle</Text>
+            <Text>: {driver?.vehicleType}</Text>
           </Flex>
           <Flex alignItems="center">
             <Text textAlign="left">Vehicle Name</Text>
           </Flex>
           <Flex alignItems="center">
-            <Text>: TVS csdc</Text>
+            <Text>: {driver?.vehicleName}</Text>
           </Flex>
           <Flex alignItems="center">
             <Text textAlign="left">Vehicle Number</Text>
           </Flex>
           <Flex alignItems="center">
-            <Text>: VQ 3344</Text>
+            <Text>: {driver?.vehicleNumber}</Text>
           </Flex>
         </Grid>
       </Box>

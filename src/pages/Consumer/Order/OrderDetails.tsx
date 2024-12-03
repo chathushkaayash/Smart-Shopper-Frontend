@@ -1,9 +1,12 @@
-import QR from "@/assets/qr_code.png";
 import Banner from "@/assets/smart-shopper-banner.svg";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import AddDriverReview from "@/components/ViewOrders/AddDriverReview";
 import DriverDetailsPopup from "@/components/ViewOrders/DriveDetails";
 import OrderReceipt from "@/components/ViewOrders/OrderReceipt";
 import TrackOrder from "@/components/ViewOrders/TrackOrder";
+import { getDecimal } from "@/lib/utils";
+import useDriver from "@/services/Driver/useDriver";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { Order } from "@/services/types";
 import useAuthStore from "@/state-management/auth/store";
@@ -42,6 +45,7 @@ const statusColor: Record<Order["status"], string> = {
   ToPay: "red",
   Processing: "purple",
   Prepared: "green",
+  Picked: "pink",
   Cancelled: "yellow",
   Completed: "blue",
 };
@@ -60,10 +64,11 @@ const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
 const OrderDetails = ({ order }: Props) => {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  const driverId = order.opportunity[0]?.driverId;
+  const driver = useDriver([driverId])[0].data; 
   const supermarketList: number[] = order.supermarketOrders.map(
     (i) => i.supermarketId
   );
-  console.log(order);
 
   const {
     isOpen: isReceiptOpen,
@@ -89,6 +94,30 @@ const OrderDetails = ({ order }: Props) => {
     onClose: onAddReviewClose,
   } = useDisclosure();
 
+  const handleDownloadPDF = async () => {
+    // Get only the receipt content, excluding the download button
+    const receiptElement = document.querySelector('.receipt-content-inner');
+    if (!receiptElement) return;
+
+    try {
+      const canvas = await html2canvas(receiptElement as HTMLElement);
+      const imgData = canvas.toDataURL('image/png');
+      
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save(`order-receipt-${order.id}.pdf`);
+      
+      onReceiptClose();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
   return (
     <>
       <Box width="100%" mb={10}>
@@ -109,7 +138,7 @@ const OrderDetails = ({ order }: Props) => {
               Order ID: #{order.id}
             </Text>
             <Flex align="center" gap={4}>
-              {order.status === "Processing" && (
+              {order.status != "ToPay" && (
                 <Button
                   size="md"
                   color="primary"
@@ -200,11 +229,12 @@ const OrderDetails = ({ order }: Props) => {
                 <Text>Shipping Method</Text>
                 <Text>: {order.shippingMethod}</Text>
                 <Text>Delivery Cost</Text>
-                <Text>: {order.deliveryFee} LKR</Text>
+                <Text>: {getDecimal(order.deliveryFee)} LKR</Text>
                 <Text>Order Total</Text>
-                <Text>: {order.totalCost} LKR</Text>
+                <Text>: {getDecimal(order.totalCost)} LKR</Text>
               </Grid>
             </Box>
+            {order.status != "ToPay" && (
             <Box
               flex="1"
               p={4}
@@ -224,20 +254,20 @@ const OrderDetails = ({ order }: Props) => {
                 ))}
               </Box>
             </Box>
+            )}
           </Flex>
 
           <Divider my={4} />
 
           {/* ------------------------------------ Driver Details ------------------------------------ */}
           {/* Hide in ToPay and Processing */}
-          {!["ToPay", "Processing"].includes(order.status) && (
+          {!["ToPay", "Processing", "Prepared"].includes(order.status) && (
             <Box
               p={4}
               borderWidth="1px"
               borderRadius="15"
               borderColor="gray.300"
               mb={4}
-              bg="red"
             >
               <Flex
                 justify="space-between"
@@ -257,18 +287,18 @@ const OrderDetails = ({ order }: Props) => {
               <Flex justifyContent="space-between" flexWrap="wrap" gap={4}>
                 <Flex align="center" gap={4}>
                   <Image
-                    src="https://via.placeholder.com/79x86"
+                    src={driver?.user?.profilePic}
                     borderRadius="full"
                     boxSize="76px"
                   />
                   <Box>
                     <Text fontSize="xl" fontWeight="bold">
-                      Bimsara Jayadewa
+                      {driver?.user?.name}
                     </Text>
                     <Text fontSize="md" fontWeight="semibold">
-                      Jayadewa gedaratama service
+                      {driver?.courierCompany}
                     </Text>
-                    <Text>Driver ID: 22345667</Text>
+                    <Text>Driver ID: {driverId}</Text>
                   </Box>
                 </Flex>
                 <Flex
@@ -278,7 +308,7 @@ const OrderDetails = ({ order }: Props) => {
                   gap={2}
                 >
                   <Text fontSize="xl" fontWeight="semibold">
-                    +94 225566789
+                    {driver?.user?.number}
                   </Text>
                   <Button
                     size="md"
@@ -362,38 +392,61 @@ const OrderDetails = ({ order }: Props) => {
       >
         <ModalOverlay backdropFilter="blur(5px)" />
         <ModalContent borderRadius="15px">
-          <Center>
-            <Image src={Banner} h={53} w={170} />
-          </Center>
-          <Divider mb={1} />
-          <ModalHeader textAlign="center" fontWeight="bold" fontSize="30">
-            Order Receipt
-          </ModalHeader>
-          <Image src={QR} h={150} w={150} mx="auto" />
-          <ModalBody>
-            <OrderReceipt />
-          </ModalBody>
-          <ModalFooter gap={3}>
-            <Flex width="100%" justifyContent="center">
+          <Box className="receipt-content">
+            <Box className="receipt-content-inner">
+              <Center>
+                <Image src={Banner} h={53} w={170} />
+              </Center>
+              <Divider mb={1} />
+              <ModalHeader textAlign="center" fontWeight="bold" fontSize="30">
+                Order Receipt
+              </ModalHeader>
+              <ModalBody>
+                <OrderReceipt status={order?.status} orderDetails={order}/>
+              </ModalBody>
+            </Box>
+            <ModalFooter gap={3}>
+              <Flex width="100%" justifyContent="center">
               <Button
-                w="70%"
-                mb={2}
-                onClick={onReceiptClose}
-                variant="outline"
-                borderColor="primary"
-                border="2px"
-                borderRadius="10px"
-                fontSize="15px"
-                fontWeight="bold"
-                color="white"
-                bg="primary"
-                _hover={{ bg: "orange.600" }}
-                _active={{ bg: "orange.700" }}
-              >
-                Download
-              </Button>
-            </Flex>
-          </ModalFooter>
+                  w="70%"
+                  mb={2}
+                  onClick={onReceiptClose}
+                  variant="outline"
+                  borderColor="primary"
+                  border="2px"
+                  borderRadius="10px"
+                  fontSize="15px"
+                  fontWeight="bold"
+                  color="primary"
+                  bg="white"
+                  _hover={{ bg: "primary", color: "white" }}
+                  _active={{ bg: "primary", color: "white" }}
+                >
+                  Close
+                </Button>
+                <Button
+                  w="70%"
+                  mb={2}
+                  onClick={() => {
+                    onReceiptClose();
+                    handleDownloadPDF();
+                  }}
+                  variant="outline"
+                  borderColor="primary"
+                  border="2px"
+                  borderRadius="10px"
+                  fontSize="15px"
+                  fontWeight="bold"
+                  color="white"
+                  bg="primary"
+                  _hover={{ bg: "orange.600" }}
+                  _active={{ bg: "orange.700" }}
+                >
+                  Download
+                </Button>
+              </Flex>
+            </ModalFooter>
+          </Box>
         </ModalContent>
       </Modal>
       {/* Driver Details Modal */}
@@ -409,7 +462,7 @@ const OrderDetails = ({ order }: Props) => {
             Driver Details
           </ModalHeader>
           <ModalBody>
-            <DriverDetailsPopup />
+            <DriverDetailsPopup driverId={driverId} />
           </ModalBody>
           <ModalFooter>
             <Flex width="100%" justifyContent="center" mt={-3}>

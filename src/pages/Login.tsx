@@ -72,9 +72,9 @@ const Login = () => {
       .login(credentials)
       .then((res) => {
         if (res.user) {
+          queryClient.resetQueries();
           toast.success("Login successful");
           login(res);
-          queryClient.invalidateQueries();
           navigate("/");
         } else {
           toast.error("Something went wrong");

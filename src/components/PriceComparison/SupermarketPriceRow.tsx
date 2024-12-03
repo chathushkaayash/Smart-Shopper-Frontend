@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import RatingStars from "../Inputs/Rating";
 import { SupermarketItem } from "@/services/types";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   supermarketItem: SupermarketItem;
@@ -36,6 +37,8 @@ const SupermarketPriceRow = ({
   const reviewCount = reviews.data?.count || 0;
   const totalStars =
     reviews.data?.results.reduce((acc, review) => acc + review.rating, 0) || 0;
+
+  const navigate = useNavigate();
 
   return (
     <HStack
@@ -72,7 +75,7 @@ const SupermarketPriceRow = ({
           </Stack>
         </HStack>
         <HStack gap={0} lineHeight={0.1} w="full">
-          <Stack w="full" lineHeight={0.1}>
+          <Stack w="full" lineHeight={0.1} onClick={() => navigate(`/reviews/supermarket_items/${supermarketItem.supermarketId}`)}>
             <Text fontSize="xs" color="gray">
               Reviews
             </Text>

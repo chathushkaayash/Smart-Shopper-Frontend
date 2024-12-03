@@ -4,6 +4,7 @@ import useDeleteAddress from "@/services/Addresses/useDeleteAddress";
 import useUpdateDefaultAddress from "@/services/Addresses/useUpdateDefaultAddress";
 import { BaseAddress } from "@/services/types";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { FaArrowLeft } from "react-icons/fa6";
 import {
   Badge,
   Box,
@@ -33,9 +34,13 @@ const ManageAddresses = () => {
   const updateDefaultAddress = useUpdateDefaultAddress();
   const deleteAddress = useDeleteAddress();
 
+  const BackToPage = () => {
+    navigate("/profile"); 
+  };
   return (
     <MiddleContainer>
-      <Box mx={"4vw"} my={"5vh"}>
+      <FaArrowLeft onClick={BackToPage} fontSize={25} style={{ margin: "10px 0px 0px 10px", cursor: "pointer" }}/>
+      <Box mx={"4vw"} mb={"5vh"} mt={"2vh"}>
         <HStack justifyContent={"space-between"}>
           <Heading>Manage Addresses</Heading>
           <Link to="/profile/addresses/create">

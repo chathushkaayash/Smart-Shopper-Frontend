@@ -1,4 +1,4 @@
-import { getPrice, getSuperMarketIdList } from "@/lib/utils";
+import { getDecimal, getPrice, getSuperMarketIdList } from "@/lib/utils";
 import useOptimizedRoute from "@/services/Location/useOptimizedRoute";
 import { CartItem } from "@/services/types";
 import useCheckoutRequestStore from "@/state-management/checkout/store";
@@ -42,7 +42,7 @@ const OptimizedInfo = ({ index, cartItems }: Props) => {
         </GridItem>
         <GridItem>
           <Stack gap={2} alignItems={"flex-end"}>
-            <Text color="primary">{optimizedRoute?.data?.totalDistance}</Text>
+            <Text color="primary">{getDecimal(optimizedRoute?.data?.totalDistance || 0)} Km</Text>
             <Text color="gray">{getPrice(subTotal)} LKR</Text>
             <Text color="gray">{getPrice(deliveryFree)} LKR</Text>
             <Divider borderColor="gray.400" mb={0} />

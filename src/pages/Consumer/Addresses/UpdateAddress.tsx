@@ -6,6 +6,7 @@ import { Box, Button, Heading, Input, InputGroup } from "@chakra-ui/react";
 import { Label } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const UpdateAddress = () => {
   const navigate = useNavigate();
@@ -40,8 +41,13 @@ const UpdateAddress = () => {
 
   const updateAddress = useUpdateAddress();
 
+  const BackToPage = () => {
+    navigate("/profile/addresses");
+  };
+
   return (
     <MiddleContainer>
+      <FaArrowLeft onClick={BackToPage} fontSize={25} style={{ margin: "10px 0px 0px 10px", cursor: "pointer" }}/>
       <Box m={10}>
         <Heading mb={4}>Update Address</Heading>
         <Label>Address Name</Label>

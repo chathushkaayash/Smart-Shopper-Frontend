@@ -6,11 +6,9 @@ import { useParams } from "react-router-dom";
 
 const CustomerViewOrder = () => {
   const { id } = useParams();
-  if (!id) return null;
+  const order = useOrder(id ? [Number(id)] : [])[0];
 
-  const order = useOrder([Number(id)])[0];
-
-  if (!order.data) return null;
+  if (!id || !order.data) return null;
 
   return (
     <Box bg="background" h="100%" pt={7} pb={10} pl={20} pr={20}>

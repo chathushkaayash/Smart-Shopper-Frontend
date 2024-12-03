@@ -1,7 +1,19 @@
-import React from "react";
+import { getPrice } from "@/lib/utils";
+import useDriver from "@/services/Driver/useDriver";
+import { Order } from "@/services/types";
+import useAuthStore from "@/state-management/auth/store";
+import { DateTime } from "@/utils/Time";
 import { Box, Flex, Text, Grid } from "@chakra-ui/react";
+interface OrderReceiptPopupProps {
+  status : string;
+  orderDetails: Order;
+}
 
-const OrderReceiptPopup: React.FC = () => {
+const OrderReceiptPopup = ({status, orderDetails}: OrderReceiptPopupProps) => {
+  const driverId = orderDetails.opportunity[0]?.driverId;
+  const user = useAuthStore((state) => state.user);
+  const driver = useDriver([driverId])[0].data; 
+  console.log(user);
   return (
     <Flex direction="column" fontWeight="md">
       <Box
@@ -18,15 +30,15 @@ const OrderReceiptPopup: React.FC = () => {
         </Text>
         <Grid templateColumns="1fr 2fr" gap={2}>
           <Text>Order ID</Text>
-          <Text>: 12042024</Text>
+          <Text>: {orderDetails?.id}</Text>
           <Text>Order Placed on</Text>
-          <Text>: 12.04.2024</Text>
+          <Text>: {DateTime.toString(orderDetails?.orderPlacedOn)}</Text>
           <Text>Payment method</Text>
-          <Text>: Credit/Debit Card</Text>
+          <Text>: {orderDetails?.shippingMethod}</Text>
           <Text>Order Total</Text>
-          <Text>: 2547.00 LKR</Text>
+          <Text>: {getPrice(orderDetails?.subTotal)} LKR</Text>
           <Text>Delivery Cost</Text>
-          <Text>: 300.00 LKR</Text>
+          <Text>: {getPrice(orderDetails?.deliveryFee)} LKR</Text>
         </Grid>
       </Box>
       <Box
@@ -43,38 +55,38 @@ const OrderReceiptPopup: React.FC = () => {
         </Text>
         <Grid templateColumns="1fr 2fr" gap={2}>
           <Text>Shipping Address</Text>
-          <Text>: Kaluthara, Western, Srilanka 129987</Text>
+          <Text>: {orderDetails?.shippingAddress}</Text>
           <Text>Contact Number</Text>
-          <Text>: 0719944045</Text>
+          <Text>: {user?.number}</Text>
           <Text>Name</Text>
-          <Text>: Chathushka Ayantha</Text>
+          <Text>: {user?.name}</Text>
         </Grid>
       </Box>
-      <Box
-        flex="1"
-        p={4}
-        pl={6}
-        mb={4}
-        borderWidth="1px"
-        borderRadius="15"
-        borderColor="gray.300"
-      >
-        <Text fontSize="lg" fontWeight="semibold" color="black" mb={2}>
-          Driver Details
-        </Text>
-        <Grid templateColumns="1fr 2fr" gap={2}>
-          <Text>Name</Text>
-          <Text>: Bimsara Jayadewa</Text>
-          <Text>Driver ID</Text>
-          <Text>: 12042024</Text>
-          <Text>Payment method</Text>
-          <Text>: Credit/Debit Card</Text>
-          <Text>Company Name</Text>
-          <Text>: Tarvels</Text>
-          <Text>Company Number</Text>
-          <Text>: 0773037722</Text>
-        </Grid>
-      </Box>
+      {!["ToPay", "Processing", "Prepared"].includes(status) && (
+        <Box
+          flex="1"
+          p={4}
+          pl={6}
+          mb={4}
+          borderWidth="1px"
+          borderRadius="15"
+          borderColor="gray.300"
+        >
+          <Text fontSize="lg" fontWeight="semibold" color="black" mb={2}>
+            Driver Details
+          </Text>
+          <Grid templateColumns="1fr 2fr" gap={2}>
+            <Text>Name</Text>
+            <Text>: {driver?.user?.name}</Text>
+            <Text>Driver ID</Text>
+            <Text>: {driver?.id}</Text>
+            <Text>Payment method</Text>
+            <Text>: Credit/Debit Card</Text>
+            <Text>Company Name</Text>
+            <Text>: {driver?.courierCompany}</Text>
+          </Grid>
+        </Box>
+    )}
     </Flex>
   );
 };

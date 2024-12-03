@@ -11,7 +11,7 @@ import useCartItems from "@/services/Cart/useCartItems";
 import useOptimizedRoute from "@/services/Location/useOptimizedRoute";
 import useAuthStore from "@/state-management/auth/store";
 import useCheckoutRequestStore from "@/state-management/checkout/store";
-import { EditIcon, SearchIcon } from "@chakra-ui/icons";
+import { EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -21,9 +21,6 @@ import {
   HStack,
   Icon,
   Image,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -73,11 +70,11 @@ const Checkout = () => {
     if (checkoutRequest.shippingMethod != "Home Delivery") {
       setShippingMethod("Home Delivery");
     }
-    if (checkoutRequest.shippingLocation != (defaultAddress?.location || "Bandaragama")) {
-      setShippingLocation(defaultAddress?.location || "Bandaragama");
+    if (checkoutRequest.shippingLocation != (defaultAddress?.location || "6.902201809674961, 79.8611528400302")) {
+      setShippingLocation(defaultAddress?.location || "6.902201809674961, 79.8611528400302");
     }
-    if (checkoutRequest.shippingAddress != (defaultAddress?.address || "66 Pandura Rd, Bandaragama")) {
-      setShippingAddress(defaultAddress?.address || "66 Pandura Rd, Bandaragama");
+    if (checkoutRequest.shippingAddress != (defaultAddress?.address || "CSC Building Complex, 35 Reid Ave, Colombo 00700")) {
+      setShippingAddress(defaultAddress?.address || "CSC Building Complex, 35 Reid Ave, Colombo 00700");
     }
   }, [allAddresses, cartItems, user]);
   
@@ -288,28 +285,9 @@ const Checkout = () => {
           <ModalBody>
             <Flex direction={"column"} my={6}>
               <Heading fontSize={"lg"} my={2}>
-                Addresses
-              </Heading>
-
-              <Box mb={3}>
-                <InputGroup>
-                  <InputLeftAddon>
-                    <Icon as={SearchIcon} boxSize={5} />
-                  </InputLeftAddon>
-                  <Input
-                    variant="filled"
-                    placeholder="Search for an address"
-                    value={checkoutRequest.shippingAddress}
-                    onChange={(e) =>
-                      setShippingAddress(e.target.value)
-                    }
-                  />
-                </InputGroup>
-              </Box>
-
-              <Heading fontSize={"lg"} my={2}>
                 Saved Addresses
               </Heading>
+
               {addresses.data?.results.map((address, index) => (
                 <Flex
                   key={index}
@@ -337,6 +315,20 @@ const Checkout = () => {
                   </Box> */}
                 </Flex>
               ))}
+              <Box mt={5}>
+                <Button
+                  bg="secondary"
+                  color="white"
+                  size="lg"
+                  width="full"
+                  _hover={{ bg: "primary", color: "white" }}
+                  onClick={() => {
+                    navigate("/profile/addresses/create");
+                  }}
+                >
+                  Add New Address
+                </Button>
+              </Box>
             </Flex>
           </ModalBody>
         </ModalContent>

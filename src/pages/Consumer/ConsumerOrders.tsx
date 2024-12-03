@@ -25,6 +25,7 @@ const statusColor: Record<Order["status"], string> = {
   ToPay: "red",
   Processing: "purple",
   Prepared: "green",
+  Picked: "pink",
   Cancelled: "yellow",
   Completed: "blue",
 };
@@ -51,8 +52,14 @@ const ConsumerOrders = () => {
     switch (activeTab) {
       case "To Pay":
         return data?.results.filter((order) => order.status === "ToPay") || [];
-      case "Processed":
-        return data?.results.filter((order) => order.status !== "ToPay") || [];
+      case "Processing":
+        return data?.results.filter((order) => order.status === "Processing") || [];
+      case "Prepared":
+        return data?.results.filter((order) => order.status === "Prepared") || [];
+      case "Picked":
+        return data?.results.filter((order) => order.status === "Picked") || [];  
+      case "Done":
+        return (data?.results.filter((order) => order.status === "Completed") && data?.results.filter((order) => order.status === "Completed")) || [];
       default:
         return data?.results || [];
     }
@@ -77,13 +84,16 @@ const ConsumerOrders = () => {
         <Tabs
           variant="enclosed"
           onChange={(index) =>
-            setActiveTab(["View All", "To Pay", "Processed"][index])
+            setActiveTab(["View All", "To Pay", "Processing", "Prepared", "Picked", "Done"][index])
           }
         >
           <TabList>
             <Tab>View All</Tab>
             <Tab>To Pay</Tab>
-            <Tab>Processed</Tab>
+            <Tab>Processing</Tab>
+            <Tab>Prepared</Tab>
+            <Tab>Picked</Tab>
+            <Tab>Completed</Tab>
           </TabList>
         </Tabs>
         <Box className="overflow-auto rounded-xl shadow-md hidden md:block">

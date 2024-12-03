@@ -149,10 +149,10 @@ const ViewOpportunity = () => {
         w="full"
         borderRadius="10"
       >
-        <VStack color="white">
+        <VStack color="white" align="start" spacing={4}>
           <Text fontWeight="bold">Order Details</Text>
           {orderDetails.map((orderDetail, index) => (
-            <HStack key={index} w="full" align="space-between">
+            <HStack key={index} w="full" justify="space-between">
               <Text>{orderDetail.label}</Text>
               <Spacer />
               <Text>{orderDetail.value}</Text>
@@ -161,13 +161,13 @@ const ViewOpportunity = () => {
         </VStack>
       </Box>
       <Text fontWeight="bold">Supermarkets</Text>
-      <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10">
+      <Box shadow="xl" borderWidth={1} p={4} w="full" borderRadius="10" >
         <Stepper
           index={activeStep}
           orientation="vertical"
-          height={`${
-            supermarketsLength < 2 ? 6 : (supermarketsLength - 1) * 12
-          }vh`}
+          // height={`${
+          //   supermarketsLength < 2 ? 6 : (supermarketsLength - 1) * 12
+          // }vh`}
           gap={0}
         >
           {opportunity.data?.opportunitysupermarket.map(

@@ -178,17 +178,6 @@ const Navbar = () => {
                       Orders
                     </MenuItem>
                     <MenuItem
-                      bg={isActive("/feedbacks") ? "orange.500" : "white"}
-                      color={isActive("/feedbacks") ? "white" : "primary"}
-                      _focus={{
-                        bg: "primary",
-                        color: "white",
-                      }}
-                      onClick={() => navigate("/feedbacks")}
-                    >
-                      Feedbacks
-                    </MenuItem>
-                    <MenuItem
                       bg={isActive("/profile") ? "orange.500" : "white"}
                       color={isActive("/profile") ? "white" : "primary"}
                       _focus={{
