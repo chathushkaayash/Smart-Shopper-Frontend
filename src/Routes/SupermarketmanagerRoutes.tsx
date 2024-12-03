@@ -23,10 +23,6 @@ const SupermarketManagerProfile = loadable(
   () => import("@/pages/SupermarketManager/Profile/Profile")
 );
 
-const SupermarketEarnings = loadable(
-  () => import("@/pages/SupermarketManager/MonthlyEarnings")
-);
-
 
 const AdminRoutes = [
   {
@@ -35,7 +31,6 @@ const AdminRoutes = [
       { path: "products", element: <SupermarketManagerProducts /> },
       { path: "dashboard", element: <SupermarketManagerDashboard /> },
       {path: "scan", element: <SupermarketManagerScan />},
-      {path: "monthly-earnings", element: <SupermarketEarnings />},
 
       // {path : "scan", element: <SupermarketManagerScan />},
       // {path : "hi", element: <SupermarketManagerScan />},

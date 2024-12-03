@@ -9,7 +9,6 @@ import { IoHome, IoSettings } from "react-icons/io5";
 import { MdOutlineQrCodeScanner, MdViewSidebar } from "react-icons/md";
 import { RiAdvertisementFill } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
-import { MdMonetizationOn } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface MenuItem {
@@ -51,8 +50,8 @@ const SideBar = () => {
     { icon: FaBagShopping, label: "Orders", path: "/orders" },
     { icon: IoMdPeople, label: "Products", path: "/products" },
     { icon: MdOutlineQrCodeScanner, label: "Scan", path: "/scan" },
-    { icon: MdMonetizationOn, label: "Earnings", path: "/monthly-earnings" },
     { icon: CgProfile, label: "Profile", path: "/profile-Settings" },
+    
     { icon: FiLogOut, label: "Logout", path: "/logout" },
   ];
 

@@ -1,3 +1,4 @@
+import UpdateAddress from "@/pages/Consumer/Addresses/UpdateAddress";
 import loadable from "@loadable/component";
 
 const CreateAddressPopup = loadable(
@@ -50,6 +51,7 @@ const ConsumerRoutes = [
       { path: "payments/orders/:id", element: <OrderPayment /> },
       { path: "profile/addresses", element: <ManageAddresses /> },
       { path: "profile/addresses/create", element: <CreateAddressPopup /> },
+      { path: "profile/addresses/update/:id", element: <UpdateAddress /> },
     ],
   },
 ];

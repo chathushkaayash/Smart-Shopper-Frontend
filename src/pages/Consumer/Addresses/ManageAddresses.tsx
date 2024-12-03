@@ -1,8 +1,9 @@
 import MiddleContainer from "@/components/Containers/MiddleContainer";
 import useAddresses from "@/services/Addresses/useAddresses";
+import useDeleteAddress from "@/services/Addresses/useDeleteAddress";
 import useUpdateDefaultAddress from "@/services/Addresses/useUpdateDefaultAddress";
 import { BaseAddress } from "@/services/types";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Badge,
   Box,
@@ -14,12 +15,13 @@ import {
   Text,
   Th,
   Thead,
-  Tr
+  Tr,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ManageAddresses = () => {
   const addresses = useAddresses();
+  const navigate = useNavigate();
 
   // default address has the max priority
   const allAddresses: BaseAddress[] = [...(addresses.data?.results || [])];
@@ -29,6 +31,7 @@ const ManageAddresses = () => {
   }
 
   const updateDefaultAddress = useUpdateDefaultAddress();
+  const deleteAddress = useDeleteAddress();
 
   return (
     <MiddleContainer>
@@ -71,6 +74,7 @@ const ManageAddresses = () => {
               <Th px={6} py={3}>
                 City
               </Th>
+              <Th px={6} py={3}></Th>
               <Th px={6} py={3}></Th>
               <Th px={6} py={3}></Th>
             </Tr>
@@ -121,14 +125,23 @@ const ManageAddresses = () => {
                   )}
                 </Td>
                 <Td px={6} py={4}>
-                  <Link to={"/orders/" + address.id}>
-                    <DeleteIcon
-                      verticalAlign={"center"}
-                      cursor="pointer"
-                      boxSize={4}
-                      _hover={{ color: "red.600" }}
-                    />
-                  </Link>
+                  <EditIcon
+                    verticalAlign={"center"}
+                    cursor="pointer"
+                    boxSize={4}
+                    onClick={() => navigate(`/profile/addresses/update/${address.id}`)}
+                  />
+                </Td>
+                <Td px={6} py={4}>
+                  <DeleteIcon
+                    verticalAlign={"center"}
+                    cursor="pointer"
+                    boxSize={4}
+                    _hover={{ color: "red.600" }}
+                    onClick={() => {
+                      deleteAddress.mutate(address);
+                    }}
+                  />
                 </Td>
               </Tr>
             ))}

@@ -5,10 +5,9 @@ import Chart from "react-apexcharts";
 interface BarGraphProps {
   chartData: number[];
   labels: string[];
-  height?: string;
 }
 
-const BarGraph: React.FC<BarGraphProps>= ({chartData,labels,height}) => {
+const BarGraph: React.FC<BarGraphProps>= ({chartData,labels}) => {
 
   const data = [
     {
@@ -53,7 +52,7 @@ const BarGraph: React.FC<BarGraphProps>= ({chartData,labels,height}) => {
   return (
     <Box>
       {/* <Bar data={data} options={options} className="h-full" /> */}
-      <Chart options={options} series={data} type="bar" width="100%" height={height}/>
+      <Chart options={options} series={data} type="bar" width="100%"/>
     </Box>
   );
 };
