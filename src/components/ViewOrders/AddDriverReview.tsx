@@ -131,7 +131,7 @@ const AddDriverReview = ({
             Driver Details
           </ModalHeader>
           <ModalBody>
-            <DriverDetailsPopup />
+            <DriverDetailsPopup driverId={driverID}  />
           </ModalBody>
           <ModalFooter>
             <Flex width="100%" justifyContent="center" mt={-3}>

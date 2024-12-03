@@ -19,7 +19,6 @@ import APIClient from "@/services/api-client";
 import useOpportunities from "@/hooks/useOpportunities";
 import Map from "@/pages/Public/Map";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
-import SupermarketLocation from "./SupermarketLocation";
 import { getDecimal } from "@/lib/utils";
 
 interface SupermarketRowInterface {
