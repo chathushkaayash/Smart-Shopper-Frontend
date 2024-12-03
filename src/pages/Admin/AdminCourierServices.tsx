@@ -35,12 +35,12 @@ import { MdFeedback } from "react-icons/md";
 import { SiCashapp } from "react-icons/si";
 import { TbTruckDelivery } from "react-icons/tb";
 // import LineChart from "../../components/Charts/LineChart";
-import BarGraph from "@/components/Charts/BarGraph";
-import useOpportunities, { OpportunityQuery } from "@/hooks/useOpportunities";
+import { IoStarSharp } from "react-icons/io5";
+import { useRef, useState } from "react";
 import useDrivers from "@/services/Driver/useDrivers";
 import { Driver } from "@/services/types";
-import { useState } from "react";
-import { IoStarSharp } from "react-icons/io5";
+import useOpportunities, { OpportunityQuery } from "@/hooks/useOpportunities";
+import BarGraph from "@/components/Charts/BarGraph";
 const AdminCourierServices = () => {
   const drivers = useDrivers();
   console.log("drivers",drivers.data?.results);
@@ -110,6 +110,12 @@ const AdminCourierServices = () => {
   
   console.log("Data:", data);
   console.log('labels',labels);
+  
+
+  const driverBoxRef = useRef<HTMLDivElement>(null);
+  const scrollToBox = () => {
+    driverBoxRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
 
   const deliveryPersonPopup = [
@@ -117,24 +123,24 @@ const AdminCourierServices = () => {
       {
         icon: <Icon as={SiCashapp} boxSize={5} color={"primary"} />,
         title: "Earning",
-        //value: driverEarningData.data,
+        value: `${(Math.random() * 4000).toFixed(0)}`,
       },
       {
         icon: <Icon as={MdFeedback} boxSize={5} color={"primary"} />,
         title: "Feedbacks",
-        value: "23",
+        value: `${(Math.random() * 30).toFixed(0)}`,
       },
     ],
     [
       {
         icon: <Icon as={TbTruckDelivery} boxSize={6} color={"primary"} />,
         title: "Deliveries",
-        value: "80",
+        value: `${(Math.random() * 20).toFixed(0)}`,
       },
       {
         icon: <Icon as={IoStarSharp} boxSize={6} color={"primary"} />,
         title: "Ratings",
-        value: "4/5",
+        value: `${(Math.random() * 5).toFixed(1)}/5`,
       },
     ],
     [
@@ -196,13 +202,13 @@ const AdminCourierServices = () => {
         </HStack>
       ))}
   </VStack>
-  <ActionButton inverted={true} className="!w-full mt-5">
+  <ActionButton inverted={true} className="!w-full mt-5" onClick={scrollToBox}>
     View All
   </ActionButton>
 </Box>
 
         </Flex>
-        <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
+        <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15} ref={driverBoxRef}>
           <Flex justifyContent="space-between" px={20} py={10}>
             <Heading as="h3" size="md">
               Delivery Person Details
@@ -280,7 +286,7 @@ const AdminCourierServices = () => {
             bg="background"
             onClick={handleClickMore}
           >
-            View More
+             More
           </Button>
         )}
         </Box>

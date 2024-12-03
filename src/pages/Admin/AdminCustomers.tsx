@@ -24,7 +24,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { AiOutlineRise } from "react-icons/ai";
+import { AiOutlineFall, AiOutlineRise } from "react-icons/ai";
 import { IoMdPeople } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 // import LineChart from "../../components/Charts/LineChart";
@@ -92,7 +92,9 @@ const AdminCustomers = () => {
       icon: IoMdPeople,
       mainColor: "orange",
       color: "orange.100",
-      percentage: "8.5% Up from yesterday",
+      percentage: "1.3% Down from yesterday",
+      rdiconColor: "red.400",
+      rdicon: AiOutlineFall,
     },
     {
       title: "Active Customers",
@@ -101,6 +103,8 @@ const AdminCustomers = () => {
       mainColor: "red",
       color: "red.100",
       percentage: "8.5% Up from yesterday",
+      rdiconColor: "green.400",
+      rdicon: AiOutlineRise,
     },
     {
       title: "Churned Customers",
@@ -109,6 +113,8 @@ const AdminCustomers = () => {
       mainColor: "green",
       color: "green.100",
       percentage: "6.5% Down from yesterday",
+      rdiconColor: "red.400",
+      rdicon: AiOutlineFall,
     },
   ];
 
@@ -157,12 +163,12 @@ const AdminCustomers = () => {
                   <Text fontSize="sm">{card.value}</Text>
                   <Flex mt={2}>
                     <Icon
-                      as={AiOutlineRise}
+                      as={card.rdicon}
                       boxSize={5}
-                      color="green.400"
+                      color={card.rdiconColor}
                       borderRadius={5}
                     />
-                    <Text fontSize="sm" color="green.400" pl={2}>
+                    <Text fontSize="sm" color={card.rdiconColor} pl={2}>
                       {card.percentage}
                     </Text>
                   </Flex>
@@ -254,7 +260,7 @@ const AdminCustomers = () => {
                     </Td>
                     <Td>{consumer.user.number}</Td>
                     <Td>{consumer.user.email}</Td>
-                    <Td>
+                    {/* <Td>
                       <Button
                         bg="primary"
                         size="sm"
@@ -263,7 +269,7 @@ const AdminCustomers = () => {
                       >
                         View More
                       </Button>
-                    </Td>
+                    </Td> */}
                   </Tr>
                 ))}
                 {consumers.data?.results.length === 0 &&

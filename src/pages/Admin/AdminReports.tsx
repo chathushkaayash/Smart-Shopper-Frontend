@@ -13,47 +13,13 @@ import {
 } from "@chakra-ui/react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import useAllOrders from "@/hooks/useAllOrders";
 import useSupermarketEarnings from "@/hooks/useSupermarketEarnings";
-// import useCustomerEngagement from "@/hooks/useCustomerEngagement";
-// import useSmartShopperRevenue from "@/hooks/useSmartShopperRevenue";
-// import useCourierCompanyEarnings from "@/hooks/useCourierCompanyEarnings";
-// import useSalesData from "@/hooks/useSalesData";
-// import useOrdersData from "@/hooks/useOrdersData";
 
 declare module "jspdf" {
   interface jsPDF {
     autoTable: (options: any) => jsPDF;
   }
-}
-
-interface SupermarketEarning {
-  name: string;
-  earnings: number;
-}
-
-interface CustomerEngagement {
-  name: string;
-  engagementScore: number;
-}
-
-interface SmartShopperRevenue {
-  storeName: string;
-  revenue: number;
-}
-
-interface CourierCompanyEarning {
-  companyName: string;
-  earnings: number;
-}
-
-interface SalesData {
-  product: string;
-  sales: number;
-}
-
-interface OrdersData {
-  orderId: string;
-  totalAmount: number;
 }
 
 const AdminReports: React.FC = () => {
@@ -64,47 +30,135 @@ const AdminReports: React.FC = () => {
 
   const padding = useBreakpointValue({ base: "4", md: "6" });
 
-  const supermarketsEarningData = useSupermarketEarnings();
-//   const customerEngagementData = useCustomerEngagement();
-//   const smartShopperRevenueData = useSmartShopperRevenue();
-//   const courierCompanyEarningData = useCourierCompanyEarnings();
-//   const salesData = useSalesData();
-//   const ordersData = useOrdersData();
+  const ordersData = useAllOrders();
+  const supermarketsEarning=useSupermarketEarnings();
+
+  const processOrdersData = (results: any[]) => {
+    if (!results) return { labels: [], counts: [] };
+
+    const groupedData: { [key: string]: number } = {};
+
+    results.forEach((order) => {
+      const orderDate = order.orderPlacedOn;
+      if (orderDate?.year && orderDate?.month) {
+        const year = orderDate.year;
+        const month = String(orderDate.month).padStart(2, "0"); // Ensure two-digit month format
+        const key = `${year}-${month}`;
+        groupedData[key] = (groupedData[key] || 0) + 1;
+      }
+    });
+
+    const sortedKeys = Object.keys(groupedData).sort();
+    const labels = sortedKeys.map((key) => {
+      const [year, month] = key.split("-");
+      const monthName = new Date(parseInt(year), parseInt(month) - 1).toLocaleString("default", {
+        month: "long",
+      });
+      return `${monthName} ${year}`;
+    });
+
+    const counts = sortedKeys.map((key) => groupedData[key]);
+
+    return { labels, counts };
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      let data: any[] = [];
+    if (reportType === "orders" && ordersData.data?.results) {
+      const processedData = processOrdersData(ordersData.data.results);
+      setReportData(processedData.labels.map((label, index) => ({
+        label,
+        count: processedData.counts[index],
+      })));
+    }
+  }, [reportType, ordersData]);
 
-      if (reportType && startDate && endDate) {
-        switch (reportType) {
-          case "supermarketsEarning":
-            data = supermarketsEarningData.data?.results || [];
-            break;
-        //   case "customerEngagement":
-        //     data = customerEngagementData.data?.results || [];
-        //     break;
-        //   case "smartShopperRevenue":
-        //     data = smartShopperRevenueData.data?.results || [];
-        //     break;
-        //   case "courierCompanyEarning":
-        //     data = courierCompanyEarningData.data?.results || [];
-        //     break;
-        //   case "sales":
-        //     data = salesData.data?.results || [];
-        //     break;
-        //   case "orders":
-        //     data = ordersData.data?.results || [];
-        //     break;
-          default:
-            data = [];
-        }
 
-        setReportData(data);
+  const supermarketsEarningData = useSupermarketEarnings();
+  useEffect(() => {
+  if (reportType === "supermarketsEarning" && supermarketsEarningData.data?.results) {
+    setReportData(supermarketsEarningData.data.results.map((item) => ({
+      label: item.name,
+      count: item.earnings,
+    })));
+   
+  }
+}, [reportType, supermarketsEarningData]);
+
+//smartShopperRevenue
+const smartShopperRevenue = useSupermarketEarnings();
+
+// Assume startMonth and endMonth are inputs from the user, for example:
+const startMonth = startDate ? startDate.getMonth() + 1 : 1;
+const endMonth = endDate ? endDate.getMonth() + 1 : 12;
+
+useEffect(() => {
+  if (reportType === "smartShopperRevenue") {
+    // Dummy data representing the revenue results for each month
+    const dummyData = [
+      { month: 1, earnings: 1000 },
+      { month: 2, earnings: 1500 },
+      { month: 3, earnings: 2000 },
+      { month: 4, earnings: 2500 },
+      { month: 5, earnings: 3000 },
+      { month: 6, earnings: 3500 },
+      { month: 7, earnings: 4000 },
+      { month: 8, earnings: 4500 },
+      { month: 9, earnings: 5000 },
+      { month: 10, earnings: 5500 },
+      { month: 11, earnings: 6000 },
+      { month: 12, earnings: 6500 },
+    ];
+
+    // Map months to names
+    const monthsMap = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    // Filter the dummyData to include only the months in the specified range
+    const filteredData = dummyData.filter((item) => item.month >= startMonth && item.month <= endMonth);
+
+    // Group data by month and calculate total earnings and 10% revenue
+    const groupedByMonth = filteredData.reduce((acc: any, item: any) => {
+      const month = monthsMap[item.month - 1]; // Map month number to name
+      if (!acc[month]) {
+        acc[month] = [];
       }
-    };
+      acc[month].push(item);
+      return acc;
+    }, {});
 
-    fetchData();
-  }, [reportType, startDate, endDate]);
+    // Process data and calculate monthly revenue and total earnings
+    const processedData = Object.keys(groupedByMonth).map((month) => {
+      const monthData = groupedByMonth[month];
+      const totalEarnings = monthData.reduce((sum: number, item: any) => sum + item.earnings, 0);
+      const monthRevenue = totalEarnings * 0.1; // 10% of total earnings for that month
+      return {
+        label: month,
+        count: monthRevenue,
+        totalEarnings: totalEarnings,
+        revenue: monthRevenue,
+      };
+    });
+
+    // Calculate summary: total earnings and revenue across the selected months
+    const totalEarningsSummary = processedData.reduce((sum, data) => sum + data.totalEarnings, 0);
+    const totalRevenueSummary = processedData.reduce((sum, data) => sum + data.revenue, 0);
+
+    // Add a summary row for total earnings and revenue
+    processedData.push({
+      label: "Total Summary",
+      count: totalRevenueSummary,
+      totalEarnings: totalEarningsSummary,
+      revenue: totalRevenueSummary,
+    });
+
+    setReportData(processedData);
+  }
+}, [reportType, startMonth, endMonth]);
+
+
+
 
   const generateReport = () => {
     if (!reportType || !startDate || !endDate || !reportData) {
@@ -115,42 +169,11 @@ const AdminReports: React.FC = () => {
     }
 
     const doc = new jsPDF();
-    // const logo = new Image();
-    // logo.src = "../../assets/logo.svg";
     const title = `Report of: ${reportType}`;
     const dateRange = `From: ${startDate.toDateString()} - ${endDate.toDateString()}`;
 
-    const headers: string[][] = [];
-    const rows: any[][] = [];
-
-    switch (reportType) {
-      case "supermarketsEarning":
-        headers.push(["Name", "Earnings"]);
-        rows.push(...reportData.map((item: SupermarketEarning) => [item.name, item.earnings]));
-        break;
-      case "customerEngagement":
-        headers.push(["Name", "Engagement Score"]);
-        rows.push(...reportData.map((item: CustomerEngagement) => [item.name, item.engagementScore]));
-        break;
-      case "smartShopperRevenue":
-        headers.push(["Store Name", "Revenue"]);
-        rows.push(...reportData.map((item: SmartShopperRevenue) => [item.storeName, item.revenue]));
-        break;
-      case "courierCompanyEarning":
-        headers.push(["Company Name", "Earnings"]);
-        rows.push(...reportData.map((item: CourierCompanyEarning) => [item.companyName, item.earnings]));
-        break;
-      case "sales":
-        headers.push(["Product", "Sales"]);
-        rows.push(...reportData.map((item: SalesData) => [item.product, item.sales]));
-        break;
-      case "orders":
-        headers.push(["Order ID", "Total Amount"]);
-        rows.push(...reportData.map((item: OrdersData) => [item.orderId, item.totalAmount]));
-        break;
-      default:
-        break;
-    }
+    const headers = [["Label", "Count"]];
+    const rows = reportData.map((item) => [item.label, item.count]);
 
     doc.text(title, 10, 10);
     doc.text(dateRange, 10, 20);
@@ -185,12 +208,16 @@ const AdminReports: React.FC = () => {
                 onChange={(e) => setReportType(e.target.value)}
               >
                 <option value="">Select a report type</option>
-                <option value="customerEngagement">Customer Engagement</option>
-                <option value="supermarketsEarning">Supermarket Earning</option>
+                
+                
+                <option value="supermarketsEarning">Monthly Supermarket Earning</option>
+                <option value="orders">Monthly Order Count</option>
                 <option value="smartShopperRevenue">Smart Shopper Revenue</option>
-                <option value="courierCompanyEarning">Courier Company Earning</option>
+                {/* <option value="courierCompanyEarning">Courier Company Earning</option>
                 <option value="sales">Sales</option>
-                <option value="orders">Orders</option>
+                <option value="customerEngagement">Customer Engagement</option> */}
+                
+
               </Select>
             </FormControl>
 
@@ -220,9 +247,7 @@ const AdminReports: React.FC = () => {
               <Button
                 bg="primary"
                 onClick={generateReport}
-                isDisabled={
-                  !reportType || !startDate || !endDate || !reportData
-                }
+                isDisabled={!reportType || !startDate || !endDate || !reportData}
                 color={"white"}
               >
                 Generate Report

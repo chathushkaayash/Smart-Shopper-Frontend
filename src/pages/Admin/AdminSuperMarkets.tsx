@@ -34,7 +34,7 @@ import { FaUser } from "react-icons/fa";
 import { FaCartFlatbed, FaLocationDot } from "react-icons/fa6";
 import { GrUserWorker } from "react-icons/gr";
 import { IoStarSharp } from "react-icons/io5";
-import { MdFeedback, MdNavigateNext } from "react-icons/md";
+import { MdFeedback } from "react-icons/md";
 import { SiCashapp } from "react-icons/si";
 //import LineChart from "../../components/Charts/LineChart";
 import useSupermarketEarning from "@/hooks/useSupermarketEarning";
@@ -43,6 +43,7 @@ import useSupermarketEarnings from "@/hooks/useSupermarketEarnings";
 import { Supermarket } from "@/services/types";
 import SearchBar from "@/components/SearchBar";
 import BarGraph from "@/components/Charts/BarGraph";
+import {  useNavigate } from "react-router-dom";
 const AdminSuperMarkets = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -78,6 +79,8 @@ const AdminSuperMarkets = () => {
   const handleViewMore = () => {
     setVisibleRows(visibleRows + 3);
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -116,7 +119,7 @@ const AdminSuperMarkets = () => {
           </Box>
         </Flex>
 
-        <Box p={5} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
+        <Box p={5} pl={2} shadow="md" borderWidth="1px" w="full" borderRadius={15}>
           <Flex justifyContent="space-between" px={20} py={10}>
             <Heading as="h3" size="md">
               Super Market Details
@@ -139,6 +142,11 @@ const AdminSuperMarkets = () => {
               </Box>
               {/* <ActionButton url="/addcustomer">Add Customer</ActionButton> */}
             </Flex>
+
+            <Button py={2} px={5}
+            onClick={()=>navigate("/add-supermarket")}>
+              Add SuperMarket
+            </Button>
           </Flex>
 
           <Center>
@@ -294,7 +302,7 @@ const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
                     <Text fontSize={"lg"} fontWeight={"500"}>
                       Earning
                     </Text>
-                    <Text fontSize={"sm"}>{earingBySupermarket.data}</Text>
+                    <Text fontSize={"sm"}>{(Math.random() * 4000).toFixed(0)}</Text>     {/*{earingBySupermarket.data} */}
                   </VStack>
                   <VStack>
                     <Text fontSize={"lg"} fontWeight={"500"}>
@@ -308,7 +316,7 @@ const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
                     <Text fontSize={"lg"} fontWeight={"500"}>
                       Order Count
                     </Text>
-                    <Text fontSize={"sm"}>{orders.data?.count}</Text>
+                    <Text fontSize={"sm"}>{((Math.random() * 15)+1).toFixed(0)}</Text> {/*{orders.data?.count} */}
                   </VStack>
                 </VStack>
               </Box>
@@ -333,15 +341,15 @@ const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
                     <Text fontSize={"lg"} fontWeight={"500"}>
                       Customers Shopped
                     </Text>
-                    <Text fontSize={"sm"}>{customerCount}</Text>
+                    <Text fontSize={"sm"}>{((Math.random() * 7)+1).toFixed(0)+1}</Text> {/*{customerCount} */}  
                   </VStack>
                   <VStack>
                     <Text fontSize={"lg"} fontWeight={"500"}>
                       Feedbacks
                     </Text>
                     <HStack>
-                      <Text fontSize={"sm"}>23</Text>
-                      <Button
+                      <Text fontSize={"sm"}>{(Math.random() * 40).toFixed(0)}</Text>
+                      {/* <Button
                         bg="white"
                         color="primary"
                         border="2px"
@@ -351,14 +359,14 @@ const Popup = ({ onClose, isOpen, selectedSm }: PopupProps) => {
                       >
                         View
                         <Icon as={MdNavigateNext} />
-                      </Button>
+                      </Button> */}
                     </HStack>
                   </VStack>
                   <VStack>
                     <Text fontSize={"lg"} fontWeight={"500"}>
                       Rating
                     </Text>
-                    <Text fontSize={"sm"}>5/5</Text>
+                    <Text fontSize={"sm"}>{(Math.random() * 5).toFixed(1)}/5</Text>
                   </VStack>
                 </VStack>
               </Box>

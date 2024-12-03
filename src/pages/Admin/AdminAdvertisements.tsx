@@ -34,7 +34,7 @@ const apiClient = new APIClient<Advertisement>("/advertisements");
 const AdminAdvertisements: React.FC = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const { data: Advertisements } = useAdvertisements();
-  const [visibleCount, setVisibleCount] = useState(3);
+  const [visibleCount, setVisibleCount] = useState(4);
   const [selectedAd, setSelectedAd] = useState<Advertisement>(
     {} as Advertisement
   );
@@ -99,7 +99,7 @@ const AdminAdvertisements: React.FC = () => {
   };
 
   const showMoreItems = () => {
-    setVisibleCount((prevCount) => prevCount + 3); // Show 3 more items on each click
+    setVisibleCount((prevCount) => prevCount + 4); // Show 3 more items on each click
   };
 
   return (
@@ -192,7 +192,7 @@ const AdminAdvertisements: React.FC = () => {
           <Heading size="lg" mb={6}>
             Current Advertisements
           </Heading>
-          <Grid templateColumns="repeat(3, 1fr)" gap={10}>
+          <Grid templateColumns="repeat(4, 1fr)" gap={10}>
           {(Advertisements && Array.isArray(Advertisements)
           ? Advertisements.slice(0, visibleCount)
           : []
@@ -205,19 +205,25 @@ const AdminAdvertisements: React.FC = () => {
                 borderRadius={15}
                 bg="white"
               >
-                <Text fontSize="md">From: {ad.startDate}</Text>
+                <Text fontSize="md"><span className="text-bold">From:</span> {ad.startDate}</Text>
                 <Text fontSize="md">To: {ad.endDate}</Text>
                 <Text fontSize="md">Priority: {ad.priority}</Text>
+                
                 <Image
-                  src="https://via.placeholder.com/150"
+                  src={ad.image}
                   alt="Advertisement Banner"
                   borderRadius={10}
-                  mb={4}
+                  border={"1px solid #E2E8F0"}
+                  my={4}
+                  h={40}
+                  w={"full"}
+
                 />
                 <Flex justifyContent={"flex-end"}>
                   <Button
                     bg="primary"
                     size="sm"
+                    w={"full"}
                     onClick={() => handleEditClick(ad)}
                   >
                     <Icon as={CiEdit} />

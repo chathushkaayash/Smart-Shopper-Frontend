@@ -76,6 +76,8 @@ const AdminOverview = () => {
     staleTime: 1000 * 5,
   });
 
+  console.log('salesData', salesData);
+
   let totalSales = 0;
   const monthlySales: { [key: number]: number } = {};
   const productSales: { [key: string]: number } = {};
@@ -154,7 +156,7 @@ const AdminOverview = () => {
       icon: CgWebsite,
       color: "purple",
       background: "purple.100",
-      value: "5.8 k",
+      value: "1.2 k",
       percentage: "8.5% Up from yesterday",
       rdicon: AiOutlineRise,
       rdiconColor: "green.400",
@@ -165,7 +167,7 @@ const AdminOverview = () => {
       color: "primary",
       background: "orange.100",
       value: totalConsumers,
-      percentage: "8.5% Down from yesterday",
+      percentage: "1.3% Down from yesterday",
       rdicon: AiOutlineFall,
       rdiconColor: "red.400",
     },
@@ -175,7 +177,7 @@ const AdminOverview = () => {
       color: "yellow",
       background: "yellow.100",
       value: `${totalSales} LKR`,
-      percentage: "8.5% Up from yesterday",
+      percentage: "2.7% Up from yesterday",
       rdicon: AiOutlineRise,
       rdiconColor: "green.400",
     },
@@ -260,7 +262,7 @@ const AdminOverview = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {topProducts.map(([productId, quantity], index) => {
+              {topProducts.slice(0,visibleCount).map(([productId, quantity], index) => {
                 console.log(productId); // Properly log the productId
                 return (
                   <Tr key={index}>
