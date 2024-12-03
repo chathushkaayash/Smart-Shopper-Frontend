@@ -41,7 +41,6 @@ import useDrivers from "@/services/Driver/useDrivers";
 import { Driver } from "@/services/types";
 import useOpportunities, { OpportunityQuery } from "@/hooks/useOpportunities";
 import BarGraph from "@/components/Charts/BarGraph";
-import { getImageUrl } from "@/lib/utils";
 const AdminCourierServices = () => {
   const drivers = useDrivers();
   console.log("drivers", drivers.data?.results);
