@@ -2,7 +2,6 @@ import useAuthStore from "@/state-management/auth/store";
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Flex,
   Grid,
@@ -24,7 +23,6 @@ const Profile = () => {
 
   const {
     isOpen: isForgetPassword,
-    onOpen: onForgetPassword,
     onClose: onForgetPasswordClose,
   } = useDisclosure();
 
@@ -47,7 +45,7 @@ const Profile = () => {
               borderRadius={10}
               p={{ base: 4, md: 5 }}
             >
-              <Box
+              {/* <Box
                 display={"flex"}
                 justifyContent={{ base: "center", md: "right" }}
                 pb={5}
@@ -70,7 +68,7 @@ const Profile = () => {
                 >
                   Change Password
                 </Button>
-              </Box>
+              </Box> */}
               <Box
                 display={"flex"}
                 alignItems={"center"}

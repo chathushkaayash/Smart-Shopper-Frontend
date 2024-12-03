@@ -11,8 +11,11 @@ const DashboardCard: React.FC<DashboardCardProps> = ({ title, content , icon ,ba
     return (
         <Box w={'full'} 
         bg="white"
-                borderRadius="md"
-                className="shadow-full"
+                borderRadius="xl"
+                border={'1px solid'}
+                borderColor={'gray.200'}
+                shadow={'md'}
+
                 p={4}>
             <Flex 
                 justify={'center'}
