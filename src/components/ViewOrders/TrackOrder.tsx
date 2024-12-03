@@ -1,3 +1,7 @@
+import useDriver from "@/services/Driver/useDriver";
+import useSupermarket from "@/services/Supermarket/useSupermarket";
+import { Order } from "@/services/types";
+import { FaTruck } from "react-icons/fa";
 import {
   Box,
   Flex,
@@ -9,14 +13,64 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-import { FaTruck } from "react-icons/fa";
 
-import Keels from "../../assets/supermarket-icons/Keels.svg";
-import Spar from "../../assets/supermarket-icons/Spar.svg";
-import Arpico from "../../assets/supermarket-icons/Arpico.svg";
+interface OrderItem {
+  order: Order;
+}
 
-const OrderTrackingPopup = () => {
+const OrderTrackingPopup = ({order}:OrderItem ) => {
   const primaryColor = "orange.500";
+  const supermarketOrders = order.supermarketOrders;
+  const supermarketIds = supermarketOrders.map((order) => order.supermarketId);
+  const supermarket = useSupermarket(supermarketIds);
+  const driver = order.opportunity[0].driverId;
+  const driverName = useDriver([driver])[0].data;
+  console.log(order);
+
+  const getTrackingSteps = () => {
+    const steps = [
+      {
+      status: "Order Placed",
+      location: "Your order has been placed",
+      active: ["ToPay", "Processing", "Prepared", "Picked", "Completed"].includes(order.status)
+      },
+      {
+      status: "Ready in Supermarkets",
+      location: (
+        <>
+          {supermarket.map((item) => (
+            <Text key={item.data?.id}>{item.data?.name}, {item.data?.city}</Text>
+          ))}
+        </>
+      ),
+      active: ["Prepared", "Picked", "Completed"].includes(order.status)
+      },
+      {
+      status: "Picked by Driver",
+      location: (
+        <>
+          Your order is on the way {driverName?.user?.name}
+          <br />
+          {driverName?.user?.number}
+        </>
+      ),
+      active: ["Picked", "Completed"].includes(order.status)
+      },
+      {
+      status: "Way to home",
+      location: `Address: ${order.shippingAddress}`,
+      active: ["Picked", "Completed"].includes(order.status)
+      },
+      {
+      status: "Completed",
+      location: "Order has been delivered",
+      active: ["Completed"].includes(order.status)
+      }
+    ];
+
+    return steps;
+  };
+
 
   return (
     <Flex
@@ -49,33 +103,7 @@ const OrderTrackingPopup = () => {
             width="3px"
             bg={primaryColor}
           ></Box>
-          {[
-            {
-              status: "Order Placed",
-              location: "Berlin, Germany",
-              time: "11:45 PM",
-            },
-            {
-              status: "Picked from Supermarket 1",
-              location: "Keels Super, Matara",
-              time: "11:45 PM",
-            },
-            {
-              status: "Picked from Supermarket 2",
-              location: "Spar Supermarket, Galle",
-              time: "11:45 PM",
-            },
-            {
-              status: "Way to home",
-              location: "Berlin, Germany",
-              time: "11:45 PM",
-            },
-            {
-              status: "Delivered",
-              location: "Berlin, Germany",
-              time: "11:45 PM",
-            },
-          ].map((item, index) => (
+          {getTrackingSteps().map((item, index) => (
             <HStack
               key={index}
               width="100%"
@@ -89,25 +117,24 @@ const OrderTrackingPopup = () => {
                 <Center
                   width="45px"
                   height="45px"
-                  bg={primaryColor}
                   borderRadius="full"
-                  color="white"
+                  borderWidth={item.active ? "2px" : "1px"}
                   fontWeight="bold"
                   position="relative"
                   zIndex={1}
+                  bg={item.active ? primaryColor : "white"}
+                  borderColor={item.active ? primaryColor : "gray.300"}
+                  color={item.active ? "white" : primaryColor}
                 >
                   <Icon as={FaTruck} boxSize={5} />
                 </Center>
                 <VStack align="start" spacing={0}>
                   <Text fontWeight="semibold">{item.status}</Text>
                   <Text fontSize="10px" fontWeight="regular">
-                    {item.location}
+                    {Array.isArray(item.location) ? item.location.join(", ") : item.location}
                   </Text>
                 </VStack>
               </HStack>
-              <Text fontSize="10px" fontWeight="regular">
-                {item.time}
-              </Text>
             </HStack>
           ))}
         </VStack>
@@ -125,58 +152,35 @@ const OrderTrackingPopup = () => {
           Supermarket Order Packing
         </Text>
         <VStack align="start" spacing={4}>
-          {[
-            {
-              name: "Keels Super",
-              location: "Battaramulla Rd, Galle",
-              status: "Packed",
-              statusColor: primaryColor,
-              image: Keels,
-            },
-            {
-              name: "Spar Super Market",
-              location: "Battaramulla Rd, Galle",
-              status: "Packed",
-              statusColor: primaryColor,
-              image: Spar,
-            },
-            {
-              name: "Arpico Supermarket",
-              location: "Battaramulla Rd, Galle",
-              status: "Not Packed",
-              statusColor: "orange.200",
-              image: Arpico,
-            },
-          ].map((item, index) => (
+          {supermarket.map((item, index) => (
             <HStack
               key={index}
               width="100%"
               p={2}
               borderWidth="1px"
-              borderColor={item.statusColor}
               borderRadius="12px"
               align="center"
               justify="space-between"
             >
-              <HStack spacing={4} align="center">
-                <Center width="40px" height="40px" borderRadius="full">
-                  <Image src={item.image} />
+              <HStack spacing={2} align="center">
+                <Center width="70px" height="70px" borderRadius="full">
+                  <Image src={item.data?.logo} />
                 </Center>
                 <VStack align="start" spacing={0}>
-                  <Text fontWeight="bold">{item.name}</Text>
-                  <Text>{item.location}</Text>
+                  <Text fontWeight="bold">{item.data?.name}</Text>
+                  <Text>{item.data?.address}</Text>
                 </VStack>
               </HStack>
               <Button
                 size="sm"
-                bg={item.statusColor}
+                bg={supermarketOrders[index].status === "Ready" ? "green" : "purple"}
                 color="white"
-                _hover={{ bg: item.statusColor }}
-                _active={{ bg: item.statusColor }}
+                _hover={{ bg: supermarketOrders[index].status === "Ready" ? "green" : "purple" }}
+                _active={{ bg: supermarketOrders[index].status === "Ready" ? "green" : "purple" }}
                 borderRadius="full"
-                px={3}
+                px={5}
               >
-                {item.status}
+                {supermarketOrders[index].status === "Ready" ? "Prepared" : "Processing"}
               </Button>
             </HStack>
           ))}

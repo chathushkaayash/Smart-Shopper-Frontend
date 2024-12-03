@@ -7,6 +7,7 @@ import { Box, Button, Heading, Input, InputGroup } from "@chakra-ui/react";
 import { Label } from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useCurrentLocation from "@/hooks/useCurrentLocation";
 
 const CreateAddressPopup = () => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const CreateAddressPopup = () => {
   });
 
   const createAddress = useCreateConsumerAddress();
+  const currentLocation = useCurrentLocation();
+  console.log("currentLocation", currentLocation);
 
   return (
     <MiddleContainer>
@@ -75,7 +78,12 @@ const CreateAddressPopup = () => {
             placeholder="6.9271, 79.8612"
           />
 
-          <Button mx={4}>Get Location</Button>
+          <Button onClick={() =>
+              setAddressInsert({
+                ...addressInsert,
+                location: `${currentLocation?.location}`,
+              })
+            } mx={4}>Get Current Location</Button>
         </InputGroup>
 
         <Button mt={8} onClick={() => createAddress.mutate(addressInsert)}>

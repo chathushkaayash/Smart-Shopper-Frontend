@@ -21,23 +21,16 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 import { RiArrowRightSLine } from "react-icons/ri";
 import DriverDetailsPopup from "./DriveDetails";
+import useDriver from "@/services/Driver/useDriver";
+import { getImageUrl } from "@/lib/utils";
 
 interface AddDriverReviewProps {
-  driverImage: string;
-  driverName: string;
-  courierCompany: string;
-  driverID: number;
-  driverNumber: string;
+  driverId: number;
 }
 
-const AddDriverReview = ({
-  driverImage,
-  driverName,
-  courierCompany,
-  driverID,
-  driverNumber,
-}: AddDriverReviewProps) => {
+const AddDriverReview = ({driverId}: AddDriverReviewProps) => {
   const [rating, setRating] = useState<number>(0);
+  const driver = useDriver([driverId])[0]?.data;
 
   const {
     isOpen: isDriverOpen,
@@ -53,7 +46,7 @@ const AddDriverReview = ({
     <Box  px={2} bg="white" borderRadius="24" mx="auto">
       <Flex alignItems="center" mb={4}>
         <Image
-          src={driverImage}
+          src={getImageUrl(driver?.user?.profilePic)}
           alt="Product Image"
           borderRadius="md"
           boxSize="90px"
@@ -61,7 +54,7 @@ const AddDriverReview = ({
         />
         <VStack align="start">
           <HStack>
-            <Text fontWeight="bold">{driverName}</Text>
+            <Text fontWeight="bold">{driver?.user?.name}</Text>
             <Box onClick={onDriverOpen} cursor="pointer">
               <Button
                 size="sm"
@@ -84,13 +77,13 @@ const AddDriverReview = ({
             </Box>
           </HStack>
           <Text fontSize="sm" color="gray.500">
-            {courierCompany}
+          Courier Company: {driver?.courierCompany}
           </Text>
           <Text fontSize="sm" color="gray.500">
-            {driverID}
+            Driver ID: {driverId}
           </Text>
           <Text fontSize="semibold" color="black">
-            {driverNumber}
+            {driver?.user?.number}
           </Text>
         </VStack>
       </Flex>
@@ -131,7 +124,7 @@ const AddDriverReview = ({
             Driver Details
           </ModalHeader>
           <ModalBody>
-            <DriverDetailsPopup driverId={driverID}  />
+            <DriverDetailsPopup driverId={driverId}  />
           </ModalBody>
           <ModalFooter>
             <Flex width="100%" justifyContent="center" mt={-3}>

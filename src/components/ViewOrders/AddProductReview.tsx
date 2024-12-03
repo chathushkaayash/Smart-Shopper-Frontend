@@ -40,7 +40,7 @@ const AddProductReview = ( { orderItem }: AddProductReviewProps) => {
         />
         <VStack align="start">
           <Text fontWeight="bold">{product.data?.name}</Text>
-          <Text fontSize="sm" color="gray.500">{orderItem.price}</Text>
+          <Text fontSize="sm" color="gray.500">Rs. {orderItem.price}</Text>
           <Image 
             src={supermarket[0].data?.logo}
             alt="Supermarket Image"

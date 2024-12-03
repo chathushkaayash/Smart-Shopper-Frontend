@@ -1,3 +1,4 @@
+import { getImageUrl } from "@/lib/utils";
 import useDriver from "@/services/Driver/useDriver";
 import { Box, Flex, Image, Text, Grid, Center } from "@chakra-ui/react";
 
@@ -13,7 +14,7 @@ const DriverDetailsPopup = ({driverId}: DriverDetailsPopupProps) => {
         <Image
           mb={4}
           borderRadius="12px"
-          src={driver?.user?.profilePic}
+          src={getImageUrl(driver?.user?.profilePic)}
           alt="Driver's Photo"
         />
       </Center>

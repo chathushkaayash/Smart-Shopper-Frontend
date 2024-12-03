@@ -5,7 +5,7 @@ import AddDriverReview from "@/components/ViewOrders/AddDriverReview";
 import DriverDetailsPopup from "@/components/ViewOrders/DriveDetails";
 import OrderReceipt from "@/components/ViewOrders/OrderReceipt";
 import TrackOrder from "@/components/ViewOrders/TrackOrder";
-import { getDecimal } from "@/lib/utils";
+import { getDecimal, getImageUrl } from "@/lib/utils";
 import useDriver from "@/services/Driver/useDriver";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { Order } from "@/services/types";
@@ -287,7 +287,7 @@ const OrderDetails = ({ order }: Props) => {
               <Flex justifyContent="space-between" flexWrap="wrap" gap={4}>
                 <Flex align="center" gap={4}>
                   <Image
-                    src={driver?.user?.profilePic}
+                    src={getImageUrl(driver?.user?.profilePic)}
                     borderRadius="full"
                     boxSize="76px"
                   />
@@ -363,7 +363,7 @@ const OrderDetails = ({ order }: Props) => {
             Order Tracking
           </ModalHeader>
           <ModalBody p={0}>
-            <TrackOrder />
+            <TrackOrder order={order}/>
           </ModalBody>
           <ModalFooter>
             <Flex width="100%" justifyContent="center">
@@ -501,13 +501,7 @@ const OrderDetails = ({ order }: Props) => {
             Add Product Review
           </ModalHeader>
           <ModalBody>
-            <AddDriverReview
-              driverImage="https://via.placeholder.com/50"
-              driverName="Bimsara Anjana Jayadewa"
-              courierCompany="Uber pvt limited."
-              driverID={123456}
-              driverNumber="+94719944045"
-            />
+            <AddDriverReview driverId={driverId}/>
           </ModalBody>
           <ModalFooter>
             <Flex width="100%" justifyContent="center" columnGap={5}>
