@@ -41,7 +41,7 @@ const ViewCart = () => {
 
   const proceedToCheckout = () => {
     if (addresses.data?.results.length || -1 > 0) {
-      navigate("/cart-comparison");
+      navigate("/checkout");
     } else {
       toast.error("Please add an address to proceed to checkout");
       navigate("/profile/addresses/create");

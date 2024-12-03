@@ -1,4 +1,5 @@
 import MiddleContainer from "@/components/Containers/MiddleContainer";
+import { getImageUrl } from "@/lib/utils";
 import useDrivers from "@/services/Driver/useDrivers";
 import { Driver } from "@/services/types";
 
@@ -42,7 +43,7 @@ const Drivers = () => {
               <Tr key={index}>
                 <Td>
                   <Avatar
-                    src="https://via.placeholder.com/150"
+                    src={getImageUrl(driver.user.profilePic)}
                     size="sm"
                     mr={2}
                   />

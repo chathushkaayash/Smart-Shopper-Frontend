@@ -23,17 +23,28 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  HStack,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { PiNotepad } from "react-icons/pi";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 interface Props {
   order: Order;
 }
 interface SupermarketInfoRowProps {
   supermarketId: number;
 }
+
+const statusColor: Record<Order["status"], string> = {
+  ToPay: "red",
+  Processing: "purple",
+  Prepared: "green",
+  Cancelled: "yellow",
+  Completed: "blue",
+};
 
 const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
   const supermarket = useSupermarket([supermarketId]);
@@ -47,10 +58,12 @@ const SupermarketInfoRow = ({ supermarketId }: SupermarketInfoRowProps) => {
 };
 
 const OrderDetails = ({ order }: Props) => {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const supermarketList: number[] = order.supermarketOrders.map(
     (i) => i.supermarketId
   );
+  console.log(order);
 
   const {
     isOpen: isReceiptOpen,
@@ -138,25 +151,35 @@ const OrderDetails = ({ order }: Props) => {
               </Button>
             </Flex>
           </Flex>
-          <Box
-            bg={
-              order.status === "Completed"
-                ? "#5BFF89"
-                : order.status === "ToPay"
-                ? "primary"
-                : order.status === "Processing"
-                ? "blue.200"
-                : "black"
-            }
-            borderRadius="full"
-            textAlign="center"
-            p={2}
-            maxWidth="200px"
-          >
-            <Text fontSize="md" fontWeight="bold">
+          <HStack>
+            <Badge
+              as="div"
+              colorScheme={statusColor[order.status]}
+              className="p-1.5 !px-2 text-xs font-medium uppercase tracking-wider !rounded-[5px]"
+            >
               {order.status}
-            </Text>
-          </Box>
+            </Badge>
+            {order.status === "ToPay" && (
+              <Button
+                size="sm"
+                color="primary"
+                bg="white"
+                borderWidth={2}
+                borderColor="primary"
+                onClick= {() => navigate("/payments/orders/" + order.id)}
+                borderRadius={10}
+                _hover={{ bg: "#E46C0A", color: "#FFFFFF" }}
+                _active={{
+                  bg: "#E46C0A",
+                  color: "#FFFFFF",
+                  transform: "scale(0.98)",
+                  borderColor: "#E46C0A",
+                }}
+              >
+                Pay for the order.
+              </Button>
+            )}
+          </HStack>
 
           <Divider my={4} />
 

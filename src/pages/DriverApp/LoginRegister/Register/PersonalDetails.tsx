@@ -18,6 +18,7 @@ import {
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
+import { BsPersonVcardFill } from "react-icons/bs";
 
 import Logo from "../../../../assets/logo.svg";
 import SubmitButton from "../../../../components/Buttons/SubmitButton";
@@ -102,7 +103,7 @@ const PersonalDetails = () => {
             register={register("nic")}
             type="nic"
             placeholder="NIC"
-            icon={FaUser}
+            icon={BsPersonVcardFill}
             outerClassName="!mt-5"
           />
           {errors.nic && <ErrorText>{errors.nic.message}</ErrorText>}

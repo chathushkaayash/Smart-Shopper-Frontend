@@ -19,6 +19,7 @@ import { useState } from "react";
 import useOrders from "@/services/Orders/useOrders";
 import { Order } from "@/services/types";
 import { DateTime } from "@/utils/Time";
+import { getDecimal } from "@/lib/utils";
 
 const statusColor: Record<Order["status"], string> = {
   ToPay: "red",
@@ -137,7 +138,7 @@ const ConsumerOrders = () => {
                     {order.shippingMethod}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    RS {order.totalCost}
+                    RS {getDecimal(order.totalCost)}
                   </Td>
                   <Td className="p-3 text-sm text-gray-700 whitespace-nowrap flex">
                     <IconButton

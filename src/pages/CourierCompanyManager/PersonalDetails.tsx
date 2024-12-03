@@ -20,6 +20,7 @@ import { useParams } from "react-router-dom";
 import useDriver from "@/services/Driver/useDriver";
 import useOpportunities from "@/hooks/useOpportunities";
 import useReviews from "@/services/Reviews/useReviews";
+import { getImageUrl } from "@/lib/utils";
 
 
 const PersonalDetails = () => {
@@ -42,8 +43,8 @@ const PersonalDetails = () => {
               <Text fontSize="lg" fontWeight="bold">
                 Driver Personal Details
               </Text>
-
-              <Image src={driver?.user.profilePic} w="50%" mt={4} ml={7} mb={4} mr={5} />
+             
+              <Image src={getImageUrl(driver?.user.profilePic)} w="50%" mt={4} ml={7} mb={4} mr={5} />
             </GridItem>
             <GridItem>
               <HStack>
@@ -74,17 +75,11 @@ const PersonalDetails = () => {
             <Text>
               Completed deliveries
               <br />
-              Pending Deliveries
-              <br />
               Revenue
             </Text>
             <Text ml={10}>
               <Text color="gray.500">
                 <b>: { opportunities?.filter((opportunity) => opportunity.driverId ===driver?.id).length||'None'} </b>
-              </Text>
-              <Text color="red">
-                {" "}
-                <b>: 5 </b>
               </Text>
               <Text color="red">
                 <b>: $1000 </b>

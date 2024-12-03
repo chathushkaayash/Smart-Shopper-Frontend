@@ -22,6 +22,10 @@ import useSupermarket from "@/services/Supermarket/useSupermarket";
 import useOptimizer from "@/hooks/useOptimizer";
 import Map from "@/pages/Public/Map";
 import { CartItem } from "@/services/types";
+import useCartCheckout from "@/services/Cart/useCartCheckout";
+import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
+import useCheckoutRequestStore from "@/state-management/checkout/store";
+import useAuthStore from "@/state-management/auth/store";
 
 const CartComparison = () => {
   const { data: cartItems } = useCartItems();
@@ -39,6 +43,26 @@ const CartComparison = () => {
       cartItems?.results?.map((item) => item.supermarketItem.supermarketId)
     )
   );
+  const cartCheckout = useCartCheckout();
+  const createPreference = useCreateUserPreference();
+  const {checkoutRequest} = useCheckoutRequestStore();
+  const user = useAuthStore((state) => state.user);
+
+  const handleCheckout = () => {
+    cartCheckout.mutate(checkoutRequest);
+    cartItems?.results.map((item) => {
+      createPreference.mutate({
+        userId: user?.id || 0,
+        preferenceType: "Purchases",
+        referenceId: item.productId,
+      });
+      console.log(item.productId);
+    });
+  };
+
+  if (cartCheckout.isSuccess) {
+    navigate("/payments/orders/" + cartCheckout.data);
+  }
 
   const supermarkets = useSupermarket(uniqueSupermarketIds);
 
@@ -225,7 +249,7 @@ const CartComparison = () => {
             transform: "scale(0.98)",
             borderColor: "primary",
           }}
-          onClick={() => navigate("/cart")}
+          onClick={() => navigate("/checkout")}
         >
           Back
         </Button>
@@ -248,7 +272,7 @@ const CartComparison = () => {
             transform: "scale(0.98)",
             borderColor: "primary",
           }}
-          onClick={() => navigate("/checkout")}
+          onClick={handleCheckout}
         >
           Checkout
         </Button>

@@ -1,9 +1,7 @@
-
-import useConsumer from "@/hooks/useConsumer";
-import { getDefaultAddress, getSuperMarketIdList } from "@/lib/utils";
+import { getPrice, getSuperMarketIdList } from "@/lib/utils";
 import useOptimizedRoute from "@/services/Location/useOptimizedRoute";
 import { CartItem } from "@/services/types";
-import useAuthStore from "@/state-management/auth/store";
+import useCheckoutRequestStore from "@/state-management/checkout/store";
 import { Box, Divider, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 interface Props {
   index: number;
@@ -11,12 +9,9 @@ interface Props {
 }
 
 const OptimizedInfo = ({ index, cartItems }: Props) => {
-  const user = useAuthStore((state) => state.user);
-  const consumer =useConsumer(user?.consumerId || -1);
   const supermarketIds = getSuperMarketIdList(cartItems);
-  const address = getDefaultAddress(consumer.data?.addresses);
-  console.log("Address:", address?.location);
-  const optimizedRoute = useOptimizedRoute(supermarketIds, address?.location || "");
+  const {checkoutRequest} = useCheckoutRequestStore();
+  const optimizedRoute = useOptimizedRoute(supermarketIds, checkoutRequest.shippingLocation || "");
   const deliveryFree = optimizedRoute.data?.deliveryCost || 250;
   const subTotal = cartItems.reduce(
     (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
@@ -47,11 +42,11 @@ const OptimizedInfo = ({ index, cartItems }: Props) => {
         </GridItem>
         <GridItem>
           <Stack gap={2} alignItems={"flex-end"}>
-            <Text color="primary">2.4 KM</Text>
-            <Text color="gray">{subTotal} LKR</Text>
-            <Text color="gray">{deliveryFree} LKR</Text>
+            <Text color="primary">{optimizedRoute?.data?.totalDistance}</Text>
+            <Text color="gray">{getPrice(subTotal)} LKR</Text>
+            <Text color="gray">{getPrice(deliveryFree)} LKR</Text>
             <Divider borderColor="gray.400" mb={0} />
-            <Text fontWeight={700}>{totalPrice} LKR</Text>
+            <Text fontWeight={700}>{getPrice(totalPrice)} LKR</Text>
           </Stack>
         </GridItem>
       </Grid>

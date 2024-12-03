@@ -28,7 +28,7 @@ const PickupLocation = ({ supermarketId }: Props) => {
         />
       </StepIndicator>
 
-      <Box flexShrink="0">
+      <Box flexShrink="0" maxW="full" >
         <StepTitle>{supermarket[0].data?.name}</StepTitle>
         <StepDescription>{supermarket[0].data?.address}</StepDescription>
       </Box>

@@ -20,7 +20,7 @@ const useOptimizedRoute = (supermarketIds: number[], deliveryLocation: string) =
         supermarketIds: supermarketIds,
         homeLocation: deliveryLocation,
       }),
-    staleTime: 1000 * 60 * 1, // 1 minute
+    staleTime: 1000 * 60 * 2, 
   });
 };
 

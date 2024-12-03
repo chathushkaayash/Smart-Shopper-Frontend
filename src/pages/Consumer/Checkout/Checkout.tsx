@@ -7,14 +7,10 @@ import {
   getSuperMarketIdList,
 } from "@/lib/utils";
 import useAddresses from "@/services/Addresses/useAddresses";
-import useCartCheckout, {
-  CheckoutRequest,
-} from "@/services/Cart/useCartCheckout";
 import useCartItems from "@/services/Cart/useCartItems";
-import useDeliveryCost from "@/services/Location/useDeliveryCost";
-import useSupermarket from "@/services/Supermarket/useSupermarket";
-import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
+import useOptimizedRoute from "@/services/Location/useOptimizedRoute";
 import useAuthStore from "@/state-management/auth/store";
+import useCheckoutRequestStore from "@/state-management/checkout/store";
 import { EditIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -41,7 +37,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
@@ -65,56 +61,34 @@ const Checkout = () => {
     }
   }, [addresses.data]);
 
-  const cartCheckout = useCartCheckout();
-
-  const supermarketIdList = getSuperMarketIdList(cartItems?.results);
-  const supermarketLocationList = useSupermarket(supermarketIdList).map(
-    (supermarket) => supermarket.data?.location || ""
-  );
-
   const allAddresses = addresses.data?.results || [];
   const defaultAddress = getDefaultAddress(allAddresses);
 
-  const [checkoutRequest, setCheckoutRequest] = useState<CheckoutRequest>(
-    {} as CheckoutRequest
-  );
+  const {  checkoutRequest, setConsumerId, setShippingMethod, setShippingLocation, setShippingAddress } = useCheckoutRequestStore();
 
   useEffect(() => {
-    setCheckoutRequest({
-      shippingMethod: "Home Delivery",
-      shippingLocation: defaultAddress?.location || "Bandaragama",
-      shippingAddress: defaultAddress?.address || "66 Pandura Rd, Bandaragama",
-      consumerId: user?.consumerId || -1,
-    });
+    if (checkoutRequest.consumerId != (user?.consumerId || -1))
+      setConsumerId(user?.consumerId || -1);
+    
+    if (checkoutRequest.shippingMethod != "Home Delivery") {
+      setShippingMethod("Home Delivery");
+    }
+    if (checkoutRequest.shippingLocation != (defaultAddress?.location || "Bandaragama")) {
+      setShippingLocation(defaultAddress?.location || "Bandaragama");
+    }
+    if (checkoutRequest.shippingAddress != (defaultAddress?.address || "66 Pandura Rd, Bandaragama")) {
+      setShippingAddress(defaultAddress?.address || "66 Pandura Rd, Bandaragama");
+    }
   }, [allAddresses, cartItems, user]);
-
-  const deliveryCost = useDeliveryCost(
-    supermarketLocationList,
-    checkoutRequest?.shippingLocation || "6.961174, 79.965387"
-  );
-
-  const deliveryFee =
-    checkoutRequest?.shippingMethod === "Home Delivery"
-      ? deliveryCost.data || 250
-      : 0;
-
-  const createPreference = useCreateUserPreference();
+  
+  const supermarketIds = getSuperMarketIdList(cartItems?.results);
+  const optimizedRoute = useOptimizedRoute(supermarketIds, checkoutRequest.shippingLocation || "");
+  const deliveryFee = checkoutRequest.shippingMethod == "Home Delivery" ? (optimizedRoute.data?.deliveryCost || 250) : 0; 
+  
 
   const handleCheckout = () => {
-    cartCheckout.mutate(checkoutRequest);
-    cartItems?.results.map((item) => {
-      createPreference.mutate({
-        userId: user?.id || 0,
-        preferenceType: "Purchases",
-        referenceId: item.productId,
-      });
-      console.log(item.productId);
-    });
+    navigate("/cart-comparison");
   };
-
-  if (cartCheckout.isSuccess) {
-    navigate("/payments/orders/" + cartCheckout.data);
-  }
 
   // --------------------------------------- Calculate Subtotal ---------------------------------------
   const subTotal =
@@ -249,7 +223,7 @@ const Checkout = () => {
                 _hover={{ bg: "primary", color: "white" }}
                 onClick={handleCheckout}
               >
-                Continue to payment
+                Continue to checkout
               </Button>
 
               {/* Note */}
@@ -327,10 +301,7 @@ const Checkout = () => {
                     placeholder="Search for an address"
                     value={checkoutRequest.shippingAddress}
                     onChange={(e) =>
-                      setCheckoutRequest({
-                        ...checkoutRequest,
-                        shippingAddress: e.target.value,
-                      })
+                      setShippingAddress(e.target.value)
                     }
                   />
                 </InputGroup>
@@ -350,12 +321,11 @@ const Checkout = () => {
                   borderRadius={5}
                   cursor={"pointer"}
                   onClick={() =>
-                    setCheckoutRequest({
-                      ...checkoutRequest,
-                      shippingAddress: address.address,
-                      shippingLocation: address.location,
-                    })
-                  }
+                  {
+                    setShippingLocation(address.location);
+                    setShippingAddress(address.address);
+                    onClose1();
+                  }}
                 >
                   <HStack>
                     <Icon as={FaLocationDot} boxSize={5} />
@@ -396,10 +366,7 @@ const Checkout = () => {
                   colorScheme="blackAlpha"
                   defaultValue="door"
                   onChange={(value) => {
-                    setCheckoutRequest({
-                      ...checkoutRequest,
-                      shippingMethod: value,
-                    });
+                    setShippingMethod(value);
                   }}
                   value={checkoutRequest.shippingMethod}
                 >
@@ -411,10 +378,7 @@ const Checkout = () => {
                       borderRadius={5}
                       cursor={"pointer"}
                       onClick={() => {
-                        setCheckoutRequest({
-                          ...checkoutRequest,
-                          shippingMethod: "Home Delivery",
-                        });
+                        setShippingMethod("Home Delivery");
                       }}
                     >
                       <HStack>
@@ -430,10 +394,7 @@ const Checkout = () => {
                       borderRadius={5}
                       cursor={"pointer"}
                       onClick={() => {
-                        setCheckoutRequest({
-                          ...checkoutRequest,
-                          shippingMethod: "Store Pickup",
-                        });
+                        setShippingMethod("Store Pickup");  
                       }}
                     >
                       <HStack>

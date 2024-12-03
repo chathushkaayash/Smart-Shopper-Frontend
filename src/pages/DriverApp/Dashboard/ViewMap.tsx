@@ -32,6 +32,8 @@ import useOrder from "@/services/Orders/useOrder";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { BaseSupermarketOrder } from "@/services/types";
 import { useState } from "react";
+import QRCode from "react-qr-code";
+import { getDecimal } from "@/lib/utils";
 import SupermarketLocation from "./SupermarketLocation";
 
 {
@@ -70,7 +72,8 @@ const SupermarketRow = ({ supermarketOrder }: SupermarketRowInterface) => {
                 {supermarket[0].data?.address}
                 <br />
               </Text>
-              <Image src={supermarketOrder.qrCode} w="40vw" h="40vw" />
+              {/* <Image src={supermarketOrder.qrCode} w="40vw" h="40vw" /> */}
+              <QRCode value={supermarketOrder._orderId.toString()} />
               <HStack>
                 <Text>Call</Text>
                 <Icon as={FaPhoneAlt} color="primary" />
@@ -128,10 +131,10 @@ const ViewMap = () => {
         <ConsumerName consumerId={opportunity.data?.consumer.userId || 0} />
       ),
     },
-    { label: "Delivery Cost", value: `${opportunity.data?.deliveryCost}` },
+    { label: "Delivery Cost", value:opportunity.data?.deliveryCost? `Rs. ${getDecimal(opportunity.data?.deliveryCost)}`:"N/A" },
     { label: "No of Supermarkets", value: supermarketsLength },
-    { label: "Trip Cost", value: `${opportunity.data?.tripCost}` },
-    { label: "Total Distance", value: `${opportunity.data?.totalDistance}` },
+    { label: "Trip Cost", value:opportunity.data?.tripCost? `Rs. ${getDecimal(opportunity.data?.tripCost)}`:"N/A" },
+    { label: "Total Distance", value:opportunity.data?.totalDistance? `${getDecimal(opportunity.data?.totalDistance)} km`:"N/A" },
     {
       label: "Delivery Location",
       value: `${opportunity.data?.deliveryLocation}`,

@@ -33,7 +33,7 @@ const SideBar = () => {
       label: "Courier Services",
       path: "/courier-services",
     },
-    { icon: FaCartFlatbed, label: "Orders", path: "/orders" },
+    { icon: FaCartFlatbed, label: "Orders", path: "/admin-orders" },
     // { icon: TbTransactionDollar, label: "Transactions", path: "/transactions" },
     {
       icon: RiAdvertisementFill,
