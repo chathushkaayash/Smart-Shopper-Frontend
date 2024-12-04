@@ -49,11 +49,6 @@ const Opportunities = () => {
                 <Spacer />
                 <Text>{DateTime.toString(opportunity.orderPlacedOn)}</Text>
               </HStack>
-              <HStack w="full">
-                <Text>Order Placed On </Text>
-                <Spacer />
-                <Text>{DateTime.toString(opportunity.orderPlacedOn)}</Text>
-              </HStack>
 
               <SubmitButton
                 onClick={() =>
@@ -71,4 +66,3 @@ const Opportunities = () => {
 };
 
 export default Opportunities;
-
