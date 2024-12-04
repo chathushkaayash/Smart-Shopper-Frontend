@@ -156,7 +156,7 @@ const AdminOverview = () => {
       icon: CgWebsite,
       color: "purple",
       background: "purple.100",
-      value: "1.2 k",
+      value: "8",
       percentage: "8.5% Up from yesterday",
       rdicon: AiOutlineRise,
       rdiconColor: "green.400",
