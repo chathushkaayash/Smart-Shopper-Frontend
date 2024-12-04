@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-
+import { baseURL } from "../api-client";
 
 const useFetchStats = (endpoint: string, supermarketId: number) => {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const url = baseURL;
 
   const currentMonth = new Date().getMonth() + 1;
 
@@ -13,12 +14,15 @@ const useFetchStats = (endpoint: string, supermarketId: number) => {
       return;
     }
 
-    fetch(`http://localhost:9090/${endpoint}?supermarketId=${supermarketId}&month=${currentMonth}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `${url}/${endpoint}?supermarketId=${supermarketId}&month=${currentMonth}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -33,17 +37,13 @@ const useFetchStats = (endpoint: string, supermarketId: number) => {
       .catch((err) => {
         setError(err.message);
       });
-
-
   }, [endpoint, supermarketId, currentMonth]);
 
   return { data, error };
 };
 
-
 export const useSupermarketEarningsStats = (supermarketId: number) =>
   useFetchStats("supermarket_earnings_stats", supermarketId);
-
 
 export const useSupermarketOrderStats = (supermarketId: number) =>
   useFetchStats("supermarket_order_stats", supermarketId);

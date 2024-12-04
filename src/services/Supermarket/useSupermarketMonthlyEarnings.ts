@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-
+import { baseURL } from "../api-client";
 
 const useFetchStats = (endpoint: string, supermarketId: number) => {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-
+  const url = baseURL;
 
   useEffect(() => {
     if (!supermarketId) {
@@ -12,7 +12,7 @@ const useFetchStats = (endpoint: string, supermarketId: number) => {
       return;
     }
 
-    fetch(`http://localhost:9090/${endpoint}?supermarketId=${supermarketId}`, {
+    fetch(`${url}/${endpoint}?supermarketId=${supermarketId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -32,16 +32,10 @@ const useFetchStats = (endpoint: string, supermarketId: number) => {
       .catch((err) => {
         setError(err.message);
       });
-
-
   }, [endpoint, supermarketId]);
 
   return { data, error };
 };
 
-
 export const useSupermarketMonthlyEarnings = (supermarketId: number) =>
   useFetchStats("get_supermarket_monthly_earnings", supermarketId);
-
-
-
