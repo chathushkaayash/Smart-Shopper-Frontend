@@ -19,21 +19,30 @@ import { useNavigate } from "react-router-dom";
 import { Key, useState } from "react";
 import useCartItems from "@/services/Cart/useCartItems";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
-import useOptimizer from "@/hooks/useOptimizer";
 import Map from "@/pages/Public/Map";
 import { CartItem } from "@/services/types";
 import useCartCheckout from "@/services/Cart/useCartCheckout";
 import useCreateUserPreference from "@/services/UserPreference/useCreateUserPreference";
 import useCheckoutRequestStore from "@/state-management/checkout/store";
 import useAuthStore from "@/state-management/auth/store";
+import useOptimizedCartItems from "@/services/Cart/useOptimizedCart";
+import useCurrentLocation from "@/hooks/useCurrentLocation";
 
 const CartComparison = () => {
   const { data: cartItems } = useCartItems();
-  const { data: optimizedCart } = useOptimizer();
-  console.log('optimizedCart :',optimizedCart);
-  console.log('cartItems :',cartItems);
+  console.log("cartItems :", cartItems);
   const navigate = useNavigate();
   const [selectedCart, setSelectedCart] = useState(1);
+
+  const user = useAuthStore((state) => state.user);
+  const location = useCurrentLocation();
+
+  const optimizedCart = useOptimizedCartItems({
+    consumerId: user?.consumerId || 0,
+    location: location.location || "",
+  });
+
+  console.log("optimizedCart :", optimizedCart);
 
   //fetching data from optimzed algorithm
   //const optimizedCart=useOptimizer();
@@ -45,8 +54,7 @@ const CartComparison = () => {
   );
   const cartCheckout = useCartCheckout();
   const createPreference = useCreateUserPreference();
-  const {checkoutRequest} = useCheckoutRequestStore();
-  const user = useAuthStore((state) => state.user);
+  const { checkoutRequest } = useCheckoutRequestStore();
 
   const handleCheckout = () => {
     cartCheckout.mutate(checkoutRequest);
@@ -68,14 +76,13 @@ const CartComparison = () => {
 
   //centers of our cart supermarkets
   const centers = supermarkets
-  .map((supermarket) => supermarket.data?.location)
-  .filter(Boolean) 
-  .map((location) => {
-    const [lat, lng] = location?.split(",").map(Number) || []; 
-    return { lat, lng }; 
-  });
-  console.log('centers :',centers);
-
+    .map((supermarket) => supermarket.data?.location)
+    .filter(Boolean)
+    .map((location) => {
+      const [lat, lng] = location?.split(",").map(Number) || [];
+      return { lat, lng };
+    });
+  console.log("centers :", centers);
 
   return (
     <Box px="5vw" py="5vh">
@@ -135,7 +142,7 @@ const CartComparison = () => {
 
               <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
                 <AspectRatio ratio={16 / 9}>
-                <Map centers={centers}/>
+                  <Map centers={centers} />
                 </AspectRatio>
               </Box>
               <OptimizedInfo index={1} cartItems={cartItems?.results || []} />
@@ -180,12 +187,14 @@ const CartComparison = () => {
                 gap={5}
                 divider={<Divider borderColor="gray.400" />}
               >
-                {optimizedCart?.map((item: CartItem, index: Key | null | undefined) => (
-                  <ComparisonItem key={index} cartItem={item} />
-                ))}
+                {optimizedCart.data?.map(
+                  (item: CartItem, index: Key | null | undefined) => (
+                    <ComparisonItem key={index} cartItem={item} />
+                  )
+                )}
               </VStack>
               <Divider borderColor="gray.400" mb={3} />
-              {(optimizedCart?.length || 0) > 4 && (
+              {(optimizedCart.data?.length || 0) > 4 && (
                 <Button width="lg" bg="primary" color="white" mt={4} mb={4}>
                   View More
                 </Button>
@@ -193,10 +202,10 @@ const CartComparison = () => {
 
               <Box shadow="xl" borderWidth={1} p={2} w="full" borderRadius="10">
                 <AspectRatio ratio={16 / 9}>
-                <Map centers={centers}/>
+                  <Map centers={centers} />
                 </AspectRatio>
               </Box>
-              <OptimizedInfo index={2} cartItems={optimizedCart || []} />
+              <OptimizedInfo index={2} cartItems={optimizedCart.data || []} />
             </VStack>
           </Box>
         </GridItem>
