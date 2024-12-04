@@ -10,8 +10,11 @@ interface Props {
 
 const OptimizedInfo = ({ index, cartItems }: Props) => {
   const supermarketIds = getSuperMarketIdList(cartItems);
-  const {checkoutRequest} = useCheckoutRequestStore();
-  const optimizedRoute = useOptimizedRoute(supermarketIds, checkoutRequest.shippingLocation || "");
+  const { checkoutRequest } = useCheckoutRequestStore();
+  const optimizedRoute = useOptimizedRoute(
+    supermarketIds,
+    checkoutRequest.shippingLocation || ""
+  );
   const deliveryFree = optimizedRoute.data?.deliveryCost || 250;
   const subTotal = cartItems.reduce(
     (acc, item) => acc + (item.supermarketItem?.price || 1) * item.quantity,
@@ -42,7 +45,9 @@ const OptimizedInfo = ({ index, cartItems }: Props) => {
         </GridItem>
         <GridItem>
           <Stack gap={2} alignItems={"flex-end"}>
-            <Text color="primary">{getDecimal(optimizedRoute?.data?.totalDistance || 0)} Km</Text>
+            <Text color="primary">
+              {getDecimal(optimizedRoute?.data?.totalDistance || 0)} Km
+            </Text>
             <Text color="gray">{getPrice(subTotal)} LKR</Text>
             <Text color="gray">{getPrice(deliveryFree)} LKR</Text>
             <Divider borderColor="gray.400" mb={0} />

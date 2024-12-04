@@ -18,59 +18,66 @@ interface OrderItem {
   order: Order;
 }
 
-const OrderTrackingPopup = ({order}:OrderItem ) => {
+const OrderTrackingPopup = ({ order }: OrderItem) => {
   const primaryColor = "orange.500";
   const supermarketOrders = order.supermarketOrders;
   const supermarketIds = supermarketOrders.map((order) => order.supermarketId);
   const supermarket = useSupermarket(supermarketIds);
-  const driver = order.opportunity[0].driverId;
-  const driverName = useDriver([driver])[0].data;
-  console.log(order);
+  const driverId = order.opportunity[0] ? order.opportunity[0].driverId : 0;
+  const driver = useDriver([driverId]);
 
   const getTrackingSteps = () => {
     const steps = [
       {
-      status: "Order Placed",
-      location: "Your order has been placed",
-      active: ["ToPay", "Processing", "Prepared", "Picked", "Completed"].includes(order.status)
+        status: "Order Placed",
+        location: "Your order has been placed",
+        active: [
+          "ToPay",
+          "Processing",
+          "Prepared",
+          "Picked",
+          "Completed",
+        ].includes(order.status),
       },
       {
-      status: "Ready in Supermarkets",
-      location: (
-        <>
-          {supermarket.map((item) => (
-            <Text key={item.data?.id}>{item.data?.name}, {item.data?.city}</Text>
-          ))}
-        </>
-      ),
-      active: ["Prepared", "Picked", "Completed"].includes(order.status)
+        status: "Ready in Supermarkets",
+        location: (
+          <>
+            {supermarket.map((item) => (
+              <Text key={item.data?.id}>
+                {item.data?.name}, {item.data?.city}
+              </Text>
+            ))}
+          </>
+        ),
+        active: ["Prepared", "Picked", "Completed"].includes(order.status),
       },
       {
-      status: "Picked by Driver",
-      location: (
-        <>
-          Your order is on the way {driverName?.user?.name}
-          <br />
-          {driverName?.user?.number}
-        </>
-      ),
-      active: ["Picked", "Completed"].includes(order.status)
+        status: "Picked by Driver",
+        location: (
+          <>
+            Your order is on the way{" "}
+            {driver[0] ? driver[0].data?.user.name : ""}
+            <br />
+            {driver[0] ? driver[0].data?.user.number : ""}
+          </>
+        ),
+        active: ["Picked", "Completed"].includes(order.status),
       },
       {
-      status: "Way to home",
-      location: `Address: ${order.shippingAddress}`,
-      active: ["Picked", "Completed"].includes(order.status)
+        status: "Way to home",
+        location: `Address: ${order.shippingAddress}`,
+        active: ["Picked", "Completed"].includes(order.status),
       },
       {
-      status: "Completed",
-      location: "Order has been delivered",
-      active: ["Completed"].includes(order.status)
-      }
+        status: "Completed",
+        location: "Order has been delivered",
+        active: ["Completed"].includes(order.status),
+      },
     ];
 
     return steps;
   };
-
 
   return (
     <Flex
@@ -131,7 +138,9 @@ const OrderTrackingPopup = ({order}:OrderItem ) => {
                 <VStack align="start" spacing={0}>
                   <Text fontWeight="semibold">{item.status}</Text>
                   <Text fontSize="10px" fontWeight="regular">
-                    {Array.isArray(item.location) ? item.location.join(", ") : item.location}
+                    {Array.isArray(item.location)
+                      ? item.location.join(", ")
+                      : item.location}
                   </Text>
                 </VStack>
               </HStack>
@@ -173,14 +182,30 @@ const OrderTrackingPopup = ({order}:OrderItem ) => {
               </HStack>
               <Button
                 size="sm"
-                bg={supermarketOrders[index].status === "Ready" ? "green" : "purple"}
+                bg={
+                  supermarketOrders[index].status === "Ready"
+                    ? "green"
+                    : "purple"
+                }
                 color="white"
-                _hover={{ bg: supermarketOrders[index].status === "Ready" ? "green" : "purple" }}
-                _active={{ bg: supermarketOrders[index].status === "Ready" ? "green" : "purple" }}
+                _hover={{
+                  bg:
+                    supermarketOrders[index].status === "Ready"
+                      ? "green"
+                      : "purple",
+                }}
+                _active={{
+                  bg:
+                    supermarketOrders[index].status === "Ready"
+                      ? "green"
+                      : "purple",
+                }}
                 borderRadius="full"
                 px={5}
               >
-                {supermarketOrders[index].status === "Ready" ? "Prepared" : "Processing"}
+                {supermarketOrders[index].status === "Ready"
+                  ? "Prepared"
+                  : "Processing"}
               </Button>
             </HStack>
           ))}
