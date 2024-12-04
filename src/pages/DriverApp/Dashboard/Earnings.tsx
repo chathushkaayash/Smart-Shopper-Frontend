@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useOpportunities from "@/hooks/useOpportunities";
 import { SupermarketAddress } from "./Deliveries";
+import { getDecimal } from "@/lib/utils";
 
 const Earnings = () => {
   const opportunities = useOpportunities({
@@ -141,7 +142,7 @@ const Earnings = () => {
                 </Text>
               </VStack>
               <Text fontWeight="bold" color="red.500">
-                Rs.{opportunity.tripCost}
+                Rs.{getDecimal(opportunity.tripCost)}
               </Text>
               <IconButton
                 onClick={displayDetails}
@@ -156,7 +157,7 @@ const Earnings = () => {
               <Box>
                 <HStack justify="space-between">
                   <Text>Delivery cost</Text>
-                  <Text>Rs.{opportunity.deliveryCost}</Text>
+                  <Text>Rs.{getDecimal(opportunity.deliveryCost)}</Text>
                 </HStack>
                 <HStack justify="space-between">
                   <Text>Number of Stops</Text>

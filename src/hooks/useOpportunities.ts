@@ -21,7 +21,7 @@ const useOpportunities = (opportunityQuery: OpportunityQuery) => {
           _limit: opportunityQuery.limit || 10,
         },
       }),
-    staleTime: 1000 * 5, // 5 seconds
+    staleTime: 1000 * 60,
   });
 };
 

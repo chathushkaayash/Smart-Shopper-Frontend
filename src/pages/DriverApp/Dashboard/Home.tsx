@@ -23,7 +23,7 @@ const Home = () => {
   const deliveredOpportunities = useOpportunities({
     status: "Delivered",
     month: "",
-  }).data?.results;
+  });
 
   const acceptedOpportunity = useOpportunities({
     status: "Accepted",
@@ -31,7 +31,7 @@ const Home = () => {
   }).data?.results;
 
   const navigate = useNavigate();
-  const monthlyDeliveries = Array(12).fill(0);
+  const monthlyDeliveries = Array(12).fill(1);
 
   const pendingTodayCount =
     pendingOpportunities && pendingOpportunities.length > 10
@@ -39,7 +39,7 @@ const Home = () => {
       : pendingOpportunities?.length || "None";
 
   const tripCount =
-    deliveredOpportunities?.filter((opportunity) => {
+    deliveredOpportunities.data?.results?.filter((opportunity) => {
       return DateTime.getMoment(opportunity.orderPlacedOn).isSame(
         moment(),
         "day"
@@ -47,19 +47,21 @@ const Home = () => {
     }).length || "None";
 
   if (deliveredOpportunities) {
-    deliveredOpportunities.map((opportunity) => {
+    deliveredOpportunities.data?.results.map((opportunity) => {
       const monthIndex = opportunity.orderPlacedOn.month; // 0 is Jan, 11 is Dec
-      monthlyDeliveries[monthIndex] += 1;
+      monthlyDeliveries[monthIndex - 1] += 1;
     });
   }
-
+  console.log("deliveredOpportunities", monthlyDeliveries);
   const chartData = [
     {
       name: "Deliveries",
       data: monthlyDeliveries,
     },
   ];
-  console.log(monthlyDeliveries);
+
+  console.log("chartData", chartData);
+
   const options = {
     xaxis: {
       categories: [
@@ -155,14 +157,14 @@ const Home = () => {
           bg="white"
           px="2vw"
         >
-          {deliveredOpportunities && (
+          {
             <ReactApexChart
               options={options}
               series={chartData}
               type="area"
               width="100%"
             />
-          )}
+          }
         </Box>
       </VStack>
     </>

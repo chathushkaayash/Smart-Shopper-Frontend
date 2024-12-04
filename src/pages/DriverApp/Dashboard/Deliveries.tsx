@@ -1,4 +1,5 @@
 import useOpportunities from "@/hooks/useOpportunities";
+import { getDecimal } from "@/lib/utils";
 import useSupermarket from "@/services/Supermarket/useSupermarket";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
@@ -12,9 +13,9 @@ export const SupermarketAddress = ({
 }: SupermarketRowInterface) => {
   const supermarket = useSupermarket([supermarketId]);
   return (
-      <Text as="span" >
-        {supermarket[0].data?.name + ", " + supermarket[0].data?.city}
-      </Text>
+    <Text as="span">
+      {supermarket[0].data?.name + ", " + supermarket[0].data?.city}
+    </Text>
   );
 };
 
@@ -54,7 +55,7 @@ const Deliveries = () => {
               </Text>
             </VStack>
             <Text fontWeight="bold" color="red.500">
-              Rs.{opportunity.tripCost}
+              Rs.{getDecimal(opportunity.tripCost)}
             </Text>
             <IconButton
               onClick={displayDetails}
@@ -69,16 +70,16 @@ const Deliveries = () => {
             <Box>
               <HStack justify="space-between">
                 <Text>Delivery Cost</Text>
-                <Text>Rs.{opportunity.deliveryCost}</Text>
+                <Text>Rs.{getDecimal(opportunity.deliveryCost)}</Text>
               </HStack>
               <HStack justify="space-between">
                 <Text>Number of Stops</Text>
                 <Text>{opportunity.opportunitysupermarket.length}</Text>
               </HStack>
 
-              <HStack justify="space-between" alignItems="start" >
+              <HStack justify="space-between" alignItems="start">
                 <Text>Supermarkets</Text>
-                <VStack >
+                <VStack>
                   {opportunity.opportunitysupermarket.map((i, index) => (
                     <SupermarketAddress
                       key={index}
